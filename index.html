@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello LSU | Black Entrepreneur Service Directory</title>
+
+  <!-- Google Fonts: Inter & Outfit for modern, clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- 
+    Tailwind CSS CDN:
+    Loads Tailwind CSS directly from the web without needing Node.js or npm!
+    This works great on school networks where Node.js installation is blocked.
+  -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Configure Tailwind theme colors (LSU Purple & Gold) directly in the browser -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            lsu: {
+              purple: '#461D7C',       /* Official LSU Purple */
+              'purple-dark': '#2E1053',  /* Deeper purple for gradients */
+              'purple-light': '#5E28A3', /* Lighter purple for hovers */
+              gold: '#FDD023',         /* Official LSU Gold */
+              'gold-hover': '#ECC21C',  /* Darker gold for buttons */
+              'gold-light': '#FEF08A',  /* Soft gold accent */
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS for specialized styles and animations -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- 
+    JavaScript ES Modules:
+    Notice type="module" below. This lets us use modern 'import' and 'export' statements
+    in our JavaScript files without any bundlers (like Vite or Webpack).
+    NOTE: Browsers require an HTTP server (like Live Server or python -m http.server)
+    to load ES modules. Opening the file directly (file://) will trigger a CORS error.
+  -->
+  <script type="module" src="js/app.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans antialiased flex flex-col justify-between selection:bg-lsu-gold selection:text-lsu-purple-dark">
+
+  <!-- Header / Navigation Placeholder -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <!-- LSU Purple & Gold Emblem Icon -->
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-lsu-purple to-lsu-purple-dark border border-lsu-gold/40 flex items-center justify-center shadow-lg shadow-purple-950/40">
+          <span class="text-lsu-gold font-heading font-black text-lg tracking-wider">LSU</span>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-heading font-bold text-white tracking-tight leading-tight">
+            Black Entrepreneur Directory
+          </h1>
+          <p class="text-xs text-slate-400">Baton Rouge &bull; 25-Mile Radius</p>
+        </div>
+      </div>
+
+      <!-- Live Server / Environment Status Pill -->
+      <div class="hidden sm:flex items-center space-x-2 text-xs bg-slate-800/80 border border-slate-700/60 rounded-full px-3 py-1.5 text-slate-300">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="js-status">ES Modules Active</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 flex flex-col items-center text-center">
+
+    <!-- Campus & Geographic Radius Badge -->
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-lsu-purple/40 border border-lsu-gold/30 text-lsu-gold text-xs sm:text-sm font-medium mb-6 backdrop-blur">
+      <svg class="w-4 h-4 fill-current text-lsu-gold" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+      </svg>
+      <span>Baton Rouge, LA &bull; Within 25 Miles of LSU</span>
+    </div>
+
+    <!-- Hero Title: "Hello LSU" -->
+    <h2 class="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold tracking-tight text-white mb-6">
+      Hello <span class="text-transparent bg-clip-text bg-gradient-to-r from-lsu-gold via-amber-300 to-yellow-400">LSU!</span> 🐯
+    </h2>
+
+    <p class="max-w-2xl text-slate-300 text-base sm:text-lg leading-relaxed mb-10">
+      Welcome to the starter foundation for the <strong class="text-white font-semibold">Black Entrepreneur Service Provider Directory</strong>. This application is configured to run 100% in pure HTML, CSS, and vanilla JavaScript—zero Node.js or build tools required.
+    </p>
+
+    <!-- Architecture Checklist Card -->
+    <div class="w-full max-w-3xl bg-slate-800/70 border border-slate-700/70 rounded-2xl p-6 sm:p-8 text-left shadow-2xl shadow-black/40 backdrop-blur mb-10">
+      <h3 class="text-lg font-heading font-bold text-white mb-4 flex items-center gap-2">
+        <span class="text-lsu-gold text-xl">&check;</span> Project Structure Configured
+      </h3>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
+          <span class="text-emerald-400 font-bold">&check;</span>
+          <div>
+            <code class="text-lsu-gold font-mono text-xs">index.html</code>
+            <p class="text-xs text-slate-400 mt-0.5">Semantic HTML5 with Tailwind CDN</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
+          <span class="text-emerald-400 font-bold">&check;</span>
+          <div>
+            <code class="text-lsu-gold font-mono text-xs">css/styles.css</code>
+            <p class="text-xs text-slate-400 mt-0.5">Custom styles &amp; LSU color tokens</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
+          <span class="text-emerald-400 font-bold">&check;</span>
+          <div>
+            <code class="text-lsu-gold font-mono text-xs">js/app.js</code>
+            <p class="text-xs text-slate-400 mt-0.5">ES Module root entry script</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
+          <span class="text-emerald-400 font-bold">&check;</span>
+          <div>
+            <code class="text-lsu-gold font-mono text-xs">js/components/</code>
+            <p class="text-xs text-slate-400 mt-0.5">Modular UI rendering functions</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
+          <span class="text-emerald-400 font-bold">&check;</span>
+          <div>
+            <code class="text-lsu-gold font-mono text-xs">js/data/</code>
+            <p class="text-xs text-slate-400 mt-0.5">Directory database &amp; providers</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
+          <span class="text-emerald-400 font-bold">&check;</span>
+          <div>
+            <code class="text-lsu-gold font-mono text-xs">js/utils/</code>
+            <p class="text-xs text-slate-400 mt-0.5">Distance math &amp; search filters</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive ES Module Verification Box -->
+    <div id="module-test-box" class="w-full max-w-3xl bg-lsu-purple/20 border border-lsu-purple/60 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between text-left gap-4">
+      <div>
+        <h4 class="text-sm font-semibold text-white">JavaScript ES Module Status:</h4>
+        <p id="module-test-message" class="text-xs text-slate-300 mt-1">
+          Loading JavaScript modules... (If this does not change, check browser console or use a local HTTP server)
+        </p>
+      </div>
+      <button id="test-btn" type="button" class="shrink-0 px-4 py-2 bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs rounded-lg transition-colors shadow-md">
+        Click to Verify JS
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-slate-950/60 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="text-slate-400">
+        Supporting Black-owned businesses, creators, and service providers across Baton Rouge and the LSU community.
+      </p>
+      <p class="mt-1 text-slate-500">
+        Built with HTML5 &bull; Vanilla JavaScript ES Modules &bull; Tailwind CSS CDN &bull; Zero Node.js
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

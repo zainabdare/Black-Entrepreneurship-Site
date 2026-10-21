@@ -1,0 +1,65 @@
+/* ==========================================================================
+   css/styles.css
+   Project: Black Entrepreneur Service Directory (LSU / Baton Rouge)
+   
+   BEGINNER NOTE:
+   We are using Tailwind CSS via CDN for most layout and utility styling.
+   This custom CSS file is where you can write custom CSS rules, animations,
+   or specific design tweaks that go beyond standard utility classes.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties (Theme Variables)
+   These store official colors so you can reuse them anywhere in CSS.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Official Louisiana State University (LSU) Colors */
+  --lsu-purple: #461D7C;
+  --lsu-purple-dark: #2E1053;
+  --lsu-purple-light: #5E28A3;
+  --lsu-gold: #FDD023;
+  --lsu-gold-hover: #ECC21C;
+
+  /* Neutral Dark Theme Backgrounds */
+  --bg-dark-primary: #0f172a;   /* Slate 900 */
+  --bg-dark-secondary: #1e293b; /* Slate 800 */
+}
+
+/* --------------------------------------------------------------------------
+   2. Global Smooth Scrolling and Base Styles
+   -------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* --------------------------------------------------------------------------
+   3. Custom Subtle Animations
+   Adds a gentle glow effect for interactive items.
+   -------------------------------------------------------------------------- */
+.lsu-glow {
+  box-shadow: 0 0 25px -5px rgba(253, 208, 35, 0.25);
+}
+
+.purple-glow {
+  box-shadow: 0 0 25px -5px rgba(70, 29, 124, 0.45);
+}
+
+/* --------------------------------------------------------------------------
+   4. Custom Scrollbar Styling (Optional luxury touch)
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #461D7C;
+}
