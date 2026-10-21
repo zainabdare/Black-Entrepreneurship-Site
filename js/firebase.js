@@ -365,6 +365,117 @@ export async function deleteReviewFromProvider(providerId, reviewId, fallbackIni
   };
 }
 
+// ============================================================================
+// CAMPUS POP-UP & DROP-OFF ALERTS (FIRESTORE "alerts" COLLECTION)
+// ============================================================================
+
+/**
+ * Fetches active (non-expired) campus alerts from Firestore "alerts" collection.
+ * Only returns alerts where expirationTime > current time.
+ * 
+ * @returns {Promise<Array<Object>>}
+ */
+export async function getActiveAlerts() {
+  try {
+    const alertsCol = collection(db, "alerts");
+    const snapshot = await getDocs(alertsCol);
+
+    if (snapshot.empty) {
+      return [];
+    }
+
+    const now = new Date();
+    const activeAlerts = [];
+
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const expDate = new Date(data.expirationTime);
+
+      // Strict validation: Only return alerts that are NOT expired
+      if (expDate > now) {
+        activeAlerts.push({
+          id: docSnap.id,
+          ...data
+        });
+      }
+    });
+
+    // Sort by expiration time ascending (soonest expiring first)
+    activeAlerts.sort((a, b) => new Date(a.expirationTime) - new Date(b.expirationTime));
+    return activeAlerts;
+  } catch (error) {
+    console.warn(`[Firestore Alerts] Could not fetch active alerts: ${error.message}`);
+    return [];
+  }
+}
+
+/**
+ * Fetches all alerts (both active and expired) for the Admin Management panel.
+ * 
+ * @returns {Promise<Array<Object>>}
+ */
+export async function getAllAlerts() {
+  try {
+    const alertsCol = collection(db, "alerts");
+    const snapshot = await getDocs(alertsCol);
+
+    if (snapshot.empty) {
+      return [];
+    }
+
+    const alerts = [];
+    snapshot.forEach((docSnap) => {
+      alerts.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
+    });
+
+    // Sort newest first
+    alerts.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+    return alerts;
+  } catch (error) {
+    console.warn(`[Firestore Alerts] Could not fetch all alerts: ${error.message}`);
+    return [];
+  }
+}
+
+/**
+ * Creates a new pop-up or drop-off alert in Firestore "alerts" collection.
+ * 
+ * @param {Object} alertData { providerName, message, location, expirationTime, providerCategory, providerId }
+ * @returns {Promise<string>} Created document ID
+ */
+export async function createAlert(alertData) {
+  const alertsCol = collection(db, "alerts");
+
+  const newDoc = {
+    providerName: alertData.providerName.trim(),
+    message: alertData.message.trim(),
+    location: alertData.location.trim(),
+    expirationTime: new Date(alertData.expirationTime).toISOString(),
+    providerCategory: alertData.providerCategory || 'Campus Vendor',
+    providerId: alertData.providerId || null,
+    createdAt: new Date().toISOString()
+  };
+
+  const docRef = await addDoc(alertsCol, newDoc);
+  console.log(`[Firestore Alerts] Created new alert [${docRef.id}]: ${newDoc.message}`);
+  return docRef.id;
+}
+
+/**
+ * Deletes an alert from Firestore "alerts" collection.
+ * 
+ * @param {string} alertId 
+ * @returns {Promise<void>}
+ */
+export async function deleteAlert(alertId) {
+  const alertDocRef = doc(db, "alerts", alertId);
+  await deleteDoc(alertDocRef);
+  console.log(`[Firestore Alerts] Deleted alert [${alertId}]`);
+}
+
 // Global window exposure for DevTools debugging
 if (typeof window !== 'undefined') {
   window.blackEntreFirebase = {
@@ -378,7 +489,11 @@ if (typeof window !== 'undefined') {
     uploadReviewPhoto,
     getReviewsForProvider,
     addReviewToProvider,
-    deleteReviewFromProvider
+    deleteReviewFromProvider,
+    getActiveAlerts,
+    getAllAlerts,
+    createAlert,
+    deleteAlert
   };
   window.seedFirestore = seedFirestoreProviders;
 }

@@ -149,6 +149,16 @@ export function injectNavigationDrawer() {
               <span class="text-base">🐯</span>
               <span>About the Creators</span>
             </a>
+            <a 
+              href="admin-alerts.html" 
+              class="menu-link flex items-center justify-between px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${currentPath === 'admin-alerts.html' ? 'bg-lsu-purple/30 text-lsu-gold font-bold border border-lsu-gold/30' : 'text-slate-300 hover:bg-lsu-purple/20 hover:text-lsu-gold'}"
+            >
+              <div class="flex items-center gap-3">
+                <span class="text-base">📢</span>
+                <span>Pop-Up Alerts Admin</span>
+              </div>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/30">Live</span>
+            </a>
           </div>
         </div>
 
@@ -159,10 +169,13 @@ export function injectNavigationDrawer() {
         <p class="text-[11px] text-slate-400">
           Supporting Black Entrepreneurship within 25 Miles of LSU
         </p>
-        <div>
-          <a href="seed.html" class="inline-flex items-center gap-1 text-[10px] text-purple-300 hover:text-lsu-gold transition-colors font-mono">
-            <span>🔥</span>
-            <span>Firestore Manager &amp; Seeder</span>
+        <div class="flex items-center justify-center gap-3 text-[10px] font-mono text-purple-300">
+          <a href="admin-alerts.html" class="hover:text-lsu-gold transition-colors">
+            📢 Pop-Up Alerts
+          </a>
+          <span>&bull;</span>
+          <a href="seed.html" class="hover:text-lsu-gold transition-colors">
+            🔥 Firestore Seeder
           </a>
         </div>
       </div>

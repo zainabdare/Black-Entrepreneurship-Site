@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Pop-Up Alerts Admin | Black-Owned BR</title>
+  <meta name="description" content="Manage and publish real-time campus pop-up and drop-off alerts for LSU students.">
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Configuration with LSU Brand Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            lsu: {
+              purple: '#461D7C',
+              'purple-dark': '#2E1053',
+              'purple-deep': '#1A0830',
+              'purple-light': '#6B2FA8',
+              gold: '#FDD023',
+              'gold-hover': '#ECC21C',
+              'gold-light': '#FEF08A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-lsu-gold selection:text-lsu-purple-dark antialiased">
+
+  <!-- Top Header -->
+  <header class="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-purple-900/30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-lsu-purple via-lsu-purple-dark to-purple-950 border border-lsu-gold/40 flex items-center justify-center shadow-lg group-hover:border-lsu-gold transition-colors">
+            <span class="text-lsu-gold font-heading font-black text-base">LSU</span>
+          </div>
+          <div>
+            <span class="font-heading font-bold text-lg sm:text-xl text-white tracking-tight block">Black-Owned <span class="text-lsu-gold">BR</span></span>
+            <span class="text-[10px] text-purple-300 tracking-wider font-semibold uppercase block">Campus Alerts Administration</span>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="text-xs sm:text-sm font-heading font-semibold text-slate-300 hover:text-lsu-gold transition-colors flex items-center gap-1">
+            <span>&larr;</span>
+            <span>View Home Banner</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    
+    <!-- ======================================================================
+         1. PASSWORD PROTECTION LOGIN GATE (Visible when not authenticated)
+         ====================================================================== -->
+    <div id="login-gate" class="max-w-md mx-auto my-12 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-purple-900/60 shadow-2xl space-y-6 text-center">
+      
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-lsu-purple to-purple-950 border border-lsu-gold/40 flex items-center justify-center text-2xl shadow-lg">
+        🔒
+      </div>
+
+      <div class="space-y-2">
+        <h1 class="text-xl sm:text-2xl font-heading font-black text-white">
+          Admin Passkey Required
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-400">
+          Enter your team passkey to access the Campus Pop-Up &amp; Drop-Off Alerts manager.
+        </p>
+      </div>
+
+      <form id="admin-login-form" class="space-y-4 text-left">
+        <div>
+          <label for="admin-passkey-input" class="block text-xs font-heading font-semibold text-slate-300 mb-1.5">
+            Admin Passkey
+          </label>
+          <input 
+            type="password" 
+            id="admin-passkey-input" 
+            required 
+            placeholder="Enter passkey..." 
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-lsu-gold focus:ring-1 focus:ring-lsu-gold transition-colors font-mono"
+            autocomplete="current-password"
+          >
+          <p class="text-[11px] text-slate-500 mt-1.5">
+            Default team passkey: <code class="text-lsu-gold font-mono font-bold">tiger-alerts-2026</code>
+          </p>
+        </div>
+
+        <div id="login-error-msg" class="hidden p-3 rounded-xl bg-red-950/60 border border-red-800 text-xs text-red-300">
+          Incorrect passkey. Please try again.
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3 px-4 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer"
+        >
+          Unlock Admin Portal &rarr;
+        </button>
+      </form>
+    </div>
+
+    <!-- ======================================================================
+         2. AUTHENTICATED ADMIN DASHBOARD (Hidden until logged in)
+         ====================================================================== -->
+    <div id="admin-dashboard" class="hidden space-y-10">
+      
+      <!-- Top Action Strip -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-900/70 border border-purple-900/40">
+        <div class="flex items-center gap-3">
+          <span class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-lg">
+            👑
+          </span>
+          <div>
+            <span class="text-xs font-heading font-bold text-emerald-400 uppercase tracking-wider block">
+              Admin Session Active
+            </span>
+            <p class="text-xs text-slate-300">
+              You have full permissions to publish live alerts and delete inappropriate or expired notices.
+            </p>
+          </div>
+        </div>
+
+        <button 
+          id="admin-logout-btn" 
+          type="button" 
+          class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-red-950/60 text-slate-300 hover:text-red-300 border border-slate-700 hover:border-red-800 text-xs font-semibold transition-colors cursor-pointer"
+        >
+          Log Out Admin
+        </button>
+      </div>
+
+      <!-- SECTION A: POST NEW POP-UP ALERT FORM -->
+      <section class="rounded-3xl bg-slate-900/90 border border-purple-900/50 p-6 sm:p-8 shadow-xl space-y-6">
+        
+        <div class="border-b border-purple-900/30 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="text-2xl">📢</span>
+            <h2 class="text-xl sm:text-2xl font-heading font-extrabold text-white">
+              Post Campus Pop-Up or Drop-Off Alert
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            Active alerts immediately display in the live swipeable banner at the top of the Home page.
+          </p>
+        </div>
+
+        <form id="create-alert-form" class="space-y-6">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            
+            <!-- Provider Selection -->
+            <div>
+              <label for="alert-provider-select" class="block text-xs font-heading font-semibold text-slate-200 mb-1.5">
+                Provider / Business Name <span class="text-lsu-gold">*</span>
+              </label>
+              <select 
+                id="alert-provider-select" 
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:outline-none focus:border-lsu-gold focus:ring-1 focus:ring-lsu-gold transition-colors cursor-pointer"
+              >
+                <option value="custom">-- Enter Custom Business Name --</option>
+                <!-- Populated dynamically with sample/Firestore providers -->
+              </select>
+
+              <input 
+                type="text" 
+                id="alert-provider-name-custom" 
+                required 
+                placeholder="Or type business name..." 
+                class="mt-2 w-full px-4 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-lsu-gold focus:ring-1 focus:ring-lsu-gold transition-colors"
+              >
+            </div>
+
+            <!-- Category -->
+            <div>
+              <label for="alert-category-select" class="block text-xs font-heading font-semibold text-slate-200 mb-1.5">
+                Business Category
+              </label>
+              <select 
+                id="alert-category-select" 
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:outline-none focus:border-lsu-gold focus:ring-1 focus:ring-lsu-gold transition-colors cursor-pointer"
+              >
+                <option value="Food & Beverages">Food &amp; Beverages</option>
+                <option value="Hair">Hair</option>
+                <option value="Nails">Nails</option>
+                <option value="Lashes">Lashes</option>
+                <option value="Fashion">Fashion (Custom Outfits)</option>
+                <option value="Photography">Photography</option>
+                <option value="Campus Pop-Up">Other Pop-Up Vendor</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Alert Message -->
+          <div class="space-y-2">
+            <label for="alert-message-input" class="block text-xs font-heading font-semibold text-slate-200">
+              Alert Message <span class="text-lsu-gold">*</span>
+              <span class="text-slate-400 font-normal ml-1">(e.g. "Selling plates at the Quad 12-2pm")</span>
+            </label>
+            <textarea 
+              id="alert-message-input" 
+              required 
+              rows="2" 
+              maxlength="250"
+              placeholder="e.g. Selling hot soul food plates & peach cobbler at the Quad 12-2pm! $15 cash or Venmo."
+              class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-lsu-gold focus:ring-1 focus:ring-lsu-gold transition-colors leading-relaxed"
+            ></textarea>
+
+            <!-- Quick Template Chips -->
+            <div class="flex flex-wrap items-center gap-1.5 pt-1 text-[11px]">
+              <span class="text-slate-500 font-medium">Quick Templates:</span>
+              <button type="button" class="template-chip px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 text-slate-300 hover:text-white transition-colors cursor-pointer">
+                Selling plates at the Quad 12-2pm
+              </button>
+              <button type="button" class="template-chip px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 text-slate-300 hover:text-white transition-colors cursor-pointer">
+                Flash drop-off at LSU Union front steps
+              </button>
+              <button type="button" class="template-chip px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 text-slate-300 hover:text-white transition-colors cursor-pointer">
+                Game-day tailgate custom apparel pop-up
+              </button>
+            </div>
+          </div>
+
+          <!-- Campus Location -->
+          <div class="space-y-2">
+            <label for="alert-location-input" class="block text-xs font-heading font-semibold text-slate-200">
+              Campus Location <span class="text-lsu-gold">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="alert-location-input" 
+              required 
+              placeholder="e.g. LSU Student Quad by the Fountain" 
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-lsu-gold focus:ring-1 focus:ring-lsu-gold transition-colors"
+            >
+
+            <!-- Quick Location Chips -->
+            <div class="flex flex-wrap items-center gap-1.5 pt-1 text-[11px]">
+              <span class="text-slate-500 font-medium">LSU Spots:</span>
+              <button type="button" class="location-chip px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 text-slate-300 hover:text-white transition-colors cursor-pointer">
+                LSU Student Quad by the Fountain
+              </button>
+              <button type="button" class="location-chip px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 text-slate-300 hover:text-white transition-colors cursor-pointer">
+                LSU Student Union Front Steps
+              </button>
+              <button type="button" class="location-chip px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 text-slate-300 hover:text-white transition-colors cursor-pointer">
+                LSU Memorial Tower Plaza
+              </button>
+              <button type="button" class="location-chip px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 text-slate-300 hover:text-white transition-colors cursor-pointer">
+                North Gates / Highland Walkway
+              </button>
+              <button type="button" class="location-chip px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 text-slate-300 hover:text-white transition-colors cursor-pointer">
+                Tiger Stadium Tailgate Area
+              </button>
+            </div>
+          </div>
+
+          <!-- Expiration Time with Quick Duration Buttons -->
+          <div class="space-y-3 pt-2 border-t border-purple-900/30">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <label for="alert-expiration-input" class="block text-xs font-heading font-semibold text-slate-200">
+                Expiration Time <span class="text-lsu-gold">*</span>
+                <span class="text-slate-400 font-normal ml-1">(Alert will automatically disappear after this time)</span>
+              </label>
+              <span class="text-[11px] text-lsu-gold font-mono font-bold" id="exp-preview-text">
+                Select duration or custom time
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Native Datetime Picker -->
+              <div>
+                <input 
+                  type="datetime-local" 
+                  id="alert-expiration-input" 
+                  required 
+                  class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:outline-none focus:border-lsu-gold focus:ring-1 focus:ring-lsu-gold transition-colors font-mono"
+                >
+              </div>
+
+              <!-- Quick Duration Buttons -->
+              <div class="flex flex-wrap items-center gap-1.5">
+                <button type="button" data-hours="1" class="quick-duration-btn px-3 py-2 rounded-xl bg-slate-800 hover:bg-lsu-purple/40 text-slate-200 hover:text-lsu-gold border border-slate-700 text-xs font-semibold transition-colors cursor-pointer">
+                  +1 Hour
+                </button>
+                <button type="button" data-hours="2" class="quick-duration-btn px-3 py-2 rounded-xl bg-slate-800 hover:bg-lsu-purple/40 text-slate-200 hover:text-lsu-gold border border-slate-700 text-xs font-semibold transition-colors cursor-pointer">
+                  +2 Hours
+                </button>
+                <button type="button" data-hours="4" class="quick-duration-btn px-3 py-2 rounded-xl bg-slate-800 hover:bg-lsu-purple/40 text-slate-200 hover:text-lsu-gold border border-slate-700 text-xs font-semibold transition-colors cursor-pointer">
+                  +4 Hours
+                </button>
+                <button type="button" id="end-of-day-btn" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-lsu-purple/40 text-slate-200 hover:text-lsu-gold border border-slate-700 text-xs font-semibold transition-colors cursor-pointer">
+                  End of Day
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Feedback Alerts -->
+          <div id="create-alert-success" class="hidden p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-800 text-xs text-emerald-300 font-semibold flex items-center gap-2">
+            <span>✅</span>
+            <span>Alert published successfully! It is now live in the Home page banner.</span>
+          </div>
+
+          <div id="create-alert-error" class="hidden p-3.5 rounded-xl bg-red-950/60 border border-red-800 text-xs text-red-300">
+            <!-- Error text -->
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex items-center justify-end gap-3 pt-3">
+            <button 
+              id="publish-alert-btn" 
+              type="submit" 
+              class="px-6 py-3 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-black text-xs uppercase tracking-wider transition-all shadow-lg flex items-center gap-2 cursor-pointer"
+            >
+              <span>🚀 Publish Live Alert</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+
+        </form>
+
+      </section>
+
+      <!-- SECTION B: MANAGE ACTIVE & EXPIRED ALERTS -->
+      <section class="rounded-3xl bg-slate-900/90 border border-purple-900/50 p-6 sm:p-8 shadow-xl space-y-6">
+        
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-purple-900/30 pb-4">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-heading font-extrabold text-white flex items-center gap-2">
+              <span>📋</span>
+              <span>Manage Campus Alerts</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">
+              Active alerts are currently displayed on the Home page. Delete inappropriate or finished notices anytime.
+            </p>
+          </div>
+
+          <button 
+            id="refresh-alerts-btn" 
+            type="button" 
+            class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
+          >
+            <span>🔄</span>
+            <span>Refresh List</span>
+          </button>
+        </div>
+
+        <!-- Alerts Cards Container -->
+        <div id="alerts-admin-list" class="space-y-3">
+          <div class="py-12 text-center text-slate-400 text-xs animate-pulse">
+            Loading alerts from Cloud Firestore...
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-purple-900/40 bg-slate-950/90 py-6 text-center text-xs text-slate-500">
+    <p>Black-Owned BR &bull; Campus Pop-Up &amp; Drop-Off Alerts Admin &bull; LSU Student Directory</p>
+  </footer>
+
+  <!-- Admin Application Logic -->
+  <script type="module">
+    import { 
+      getAllAlerts, 
+      createAlert, 
+      deleteAlert,
+      getProvidersFromFirestore 
+    } from './js/firebase.js';
+    import { SAMPLE_PROVIDERS } from './src/data/providers.js';
+
+    // Passkeys accepted for admin access
+    const VALID_PASSKEYS = ['tiger-alerts-2026', 'lsu-admin-2026'];
+    const AUTH_STORAGE_KEY = 'campus_alerts_admin_auth';
+
+    const loginGate = document.getElementById('login-gate');
+    const adminDashboard = document.getElementById('admin-dashboard');
+    const loginForm = document.getElementById('admin-login-form');
+    const passkeyInput = document.getElementById('admin-passkey-input');
+    const loginError = document.getElementById('login-error-msg');
+    const logoutBtn = document.getElementById('admin-logout-btn');
+
+    // Authentication Check
+    function isAuthenticated() {
+      return localStorage.getItem(AUTH_STORAGE_KEY) === 'true';
+    }
+
+    function updateAuthView() {
+      if (isAuthenticated()) {
+        loginGate.classList.add('hidden');
+        adminDashboard.classList.remove('hidden');
+        initDashboard();
+      } else {
+        loginGate.classList.remove('hidden');
+        adminDashboard.classList.add('hidden');
+      }
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = passkeyInput.value.trim();
+      if (VALID_PASSKEYS.includes(val)) {
+        localStorage.setItem(AUTH_STORAGE_KEY, 'true');
+        loginError.classList.add('hidden');
+        updateAuthView();
+      } else {
+        loginError.classList.remove('hidden');
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      passkeyInput.value = '';
+      updateAuthView();
+    });
+
+    // Check auth on load
+    updateAuthView();
+
+    // ========================================================================
+    // DASHBOARD LOGIC
+    // ========================================================================
+    let allProvidersList = [];
+
+    async function initDashboard() {
+      // Load providers for dropdown
+      try {
+        const firestoreProviders = await getProvidersFromFirestore();
+        allProvidersList = firestoreProviders.length > 0 ? firestoreProviders : SAMPLE_PROVIDERS;
+      } catch (e) {
+        allProvidersList = SAMPLE_PROVIDERS;
+      }
+
+      populateProviderDropdown(allProvidersList);
+      loadAlertsList();
+      initQuickButtons();
+    }
+
+    function populateProviderDropdown(providers) {
+      const select = document.getElementById('alert-provider-select');
+      const customInput = document.getElementById('alert-provider-name-custom');
+      const categorySelect = document.getElementById('alert-category-select');
+
+      // Keep only custom option first
+      select.innerHTML = `<option value="custom">-- Enter Custom Business Name --</option>`;
+
+      providers.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = `${p.businessName} (${p.category})`;
+        opt.dataset.name = p.businessName;
+        opt.dataset.category = p.category;
+        select.appendChild(opt);
+      });
+
+      select.addEventListener('change', () => {
+        if (select.value === 'custom') {
+          customInput.classList.remove('hidden');
+          customInput.required = true;
+          customInput.value = '';
+        } else {
+          customInput.classList.add('hidden');
+          customInput.required = false;
+          const opt = select.selectedOptions[0];
+          customInput.value = opt.dataset.name || '';
+          if (opt.dataset.category) {
+            categorySelect.value = opt.dataset.category;
+          }
+        }
+      });
+    }
+
+    function initQuickButtons() {
+      const expInput = document.getElementById('alert-expiration-input');
+      const previewText = document.getElementById('exp-preview-text');
+      const messageInput = document.getElementById('alert-message-input');
+      const locationInput = document.getElementById('alert-location-input');
+
+      // Set default expiration (+2 hours)
+      const defaultDate = new Date(Date.now() + 2 * 60 * 60 * 1000);
+      expInput.min = new Date().toISOString().slice(0, 16);
+      expInput.value = defaultDate.toISOString().slice(0, 16);
+      updateExpPreview(defaultDate);
+
+      // Duration buttons
+      document.querySelectorAll('.quick-duration-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const hours = parseFloat(btn.dataset.hours);
+          const target = new Date(Date.now() + hours * 60 * 60 * 1000);
+          expInput.value = target.toISOString().slice(0, 16);
+          updateExpPreview(target);
+        });
+      });
+
+      // End of Day button
+      const eodBtn = document.getElementById('end-of-day-btn');
+      if (eodBtn) {
+        eodBtn.addEventListener('click', () => {
+          const eod = new Date();
+          eod.setHours(23, 59, 0, 0);
+          expInput.value = eod.toISOString().slice(0, 16);
+          updateExpPreview(eod);
+        });
+      }
+
+      expInput.addEventListener('change', () => {
+        if (expInput.value) {
+          updateExpPreview(new Date(expInput.value));
+        }
+      });
+
+      function updateExpPreview(d) {
+        const timeStr = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const dateStr = d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+        previewText.textContent = `Expires ${dateStr} at ${timeStr}`;
+      }
+
+      // Template Chips
+      document.querySelectorAll('.template-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          messageInput.value = chip.textContent.trim();
+        });
+      });
+
+      // Location Chips
+      document.querySelectorAll('.location-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          locationInput.value = chip.textContent.trim();
+        });
+      });
+    }
+
+    // CREATE ALERT SUBMISSION
+    const createForm = document.getElementById('create-alert-form');
+    const successBox = document.getElementById('create-alert-success');
+    const errorBox = document.getElementById('create-alert-error');
+    const publishBtn = document.getElementById('publish-alert-btn');
+
+    createForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      successBox.classList.add('hidden');
+      errorBox.classList.add('hidden');
+
+      const select = document.getElementById('alert-provider-select');
+      const customName = document.getElementById('alert-provider-name-custom').value.trim();
+      const message = document.getElementById('alert-message-input').value.trim();
+      const location = document.getElementById('alert-location-input').value.trim();
+      const expirationTime = document.getElementById('alert-expiration-input').value;
+      const category = document.getElementById('alert-category-select').value;
+
+      let providerName = customName;
+      let providerId = null;
+
+      if (select.value !== 'custom') {
+        const opt = select.selectedOptions[0];
+        providerName = opt.dataset.name || customName;
+        providerId = select.value;
+      }
+
+      if (!providerName || !message || !location || !expirationTime) {
+        errorBox.textContent = 'Please fill out all required fields.';
+        errorBox.classList.remove('hidden');
+        return;
+      }
+
+      if (new Date(expirationTime) <= new Date()) {
+        errorBox.textContent = 'Expiration time must be in the future.';
+        errorBox.classList.remove('hidden');
+        return;
+      }
+
+      publishBtn.disabled = true;
+      publishBtn.innerHTML = `<span>⏳ Publishing...</span>`;
+
+      try {
+        await createAlert({
+          providerName,
+          message,
+          location,
+          expirationTime,
+          providerCategory: category,
+          providerId
+        });
+
+        successBox.classList.remove('hidden');
+        createForm.reset();
+        
+        // Reset default time
+        const defaultDate = new Date(Date.now() + 2 * 60 * 60 * 1000);
+        document.getElementById('alert-expiration-input').value = defaultDate.toISOString().slice(0, 16);
+
+        // Reload alerts list
+        await loadAlertsList();
+
+      } catch (err) {
+        errorBox.textContent = `Could not publish alert: ${err.message}. Make sure Cloud Firestore is enabled.`;
+        errorBox.classList.remove('hidden');
+      } finally {
+        publishBtn.disabled = false;
+        publishBtn.innerHTML = `<span>🚀 Publish Live Alert</span><span>&rarr;</span>`;
+      }
+    });
+
+    // LOAD & MANAGE ALERTS LIST
+    async function loadAlertsList() {
+      const listEl = document.getElementById('alerts-admin-list');
+      listEl.innerHTML = `<div class="py-8 text-center text-slate-400 text-xs animate-pulse">Loading alerts...</div>`;
+
+      let alerts = [];
+      try {
+        alerts = await getAllAlerts();
+      } catch (e) {
+        console.warn('Error fetching all alerts:', e);
+      }
+
+      if (alerts.length === 0) {
+        listEl.innerHTML = `
+          <div class="p-8 rounded-2xl bg-slate-950/60 border border-slate-800 text-center space-y-2">
+            <span class="text-3xl block">📭</span>
+            <p class="text-sm font-heading font-bold text-white">No alerts found</p>
+            <p class="text-xs text-slate-400">Post your first pop-up alert using the form above.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const now = new Date();
+
+      listEl.innerHTML = alerts.map(a => {
+        const expDate = new Date(a.expirationTime);
+        const isActive = expDate > now;
+        const timeFormatted = expDate.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const createdFormatted = a.createdAt ? new Date(a.createdAt).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Recently';
+
+        return `
+          <div class="p-4 sm:p-5 rounded-2xl ${isActive ? 'bg-slate-950/80 border-purple-900/50' : 'bg-slate-950/40 border-slate-800 opacity-60'} border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all">
+            
+            <div class="space-y-1.5 flex-1">
+              <div class="flex items-center gap-2">
+                ${isActive ? `
+                  <span class="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    ACTIVE
+                  </span>
+                ` : `
+                  <span class="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+                    EXPIRED
+                  </span>
+                `}
+                <strong class="text-sm font-heading font-bold text-white">${a.providerName}</strong>
+                <span class="text-xs text-purple-300 font-mono">(${a.providerCategory || 'Pop-Up'})</span>
+              </div>
+
+              <p class="text-xs text-slate-200 font-medium">
+                "${a.message}"
+              </p>
+
+              <div class="flex flex-wrap items-center gap-3 text-[11px] text-slate-400 pt-1">
+                <span>📍 <strong class="text-slate-300">${a.location}</strong></span>
+                <span>⏳ Expires: <strong class="${isActive ? 'text-lsu-gold' : 'text-slate-400'} font-mono">${timeFormatted}</strong></span>
+                <span>📅 Posted: <span class="font-mono">${createdFormatted}</span></span>
+              </div>
+            </div>
+
+            <!-- Delete Action -->
+            <button 
+              type="button" 
+              class="delete-alert-btn px-3 py-1.5 rounded-xl bg-red-950/60 hover:bg-red-900 text-red-300 hover:text-white border border-red-800 text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer shrink-0"
+              data-alert-id="${a.id}"
+            >
+              <span>🗑️</span>
+              <span>Delete</span>
+            </button>
+
+          </div>
+        `;
+      }).join('');
+
+      // Attach Delete Handlers
+      listEl.querySelectorAll('.delete-alert-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const alertId = btn.dataset.alertId;
+          if (!confirm('Are you sure you want to permanently delete this alert?')) return;
+
+          btn.disabled = true;
+          btn.textContent = 'Deleting...';
+
+          try {
+            await deleteAlert(alertId);
+            await loadAlertsList();
+          } catch (err) {
+            alert(`Could not delete alert: ${err.message}`);
+            btn.disabled = false;
+            btn.textContent = 'Delete';
+          }
+        });
+      });
+    }
+
+    document.getElementById('refresh-alerts-btn').addEventListener('click', loadAlertsList);
+  </script>
+</body>
+</html>

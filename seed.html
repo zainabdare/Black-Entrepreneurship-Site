@@ -230,6 +230,10 @@ service cloud.firestore {
                      && request.resource.data.rating <= 5;
         allow delete: if true; // Passkey / admin moderation in app
       }
+    // Campus Pop-Up & Drop-Off Alerts: Anyone can read, admin manages writes
+    match /alerts/{alertId} {
+      allow read: if true;
+      allow write: if true;
     }
     
   }

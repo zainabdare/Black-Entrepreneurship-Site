@@ -22,6 +22,7 @@ import { calculateDistance, LSU_COORDINATES } from './utils/distance.js';
 import { injectNavigationDrawer } from './components/NavigationDrawer.js';
 import { injectFilterPanel } from './components/FilterPanel.js';
 import { openProviderDetailModal, closeProviderDetailModal, closePhotoLightbox } from './components/ProviderDetailModal.js';
+import { injectCampusAlertsBanner } from './components/AlertsBanner.js';
 
 console.log('%c🐯 Black-Owned BR: Multi-page & Filter Panel Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
 
@@ -796,6 +797,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (isDedicatedCategoryPage && document.getElementById('filter-panel-mount')) {
     injectFilterPanel(pageCategory, updateDirectory);
     attachFilterListeners();
+  }
+
+  // 3b. Inject Campus Pop-Up & Drop-Off Alerts Banner (on Home page)
+  if (document.getElementById('campus-alerts-mount')) {
+    injectCampusAlertsBanner();
   }
 
   // 4. Initial Directory Render & Firestore Loading
