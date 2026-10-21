@@ -272,8 +272,73 @@
       </div>
     </div>
 
+    <!-- Scaffolding & Directory Container -->
+    <div id="directory-container" class="space-y-6">
+      
+      <!-- Category Filter Bar (Swipeable on mobile, touch-friendly 44px+) -->
+      <div class="overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0" role="toolbar" aria-label="Filter service providers by category">
+        <div id="category-filter-bar" class="flex items-center gap-2 sm:gap-2.5 min-w-max">
+          <button 
+            type="button" 
+            data-category="All"
+            class="category-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-lsu-gold text-lsu-purple-dark shadow-md shadow-lsu-gold/20 active-category"
+            aria-pressed="true"
+          >
+            All
+          </button>
+          <button 
+            type="button" 
+            data-category="Hair"
+            class="category-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700"
+            aria-pressed="false"
+          >
+            Hair
+          </button>
+          <button 
+            type="button" 
+            data-category="Nails"
+            class="category-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700"
+            aria-pressed="false"
+          >
+            Nails
+          </button>
+          <button 
+            type="button" 
+            data-category="Lashes"
+            class="category-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700"
+            aria-pressed="false"
+          >
+            Lashes
+          </button>
+          <button 
+            type="button" 
+            data-category="Food & Beverages"
+            class="category-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700"
+            aria-pressed="false"
+          >
+            Food &amp; Beverages
+          </button>
+          <button 
+            type="button" 
+            data-category="Fashion"
+            class="category-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700"
+            aria-pressed="false"
+          >
+            Fashion
+          </button>
+          <button 
+            type="button" 
+            data-category="Photography"
+            class="category-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700"
+            aria-pressed="false"
+          >
+            Photography
+          </button>
+        </div>
+      </div>
+
       <!-- Directory Grid Header & Results Count -->
-      <div class="flex items-center justify-between pb-2">
+      <div class="flex items-center justify-between pb-1">
         <p id="results-count" class="text-xs sm:text-sm text-slate-300 font-medium">
           Showing all <span class="text-lsu-gold font-bold font-mono">12</span> local service providers
         </p>
@@ -286,6 +351,7 @@
       <div id="providers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" role="region" aria-label="Service Provider Listings">
         <!-- Cards injected dynamically via js/components/ProviderCard.js -->
       </div>
+
     </div>
 
     <!-- Seasonal Hubs Teaser Section (Anchor for Nav link) -->
