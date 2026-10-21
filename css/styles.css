@@ -75,7 +75,7 @@ h1, h2, h3, h4, .font-heading {
   transition: opacity 0.25s ease-in-out;
 }
 
-/* When the drawer is open */
+/* When the navigation drawer is open */
 body.menu-open {
   overflow: hidden;
 }
@@ -85,6 +85,31 @@ body.menu-open #slide-out-menu {
 }
 
 body.menu-open #menu-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --------------------------------------------------------------------------
+   4b. Mobile Filter Drawer Animations
+   Smooth slide from the right edge on mobile devices.
+   -------------------------------------------------------------------------- */
+#filter-drawer {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#filter-backdrop {
+  transition: opacity 0.25s ease-in-out;
+}
+
+body.filter-drawer-open {
+  overflow: hidden;
+}
+
+body.filter-drawer-open #filter-drawer {
+  transform: translateX(0);
+}
+
+body.filter-drawer-open #filter-backdrop {
   opacity: 1;
   pointer-events: auto;
 }

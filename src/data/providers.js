@@ -81,7 +81,7 @@ export const SAMPLE_PROVIDERS = [
     lsuVerified: "alumni",
     hairTypes: ["3A-3C", "4A-4C", "Relaxed/Straight"],
     specialties: ["silk press", "wig installs"],
-    chairVibe: "studio",
+    chairVibe: "travels to you",
     policies: {
       depositRequired: true,
       depositAmount: "$25 deposit applied to total service",

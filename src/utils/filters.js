@@ -1,11 +1,14 @@
 /**
  * src/utils/filters.js
  * 
- * Central filtering logic for Black-Owned BR service directory:
+ * Central filtering & sorting logic for Black-Owned BR service directory:
  * - Category matching
  * - Keyword search matching (name, category, description)
  * - Geographic radius filtering (Haversine formula from LSU)
  * - Quick-select zone filtering
+ * - Shared filters: price tiers, max starting price, min rating, experience tiers,
+ *   student discount toggle, service delivery, availability, and sorting
+ * - Category-specific filters for Hair, Nails, Lashes, Food & Beverages, Fashion, Photography
  * 
  * Strict rule: NEVER returns providers beyond 25 miles from LSU.
  */
@@ -134,54 +137,278 @@ export function matchesRadius(provider, maxRadius = 25) {
 }
 
 /**
- * Combined filter evaluating category, search query, radius limit, and zone.
+ * Combined filter evaluating all shared and category-specific criteria, then sorting results.
  * 
  * @param {Array} providers - All provider objects
  * @param {Object} options - Filter criteria
- * @param {string} [options.searchQuery=''] - Keyword search
- * @param {string} [options.selectedCategory='All'] - Category selection
- * @param {number} [options.maxRadius=25] - Max driving radius from LSU (1 to 25)
- * @param {string} [options.selectedZone='all'] - Quick-select zone
- * @returns {Array} Filtered providers
+ * @returns {Array} Filtered and sorted providers
  */
 export function filterProviders(providers, {
   searchQuery = '',
   selectedCategory = 'All',
   maxRadius = 25,
-  selectedZone = 'all'
+  selectedZone = 'all',
+
+  // Shared Filters
+  priceTiers = [],              // Array of '$', '$$', '$$$'
+  maxStartingPrice = null,      // Number or null
+  minRating = 0,                // 0, 3, 4, 4.5
+  experienceTiers = [],         // Array of '1-2', '3-5', '5+'
+  studentDiscountOnly = false,  // Boolean
+  serviceDelivery = 'all',      // 'all', 'mobile', 'studio'
+  availabilities = [],          // Array of 'open-this-week', 'same-day', 'bookings-open'
+  sortBy = 'rating',            // 'rating', 'distance', 'price', 'experience'
+
+  // Category-Specific: Hair
+  hairTypes = [],               // ['3A-3C', '4A-4C', 'Locs & Sisterlocks', 'Relaxed/Straight']
+  hairSpecialties = [],         // ['knotless braids', 'wig installs', 'silk press', 'loc maintenance', 'hair included']
+  chairVibes = [],              // ['home studio', 'travels to you', 'studio']
+
+  // Category-Specific: Nails
+  nailStyles = [],              // ['acrylic', 'gel-x', 'natural nail', 'press-ons', 'nail art']
+
+  // Category-Specific: Lashes
+  lashTypes = [],               // ['classic', 'hybrid', 'volume', 'mega volume']
+  offersFillsOnly = false,      // Boolean
+
+  // Category-Specific: Food & Beverages
+  foodTypes = [],               // ['meals/plates', 'desserts/baked goods', 'drinks', 'catering']
+  campusDropOffOnly = false,    // Boolean
+  preOrderRequiredOnly = false, // Boolean
+
+  // Category-Specific: Fashion
+  outfitTypes = [],             // ['game day', 'formal/prom', 'graduation', 'everyday']
+  turnarounds = [],             // ['this-week', '2-weeks', 'formal-ready']
+
+  // Category-Specific: Photography
+  shootTypes = [],              // ['graduation', 'game day', 'events', 'portraits', 'brand content']
+  photoTurnarounds = [],        // ['this-week', '2-weeks', 'formal-ready']
+  travelsToCampusOnly = false   // Boolean
 } = {}) {
   if (!Array.isArray(providers)) {
     return [];
   }
 
-  return providers.filter(provider => {
-    // 1. Strict cap: Never show providers beyond 25 miles
+  // 1. Filter matching providers
+  const filtered = providers.filter(provider => {
+    // Distance from LSU
     const dist = calculateDistance(provider.latitude, provider.longitude);
+
+    // Strict cap: Never show providers beyond 25 miles
     if (dist > MAX_ALLOWED_RADIUS_MILES) {
       return false;
     }
 
-    // 2. Radius Slider Check (1 to 25 miles)
+    // Radius Limit (1 to 25 miles)
     if (!matchesRadius(provider, maxRadius)) {
       return false;
     }
 
-    // 3. Quick-Select Zone Check
+    // Quick-Select Zone Check
     if (!matchesZone(provider, selectedZone)) {
       return false;
     }
 
-    // 4. Category Check
+    // Category Check
     if (!matchesCategory(provider.category, selectedCategory)) {
       return false;
     }
 
-    // 5. Keyword Search Check
+    // Keyword Search Check
     if (!matchesSearch(provider, searchQuery)) {
       return false;
     }
 
+    // --- SHARED FILTERS ---
+
+    // Price Tiers (e.g. '$', '$$', '$$$')
+    if (priceTiers && priceTiers.length > 0) {
+      if (!priceTiers.includes(provider.priceTier)) {
+        return false;
+      }
+    }
+
+    // Max Starting Price
+    if (maxStartingPrice !== null && maxStartingPrice !== undefined && Number(maxStartingPrice) > 0) {
+      if (provider.startingPrice > Number(maxStartingPrice)) {
+        return false;
+      }
+    }
+
+    // Minimum Rating (3+, 4+, 4.5+)
+    if (minRating && Number(minRating) > 0) {
+      if ((provider.averageRating || 0) < Number(minRating)) {
+        return false;
+      }
+    }
+
+    // Years of Experience Tier ('1-2', '3-5', '5+')
+    if (experienceTiers && experienceTiers.length > 0) {
+      const exp = provider.yearsExperience || 0;
+      const matchesExp = experienceTiers.some(tier => {
+        if (tier === '1-2') return exp >= 1 && exp <= 2;
+        if (tier === '3-5') return exp >= 3 && exp <= 5;
+        if (tier === '5+') return exp >= 5;
+        return false;
+      });
+      if (!matchesExp) {
+        return false;
+      }
+    }
+
+    // Student Discount Toggle
+    if (studentDiscountOnly) {
+      if (!provider.studentDiscount) {
+        return false;
+      }
+    }
+
+    // Service Delivery ('mobile', 'studio', 'all')
+    if (serviceDelivery && serviceDelivery !== 'all') {
+      if (serviceDelivery === 'mobile') {
+        // Mobile / Travels to Campus
+        if (provider.serviceDelivery !== 'mobile' && provider.serviceDelivery !== 'both') {
+          return false;
+        }
+      } else if (serviceDelivery === 'studio') {
+        // Studio / Home Setup
+        if (provider.serviceDelivery !== 'studio' && provider.serviceDelivery !== 'both') {
+          return false;
+        }
+      }
+    }
+
+    // Availability ('open-this-week', 'same-day', 'bookings-open')
+    if (availabilities && availabilities.length > 0) {
+      if (!availabilities.includes(provider.availability)) {
+        return false;
+      }
+    }
+
+    // --- CATEGORY-SPECIFIC FILTERS ---
+
+    // Hair: Hair Type & Texture
+    if (hairTypes && hairTypes.length > 0) {
+      if (!provider.hairTypes || !provider.hairTypes.some(t => hairTypes.includes(t))) {
+        return false;
+      }
+    }
+
+    // Hair: Specialties
+    if (hairSpecialties && hairSpecialties.length > 0) {
+      if (!provider.specialties || !provider.specialties.some(s => hairSpecialties.includes(s))) {
+        return false;
+      }
+    }
+
+    // Hair: Chair Vibe
+    if (chairVibes && chairVibes.length > 0) {
+      if (!provider.chairVibe || !chairVibes.includes(provider.chairVibe)) {
+        return false;
+      }
+    }
+
+    // Nails: Nail Style
+    if (nailStyles && nailStyles.length > 0) {
+      if (!provider.nailStyles || !provider.nailStyles.some(s => nailStyles.includes(s))) {
+        return false;
+      }
+    }
+
+    // Lashes: Lash Type
+    if (lashTypes && lashTypes.length > 0) {
+      if (!provider.lashTypes || !provider.lashTypes.some(t => lashTypes.includes(t))) {
+        return false;
+      }
+    }
+
+    // Lashes: Offers Fills
+    if (offersFillsOnly) {
+      if (!provider.offersFills) {
+        return false;
+      }
+    }
+
+    // Food & Beverages: Food Type
+    if (foodTypes && foodTypes.length > 0) {
+      if (!provider.foodTypes || !provider.foodTypes.some(t => foodTypes.includes(t))) {
+        return false;
+      }
+    }
+
+    // Food & Beverages: Campus Drop-off
+    if (campusDropOffOnly) {
+      if (!provider.campusDropOff) {
+        return false;
+      }
+    }
+
+    // Food & Beverages: Pre-order Required
+    if (preOrderRequiredOnly) {
+      if (!provider.preOrderRequired) {
+        return false;
+      }
+    }
+
+    // Fashion: Outfit Type
+    if (outfitTypes && outfitTypes.length > 0) {
+      if (!provider.outfitTypes || !provider.outfitTypes.some(o => outfitTypes.includes(o))) {
+        return false;
+      }
+    }
+
+    // Fashion: Turnaround
+    if (turnarounds && turnarounds.length > 0) {
+      if (!provider.turnaround || !turnarounds.includes(provider.turnaround)) {
+        return false;
+      }
+    }
+
+    // Photography: Shoot Type
+    if (shootTypes && shootTypes.length > 0) {
+      if (!provider.shootTypes || !provider.shootTypes.some(s => shootTypes.includes(s))) {
+        return false;
+      }
+    }
+
+    // Photography: Turnaround
+    if (photoTurnarounds && photoTurnarounds.length > 0) {
+      if (!provider.turnaround || !photoTurnarounds.includes(provider.turnaround)) {
+        return false;
+      }
+    }
+
+    // Photography: Travels to Campus
+    if (travelsToCampusOnly) {
+      if (!provider.travelsToCampus) {
+        return false;
+      }
+    }
+
     return true;
+  });
+
+  // 2. Sort results
+  return filtered.sort((a, b) => {
+    switch (sortBy) {
+      case 'distance': {
+        const distA = calculateDistance(a.latitude, a.longitude);
+        const distB = calculateDistance(b.latitude, b.longitude);
+        return distA - distB;
+      }
+      case 'price':
+        return (a.startingPrice || 0) - (b.startingPrice || 0);
+
+      case 'experience':
+        return (b.yearsExperience || 0) - (a.yearsExperience || 0);
+
+      case 'rating':
+      default: {
+        const ratingDiff = (b.averageRating || 0) - (a.averageRating || 0);
+        if (ratingDiff !== 0) return ratingDiff;
+        return (b.reviewCount || 0) - (a.reviewCount || 0);
+      }
+    }
   });
 }
 

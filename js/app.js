@@ -6,9 +6,12 @@
  * - Dynamic rendering of providers via ProviderCard component
  * - Category page detection (supports dedicated category pages with unique URLs)
  * - Slide-out navigation side menu (opens via top-corner hamburger, closes on link click or outside tap)
- * - Real-time keyword search
- * - Location filtering (Haversine distance from LSU 30.4133, -91.1800, quick zone buttons, 1-25 mi radius slider)
- * - Strict 25-mile max distance enforcement
+ * - Category filter panel with mobile drawer & desktop collapsible dashboard
+ * - Real-time keyword search with cross-page routing from Home
+ * - Shared filters: Location radius (1-25 mi), LSU zones, price tiers, max starting price,
+ *   minimum rating, years of experience, student discount toggle, service delivery, availability, and sorting
+ * - Category-specific filters for Hair, Nails, Lashes, Food & Beverages, Fashion, Photography
+ * - Clear filters button and dynamic result count
  */
 
 import { SAMPLE_PROVIDERS } from './data/providers.js';
@@ -16,8 +19,9 @@ import { createProviderCard } from './components/ProviderCard.js';
 import { filterProviders, MAX_ALLOWED_RADIUS_MILES } from './utils/filters.js';
 import { calculateDistance, LSU_COORDINATES } from './utils/distance.js';
 import { injectNavigationDrawer } from './components/NavigationDrawer.js';
+import { injectFilterPanel } from './components/FilterPanel.js';
 
-console.log('%c🐯 Black-Owned BR: Multi-page & Drawer Navigation Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
+console.log('%c🐯 Black-Owned BR: Multi-page & Filter Panel Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
 
 // Detect if current page is dedicated to a specific category
 const pageCategory = document.body.dataset.category || 'All';
@@ -26,12 +30,130 @@ const isDedicatedCategoryPage = pageCategory !== 'All';
 // ---------------------------------------------------------------------------
 // 1. Application Filter State
 // ---------------------------------------------------------------------------
-const appState = {
+export const appState = {
   selectedCategory: pageCategory,
   searchQuery: '',
   maxRadius: 25,
-  selectedZone: 'all'
+  selectedZone: 'all',
+
+  // Shared Filters
+  priceTiers: [],              // ['$', '$$', '$$$']
+  maxStartingPrice: null,      // Number or null
+  minRating: 0,                // 0, 3, 4, 4.5
+  experienceTiers: [],         // ['1-2', '3-5', '5+']
+  studentDiscountOnly: false,  // Boolean
+  serviceDelivery: 'all',      // 'all', 'mobile', 'studio'
+  availabilities: [],          // ['open-this-week', 'same-day', 'bookings-open']
+  sortBy: 'rating',            // 'rating', 'distance', 'price', 'experience'
+
+  // Hair Specific
+  hairTypes: [],
+  hairSpecialties: [],
+  chairVibes: [],
+
+  // Nails Specific
+  nailStyles: [],
+
+  // Lashes Specific
+  lashTypes: [],
+  offersFillsOnly: false,
+
+  // Food & Beverages Specific
+  foodTypes: [],
+  campusDropOffOnly: false,
+  preOrderRequiredOnly: false,
+
+  // Fashion Specific
+  outfitTypes: [],
+  turnarounds: [],
+
+  // Photography Specific
+  shootTypes: [],
+  photoTurnarounds: [],
+  travelsToCampusOnly: false
 };
+
+/**
+ * Calculates the number of non-default active filters.
+ * 
+ * @returns {number}
+ */
+export function getActiveFilterCount() {
+  let count = 0;
+  if (appState.maxRadius < 25) count++;
+  if (appState.selectedZone !== 'all') count++;
+  if (appState.priceTiers.length > 0) count += appState.priceTiers.length;
+  if (appState.maxStartingPrice !== null && appState.maxStartingPrice < 250) count++;
+  if (appState.minRating > 0) count++;
+  if (appState.experienceTiers.length > 0) count += appState.experienceTiers.length;
+  if (appState.studentDiscountOnly) count++;
+  if (appState.serviceDelivery !== 'all') count++;
+  if (appState.availabilities.length > 0) count += appState.availabilities.length;
+
+  // Hair
+  if (appState.hairTypes.length > 0) count += appState.hairTypes.length;
+  if (appState.hairSpecialties.length > 0) count += appState.hairSpecialties.length;
+  if (appState.chairVibes.length > 0) count += appState.chairVibes.length;
+
+  // Nails
+  if (appState.nailStyles.length > 0) count += appState.nailStyles.length;
+
+  // Lashes
+  if (appState.lashTypes.length > 0) count += appState.lashTypes.length;
+  if (appState.offersFillsOnly) count++;
+
+  // Food
+  if (appState.foodTypes.length > 0) count += appState.foodTypes.length;
+  if (appState.campusDropOffOnly) count++;
+  if (appState.preOrderRequiredOnly) count++;
+
+  // Fashion
+  if (appState.outfitTypes.length > 0) count += appState.outfitTypes.length;
+  if (appState.turnarounds.length > 0) count += appState.turnarounds.length;
+
+  // Photography
+  if (appState.shootTypes.length > 0) count += appState.shootTypes.length;
+  if (appState.photoTurnarounds.length > 0) count += appState.photoTurnarounds.length;
+  if (appState.travelsToCampusOnly) count++;
+
+  return count;
+}
+
+/**
+ * Updates filter badge counts and toggles "Clear Filters" visibility.
+ */
+function updateActiveFilterBadges() {
+  const count = getActiveFilterCount();
+  const badge = document.getElementById('active-filter-badge');
+  const mobileBadge = document.getElementById('mobile-filter-badge');
+  const clearBtn = document.getElementById('clear-filters-btn-bar');
+
+  if (badge) {
+    badge.textContent = count;
+    if (count > 0) {
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  if (mobileBadge) {
+    mobileBadge.textContent = count;
+    if (count > 0) {
+      mobileBadge.classList.remove('hidden');
+    } else {
+      mobileBadge.classList.add('hidden');
+    }
+  }
+
+  if (clearBtn) {
+    if (count > 0 || appState.searchQuery) {
+      clearBtn.classList.remove('hidden');
+    } else {
+      clearBtn.classList.add('hidden');
+    }
+  }
+}
 
 /**
  * Updates the directory grid and status indicators according to current filter state.
@@ -39,34 +161,31 @@ const appState = {
 export function updateDirectory() {
   const gridElement = document.getElementById('providers-grid');
   const countElement = document.getElementById('results-count');
-  const statusElement = document.getElementById('directory-status-text');
-  const radiusDisplay = document.getElementById('radius-value-display');
+  const radiusDisplay = document.getElementById('filter-radius-display') || document.getElementById('radius-value-display');
+  const priceDisplay = document.getElementById('filter-price-display');
 
   if (!gridElement) return;
 
-  // Update radius slider value display text
+  // Update slider displays
   if (radiusDisplay) {
     radiusDisplay.textContent = `${appState.maxRadius} mi`;
   }
+  if (priceDisplay) {
+    priceDisplay.textContent = appState.maxStartingPrice && appState.maxStartingPrice < 250 
+      ? `$${appState.maxStartingPrice} max` 
+      : 'Any ($250+)';
+  }
 
   // Filter providers through central filtering logic (src/utils/filters.js)
-  const filtered = filterProviders(SAMPLE_PROVIDERS, {
-    searchQuery: appState.searchQuery,
-    selectedCategory: appState.selectedCategory,
-    maxRadius: appState.maxRadius,
-    selectedZone: appState.selectedZone
-  });
+  const filtered = filterProviders(SAMPLE_PROVIDERS, appState);
 
-  // Update status pill in section header
-  if (statusElement) {
-    statusElement.textContent = `${filtered.length} Listing${filtered.length === 1 ? '' : 's'} Active`;
-  }
+  // Update active filter badge & clear button
+  updateActiveFilterBadges();
 
   // Update results counter text
   if (countElement) {
     const categoryLabel = appState.selectedCategory === 'All' ? '' : ` in ${appState.selectedCategory}`;
-    const radiusLabel = appState.maxRadius < MAX_ALLOWED_RADIUS_MILES ? ` (within ${appState.maxRadius} mi of LSU)` : '';
-    countElement.innerHTML = `Showing <span class="text-lsu-gold font-bold font-mono">${filtered.length}</span> provider${filtered.length === 1 ? '' : 's'}${categoryLabel}${radiusLabel}`;
+    countElement.innerHTML = `Showing <span class="text-lsu-gold font-bold font-mono">${filtered.length}</span> provider${filtered.length === 1 ? '' : 's'}${categoryLabel}`;
   }
 
   // Handle empty state: "No providers found"
@@ -80,14 +199,13 @@ export function updateDirectory() {
           No providers found
         </h4>
         <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
-          No businesses found matching your criteria
+          No businesses found matching your active filter criteria
           ${appState.searchQuery ? ` for "<strong class="text-white">${appState.searchQuery}</strong>"` : ''}
           ${appState.selectedCategory !== 'All' ? ` under <strong class="text-lsu-gold">${appState.selectedCategory}</strong>` : ''}
-          ${appState.selectedZone !== 'all' ? ` in zone <strong class="text-white">${appState.selectedZone}</strong>` : ''}
           within <strong class="text-lsu-gold">${appState.maxRadius} miles</strong> of LSU.
         </p>
         <button 
-          id="reset-filters-btn"
+          id="empty-reset-filters-btn"
           type="button" 
           class="mt-6 px-5 py-2.5 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-colors shadow-md inline-flex items-center gap-2 cursor-pointer"
         >
@@ -97,7 +215,7 @@ export function updateDirectory() {
       </div>
     `;
 
-    const resetBtn = document.getElementById('reset-filters-btn');
+    const resetBtn = document.getElementById('empty-reset-filters-btn');
     if (resetBtn) {
       resetBtn.addEventListener('click', () => {
         resetAllFilters();
@@ -107,70 +225,136 @@ export function updateDirectory() {
   }
 
   // Render provider cards
-  const cardsHtml = filtered.map(provider => createProviderCard(provider)).join('');
-  gridElement.innerHTML = cardsHtml;
+  gridElement.innerHTML = filtered.map(provider => createProviderCard(provider)).join('');
 }
 
 /**
- * Resets all search, radius, and zone filters to default.
+ * Resets all filters back to default.
  */
-function resetAllFilters() {
+export function resetAllFilters() {
   appState.selectedCategory = pageCategory;
   appState.searchQuery = '';
   appState.maxRadius = 25;
   appState.selectedZone = 'all';
 
+  appState.priceTiers = [];
+  appState.maxStartingPrice = null;
+  appState.minRating = 0;
+  appState.experienceTiers = [];
+  appState.studentDiscountOnly = false;
+  appState.serviceDelivery = 'all';
+  appState.availabilities = [];
+  appState.sortBy = 'rating';
+
+  appState.hairTypes = [];
+  appState.hairSpecialties = [];
+  appState.chairVibes = [];
+  appState.nailStyles = [];
+  appState.lashTypes = [];
+  appState.offersFillsOnly = false;
+  appState.foodTypes = [];
+  appState.campusDropOffOnly = false;
+  appState.preOrderRequiredOnly = false;
+  appState.outfitTypes = [];
+  appState.turnarounds = [];
+  appState.shootTypes = [];
+  appState.photoTurnarounds = [];
+  appState.travelsToCampusOnly = false;
+
+  // Reset Input Elements
   const searchInput = document.getElementById('hero-search-input');
   if (searchInput) searchInput.value = '';
 
-  const radiusSlider = document.getElementById('radius-slider');
+  const radiusSlider = document.getElementById('filter-radius-slider') || document.getElementById('radius-slider');
   if (radiusSlider) radiusSlider.value = '25';
 
-  updateCategoryButtonStyles();
-  updateZoneButtonStyles();
+  const priceSlider = document.getElementById('filter-max-price');
+  if (priceSlider) priceSlider.value = '250';
+
+  const sortSelect = document.getElementById('sort-by-select');
+  if (sortSelect) sortSelect.value = 'rating';
+
+  // Reset checkboxes
+  const studentDiscountCb = document.getElementById('filter-student-discount');
+  if (studentDiscountCb) studentDiscountCb.checked = false;
+
+  const offersFillsCb = document.getElementById('filter-offers-fills');
+  if (offersFillsCb) offersFillsCb.checked = false;
+
+  const campusDropoffCb = document.getElementById('filter-campus-dropoff');
+  if (campusDropoffCb) campusDropoffCb.checked = false;
+
+  const preorderCb = document.getElementById('filter-preorder-required');
+  if (preorderCb) preorderCb.checked = false;
+
+  const travelsCampusCb = document.getElementById('filter-travels-campus');
+  if (travelsCampusCb) travelsCampusCb.checked = false;
+
+  // Reset radios
+  const allDeliveryRadio = document.querySelector('input[name="service-delivery-radio"][value="all"]');
+  if (allDeliveryRadio) allDeliveryRadio.checked = true;
+
+  // Reset pills
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.classList.remove('bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
+    pill.classList.add('bg-slate-950/80', 'border-slate-800', 'text-slate-300');
+  });
+
+  document.querySelectorAll('.zone-pill').forEach(pill => {
+    const isAll = pill.dataset.zone === 'all';
+    pill.classList.toggle('bg-lsu-gold', isAll);
+    pill.classList.toggle('text-lsu-purple-dark', isAll);
+    pill.classList.toggle('font-bold', isAll);
+    pill.classList.toggle('bg-slate-950/80', !isAll);
+    pill.classList.toggle('text-slate-300', !isAll);
+  });
+
+  document.querySelectorAll('.rating-pill').forEach(pill => {
+    const isZero = pill.dataset.rating === '0';
+    pill.classList.toggle('bg-lsu-gold', isZero);
+    pill.classList.toggle('text-lsu-purple-dark', isZero);
+    pill.classList.toggle('font-bold', isZero);
+    pill.classList.toggle('bg-slate-950/80', !isZero);
+    pill.classList.toggle('text-slate-300', !isZero);
+  });
+
   updateDirectory();
 }
 
-/**
- * Updates Category filter button active/inactive styling (if present on the page).
- */
-function updateCategoryButtonStyles() {
-  const categoryButtons = document.querySelectorAll('.category-filter-btn');
-  categoryButtons.forEach(btn => {
-    const btnCategory = btn.dataset.category;
-    const isActive = btnCategory === appState.selectedCategory;
+// ---------------------------------------------------------------------------
+// 2. Filter Panel Toggle & Drawer Controls
+// ---------------------------------------------------------------------------
+export function openFilterPanel() {
+  const isMobile = window.innerWidth < 768;
+  const panel = document.getElementById('filter-panel');
+  const backdrop = document.getElementById('filter-backdrop');
+  const toggleBtn = document.getElementById('toggle-filters-btn');
 
-    btn.setAttribute('aria-pressed', String(isActive));
-
-    if (isActive) {
-      btn.className = 'category-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-lsu-gold text-lsu-purple-dark shadow-md shadow-lsu-gold/20 active-category';
-    } else {
-      btn.className = 'category-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700';
+  if (isMobile) {
+    document.body.classList.add('filter-drawer-open');
+    if (backdrop) backdrop.classList.remove('hidden');
+  } else {
+    if (panel) {
+      panel.classList.toggle('md:hidden');
+      const isOpen = !panel.classList.contains('md:hidden');
+      if (toggleBtn) {
+        toggleBtn.setAttribute('aria-expanded', String(isOpen));
+        toggleBtn.classList.toggle('bg-lsu-purple/40', isOpen);
+        toggleBtn.classList.toggle('border-lsu-gold/60', isOpen);
+        toggleBtn.classList.toggle('text-lsu-gold', isOpen);
+      }
     }
-  });
+  }
 }
 
-/**
- * Updates Zone quick-select button active/inactive styling.
- */
-function updateZoneButtonStyles() {
-  const zoneButtons = document.querySelectorAll('.zone-filter-btn');
-  zoneButtons.forEach(btn => {
-    const btnZone = btn.dataset.zone;
-    const isActive = btnZone === appState.selectedZone;
-
-    btn.setAttribute('aria-pressed', String(isActive));
-
-    if (isActive) {
-      btn.className = 'zone-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-lsu-gold text-lsu-purple-dark font-bold active-zone';
-    } else {
-      btn.className = 'zone-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-colors bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60';
-    }
-  });
+export function closeFilterPanel() {
+  document.body.classList.remove('filter-drawer-open');
+  const backdrop = document.getElementById('filter-backdrop');
+  if (backdrop) backdrop.classList.add('hidden');
 }
 
 // ---------------------------------------------------------------------------
-// 2. Slide-out Navigation Side Menu Controls
+// 3. Navigation Drawer Controls
 // ---------------------------------------------------------------------------
 export function openMenu() {
   document.body.classList.add('menu-open');
@@ -189,10 +373,198 @@ export function closeMenu() {
 }
 
 // ---------------------------------------------------------------------------
-// Document Ready: Attach All Event Handlers
+// 4. Attach Filter Panel Listeners
+// ---------------------------------------------------------------------------
+function attachFilterListeners() {
+  // Toggle Filters Button
+  const toggleBtn = document.getElementById('toggle-filters-btn');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openFilterPanel();
+    });
+  }
+
+  // Mobile Close Drawer Button
+  const closeDrawerBtn = document.getElementById('close-filter-drawer-btn');
+  if (closeDrawerBtn) {
+    closeDrawerBtn.addEventListener('click', () => {
+      closeFilterPanel();
+    });
+  }
+
+  // Mobile Backdrop Tap
+  const filterBackdrop = document.getElementById('filter-backdrop');
+  if (filterBackdrop) {
+    filterBackdrop.addEventListener('click', () => {
+      closeFilterPanel();
+    });
+  }
+
+  // Mobile Apply Filters Button
+  const applyBtn = document.getElementById('apply-filters-btn');
+  if (applyBtn) {
+    applyBtn.addEventListener('click', () => {
+      closeFilterPanel();
+      const grid = document.getElementById('providers-grid');
+      if (grid) grid.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+  // Desktop Collapse Button
+  const collapseBtn = document.getElementById('collapse-panel-btn');
+  if (collapseBtn) {
+    collapseBtn.addEventListener('click', () => {
+      const panel = document.getElementById('filter-panel');
+      const btn = document.getElementById('toggle-filters-btn');
+      if (panel) panel.classList.add('md:hidden');
+      if (btn) {
+        btn.setAttribute('aria-expanded', 'false');
+        btn.classList.remove('bg-lsu-purple/40', 'border-lsu-gold/60', 'text-lsu-gold');
+      }
+    });
+  }
+
+  // Clear Filters Buttons
+  const clearBtnBar = document.getElementById('clear-filters-btn-bar');
+  if (clearBtnBar) {
+    clearBtnBar.addEventListener('click', () => resetAllFilters());
+  }
+
+  const clearBtnPanel = document.getElementById('clear-filters-btn-panel');
+  if (clearBtnPanel) {
+    clearBtnPanel.addEventListener('click', () => resetAllFilters());
+  }
+
+  // Radius Slider (1 to 25 mi)
+  const radiusSlider = document.getElementById('filter-radius-slider') || document.getElementById('radius-slider');
+  if (radiusSlider) {
+    radiusSlider.addEventListener('input', (e) => {
+      appState.maxRadius = Math.min(Math.max(Number(e.target.value) || 25, 1), 25);
+      updateDirectory();
+    });
+  }
+
+  // Quick Zone Pills
+  const zonePills = document.querySelectorAll('.zone-pill');
+  zonePills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const zone = pill.dataset.zone;
+      if (zone) {
+        appState.selectedZone = zone;
+        if (zone === 'all') {
+          appState.maxRadius = 25;
+          if (radiusSlider) radiusSlider.value = '25';
+        }
+        zonePills.forEach(p => {
+          const isSelected = p.dataset.zone === zone;
+          p.classList.toggle('bg-lsu-gold', isSelected);
+          p.classList.toggle('text-lsu-purple-dark', isSelected);
+          p.classList.toggle('font-bold', isSelected);
+          p.classList.toggle('bg-slate-950/80', !isSelected);
+          p.classList.toggle('text-slate-300', !isSelected);
+        });
+        updateDirectory();
+      }
+    });
+  });
+
+  // Price Slider
+  const priceSlider = document.getElementById('filter-max-price');
+  if (priceSlider) {
+    priceSlider.addEventListener('input', (e) => {
+      const val = Number(e.target.value);
+      appState.maxStartingPrice = val >= 250 ? null : val;
+      updateDirectory();
+    });
+  }
+
+  // Rating Pills
+  const ratingPills = document.querySelectorAll('.rating-pill');
+  ratingPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const rating = Number(pill.dataset.rating) || 0;
+      appState.minRating = rating;
+      ratingPills.forEach(p => {
+        const isSelected = Number(p.dataset.rating) === rating;
+        p.classList.toggle('bg-lsu-gold', isSelected);
+        p.classList.toggle('text-lsu-purple-dark', isSelected);
+        p.classList.toggle('font-bold', isSelected);
+        p.classList.toggle('bg-slate-950/80', !isSelected);
+        p.classList.toggle('text-slate-300', !isSelected);
+      });
+      updateDirectory();
+    });
+  });
+
+  // Service Delivery Radio
+  const deliveryRadios = document.querySelectorAll('input[name="service-delivery-radio"]');
+  deliveryRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      appState.serviceDelivery = e.target.value;
+      updateDirectory();
+    });
+  });
+
+  // Sort Dropdown
+  const sortSelect = document.getElementById('sort-by-select');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', (e) => {
+      appState.sortBy = e.target.value;
+      updateDirectory();
+    });
+  }
+
+  // Generic Multi-Select Filter Pills (priceTiers, experienceTiers, availabilities, hairTypes, etc.)
+  const filterPills = document.querySelectorAll('.filter-pill');
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const filterKey = pill.dataset.filter;
+      const filterVal = pill.dataset.value;
+
+      if (filterKey && filterVal && Array.isArray(appState[filterKey])) {
+        const arr = appState[filterKey];
+        const idx = arr.indexOf(filterVal);
+        const isSelected = idx > -1;
+
+        if (isSelected) {
+          arr.splice(idx, 1);
+          pill.classList.remove('bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
+          pill.classList.add('bg-slate-950/80', 'border-slate-800', 'text-slate-300');
+        } else {
+          arr.push(filterVal);
+          pill.classList.add('bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
+          pill.classList.remove('bg-slate-950/80', 'border-slate-800', 'text-slate-300');
+        }
+
+        updateDirectory();
+      }
+    });
+  });
+
+  // Checkbox Filters
+  const bindCheckbox = (id, stateKey) => {
+    const cb = document.getElementById(id);
+    if (cb) {
+      cb.addEventListener('change', (e) => {
+        appState[stateKey] = e.target.checked;
+        updateDirectory();
+      });
+    }
+  };
+
+  bindCheckbox('filter-student-discount', 'studentDiscountOnly');
+  bindCheckbox('filter-offers-fills', 'offersFillsOnly');
+  bindCheckbox('filter-campus-dropoff', 'campusDropOffOnly');
+  bindCheckbox('filter-preorder-required', 'preOrderRequiredOnly');
+  bindCheckbox('filter-travels-campus', 'travelsToCampusOnly');
+}
+
+// ---------------------------------------------------------------------------
+// 5. Document Ready Initialization
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Inject slide-out side menu drawer and backdrop into DOM
+  // 1. Inject slide-out side navigation drawer and backdrop
   injectNavigationDrawer();
 
   // 2. Read URL search parameters (for cross-page search navigation)
@@ -204,15 +576,19 @@ document.addEventListener('DOMContentLoaded', () => {
     appState.searchQuery = searchParam;
   }
 
-  // 3. Initial Render
-  updateCategoryButtonStyles();
-  updateZoneButtonStyles();
+  // 3. Inject Filter Panel on dedicated category pages
+  if (isDedicatedCategoryPage && document.getElementById('filter-panel-mount')) {
+    injectFilterPanel(pageCategory, updateDirectory);
+    attachFilterListeners();
+  }
+
+  // 4. Initial Directory Render
   updateDirectory();
 
-  // 3. Slide-out Menu Event Listeners
+  // 5. Slide-out Menu Event Listeners
   const hamburgerBtn = document.getElementById('hamburger-btn');
   const closeMenuBtn = document.getElementById('close-menu-btn');
-  const backdrop = document.getElementById('menu-backdrop');
+  const navBackdrop = document.getElementById('menu-backdrop');
 
   if (hamburgerBtn) {
     hamburgerBtn.addEventListener('click', (e) => {
@@ -228,72 +604,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (backdrop) {
-    // Closes when tapping outside the menu
-    backdrop.addEventListener('click', () => {
-      closeMenu();
-    });
+  if (navBackdrop) {
+    navBackdrop.addEventListener('click', () => closeMenu());
   }
 
-  // Close when tapping any link inside the menu
-  const menuLinks = document.querySelectorAll('.menu-link');
-  menuLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      closeMenu();
-    });
+  document.querySelectorAll('.menu-link').forEach(link => {
+    link.addEventListener('click', () => closeMenu());
   });
 
-  // Close on Escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && document.body.classList.contains('menu-open')) {
-      closeMenu();
+    if (e.key === 'Escape') {
+      if (document.body.classList.contains('menu-open')) closeMenu();
+      if (document.body.classList.contains('filter-drawer-open')) closeFilterPanel();
     }
   });
 
-  // 4. Category Filter Buttons (if present on the page)
-  const categoryButtons = document.querySelectorAll('.category-filter-btn');
-  categoryButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const category = btn.dataset.category;
-      if (category) {
-        appState.selectedCategory = category;
-        updateCategoryButtonStyles();
-        updateDirectory();
-      }
-    });
-  });
-
-  // 5. Quick-Select Zone Buttons
-  const zoneButtons = document.querySelectorAll('.zone-filter-btn');
-  zoneButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const zone = btn.dataset.zone;
-      if (zone) {
-        appState.selectedZone = zone;
-        
-        if (zone === 'all') {
-          appState.maxRadius = 25;
-          const slider = document.getElementById('radius-slider');
-          if (slider) slider.value = '25';
-        }
-
-        updateZoneButtonStyles();
-        updateDirectory();
-      }
-    });
-  });
-
-  // 6. Radius Slider Control (1 to 25 Miles)
-  const radiusSlider = document.getElementById('radius-slider');
-  if (radiusSlider) {
-    radiusSlider.addEventListener('input', (e) => {
-      const val = Math.min(Math.max(Number(e.target.value) || 25, 1), 25);
-      appState.maxRadius = val;
-      updateDirectory();
-    });
-  }
-
-  // Helper function to resolve category destination from search query
+  // 6. Hero Search Bar Live Filtering & Home Page Cross-Routing
   function getCategoryUrlForQuery(query) {
     const q = query.toLowerCase();
     if (q.includes('nail')) return 'nails.html';
@@ -304,10 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return 'hair.html';
   }
 
-  // 7. Hero Search Bar Live Filtering & Home Page Routing
-  const searchInput = document.getElementById('hero-search-input');
   const searchForm = document.getElementById('hero-search-form');
-
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       appState.searchQuery = e.target.value;
@@ -320,7 +643,6 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       if (searchInput) {
         const query = searchInput.value.trim();
-        // If on Home page without provider grid, route to the matched category page
         if (!document.getElementById('providers-grid') && query) {
           const targetUrl = getCategoryUrlForQuery(query);
           window.location.href = `${targetUrl}?search=${encodeURIComponent(query)}`;
@@ -329,21 +651,18 @@ document.addEventListener('DOMContentLoaded', () => {
         appState.searchQuery = query;
         updateDirectory();
       }
-      const mainContent = document.getElementById('main-directory-content');
-      if (mainContent) {
-        mainContent.scrollIntoView({ behavior: 'smooth' });
-      }
+      const grid = document.getElementById('providers-grid');
+      if (grid) grid.scrollIntoView({ behavior: 'smooth' });
     });
   }
 
-  // 8. Popular Search Tag Chips
+  // 7. Popular Search Tag Chips
   const tagChips = document.querySelectorAll('.search-tag-chip');
   tagChips.forEach(chip => {
     chip.addEventListener('click', () => {
       const rawText = chip.textContent.trim();
       const cleanQuery = rawText.replace(/^[^\w\s]+/, '').trim();
 
-      // If on Home page without provider grid, route directly to the matched category page
       if (!document.getElementById('providers-grid')) {
         const targetUrl = getCategoryUrlForQuery(cleanQuery);
         window.location.href = `${targetUrl}?search=${encodeURIComponent(cleanQuery)}`;
@@ -355,10 +674,8 @@ document.addEventListener('DOMContentLoaded', () => {
         appState.searchQuery = cleanQuery;
         updateDirectory();
 
-        const mainContent = document.getElementById('main-directory-content');
-        if (mainContent) {
-          mainContent.scrollIntoView({ behavior: 'smooth' });
-        }
+        const grid = document.getElementById('providers-grid');
+        if (grid) grid.scrollIntoView({ behavior: 'smooth' });
       }
     });
   });
