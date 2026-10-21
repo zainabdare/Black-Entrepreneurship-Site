@@ -2,11 +2,10 @@
  * js/components/ProviderCard.js
  * 
  * Reusable component for rendering individual service provider cards.
- * 
- * BEGINNER GUIDE:
- * This component takes a single provider object from providers.js and returns
- * an HTML string with modern Tailwind CSS styling.
+ * Displays calculated distance from LSU Memorial Tower using Haversine formula.
  */
+
+import { calculateDistance } from '../utils/distance.js';
 
 /**
  * Returns an experience badge HTML based on years of experience.
@@ -101,12 +100,16 @@ export function createProviderCard(provider) {
   const expBadge = getExperienceBadge(provider.yearsExperience);
   const availBadge = getAvailabilityBadge(provider.availability);
   const lsuBadge = getLsuVerifiedBadge(provider.lsuVerified);
+  
+  // Calculate distance from LSU Memorial Tower
+  const distance = calculateDistance(provider.latitude, provider.longitude);
 
   return `
     <article 
       class="group relative flex flex-col rounded-2xl bg-slate-900/80 border border-slate-800/80 hover:border-lsu-gold/50 shadow-lg hover:shadow-2xl hover:shadow-purple-950/40 transition-all duration-300 overflow-hidden"
       data-provider-id="${provider.id}"
       data-category="${provider.category}"
+      data-distance="${distance}"
     >
       <!-- 1. Portfolio Image Preview Container -->
       <div class="relative w-full aspect-[16/10] bg-slate-950 overflow-hidden">
@@ -128,13 +131,18 @@ export function createProviderCard(provider) {
           </div>
         </div>
 
-        <!-- Bottom Gradient Shade & Category Tag -->
-        <div class="absolute inset-x-0 bottom-0 pt-10 pb-2.5 px-3.5 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent flex items-center justify-between">
-          <span class="inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-900/90 text-lsu-gold border border-lsu-gold/30 backdrop-blur">
+        <!-- Bottom Gradient Shade & Category / Distance Tag -->
+        <div class="absolute inset-x-0 bottom-0 pt-10 pb-2.5 px-3.5 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent flex items-center justify-between gap-2">
+          <span class="inline-flex items-center text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-900/90 text-lsu-gold border border-lsu-gold/30 backdrop-blur shrink-0">
             ${provider.category}
           </span>
-          <span class="text-[11px] font-medium text-slate-300 flex items-center gap-1 backdrop-blur px-2 py-0.5 rounded-md bg-slate-900/70">
-            📍 ${provider.neighborhood}
+          
+          <!-- Distance from LSU Pill -->
+          <span class="text-[11px] font-semibold text-slate-200 flex items-center gap-1 backdrop-blur px-2.5 py-0.5 rounded-md bg-slate-950/85 border border-slate-700/60 shadow-sm truncate" title="${provider.neighborhood} (${distance} miles from LSU)">
+            <span class="text-lsu-gold">📍</span>
+            <span class="truncate">${provider.neighborhood}</span>
+            <span class="text-slate-500">&bull;</span>
+            <span class="text-lsu-gold font-mono font-bold shrink-0">${distance} mi</span>
           </span>
         </div>
       </div>
@@ -152,11 +160,19 @@ export function createProviderCard(provider) {
           </p>
         </div>
 
-        <!-- Rating & Reviews -->
-        <div class="flex items-center gap-1.5 mb-3 text-xs">
-          <span class="text-amber-400 text-sm leading-none">★</span>
-          <span class="font-bold text-white">${provider.averageRating.toFixed(1)}</span>
-          <span class="text-slate-400 font-normal">(${provider.reviewCount} reviews)</span>
+        <!-- Rating, Reviews & Distance Indicator -->
+        <div class="flex items-center justify-between mb-3 text-xs">
+          <div class="flex items-center gap-1.5">
+            <span class="text-amber-400 text-sm leading-none">★</span>
+            <span class="font-bold text-white">${provider.averageRating.toFixed(1)}</span>
+            <span class="text-slate-400 font-normal">(${provider.reviewCount} reviews)</span>
+          </div>
+
+          <!-- Distance from LSU Campus Center -->
+          <div class="text-[11px] text-slate-400 font-mono flex items-center gap-1">
+            <span class="text-lsu-gold">🐯</span>
+            <span><strong class="text-slate-200">${distance} mi</strong> to LSU</span>
+          </div>
         </div>
 
         <!-- Description Snippet -->
@@ -245,3 +261,5 @@ export function createProviderCard(provider) {
     </article>
   `;
 }
+
+export default createProviderCard;
