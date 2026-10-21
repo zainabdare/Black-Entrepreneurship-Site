@@ -195,7 +195,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Inject slide-out side menu drawer and backdrop into DOM
   injectNavigationDrawer();
 
-  // 2. Initial Render
+  // 2. Read URL search parameters (for cross-page search navigation)
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchParam = urlParams.get('search');
+  const searchInput = document.getElementById('hero-search-input');
+  if (searchParam && searchInput) {
+    searchInput.value = searchParam;
+    appState.searchQuery = searchParam;
+  }
+
+  // 3. Initial Render
   updateCategoryButtonStyles();
   updateZoneButtonStyles();
   updateDirectory();
@@ -284,7 +293,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 7. Hero Search Bar Live Filtering
+  // Helper function to resolve category destination from search query
+  function getCategoryUrlForQuery(query) {
+    const q = query.toLowerCase();
+    if (q.includes('nail')) return 'nails.html';
+    if (q.includes('lash')) return 'lashes.html';
+    if (q.includes('food') || q.includes('cater') || q.includes('bake') || q.includes('cake') || q.includes('bbq') || q.includes('plate') || q.includes('drink')) return 'food-and-beverages.html';
+    if (q.includes('fashion') || q.includes('outfit') || q.includes('dress') || q.includes('suit') || q.includes('prom') || q.includes('stole') || q.includes('alteration') || q.includes('formal fit')) return 'fashion.html';
+    if (q.includes('photo') || q.includes('grad') || q.includes('shoot') || q.includes('portrait') || q.includes('headshot') || q.includes('shutter') || q.includes('camera')) return 'photography.html';
+    return 'hair.html';
+  }
+
+  // 7. Hero Search Bar Live Filtering & Home Page Routing
   const searchInput = document.getElementById('hero-search-input');
   const searchForm = document.getElementById('hero-search-form');
 
@@ -299,7 +319,14 @@ document.addEventListener('DOMContentLoaded', () => {
     searchForm.addEventListener('submit', (e) => {
       e.preventDefault();
       if (searchInput) {
-        appState.searchQuery = searchInput.value;
+        const query = searchInput.value.trim();
+        // If on Home page without provider grid, route to the matched category page
+        if (!document.getElementById('providers-grid') && query) {
+          const targetUrl = getCategoryUrlForQuery(query);
+          window.location.href = `${targetUrl}?search=${encodeURIComponent(query)}`;
+          return;
+        }
+        appState.searchQuery = query;
         updateDirectory();
       }
       const mainContent = document.getElementById('main-directory-content');
@@ -313,9 +340,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const tagChips = document.querySelectorAll('.search-tag-chip');
   tagChips.forEach(chip => {
     chip.addEventListener('click', () => {
+      const rawText = chip.textContent.trim();
+      const cleanQuery = rawText.replace(/^[^\w\s]+/, '').trim();
+
+      // If on Home page without provider grid, route directly to the matched category page
+      if (!document.getElementById('providers-grid')) {
+        const targetUrl = getCategoryUrlForQuery(cleanQuery);
+        window.location.href = `${targetUrl}?search=${encodeURIComponent(cleanQuery)}`;
+        return;
+      }
+
       if (searchInput) {
-        const rawText = chip.textContent.trim();
-        const cleanQuery = rawText.replace(/^[^\w\s]+/, '').trim();
         searchInput.value = cleanQuery;
         appState.searchQuery = cleanQuery;
         updateDirectory();
