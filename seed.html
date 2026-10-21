@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Firestore Database Seeder | Black-Owned BR</title>
+  <meta name="description" content="Manage and seed the Cloud Firestore providers collection for Black-Owned BR.">
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Configuration with LSU Brand Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            lsu: {
+              purple: '#461D7C',
+              'purple-dark': '#2E1053',
+              'purple-deep': '#1A0830',
+              'purple-light': '#6B2FA8',
+              gold: '#FDD023',
+              'gold-hover': '#ECC21C',
+              'gold-light': '#FEF08A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-lsu-gold selection:text-lsu-purple-dark antialiased">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-purple-900/30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-lsu-purple via-lsu-purple-dark to-purple-950 border border-lsu-gold/40 flex items-center justify-center shadow-lg group-hover:border-lsu-gold transition-colors">
+            <span class="text-lsu-gold font-heading font-black text-base">LSU</span>
+          </div>
+          <div>
+            <span class="font-heading font-bold text-lg sm:text-xl text-white tracking-tight block">Black-Owned <span class="text-lsu-gold">BR</span></span>
+            <span class="text-[10px] text-purple-300 tracking-wider font-semibold uppercase block">Firestore Database Manager</span>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <a href="index.html" class="text-xs sm:text-sm font-heading font-semibold text-slate-300 hover:text-lsu-gold transition-colors">
+            &larr; Back to Directory
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+    
+    <!-- Hero / Title -->
+    <div class="text-center max-w-2xl mx-auto space-y-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lsu-purple/40 border border-lsu-gold/40 text-lsu-gold text-xs font-semibold">
+        <span>🔥</span>
+        <span>Firebase Cloud Firestore SDK v13.1.0</span>
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-heading font-extrabold text-white tracking-tight">
+        Firestore Collection Manager
+      </h1>
+      <p class="text-sm sm:text-base text-slate-300">
+        Upload the 18 curated sample providers into the Firestore <code class="text-lsu-gold font-mono font-bold">"providers"</code> collection and review security rules.
+      </p>
+    </div>
+
+    <!-- Firebase Connection Card -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Project Config -->
+      <div class="rounded-2xl bg-slate-900/70 border border-slate-800 p-6 space-y-3 shadow-lg">
+        <div class="flex items-center justify-between">
+          <h2 class="font-heading font-bold text-sm text-slate-200 uppercase tracking-wider">Project ID</h2>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-950 text-purple-300 border border-purple-800">web</span>
+        </div>
+        <p class="text-xl font-heading font-bold text-lsu-gold font-mono">black-entre</p>
+        <p class="text-xs text-slate-400">Auth Domain: <span class="font-mono text-slate-300">black-entre.firebaseapp.com</span></p>
+        <p class="text-xs text-slate-400">Target Collection: <span class="font-mono text-lsu-gold font-bold">providers</span></p>
+      </div>
+
+      <!-- Live Firestore Status -->
+      <div class="rounded-2xl bg-slate-900/70 border border-slate-800 p-6 space-y-3 shadow-lg">
+        <div class="flex items-center justify-between">
+          <h2 class="font-heading font-bold text-sm text-slate-200 uppercase tracking-wider">Firestore Status</h2>
+          <span id="connection-pill" class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">Checking...</span>
+        </div>
+        <p id="docs-count-display" class="text-xl font-heading font-bold text-white font-mono">-- documents</p>
+        <p id="connection-details" class="text-xs text-slate-400 leading-relaxed">Connecting to Cloud Firestore...</p>
+      </div>
+
+      <!-- Quick Action -->
+      <div class="rounded-2xl bg-gradient-to-br from-lsu-purple-dark/80 via-slate-900 to-purple-950 border border-lsu-gold/30 p-6 flex flex-col justify-between shadow-lg">
+        <div>
+          <h2 class="font-heading font-bold text-sm text-lsu-gold uppercase tracking-wider">Seeder Action</h2>
+          <p class="text-xs text-slate-300 mt-2">
+            Uploads all 18 sample providers with full coordinates, categories, and tags to Firestore.
+          </p>
+        </div>
+        <button 
+          id="seed-btn" 
+          type="button" 
+          class="mt-4 w-full py-3 px-4 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span>🔥 Upload 18 Providers to Firestore</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Seeding Progress & Live Log -->
+    <div id="progress-card" class="hidden rounded-2xl bg-slate-900/80 border border-slate-800 p-6 space-y-4 shadow-xl">
+      <div class="flex items-center justify-between">
+        <h3 class="font-heading font-bold text-sm text-white">Upload Progress</h3>
+        <span id="progress-percent" class="text-xs font-mono font-bold text-lsu-gold">0%</span>
+      </div>
+      
+      <!-- Progress Bar Track -->
+      <div class="w-full h-3 rounded-full bg-slate-800 overflow-hidden border border-slate-700">
+        <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-lsu-purple via-lsu-purple-light to-lsu-gold transition-all duration-300" style="width: 0%"></div>
+      </div>
+
+      <!-- Live Terminal Log -->
+      <div id="seed-log" class="font-mono text-xs p-4 rounded-xl bg-slate-950 border border-slate-800/80 max-h-56 overflow-y-auto space-y-1.5 text-slate-300">
+        <!-- Log lines inserted dynamically -->
+      </div>
+    </div>
+
+    <!-- Firebase Console Step-by-Step Instructions -->
+    <div class="rounded-2xl bg-slate-900/70 border border-slate-800 p-6 sm:p-8 space-y-6 shadow-xl">
+      <div class="flex items-center gap-3 border-b border-slate-800 pb-4">
+        <span class="text-2xl">📋</span>
+        <div>
+          <h2 class="font-heading font-bold text-lg text-white">Firebase Console Setup &amp; Security Rules Guide</h2>
+          <p class="text-xs text-slate-400">Follow these 4 simple steps to initialize your Firestore database and set security rules.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Step 1 & 2 -->
+        <div class="space-y-4">
+          <div class="flex gap-3">
+            <span class="w-7 h-7 rounded-full bg-lsu-purple border border-lsu-gold text-lsu-gold font-bold text-xs flex items-center justify-center shrink-0">1</span>
+            <div class="space-y-1">
+              <h3 class="font-heading font-bold text-sm text-white">Create Cloud Firestore Database</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Go to the <a href="https://console.firebase.google.com/project/black-entre/firestore" target="_blank" rel="noopener noreferrer" class="text-lsu-gold underline font-semibold">Firebase Console for black-entre</a>. Click <strong>Firestore Database</strong> in the left sidebar, then click <strong>Create database</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <span class="w-7 h-7 rounded-full bg-lsu-purple border border-lsu-gold text-lsu-gold font-bold text-xs flex items-center justify-center shrink-0">2</span>
+            <div class="space-y-1">
+              <h3 class="font-heading font-bold text-sm text-white">Choose Location &amp; Initial Mode</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Select your database region (e.g. <code class="text-purple-300 font-mono">nam5 (us-central)</code>). When asked for rules, you can choose <strong>Start in test mode</strong> (or allow writes) so you can run the seeder in step 3.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <span class="w-7 h-7 rounded-full bg-lsu-purple border border-lsu-gold text-lsu-gold font-bold text-xs flex items-center justify-center shrink-0">3</span>
+            <div class="space-y-1">
+              <h3 class="font-heading font-bold text-sm text-white">Click "Upload 18 Providers to Firestore"</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Click the gold button above on this page. All 18 sample records across Hair, Nails, Lashes, Food, Fashion, and Photography will be written to the <code class="text-lsu-gold font-mono">"providers"</code> collection.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <span class="w-7 h-7 rounded-full bg-lsu-purple border border-lsu-gold text-lsu-gold font-bold text-xs flex items-center justify-center shrink-0">4</span>
+            <div class="space-y-1">
+              <h3 class="font-heading font-bold text-sm text-white">Apply Read-Only Security Rules</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Once the data is seeded, go to the <strong>Rules</strong> tab in the Firestore console and paste the rules shown on the right. Then click <strong>Publish</strong>. This locks the database so anyone can read providers, but no unauthorized person can modify or delete them!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Rules Code Box -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-heading font-bold text-slate-300 uppercase tracking-wider">Firestore Security Rules (Copy &amp; Paste)</span>
+            <button 
+              id="copy-rules-btn" 
+              type="button" 
+              class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-lsu-gold text-xs font-mono font-medium transition-colors border border-slate-700 cursor-pointer"
+            >
+              Copy Rules
+            </button>
+          </div>
+
+          <pre class="bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="rules-code">rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Anyone in the public can view and search providers,
+    // but only authenticated administrators or backend can write/edit.
+    match /providers/{providerId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    
+  }
+}</code></pre>
+
+          <div class="p-3.5 rounded-xl bg-purple-950/40 border border-purple-800/50 text-xs text-slate-300 space-y-1">
+            <p class="font-semibold text-lsu-gold">🔒 How these rules protect your directory:</p>
+            <ul class="list-disc list-inside space-y-0.5 text-slate-300">
+              <li><code class="text-purple-300 font-mono">allow read: if true;</code> enables students and visitors on any device to browse businesses without having to log in.</li>
+              <li><code class="text-purple-300 font-mono">allow write: if false;</code> completely prevents malicious visitors from modifying prices, ratings, or deleting business profiles.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Direct Links -->
+    <div class="rounded-2xl bg-slate-900/60 border border-slate-800/80 p-6 space-y-4 shadow-lg">
+      <h3 class="font-heading font-bold text-sm text-slate-200 uppercase tracking-wider">Test Live Pages with Firestore</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        <a href="hair.html" class="p-3 rounded-xl bg-slate-950 hover:bg-lsu-purple/30 border border-slate-800 hover:border-lsu-gold/40 text-center transition-all group">
+          <span class="text-lg block mb-1">💇‍♀️</span>
+          <span class="text-xs font-heading font-semibold text-white group-hover:text-lsu-gold block">Hair</span>
+        </a>
+        <a href="nails.html" class="p-3 rounded-xl bg-slate-950 hover:bg-lsu-purple/30 border border-slate-800 hover:border-lsu-gold/40 text-center transition-all group">
+          <span class="text-lg block mb-1">💅</span>
+          <span class="text-xs font-heading font-semibold text-white group-hover:text-lsu-gold block">Nails</span>
+        </a>
+        <a href="lashes.html" class="p-3 rounded-xl bg-slate-950 hover:bg-lsu-purple/30 border border-slate-800 hover:border-lsu-gold/40 text-center transition-all group">
+          <span class="text-lg block mb-1">✨</span>
+          <span class="text-xs font-heading font-semibold text-white group-hover:text-lsu-gold block">Lashes</span>
+        </a>
+        <a href="food-and-beverages.html" class="p-3 rounded-xl bg-slate-950 hover:bg-lsu-purple/30 border border-slate-800 hover:border-lsu-gold/40 text-center transition-all group">
+          <span class="text-lg block mb-1">🍲</span>
+          <span class="text-xs font-heading font-semibold text-white group-hover:text-lsu-gold block">Food</span>
+        </a>
+        <a href="fashion.html" class="p-3 rounded-xl bg-slate-950 hover:bg-lsu-purple/30 border border-slate-800 hover:border-lsu-gold/40 text-center transition-all group">
+          <span class="text-lg block mb-1">👗</span>
+          <span class="text-xs font-heading font-semibold text-white group-hover:text-lsu-gold block">Fashion</span>
+        </a>
+        <a href="photography.html" class="p-3 rounded-xl bg-slate-950 hover:bg-lsu-purple/30 border border-slate-800 hover:border-lsu-gold/40 text-center transition-all group">
+          <span class="text-lg block mb-1">📸</span>
+          <span class="text-xs font-heading font-semibold text-white group-hover:text-lsu-gold block">Photography</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-purple-900/40 bg-slate-950/90 py-6 text-center text-xs text-slate-500">
+    <p>Black-Owned BR &bull; LSU Student &amp; Alumni Business Directory &bull; Powered by Firebase &amp; Cloud Firestore</p>
+  </footer>
+
+  <!-- Script logic connecting to Firebase CDN module -->
+  <script type="module">
+    import { getProvidersFromFirestore, seedFirestoreProviders, db } from './js/firebase.js';
+    import { SAMPLE_PROVIDERS } from './src/data/providers.js';
+
+    const pill = document.getElementById('connection-pill');
+    const docsCount = document.getElementById('docs-count-display');
+    const connDetails = document.getElementById('connection-details');
+    const seedBtn = document.getElementById('seed-btn');
+    const progressCard = document.getElementById('progress-card');
+    const progressBar = document.getElementById('progress-bar-fill');
+    const progressPercent = document.getElementById('progress-percent');
+    const seedLog = document.getElementById('seed-log');
+    const copyRulesBtn = document.getElementById('copy-rules-btn');
+
+    // Copy rules button
+    if (copyRulesBtn) {
+      copyRulesBtn.addEventListener('click', () => {
+        const rules = document.getElementById('rules-code').innerText;
+        navigator.clipboard.writeText(rules).then(() => {
+          copyRulesBtn.textContent = 'Copied!';
+          setTimeout(() => copyRulesBtn.textContent = 'Copy Rules', 2000);
+        });
+      });
+    }
+
+    function addLogLine(msg, type = 'info') {
+      const line = document.createElement('div');
+      const time = new Date().toLocaleTimeString();
+      let colorClass = 'text-slate-300';
+      if (type === 'success') colorClass = 'text-emerald-400 font-semibold';
+      if (type === 'error') colorClass = 'text-red-400 font-semibold';
+      if (type === 'warning') colorClass = 'text-amber-400';
+      line.className = `${colorClass} flex items-start gap-2`;
+      line.innerHTML = `<span class="text-slate-500 shrink-0">[${time}]</span> <span>${msg}</span>`;
+      seedLog.appendChild(line);
+      seedLog.scrollTop = seedLog.scrollHeight;
+    }
+
+    async function checkFirestoreStatus() {
+      try {
+        const providers = await getProvidersFromFirestore();
+        if (providers.length > 0) {
+          pill.className = 'px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+          pill.textContent = 'Active (Live)';
+          docsCount.textContent = `${providers.length} Documents`;
+          docsCount.className = 'text-xl font-heading font-bold text-emerald-400 font-mono';
+          connDetails.textContent = `Connected! "providers" collection has ${providers.length} live records.`;
+        } else {
+          pill.className = 'px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30';
+          pill.textContent = 'Empty';
+          docsCount.textContent = '0 Documents';
+          docsCount.className = 'text-xl font-heading font-bold text-amber-300 font-mono';
+          connDetails.textContent = 'Database is connected, but the "providers" collection has not been seeded yet.';
+        }
+      } catch (err) {
+        pill.className = 'px-2 py-0.5 rounded-full text-[11px] font-semibold bg-red-500/20 text-red-400 border border-red-500/30';
+        pill.textContent = 'API Setup Pending';
+        docsCount.textContent = 'Not Created Yet';
+        docsCount.className = 'text-xl font-heading font-bold text-red-400 font-mono';
+        connDetails.innerHTML = 'Firestore API needs to be enabled in Firebase Console (see Step 1 below).';
+      }
+    }
+
+    // Check status on load
+    checkFirestoreStatus();
+
+    // Seeder action
+    seedBtn.addEventListener('click', async () => {
+      seedBtn.disabled = true;
+      seedBtn.innerHTML = `<span>⏳ Uploading records...</span>`;
+      progressCard.classList.remove('hidden');
+      seedLog.innerHTML = '';
+      addLogLine(`Connecting to Firestore and preparing ${SAMPLE_PROVIDERS.length} sample providers...`);
+
+      const total = SAMPLE_PROVIDERS.length;
+      let completed = 0;
+
+      const result = await seedFirestoreProviders(SAMPLE_PROVIDERS, (current, totalCount, businessName) => {
+        completed = current;
+        const pct = Math.round((completed / totalCount) * 100);
+        progressBar.style.width = `${pct}%`;
+        progressPercent.textContent = `${pct}% (${completed}/${totalCount})`;
+        addLogLine(`Uploaded doc [${current}/${totalCount}]: "${businessName}"`, 'success');
+      });
+
+      if (result.success) {
+        addLogLine(`✨ Successfully seeded all ${result.count} providers into collection "providers"!`, 'success');
+        addLogLine(`Now navigate to Firebase Console Rules tab and apply the Read-Only rules.`, 'warning');
+        seedBtn.innerHTML = `<span>✅ Upload Complete (${result.count} Docs)</span>`;
+        seedBtn.classList.remove('bg-lsu-gold', 'hover:bg-lsu-gold-hover');
+        seedBtn.classList.add('bg-emerald-500', 'text-slate-950');
+        checkFirestoreStatus();
+      } else {
+        addLogLine(`❌ Failed to upload some or all records: ${result.errors.map(e => e.error).join(', ')}`, 'error');
+        addLogLine(`Please verify that you clicked "Create database" in Firebase Console and set rules to allow writes temporarily.`, 'warning');
+        seedBtn.disabled = false;
+        seedBtn.innerHTML = `<span>Retry Upload</span>`;
+      }
+    });
+  </script>
+</body>
+</html>

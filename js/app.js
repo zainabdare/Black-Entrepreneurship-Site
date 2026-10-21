@@ -14,6 +14,7 @@
  * - Clear filters button and dynamic result count
  */
 
+import { getProvidersFromFirestore, seedFirestoreProviders } from './firebase.js';
 import { SAMPLE_PROVIDERS } from './data/providers.js';
 import { createProviderCard } from './components/ProviderCard.js';
 import { filterProviders, MAX_ALLOWED_RADIUS_MILES } from './utils/filters.js';
@@ -22,6 +23,11 @@ import { injectNavigationDrawer } from './components/NavigationDrawer.js';
 import { injectFilterPanel } from './components/FilterPanel.js';
 
 console.log('%c🐯 Black-Owned BR: Multi-page & Filter Panel Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
+
+// Master provider records loaded from Firestore (falls back to sample providers if Firestore collection is empty or API pending)
+export let allProviders = [];
+export let isProvidersLoading = true;
+export let firestoreLoadStatus = 'loading'; // 'firestore' | 'offline' | 'empty'
 
 // Detect if current page is dedicated to a specific category
 const pageCategory = document.body.dataset.category || 'All';
@@ -156,6 +162,177 @@ function updateActiveFilterBadges() {
 }
 
 /**
+ * Renders pulse loading skeleton cards inside the directory grid.
+ * 
+ * @param {HTMLElement} gridElement 
+ */
+export function renderProvidersSkeleton(gridElement) {
+  if (!gridElement) return;
+  const skeletonCard = `
+    <div class="rounded-2xl bg-slate-900/60 border border-slate-800/80 overflow-hidden shadow-lg animate-pulse flex flex-col h-full">
+      <div class="h-48 sm:h-52 bg-slate-800/70 w-full relative">
+        <div class="absolute top-3 left-3 w-20 h-5 bg-slate-700/60 rounded-full"></div>
+        <div class="absolute top-3 right-3 w-16 h-5 bg-slate-700/60 rounded-full"></div>
+      </div>
+      <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+        <div class="space-y-2">
+          <div class="h-5 bg-slate-700/60 rounded w-3/4"></div>
+          <div class="h-3.5 bg-slate-800/80 rounded w-full"></div>
+          <div class="h-3.5 bg-slate-800/80 rounded w-2/3"></div>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <div class="h-6 bg-slate-800/80 rounded-full w-20"></div>
+          <div class="h-6 bg-slate-800/80 rounded-full w-24"></div>
+        </div>
+        <div class="pt-4 border-t border-slate-800/60 flex justify-between items-center">
+          <div class="h-7 bg-slate-800/80 rounded w-20"></div>
+          <div class="h-7 bg-slate-700/60 rounded w-24"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  gridElement.innerHTML = Array(6).fill(skeletonCard).join('');
+}
+
+/**
+ * Removes any existing Firestore status banner.
+ */
+export function removeFirestoreNotice() {
+  const existing = document.getElementById('firestore-status-notice');
+  if (existing) existing.remove();
+}
+
+/**
+ * Displays an LSU-themed banner indicating Firestore database status.
+ * 
+ * @param {'empty' | 'offline'} type 
+ * @param {string} errorDetails 
+ */
+export function renderFirestoreNotice(type, errorDetails = '') {
+  removeFirestoreNotice();
+
+  const mount = document.getElementById('filter-panel-mount') || document.getElementById('category-pills-bar');
+  if (!mount) return;
+
+  const notice = document.createElement('div');
+  notice.id = 'firestore-status-notice';
+  notice.className = 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4';
+
+  if (type === 'empty') {
+    notice.innerHTML = `
+      <div class="p-3.5 sm:p-4 rounded-xl bg-lsu-purple/40 border border-lsu-gold/40 text-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg backdrop-blur">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl shrink-0">🔥</span>
+          <div>
+            <p class="text-xs sm:text-sm font-semibold text-white">
+              Firebase Connected: Cloud Firestore collection <code class="text-lsu-gold font-mono font-bold">"providers"</code> is currently empty.
+            </p>
+            <p class="text-xs text-slate-300">
+              Showing local sample data. Click below to populate Firestore with all 18 sample records.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+          <button 
+            id="quick-seed-btn" 
+            type="button" 
+            class="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark text-xs font-heading font-bold uppercase tracking-wider transition-colors shadow cursor-pointer text-center"
+          >
+            Seed to Firestore
+          </button>
+          <a 
+            href="seed.html" 
+            class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-heading font-medium transition-colors border border-slate-700 text-center"
+          >
+            Seeder &rarr;
+          </a>
+        </div>
+      </div>
+    `;
+  } else if (type === 'offline') {
+    notice.innerHTML = `
+      <div class="p-3 sm:p-3.5 rounded-xl bg-slate-900/90 border border-purple-900/50 text-slate-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
+        <div class="flex items-center gap-2.5">
+          <span class="text-amber-400 text-lg shrink-0">⚡</span>
+          <p class="text-xs leading-relaxed">
+            <strong class="text-white">Firebase Note:</strong> Cloud Firestore database setup in progress. Serving cached sample data until enabled in Firebase Console.
+          </p>
+        </div>
+        <a 
+          href="seed.html" 
+          class="shrink-0 text-xs text-lsu-gold hover:underline font-semibold flex items-center gap-1"
+        >
+          View Setup &amp; Rules Guide &rarr;
+        </a>
+      </div>
+    `;
+  }
+
+  mount.parentNode.insertBefore(notice, mount.nextSibling);
+
+  const quickSeedBtn = document.getElementById('quick-seed-btn');
+  if (quickSeedBtn) {
+    quickSeedBtn.addEventListener('click', async () => {
+      quickSeedBtn.disabled = true;
+      quickSeedBtn.textContent = 'Uploading...';
+      try {
+        const res = await seedFirestoreProviders(SAMPLE_PROVIDERS);
+        if (res.success) {
+          quickSeedBtn.textContent = 'Uploaded!';
+          setTimeout(() => loadProvidersData(), 600);
+        } else {
+          alert(`Could not write: ${res.errors[0]?.error || 'Check Firestore security rules in Firebase Console'}.`);
+          quickSeedBtn.disabled = false;
+          quickSeedBtn.textContent = 'Retry Seed';
+        }
+      } catch (err) {
+        alert(`Could not write to Firestore: ${err.message}\nMake sure Cloud Firestore is enabled in Firebase Console.`);
+        quickSeedBtn.disabled = false;
+        quickSeedBtn.textContent = 'Seed to Firestore';
+      }
+    });
+  }
+}
+
+/**
+ * Asynchronously loads provider documents from Cloud Firestore "providers" collection.
+ * If the collection is empty or the API is not yet activated in the Firebase Console,
+ * it falls back to SAMPLE_PROVIDERS and displays a helpful status guide.
+ */
+export async function loadProvidersData() {
+  const gridElement = document.getElementById('providers-grid');
+  isProvidersLoading = true;
+  if (gridElement) {
+    renderProvidersSkeleton(gridElement);
+  }
+
+  try {
+    console.log('%c🔥 Black-Owned BR: Querying Cloud Firestore "providers" collection...', 'color: #FDD023; background: #461D7C; font-weight: bold; padding: 2px 6px;');
+    const firestoreDocs = await getProvidersFromFirestore();
+
+    if (Array.isArray(firestoreDocs) && firestoreDocs.length > 0) {
+      console.log(`%c🔥 Firestore Connected! Successfully loaded ${firestoreDocs.length} providers from collection "providers".`, 'color: #10B981; font-weight: bold;');
+      allProviders = firestoreDocs;
+      firestoreLoadStatus = 'firestore';
+      removeFirestoreNotice();
+    } else {
+      console.warn('⚠️ Cloud Firestore "providers" collection is currently empty. Serving sample providers.');
+      allProviders = SAMPLE_PROVIDERS;
+      firestoreLoadStatus = 'empty';
+      renderFirestoreNotice('empty');
+    }
+  } catch (error) {
+    console.warn('⚠️ Cloud Firestore not reachable (database may need to be created in Firebase Console). Serving local sample providers:', error.message);
+    allProviders = SAMPLE_PROVIDERS;
+    firestoreLoadStatus = 'offline';
+    renderFirestoreNotice('offline', error.message);
+  } finally {
+    isProvidersLoading = false;
+    updateDirectory();
+  }
+}
+
+/**
  * Updates the directory grid and status indicators according to current filter state.
  */
 export function updateDirectory() {
@@ -165,6 +342,12 @@ export function updateDirectory() {
   const priceDisplay = document.getElementById('filter-price-display');
 
   if (!gridElement) return;
+
+  // If still loading from Firestore, show skeleton loader
+  if (isProvidersLoading) {
+    renderProvidersSkeleton(gridElement);
+    return;
+  }
 
   // Update slider displays
   if (radiusDisplay) {
@@ -176,16 +359,19 @@ export function updateDirectory() {
       : 'Any ($250+)';
   }
 
-  // Filter providers through central filtering logic (src/utils/filters.js)
-  const filtered = filterProviders(SAMPLE_PROVIDERS, appState);
+  // Filter providers from active list (Firestore data, or fallback if uninitialized)
+  const filtered = filterProviders(allProviders, appState);
 
   // Update active filter badge & clear button
   updateActiveFilterBadges();
 
-  // Update results counter text
+  // Update results counter text with source indicator
   if (countElement) {
     const categoryLabel = appState.selectedCategory === 'All' ? '' : ` in ${appState.selectedCategory}`;
-    countElement.innerHTML = `Showing <span class="text-lsu-gold font-bold font-mono">${filtered.length}</span> provider${filtered.length === 1 ? '' : 's'}${categoryLabel}`;
+    const sourceBadge = firestoreLoadStatus === 'firestore'
+      ? `<span class="ml-2 inline-flex items-center gap-1 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" title="Data loaded live from Cloud Firestore 'providers' collection">🔥 Firestore</span>`
+      : '';
+    countElement.innerHTML = `Showing <span class="text-lsu-gold font-bold font-mono">${filtered.length}</span> provider${filtered.length === 1 ? '' : 's'}${categoryLabel}${sourceBadge}`;
   }
 
   // Handle empty state: "No providers found"
@@ -582,8 +768,8 @@ document.addEventListener('DOMContentLoaded', () => {
     attachFilterListeners();
   }
 
-  // 4. Initial Directory Render
-  updateDirectory();
+  // 4. Initial Directory Render & Firestore Loading
+  loadProvidersData();
 
   // 5. Slide-out Menu Event Listeners
   const hamburgerBtn = document.getElementById('hamburger-btn');

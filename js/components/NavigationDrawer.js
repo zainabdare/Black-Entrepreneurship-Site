@@ -155,10 +155,16 @@ export function injectNavigationDrawer() {
       </div>
 
       <!-- Drawer Footer -->
-      <div class="p-4 border-t border-purple-900/30 bg-slate-950/90 text-center">
+      <div class="p-4 border-t border-purple-900/30 bg-slate-950/90 text-center space-y-1.5">
         <p class="text-[11px] text-slate-400">
           Supporting Black Entrepreneurship within 25 Miles of LSU
         </p>
+        <div>
+          <a href="seed.html" class="inline-flex items-center gap-1 text-[10px] text-purple-300 hover:text-lsu-gold transition-colors font-mono">
+            <span>🔥</span>
+            <span>Firestore Manager &amp; Seeder</span>
+          </a>
+        </div>
       </div>
     </nav>
   `;
