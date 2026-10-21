@@ -272,27 +272,20 @@
       </div>
     </div>
 
-    <!-- Scaffolding Container for Upcoming Filters & Cards -->
-    <div id="directory-container" class="space-y-8">
-      
-      <!-- Scaffolding Placeholder Card (Clean notice of next build step) -->
-      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-900/50 border border-purple-900/40 p-8 sm:p-12 text-center shadow-xl">
-        <div class="max-w-md mx-auto">
-          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-lsu-purple/30 border border-lsu-gold/30 flex items-center justify-center text-2xl shadow-inner">
-            📍
-          </div>
-          <h3 class="text-lg sm:text-xl font-heading font-bold text-white mb-2">
-            Directory Layout Ready
-          </h3>
-          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
-            The core page layout, celebratory LSU theme, mobile navigation, and hero search bar are active. The 12 sample providers from <code class="text-lsu-gold font-mono text-xs">src/data/providers.js</code> will be mounted here in the next step.
-          </p>
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs text-slate-400">
-            <span class="text-emerald-400">&check;</span> Next: Filter Bar &amp; Directory Card Grid
-          </div>
-        </div>
+      <!-- Directory Grid Header & Results Count -->
+      <div class="flex items-center justify-between pb-2">
+        <p id="results-count" class="text-xs sm:text-sm text-slate-300 font-medium">
+          Showing all <span class="text-lsu-gold font-bold font-mono">12</span> local service providers
+        </p>
+        <span class="text-[11px] text-slate-400 hidden sm:inline-block">
+          Sorted by LSU proximity &amp; rating
+        </span>
       </div>
 
+      <!-- Responsive Provider Cards Grid (1 col phone, 2 cols tablet, 3 cols desktop) -->
+      <div id="providers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" role="region" aria-label="Service Provider Listings">
+        <!-- Cards injected dynamically via js/components/ProviderCard.js -->
+      </div>
     </div>
 
     <!-- Seasonal Hubs Teaser Section (Anchor for Nav link) -->
