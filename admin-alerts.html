@@ -6,29 +6,51 @@
   <title>Admin Portal | Business Review Queue &amp; Campus Alerts | Black-Owned BR</title>
   <meta name="description" content="Admin portal for Black-Owned BR: Review and approve business submissions and manage live campus pop-up alerts.">
 
-  <!-- Google Fonts: Inter & Outfit -->
+  <!-- Google Fonts: Lilita One (Headings), Caveat (Script Accent), Poppins (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lilita+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Tailwind Configuration with LSU Brand Theme -->
+  <!-- Tailwind Configuration with Burgundy, Blush, Cream, Sand & LSU Gold -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            heading: ['Outfit', 'sans-serif'],
+            sans: ['Poppins', 'sans-serif'],
+            heading: ['"Lilita One"', 'cursive', 'sans-serif'],
+            script: ['Caveat', 'cursive'],
           },
           colors: {
+            burgundy: {
+              DEFAULT: '#4A1C24',
+              dark: '#351218',
+              light: '#612731',
+              hover: '#3D151C',
+            },
+            blush: {
+              DEFAULT: '#E9C6CC',
+              light: '#F7E9EC',
+              dark: '#D4A7B0',
+            },
+            cream: {
+              DEFAULT: '#F6EEE6',
+              light: '#FDFBF8',
+              dark: '#ECE2D8',
+            },
+            sand: {
+              DEFAULT: '#EAD5C0',
+              light: '#F4E8DC',
+              dark: '#D3BAA2',
+            },
             lsu: {
-              purple: '#461D7C',
-              'purple-dark': '#2E1053',
-              'purple-deep': '#1A0830',
-              'purple-light': '#6B2FA8',
+              purple: '#4A1C24',
+              'purple-dark': '#351218',
+              'purple-deep': '#4A1C24',
+              'purple-light': '#612731',
               gold: '#FDD023',
               'gold-hover': '#ECC21C',
               'gold-light': '#FEF08A',
@@ -42,25 +64,27 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-lsu-gold selection:text-lsu-purple-dark antialiased">
+<body class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
 
   <!-- Top Header -->
-  <header class="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-purple-900/30">
+  <header class="sticky top-0 z-40 bg-[#F6EEE6]/90 backdrop-blur-md border-b border-[#EAD5C0]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20">
         
         <a href="index.html" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-lsu-purple via-lsu-purple-dark to-purple-950 border border-lsu-gold/40 flex items-center justify-center shadow-lg group-hover:border-lsu-gold transition-colors">
-            <span class="text-lsu-gold font-heading font-black text-base">LSU</span>
+          <div class="w-10 h-10 rounded-full bg-[#4A1C24] border border-[#FDD023]/60 flex items-center justify-center shadow-md group-hover:border-[#FDD023] transition-colors">
+            <span class="text-[#FDD023] font-heading font-black text-base sm:text-lg">LSU</span>
           </div>
           <div>
-            <span class="font-heading font-bold text-lg sm:text-xl text-white tracking-tight block">Black-Owned <span class="text-lsu-gold">BR</span></span>
-            <span class="text-[10px] text-purple-300 tracking-wider font-semibold uppercase block">Admin Control Center</span>
+            <span class="font-heading font-black text-lg sm:text-xl text-[#4A1C24] tracking-tight block">
+              BLACK-OWNED <span class="script-word text-[#4A1C24]">br</span>
+            </span>
+            <span class="text-[10px] text-[#7A535A] tracking-wider font-semibold uppercase block">Admin Control Center</span>
           </div>
         </a>
 
         <div class="flex items-center gap-3">
-          <a href="index.html" class="text-xs sm:text-sm font-heading font-semibold text-slate-300 hover:text-lsu-gold transition-colors flex items-center gap-1">
+          <a href="index.html" class="text-xs sm:text-sm font-heading font-semibold text-[#7A535A] hover:text-[#4A1C24] transition-colors flex items-center gap-1">
             <span>&larr;</span>
             <span>View Live Directory</span>
           </a>
@@ -150,6 +174,41 @@
         >
           Log Out Admin
         </button>
+      </div>
+
+      <!-- Live Community Impact Metrics Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-purple-900/40 flex items-center gap-3">
+          <span class="w-9 h-9 rounded-xl bg-purple-950/60 border border-purple-800 flex items-center justify-center text-base">🏬</span>
+          <div>
+            <span class="text-[10px] text-slate-400 uppercase tracking-wider block font-semibold">Active Providers</span>
+            <span id="admin-stat-providers" class="text-base font-heading font-black text-white font-mono">--</span>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-purple-900/40 flex items-center gap-3">
+          <span class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-base">👀</span>
+          <div>
+            <span class="text-[10px] text-slate-400 uppercase tracking-wider block font-semibold">Profile Views</span>
+            <span id="admin-stat-views" class="text-base font-heading font-black text-lsu-gold font-mono">--</span>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-purple-900/40 flex items-center gap-3">
+          <span class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-base">📲</span>
+          <div>
+            <span class="text-[10px] text-slate-400 uppercase tracking-wider block font-semibold">Link Clicks</span>
+            <span id="admin-stat-clicks" class="text-base font-heading font-black text-emerald-400 font-mono">--</span>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-purple-900/40 flex items-center gap-3">
+          <span class="w-9 h-9 rounded-xl bg-purple-950/60 border border-purple-800 flex items-center justify-center text-base">⭐</span>
+          <div>
+            <span class="text-[10px] text-slate-400 uppercase tracking-wider block font-semibold">Total Reviews</span>
+            <span id="admin-stat-reviews" class="text-base font-heading font-black text-white font-mono">--</span>
+          </div>
+        </div>
       </div>
 
       <!-- Navigation Tabs: Review Queue vs Campus Pop-Up Alerts -->
@@ -471,7 +530,8 @@
       getPendingProviders,
       approvePendingProvider,
       rejectPendingProvider,
-      submitPendingProvider
+      submitPendingProvider,
+      getImpactStats
     } from './js/firebase.js';
     import { SAMPLE_PROVIDERS } from './src/data/providers.js';
 
@@ -879,6 +939,21 @@
       populateProviderDropdown(allProvidersList);
       loadAlertsList();
       initQuickButtons();
+
+      // Load Community Impact telemetry stats
+      try {
+        const stats = await getImpactStats(allProvidersList);
+        const provEl = document.getElementById('admin-stat-providers');
+        const viewEl = document.getElementById('admin-stat-views');
+        const clickEl = document.getElementById('admin-stat-clicks');
+        const revEl = document.getElementById('admin-stat-reviews');
+        if (provEl) provEl.textContent = stats.totalProviders + '+';
+        if (viewEl) viewEl.textContent = stats.totalViews.toLocaleString() + '+';
+        if (clickEl) clickEl.textContent = stats.totalClicks.toLocaleString() + '+';
+        if (revEl) revEl.textContent = stats.totalReviews.toLocaleString() + '+';
+      } catch (err) {
+        console.warn('Could not load impact stats in admin:', err);
+      }
     }
 
     function populateProviderDropdown(providers) {

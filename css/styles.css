@@ -2,80 +2,263 @@
    css/styles.css
    Project: Black-Owned BR — LSU Student & Community Directory
    
-   BEGINNER NOTE:
-   We are using Tailwind CSS via CDN for rapid utility-based styling.
-   This custom CSS file adds tailored gradients, warm celebratory effects,
-   smooth slide-out side menu transitions, and custom brand touches.
+   Style System:
+   - Palette: Cream (#F6EEE6), Burgundy (#4A1C24), Blush Pink (#E9C6CC), Sand (#EAD5C0), Accent Gold (#FDD023)
+   - Fonts:
+       - Headings: "Lilita One" (Chunky, all-caps display)
+       - Accent script: "Caveat" (Handwritten single-word script)
+       - Body: "Poppins" (Clean modern sans-serif)
+   - Buttons: Fully rounded pill buttons (Burgundy with cream text & outlined version)
+   - Cards: Soft rounded corners, warm gentle shadows
+   - Navigation: Burgundy slide-out drawer with cream text
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. CSS Custom Properties (Theme Variables)
+   1. Google Fonts Import (Lilita One, Caveat, Poppins)
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lilita+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+
+/* --------------------------------------------------------------------------
+   2. CSS Custom Properties (Easy to change later)
    -------------------------------------------------------------------------- */
 :root {
-  /* Official Louisiana State University (LSU) Colors */
-  --lsu-purple: #461D7C;
-  --lsu-purple-dark: #2E1053;
-  --lsu-purple-deep: #1d0936;
-  --lsu-purple-light: #5E28A3;
-  --lsu-gold: #FDD023;
-  --lsu-gold-hover: #ECC21C;
-  --lsu-gold-light: #FEF08A;
+  /* Brand Palette defined by User */
+  --color-burgundy: #4A1C24;         /* Main dark color, headings, dark sections, buttons */
+  --color-burgundy-dark: #351218;    /* Deep burgundy active */
+  --color-burgundy-light: #612731;   /* Medium burgundy */
+  --color-blush: #E9C6CC;            /* Blush pink accent & cards */
+  --color-blush-light: #F7E9EC;      /* Soft blush wash */
+  --color-blush-dark: #D4A7B0;       /* Muted blush border */
+  --color-cream: #F6EEE6;            /* Main page background */
+  --color-cream-light: #FDFBF8;      /* Clean card surface */
+  --color-sand: #EAD5C0;             /* Warm sand neutral */
+  --color-sand-light: #F4E8DC;       /* Sand tint */
+  --color-sand-dark: #D3BAA2;        /* Dark sand border */
+  --color-lsu-gold: #FDD023;         /* Small accent only for badges/highlights */
+  --color-lsu-gold-hover: #ECC21C;
+  --color-lsu-gold-light: #FEF08A;
 
-  /* Neutral Theme Backgrounds */
-  --bg-dark-primary: #0b0f19;   /* Deep charcoal slate */
-  --bg-dark-surface: #131c2e;   /* Card surface */
-  --bg-dark-elevated: #1e293b;  /* Elevated elements */
+  /* Semantic Theme Mappings */
+  --bg-page: var(--color-cream);
+  --bg-card: var(--color-cream-light);
+  --bg-card-alt: #FFFFFF;
+  --bg-dark: var(--color-burgundy);
+  --text-main: var(--color-burgundy);
+  --text-muted: #7A535A;
+  --text-on-dark: var(--color-cream);
+  --border-subtle: #E3D0C6;
+  --border-blush: var(--color-blush);
+  --border-sand: var(--color-sand);
+  --shadow-soft: 0 10px 30px -5px rgba(74, 28, 36, 0.08), 0 4px 12px -2px rgba(74, 28, 36, 0.04);
+  --shadow-hover: 0 20px 35px -8px rgba(74, 28, 36, 0.14), 0 8px 16px -4px rgba(74, 28, 36, 0.06);
+
+  /* Compatibility Fallback mappings */
+  --lsu-purple: var(--color-burgundy);
+  --lsu-purple-dark: var(--color-burgundy-dark);
+  --lsu-purple-deep: var(--color-burgundy);
+  --lsu-purple-light: var(--color-burgundy-light);
+  --lsu-gold: var(--color-lsu-gold);
+  --lsu-gold-hover: var(--color-lsu-gold-hover);
+  --lsu-gold-light: var(--color-lsu-gold-light);
+  --bg-dark-primary: var(--color-cream);
+  --bg-dark-surface: var(--color-cream-light);
+  --bg-dark-elevated: var(--color-sand);
 }
 
 /* --------------------------------------------------------------------------
-   2. Global Typography & Smooth Scrolling
+   3. Global Typography & Smooth Scrolling
    -------------------------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
+  background-color: var(--color-cream);
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-dark-primary);
-  color: #f1f5f9;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-cream);
+  color: var(--color-burgundy);
 }
 
-h1, h2, h3, h4, .font-heading {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+/* Chunky, heavy, all-caps display font for headings */
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Lilita One', 'Arial Black', Impact, cursive, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 /* --------------------------------------------------------------------------
-   3. Hero Ambient Warm Glow Gradients
-   Creates a warm, celebratory atmosphere honoring Black-owned businesses.
+   4. Reusable Script Word Accent
+   Allows single words in headings to be rendered in handwritten script font
+   Usage:
+     - <h2>WHAT KIND OF <span class="script-word">results</span> CAN YOU <span class="script-word">expect</span>?</h2>
+     - <h1>FIND YOUR <script-word>glow</script-word></h1>
+     - <h3>TURN UP <span class="font-script">the</span> HEAT.</h3>
    -------------------------------------------------------------------------- */
-.hero-glow-bg {
-  background: 
-    radial-gradient(circle at 50% 0%, rgba(70, 29, 124, 0.45) 0%, rgba(11, 15, 25, 0) 70%),
-    radial-gradient(circle at 80% 20%, rgba(253, 208, 35, 0.08) 0%, rgba(11, 15, 25, 0) 50%);
+.script-word,
+.font-script,
+.accent-script,
+script-word,
+accent-script,
+[data-script] {
+  font-family: 'Caveat', cursive, sans-serif !important;
+  font-weight: 700;
+  text-transform: lowercase !important;
+  font-style: normal;
+  letter-spacing: 0.01em;
+  font-size: 1.25em;
+  display: inline-block;
+  transform: rotate(-3deg);
+  margin: 0 0.12em;
+  vertical-align: baseline;
+  line-height: 0.9;
+  color: inherit;
+  transition: transform 0.2s ease;
 }
 
-.gold-glow {
-  box-shadow: 0 0 35px -5px rgba(253, 208, 35, 0.3);
-}
-
-.purple-glow {
-  box-shadow: 0 0 35px -5px rgba(70, 29, 124, 0.5);
+.script-word:hover,
+script-word:hover {
+  transform: rotate(0deg) scale(1.05);
 }
 
 /* --------------------------------------------------------------------------
-   4. Slide-out Side Menu Drawer Animations
-   Smooth slide from the right edge with backdrop blur.
+   5. Buttons: Pill-Shaped (Fully Rounded) & Outlined
+   -------------------------------------------------------------------------- */
+/* Primary Pill Button: Burgundy with cream text */
+.btn-pill,
+.btn-primary,
+.btn-burgundy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px !important;
+  background-color: var(--color-burgundy);
+  color: var(--color-cream) !important;
+  font-family: 'Lilita One', cursive, sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.6rem;
+  font-size: 0.875rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(74, 28, 36, 0.15);
+  cursor: pointer;
+  border: 2px solid var(--color-burgundy);
+}
+
+.btn-pill:hover,
+.btn-primary:hover,
+.btn-burgundy:hover {
+  background-color: var(--color-burgundy-dark);
+  border-color: var(--color-burgundy-dark);
+  color: var(--color-cream) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(74, 28, 36, 0.22);
+}
+
+.btn-pill:active,
+.btn-primary:active,
+.btn-burgundy:active {
+  transform: translateY(0);
+}
+
+/* Outlined Version: 2px Burgundy border with transparent/cream background */
+.btn-pill-outline,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px !important;
+  border: 2px solid var(--color-burgundy) !important;
+  background-color: transparent;
+  color: var(--color-burgundy) !important;
+  font-family: 'Lilita One', cursive, sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.btn-pill-outline:hover,
+.btn-outline:hover {
+  background-color: var(--color-burgundy) !important;
+  color: var(--color-cream) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(74, 28, 36, 0.18);
+}
+
+.btn-pill-outline:active,
+.btn-outline:active {
+  transform: translateY(0);
+}
+
+/* Small Pill Accent Button */
+.btn-pill-sm {
+  padding: 0.35rem 1rem;
+  font-size: 0.75rem;
+  border-radius: 9999px !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. Cards: Rounded Corners & Soft Shadows
+   -------------------------------------------------------------------------- */
+.card-soft,
+.card-styled {
+  border-radius: 1.5rem !important; /* 24px */
+  background-color: var(--bg-card);
+  border: 1px solid var(--color-blush);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card-soft:hover,
+.card-styled:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-burgundy);
+}
+
+/* Editorial Palette Block Cards (from attached moodboard) */
+.card-burgundy-block {
+  background-color: var(--color-burgundy);
+  color: var(--color-cream);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.card-blush-block {
+  background-color: var(--color-blush);
+  color: var(--color-burgundy);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.card-sand-block {
+  background-color: var(--color-sand);
+  color: var(--color-burgundy);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+/* --------------------------------------------------------------------------
+   7. Slide-out Side Menu Drawer Animations
+   Burgundy panel with cream text & soft backdrop
    -------------------------------------------------------------------------- */
 #slide-out-menu {
+  background-color: var(--color-burgundy);
+  color: var(--color-cream);
+  border-left: 1px solid rgba(233, 198, 204, 0.25);
+  box-shadow: -10px 0 35px rgba(53, 18, 24, 0.35);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #menu-backdrop {
+  background-color: rgba(74, 28, 36, 0.65);
+  backdrop-filter: blur(4px);
   transition: opacity 0.25s ease-in-out;
 }
 
-/* When the navigation drawer is open */
 body.menu-open {
   overflow: hidden;
 }
@@ -90,14 +273,40 @@ body.menu-open #menu-backdrop {
 }
 
 /* --------------------------------------------------------------------------
-   4b. Mobile Filter Drawer Animations
-   Smooth slide from the right edge on mobile devices.
+   8. Mobile Filter Drawer & Panel Styling
+   Cream background, burgundy headings, and blush pink selected states
    -------------------------------------------------------------------------- */
-#filter-drawer {
+#filter-drawer,
+#filter-panel {
+  background-color: var(--color-cream) !important;
+  color: var(--color-burgundy) !important;
+  border-left: 2px solid var(--color-sand) !important;
+  box-shadow: -10px 0 35px rgba(74, 28, 36, 0.15) !important;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+@media (min-width: 768px) {
+  #filter-panel {
+    background-color: var(--color-cream) !important;
+    border: 1.5px solid var(--color-sand) !important;
+    border-radius: 1.75rem !important;
+    box-shadow: var(--shadow-soft) !important;
+  }
+}
+
+#filter-panel h4,
+#filter-panel h3,
+#filter-drawer h4,
+#filter-drawer h3 {
+  font-family: 'Lilita One', 'Arial Black', cursive, sans-serif !important;
+  color: var(--color-burgundy) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
 #filter-backdrop {
+  background-color: rgba(74, 28, 36, 0.65) !important;
+  backdrop-filter: blur(4px) !important;
   transition: opacity 0.25s ease-in-out;
 }
 
@@ -105,7 +314,8 @@ body.filter-drawer-open {
   overflow: hidden;
 }
 
-body.filter-drawer-open #filter-drawer {
+body.filter-drawer-open #filter-drawer,
+body.filter-drawer-open #filter-panel {
   transform: translateX(0);
 }
 
@@ -114,20 +324,158 @@ body.filter-drawer-open #filter-backdrop {
   pointer-events: auto;
 }
 
+/* Filter Pills: Default State */
+.filter-pill,
+.zone-pill,
+.rating-pill {
+  border-radius: 9999px !important;
+  background-color: #FFFFFF !important;
+  border: 1.5px solid var(--color-sand) !important;
+  color: var(--color-burgundy) !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  padding: 0.35rem 0.95rem !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(74, 28, 36, 0.04);
+}
+
+.filter-pill:hover,
+.zone-pill:hover,
+.rating-pill:hover {
+  background-color: var(--color-blush-light) !important;
+  border-color: var(--color-burgundy) !important;
+  color: var(--color-burgundy) !important;
+  transform: translateY(-1px);
+}
+
+/* BLUSH SELECTED STATES: Explicitly requested */
+.filter-pill.active-filter,
+.zone-pill.active-zone,
+.rating-pill.active-rating,
+.filter-pill.bg-lsu-gold,
+.zone-pill.bg-lsu-gold,
+.rating-pill.bg-lsu-gold,
+.filter-pill.active,
+.zone-pill.active,
+.rating-pill.active {
+  background-color: var(--color-blush) !important;
+  border-color: var(--color-blush-dark) !important;
+  color: var(--color-burgundy) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 3px 10px rgba(74, 28, 36, 0.14) !important;
+  transform: translateY(-1px);
+}
+
+/* Range input accent */
+#filter-radius-slider,
+#filter-max-price {
+  accent-color: var(--color-burgundy);
+}
+
+/* Top filter toggle button */
+#toggle-filters-btn {
+  border-radius: 9999px !important;
+  background-color: var(--color-burgundy) !important;
+  color: var(--color-cream) !important;
+  border: 1px solid var(--color-burgundy) !important;
+  box-shadow: 0 4px 12px rgba(74, 28, 36, 0.15) !important;
+}
+
+#toggle-filters-btn:hover {
+  background-color: var(--color-burgundy-dark) !important;
+  color: var(--color-cream) !important;
+}
+
 /* --------------------------------------------------------------------------
-   5. Interactive Touch Targets & Focus States
+   9. Provider Detail Modal & Lightbox Styles
+   Cream background, burgundy headings, sand borders, and pill buttons
+   -------------------------------------------------------------------------- */
+#provider-detail-modal {
+  background-color: rgba(74, 28, 36, 0.72) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+#provider-modal-content {
+  background-color: var(--color-cream) !important;
+  color: var(--color-burgundy) !important;
+  border: 1px solid var(--color-sand) !important;
+  border-radius: 1.75rem !important;
+  box-shadow: 0 25px 60px -15px rgba(74, 28, 36, 0.35) !important;
+}
+
+#provider-modal-content .sticky {
+  background-color: rgba(246, 238, 230, 0.96) !important;
+  border-color: var(--color-sand) !important;
+  color: var(--color-burgundy) !important;
+}
+
+#close-provider-modal-btn,
+#close-photo-lightbox {
+  border-radius: 9999px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid var(--color-sand) !important;
+  color: var(--color-burgundy) !important;
+  transition: all 0.2s ease;
+}
+
+#close-provider-modal-btn:hover,
+#close-photo-lightbox:hover {
+  background-color: var(--color-burgundy) !important;
+  color: var(--color-cream) !important;
+  border-color: var(--color-burgundy) !important;
+}
+
+/* Modal form inputs, cards, and textareas */
+#provider-modal-content input,
+#provider-modal-content textarea,
+#provider-modal-content select {
+  background-color: #FFFFFF !important;
+  color: var(--color-burgundy) !important;
+  border: 1px solid var(--color-sand) !important;
+  border-radius: 0.875rem !important;
+}
+
+#provider-modal-content input:focus,
+#provider-modal-content textarea:focus,
+#provider-modal-content select:focus {
+  border-color: var(--color-burgundy) !important;
+  outline: 2px solid rgba(74, 28, 36, 0.15) !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. Ambient Glows & Background Accents
+   -------------------------------------------------------------------------- */
+.hero-glow-bg {
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(233, 198, 204, 0.5) 0%, rgba(246, 238, 230, 0) 70%),
+    radial-gradient(circle at 80% 20%, rgba(253, 208, 35, 0.12) 0%, rgba(246, 238, 230, 0) 50%);
+}
+
+.gold-accent-badge {
+  background-color: var(--color-lsu-gold);
+  color: var(--color-burgundy);
+  font-family: 'Lilita One', cursive, sans-serif;
+  letter-spacing: 0.05em;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(253, 208, 35, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   11. Interactive Touch Targets & Focus States
    -------------------------------------------------------------------------- */
 a, button, input {
   transition: all 0.2s ease;
 }
 
 a:focus-visible, button:focus-visible, input:focus-visible {
-  outline: 2px solid var(--lsu-gold);
+  outline: 2px solid var(--color-burgundy);
   outline-offset: 2px;
 }
 
 /* --------------------------------------------------------------------------
-   6. Custom Scrollbar Styling
+   12. Custom Scrollbar Styling (Warm Cream & Burgundy)
    -------------------------------------------------------------------------- */
 ::-webkit-scrollbar {
   width: 8px;
@@ -135,16 +483,16 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-dark-primary);
+  background: var(--color-cream);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 4px;
+  background: var(--color-blush-dark);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--lsu-purple);
+  background: var(--color-burgundy);
 }
 
 .scrollbar-none::-webkit-scrollbar {
@@ -154,3 +502,194 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* --------------------------------------------------------------------------
+   13. Hero Photo & Chunky Overlap Headline Styles
+   -------------------------------------------------------------------------- */
+.hero-photo-frame {
+  position: relative;
+  width: 100%;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 20px 40px -10px rgba(74, 28, 36, 0.2), 0 10px 20px -5px rgba(74, 28, 36, 0.1);
+  border: 1px solid rgba(233, 198, 204, 0.4);
+  background-color: var(--color-sand);
+}
+
+@media (min-width: 640px) {
+  .hero-photo-frame {
+    border-radius: 2.75rem;
+  }
+}
+
+.hero-chunky-headline {
+  font-family: 'Lilita One', 'Arial Black', Impact, cursive, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 0.92;
+  color: #FFFFFF;
+  text-shadow: 0 4px 18px rgba(74, 28, 36, 0.65), 0 2px 4px rgba(74, 28, 36, 0.4);
+}
+
+.hero-chunky-headline .script-word {
+  color: var(--color-blush) !important;
+  text-shadow: 0 3px 12px rgba(74, 28, 36, 0.5);
+  font-size: 1.15em;
+  display: inline-block;
+  transform: rotate(-4deg);
+}
+
+/* --------------------------------------------------------------------------
+   14. Scrolling Text Banner (Marquee)
+   Infinite smooth loop, pause on hover, prefers-reduced-motion safe
+   -------------------------------------------------------------------------- */
+.marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-burgundy);
+  color: var(--color-cream);
+  border-top: 1.5px solid rgba(233, 198, 204, 0.2);
+  border-bottom: 1.5px solid rgba(233, 198, 204, 0.2);
+  user-select: none;
+  cursor: default;
+}
+
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+  will-change: transform;
+}
+
+.marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Lilita One', 'Arial Black', Impact, cursive, sans-serif;
+  font-size: clamp(1.35rem, 3.2vw, 2.75rem);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  padding: 0.85rem 0;
+  color: var(--color-cream);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.marquee-item:hover {
+  color: var(--color-lsu-gold);
+  transform: scale(1.03);
+}
+
+.marquee-slash {
+  color: var(--color-lsu-gold);
+  margin: 0 clamp(0.75rem, 2vw, 1.75rem);
+  font-weight: 900;
+  opacity: 0.95;
+  display: inline-block;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Accessibility: Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+    overflow-x: auto;
+    width: 100%;
+    scrollbar-width: none;
+  }
+  .marquee-track::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   15. Condensed Category Title Row (Blush & Sand Pills with Burgundy text)
+   -------------------------------------------------------------------------- */
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px !important;
+  font-family: 'Lilita One', 'Arial Black', Impact, cursive, sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+  line-height: 1;
+  padding: 0.7rem 1.45rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px -2px rgba(74, 28, 36, 0.08);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .category-pill {
+    font-size: 0.875rem;
+    padding: 0.75rem 1.65rem;
+  }
+}
+
+/* Blush Pink Pill */
+.category-pill-blush {
+  background-color: var(--color-blush) !important;
+  color: var(--color-burgundy) !important;
+  border: 1.5px solid var(--color-blush-dark) !important;
+}
+
+.category-pill-blush:hover,
+.category-pill-blush:focus-visible {
+  background-color: var(--color-burgundy) !important;
+  color: var(--color-cream) !important;
+  border-color: var(--color-burgundy) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px -2px rgba(74, 28, 36, 0.24);
+}
+
+/* Sand Warm Neutral Pill */
+.category-pill-sand {
+  background-color: var(--color-sand) !important;
+  color: var(--color-burgundy) !important;
+  border: 1.5px solid var(--color-sand-dark) !important;
+}
+
+.category-pill-sand:hover,
+.category-pill-sand:focus-visible {
+  background-color: var(--color-burgundy) !important;
+  color: var(--color-cream) !important;
+  border-color: var(--color-burgundy) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px -2px rgba(74, 28, 36, 0.24);
+}
+
+/* Active Category State */
+.category-pill-active {
+  background-color: var(--color-burgundy) !important;
+  color: var(--color-cream) !important;
+  border: 1.5px solid var(--color-burgundy) !important;
+  box-shadow: 0 6px 16px rgba(74, 28, 36, 0.28) !important;
+  transform: translateY(-1px);
+}
+
+

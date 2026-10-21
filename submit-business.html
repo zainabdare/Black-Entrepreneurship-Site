@@ -6,29 +6,51 @@
   <title>Submit Your Business | Black-Owned BR (LSU Directory)</title>
   <meta name="description" content="Apply to list your Black-owned business or creative service in the Baton Rouge directory within 25 miles of LSU.">
 
-  <!-- Google Fonts: Inter & Outfit -->
+  <!-- Google Fonts: Lilita One (Headings), Caveat (Script Accent), Poppins (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lilita+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Tailwind Configuration with LSU Brand Theme -->
+  <!-- Tailwind Configuration with Burgundy, Blush, Cream, Sand & LSU Gold -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            heading: ['Outfit', 'sans-serif'],
+            sans: ['Poppins', 'sans-serif'],
+            heading: ['"Lilita One"', 'cursive', 'sans-serif'],
+            script: ['Caveat', 'cursive'],
           },
           colors: {
+            burgundy: {
+              DEFAULT: '#4A1C24',
+              dark: '#351218',
+              light: '#612731',
+              hover: '#3D151C',
+            },
+            blush: {
+              DEFAULT: '#E9C6CC',
+              light: '#F7E9EC',
+              dark: '#D4A7B0',
+            },
+            cream: {
+              DEFAULT: '#F6EEE6',
+              light: '#FDFBF8',
+              dark: '#ECE2D8',
+            },
+            sand: {
+              DEFAULT: '#EAD5C0',
+              light: '#F4E8DC',
+              dark: '#D3BAA2',
+            },
             lsu: {
-              purple: '#461D7C',
-              'purple-dark': '#2E1053',
-              'purple-deep': '#1A0830',
-              'purple-light': '#6B2FA8',
+              purple: '#4A1C24',
+              'purple-dark': '#351218',
+              'purple-deep': '#4A1C24',
+              'purple-light': '#612731',
               gold: '#FDD023',
               'gold-hover': '#ECC21C',
               'gold-light': '#FEF08A',
@@ -42,31 +64,34 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 
+  <!-- EmailJS Official Browser SDK (Zero npm, loaded via CDN) -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <!-- JavaScript ES Modules (Includes slide-out drawer navigation) -->
   <script type="module" src="js/app.js"></script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-lsu-gold selection:text-lsu-purple-dark antialiased">
+<body class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
 
   <!-- ========================================================================
        HEADER & NAVIGATION
        ======================================================================== -->
-  <header class="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-purple-900/30 transition-all">
+  <header class="sticky top-0 z-40 bg-[#F6EEE6]/90 backdrop-blur-md border-b border-[#EAD5C0] transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20">
         
         <!-- Site Logo -->
-        <a href="index.html" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-lsu-gold rounded-xl py-1">
-          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-lsu-purple via-lsu-purple-dark to-purple-950 border border-lsu-gold/40 flex items-center justify-center shadow-lg shadow-purple-950/50 group-hover:border-lsu-gold transition-colors">
-            <span class="text-lsu-gold font-heading font-black text-base sm:text-lg tracking-wider">LSU</span>
+        <a href="index.html" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4A1C24] rounded-full py-1">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#4A1C24] border border-[#FDD023]/60 flex items-center justify-center shadow-md group-hover:border-[#FDD023] transition-colors">
+            <span class="text-[#FDD023] font-heading font-black text-base sm:text-lg tracking-wider">LSU</span>
           </div>
           <div>
             <div class="flex items-center gap-1.5">
-              <span class="font-heading font-black text-lg sm:text-xl text-white tracking-tight leading-none group-hover:text-lsu-gold transition-colors">
-                Black-Owned BR
+              <span class="font-heading font-black text-lg sm:text-2xl text-[#4A1C24] tracking-tight leading-none group-hover:text-[#612731] transition-colors">
+                BLACK-OWNED <span class="script-word text-[#4A1C24]">br</span>
               </span>
-              <span class="inline-block w-2 h-2 rounded-full bg-lsu-gold animate-pulse"></span>
+              <span class="inline-block w-2 h-2 rounded-full bg-[#FDD023] shadow-sm"></span>
             </div>
-            <p class="text-[11px] sm:text-xs text-slate-400 font-medium tracking-wide">
+            <p class="text-[11px] sm:text-xs text-[#7A535A] font-medium tracking-wide">
               LSU &bull; 25-Mile Radius Directory
             </p>
           </div>
@@ -77,12 +102,12 @@
           <button 
             id="hamburger-btn" 
             type="button" 
-            class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-purple-900/40 text-slate-200 hover:text-lsu-gold hover:border-lsu-gold/50 focus:outline-none focus:ring-2 focus:ring-lsu-gold transition-colors shadow-sm cursor-pointer"
+            class="flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] hover:text-[#FDD023] border border-[#4A1C24] focus:outline-none focus:ring-2 focus:ring-[#FDD023] transition-all shadow-md cursor-pointer"
             aria-expanded="false" 
             aria-controls="slide-out-menu"
             aria-label="Open navigation menu"
           >
-            <span class="text-xs font-heading font-bold uppercase tracking-wider text-slate-300 hidden sm:inline-block">Menu</span>
+            <span class="text-xs font-heading font-bold uppercase tracking-wider hidden sm:inline-block">Menu</span>
             <svg class="w-5 h-5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
@@ -96,30 +121,30 @@
   <!-- ========================================================================
        HERO BANNER
        ======================================================================== -->
-  <section class="relative hero-glow-bg border-b border-purple-900/20 py-12 sm:py-16 overflow-hidden">
+  <section class="relative hero-glow-bg border-b border-[#EAD5C0]/80 py-12 sm:py-16 overflow-hidden">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       
       <!-- Breadcrumb -->
-      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-lsu-gold transition-colors mb-4">
+      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-[#7A535A] hover:text-[#4A1C24] font-heading font-semibold transition-colors mb-4">
         <span>&larr;</span>
         <span>Back to Main Directory</span>
       </a>
 
       <!-- Pill -->
       <div class="block">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-lsu-purple/40 border border-lsu-gold/30 text-lsu-gold text-xs sm:text-sm font-semibold mb-4 backdrop-blur">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E9C6CC]/50 border border-[#D4A7B0] text-[#4A1C24] text-xs sm:text-sm font-heading font-bold mb-4">
           <span>📝</span>
           <span>Community Directory Intake</span>
-          <span class="w-1 h-1 rounded-full bg-lsu-gold"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[#FDD023]"></span>
           <span>100% Free Listing</span>
         </div>
       </div>
 
       <!-- Title -->
-      <h1 class="text-3xl sm:text-5xl font-heading font-extrabold text-white tracking-tight mb-4">
-        Submit Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-lsu-gold via-amber-300 to-yellow-400">Business</span>
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-[#4A1C24] tracking-tight mb-4">
+        Submit Your <span class="script-word text-[#4A1C24]">business</span>
       </h1>
-      <p class="max-w-xl mx-auto text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+      <p class="max-w-xl mx-auto text-[#7A535A] text-sm sm:text-base leading-relaxed mb-4 font-sans">
         Are you a Black entrepreneur, braider, nail artist, lash tech, caterer, designer, or photographer within 25 miles of LSU? Apply below to get discovered by thousands of Tigers.
       </p>
 
@@ -129,35 +154,16 @@
   <!-- ========================================================================
        INTAKE FORM & STANDARDS
        ======================================================================== -->
-  <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10">
-    
-    <!-- Listing Standards Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 text-center shadow">
-        <div class="text-2xl mb-1">📍</div>
-        <div class="text-xs font-heading font-bold text-white mb-1">Within 25 Miles</div>
-        <p class="text-[11px] text-slate-400">Located in Baton Rouge or travels to LSU campus.</p>
-      </div>
-      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 text-center shadow">
-        <div class="text-2xl mb-1">🐯</div>
-        <div class="text-xs font-heading font-bold text-white mb-1">LSU Verified Badge</div>
-        <p class="text-[11px] text-slate-400">Student &amp; Alumni verification badges available.</p>
-      </div>
-      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 text-center shadow">
-        <div class="text-2xl mb-1">✨</div>
-        <div class="text-xs font-heading font-bold text-white mb-1">Free Directory</div>
-        <p class="text-[11px] text-slate-400">No listing fees, subscriptions, or commissions.</p>
-      </div>
-    </div>
+  <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
 
     <!-- Intake Form Card -->
-    <div class="rounded-3xl bg-slate-900/80 border border-purple-900/50 p-6 sm:p-10 shadow-2xl backdrop-blur space-y-8">
+    <div class="rounded-3xl bg-slate-900/95 border border-purple-900/50 p-6 sm:p-10 shadow-2xl backdrop-blur space-y-8">
       
-      <div>
-        <h2 class="text-xl sm:text-2xl font-heading font-bold text-white">
+      <div id="intake-form-header">
+        <h2 class="text-2xl sm:text-3xl font-heading font-black text-white">
           Provider Application Form
         </h2>
-        <p class="text-xs text-slate-400 mt-1">
+        <p class="text-xs sm:text-sm text-slate-300 mt-1.5 font-sans">
           Fill out your details below. Your submission will be sent to our admin review queue for verification.
         </p>
       </div>
@@ -166,76 +172,110 @@
         
         <!-- SECTION 1: BUSINESS IDENTITY & CATEGORY -->
         <div class="space-y-4">
-          <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider border-b border-purple-900/30 pb-2">
-            1. Business Identity &amp; Category
+          <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider border-b border-[#FDD023]/30 pb-2 flex items-center gap-2">
+            <span>🏷️</span>
+            <span>1. Business Identity &amp; Contact</span>
           </h3>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Anti-Spam Honeypot Field (Hidden from real users; bots fill this and get blocked) -->
+          <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+            <label for="intake-bot-trap">Leave this blank</label>
+            <input type="text" id="intake-bot-trap" name="bot_security_code" tabindex="-1" autocomplete="new-password">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-business-name">
-                Business Name <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-business-name">
+                Business Name <span class="text-[#FDD023] font-bold">*</span>
               </label>
               <input 
                 id="intake-business-name" 
                 type="text" 
                 required 
                 placeholder="e.g. Bayou Crown Braid Lounge"
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
 
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-owner-name">
-                Owner / Artist Name <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-owner-name">
+                Owner / Artist Name <span class="text-[#FDD023] font-bold">*</span>
               </label>
               <input 
                 id="intake-owner-name" 
                 type="text" 
                 required 
                 placeholder="e.g. Kiana Carter"
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-category-select">
-                Primary Category <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-owner-email">
+                Contact Email <span class="text-[#FDD023] font-bold">*</span>
+              </label>
+              <input 
+                id="intake-owner-email" 
+                type="email" 
+                required 
+                placeholder="e.g. kiana@example.com"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
+              >
+            </div>
+
+            <div>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-owner-phone">
+                Contact Phone <span class="text-[#EAD5C0] font-normal">(Optional)</span>
+              </label>
+              <input 
+                id="intake-owner-phone" 
+                type="tel" 
+                placeholder="e.g. (225) 555-0199"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
+              >
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <div>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-category-select">
+                Primary Category <span class="text-[#FDD023] font-bold">*</span>
               </label>
               <select 
                 id="intake-category-select" 
                 required
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer"
               >
-                <option value="">-- Choose Category --</option>
-                <option value="Hair">Hair (Braids, Silk Press, Locs, Wigs)</option>
-                <option value="Nails">Nails (Acrylic, Gel-X, Press-Ons, Nail Art)</option>
-                <option value="Lashes">Lashes (Classic, Volume, Hybrid)</option>
-                <option value="Food & Beverages">Food &amp; Beverages (Plates, Catering, Desserts)</option>
-                <option value="Fashion (Custom Outfits)">Fashion (Custom Outfits, Tailoring, Prom)</option>
-                <option value="Photography">Photography (Graduation, Game Day, Brand)</option>
+                <option value="" class="bg-slate-900 text-white">-- Choose Category --</option>
+                <option value="Hair" class="bg-slate-900 text-white">Hair (Braids, Silk Press, Locs, Wigs)</option>
+                <option value="Nails" class="bg-slate-900 text-white">Nails (Acrylic, Gel-X, Press-Ons, Nail Art)</option>
+                <option value="Lashes" class="bg-slate-900 text-white">Lashes (Classic, Volume, Hybrid)</option>
+                <option value="Food & Beverages" class="bg-slate-900 text-white">Food &amp; Beverages (Plates, Catering, Desserts)</option>
+                <option value="Fashion (Custom Outfits)" class="bg-slate-900 text-white">Fashion (Custom Outfits, Tailoring, Prom)</option>
+                <option value="Photography" class="bg-slate-900 text-white">Photography (Graduation, Game Day, Brand)</option>
               </select>
             </div>
 
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-lsu-verified">
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-lsu-verified">
                 LSU Affiliation
               </label>
               <select 
                 id="intake-lsu-verified"
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer"
               >
-                <option value="null">Independent Community Business</option>
-                <option value="student">Current LSU Student (Student-Owned Badge)</option>
-                <option value="alumni">LSU Alumni (Alumni-Owned Badge)</option>
+                <option value="null" class="bg-slate-900 text-white">Independent Community Business</option>
+                <option value="student" class="bg-slate-900 text-white">Current LSU Student (Student-Owned Badge)</option>
+                <option value="alumni" class="bg-slate-900 text-white">LSU Alumni (Alumni-Owned Badge)</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-description">
-              Business Bio &amp; Service Description <span class="text-lsu-gold">*</span>
+            <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-description">
+              Business Bio &amp; Service Description <span class="text-[#FDD023] font-bold">*</span>
             </label>
             <textarea 
               id="intake-description" 
@@ -243,7 +283,7 @@
               required 
               maxlength="400"
               placeholder="Tell clients what makes your service special, your setup, and what to expect..."
-              class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors leading-relaxed"
+              class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors leading-relaxed"
             ></textarea>
           </div>
         </div>
@@ -252,101 +292,101 @@
              SECTION 2: DYNAMIC CATEGORY-SPECIFIC ATTRIBUTES
              (Only displays fields for the selected category!)
              ==================================================================== -->
-        <div id="category-specific-wrapper" class="hidden space-y-4 p-5 rounded-2xl bg-slate-950/80 border border-lsu-gold/30">
+        <div id="category-specific-wrapper" class="hidden space-y-5 p-5 sm:p-6 rounded-2xl bg-slate-950 border-2 border-[#FDD023]/40 shadow-inner">
           
-          <div class="flex items-center justify-between border-b border-purple-900/30 pb-2">
-            <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider flex items-center gap-1.5">
+          <div class="flex items-center justify-between border-b border-[#FDD023]/30 pb-3">
+            <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider flex items-center gap-2">
               <span>✨</span>
               <span id="category-specific-title">Category Details</span>
             </h3>
-            <span class="text-[10px] text-purple-300 font-mono">Tailored to your craft</span>
+            <span class="text-xs text-[#E9C6CC] font-heading font-semibold bg-[#4A1C24] px-3 py-0.5 rounded-full border border-[#E9C6CC]/30">Tailored to your craft</span>
           </div>
 
           <!-- 2A. Hair Specific Fields -->
-          <div id="fields-hair" class="category-field-group hidden space-y-4">
+          <div id="fields-hair" class="category-field-group hidden space-y-5">
             <div>
-              <span class="block text-xs font-semibold text-slate-200 mb-2">Hair Types &amp; Textures Serviced</span>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="hairTypes" value="3A-3C" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>3A-3C</span>
+              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Hair Types &amp; Textures Serviced</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairTypes" value="3A-3C" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">3A-3C</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="hairTypes" value="4A-4C" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>4A-4C</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairTypes" value="4A-4C" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">4A-4C</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="hairTypes" value="Locs & Sisterlocks" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Locs &amp; Sisterlocks</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairTypes" value="Locs & Sisterlocks" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Locs &amp; Sisterlocks</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="hairTypes" value="Relaxed/Straight" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Relaxed/Straight</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairTypes" value="Relaxed/Straight" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Relaxed/Straight</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <span class="block text-xs font-semibold text-slate-200 mb-2">Specialties</span>
-              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="hairSpecialties" value="knotless braids" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Knotless Braids</span>
+              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Specialties</span>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="knotless braids" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Knotless Braids</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="hairSpecialties" value="wig installs" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Wig Installs</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="wig installs" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Wig Installs</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="hairSpecialties" value="silk press" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Silk Press</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="silk press" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Silk Press</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="hairSpecialties" value="loc maintenance" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Loc Maintenance</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="loc maintenance" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Loc Maintenance</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="hairSpecialties" value="hair included" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Braiding Hair Included</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="hair included" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Braiding Hair Included</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-200 mb-1" for="intake-chair-vibe">
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-chair-vibe">
                 Chair Vibe / Setting
               </label>
-              <select id="intake-chair-vibe" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm">
-                <option value="home studio">Home Studio (Cozy / Quiet)</option>
-                <option value="studio">Professional Salon / Commercial Studio</option>
-                <option value="travels to you">Travels to Client / Mobile</option>
+              <select id="intake-chair-vibe" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
+                <option value="home studio" class="bg-slate-900 text-white">Home Studio (Cozy / Quiet)</option>
+                <option value="studio" class="bg-slate-900 text-white">Professional Salon / Commercial Studio</option>
+                <option value="travels to you" class="bg-slate-900 text-white">Travels to Client / Mobile</option>
               </select>
             </div>
           </div>
 
           <!-- 2B. Nails Specific Fields -->
-          <div id="fields-nails" class="category-field-group hidden space-y-3">
-            <span class="block text-xs font-semibold text-slate-200 mb-1">Nail Styles Offered</span>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                <input type="checkbox" name="nailStyles" value="acrylic" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                <span>Acrylic Full Sets</span>
+          <div id="fields-nails" class="category-field-group hidden space-y-4">
+            <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Nail Styles Offered</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="acrylic" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                <span class="text-white font-medium select-none">Acrylic Full Sets</span>
               </label>
-              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                <input type="checkbox" name="nailStyles" value="gel-x" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                <span>Gel-X Extensions</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="gel-x" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                <span class="text-white font-medium select-none">Gel-X Extensions</span>
               </label>
-              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                <input type="checkbox" name="nailStyles" value="natural nail" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                <span>Natural Nail Care &amp; Builder Gel</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="natural nail" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                <span class="text-white font-medium select-none">Natural Nail Care &amp; Builder Gel</span>
               </label>
-              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                <input type="checkbox" name="nailStyles" value="press-ons" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                <span>Custom Press-On Sets</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="press-ons" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                <span class="text-white font-medium select-none">Custom Press-On Sets</span>
               </label>
-              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                <input type="checkbox" name="nailStyles" value="nail art" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                <span>Intricate Hand-Painted Nail Art</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="nail art" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                <span class="text-white font-medium select-none">Intricate Hand-Painted Nail Art</span>
               </label>
             </div>
           </div>
@@ -354,33 +394,33 @@
           <!-- 2C. Lashes Specific Fields -->
           <div id="fields-lashes" class="category-field-group hidden space-y-4">
             <div>
-              <span class="block text-xs font-semibold text-slate-200 mb-1">Lash Extension Types</span>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="lashTypes" value="classic" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>Classic</span>
+              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Lash Extension Types</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="lashTypes" value="classic" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">Classic</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="lashTypes" value="hybrid" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>Hybrid</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="lashTypes" value="hybrid" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">Hybrid</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="lashTypes" value="volume" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>Volume</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="lashTypes" value="volume" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">Volume</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="lashTypes" value="mega volume" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Mega Volume</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="lashTypes" value="mega volume" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Mega Volume</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                <input type="checkbox" id="intake-offers-fills" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" id="intake-offers-fills" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
                 <div>
-                  <span class="text-xs font-semibold text-white block">Offers Lash Fills / Relashes</span>
-                  <span class="text-[11px] text-slate-400">Allows booking maintenance fills on sets from your salon or foreign work.</span>
+                  <span class="text-xs sm:text-sm font-bold text-white block">Offers Lash Fills / Relashes</span>
+                  <span class="text-[11px] sm:text-xs text-slate-300 block mt-0.5">Allows booking maintenance fills on sets from your salon or foreign work.</span>
                 </div>
               </label>
             </div>
@@ -389,35 +429,35 @@
           <!-- 2D. Food & Beverages Specific Fields -->
           <div id="fields-food" class="category-field-group hidden space-y-4">
             <div>
-              <span class="block text-xs font-semibold text-slate-200 mb-1">Food Offerings</span>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="foodTypes" value="meals/plates" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>Meals &amp; Hot Plates</span>
+              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Food Offerings</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="foodTypes" value="meals/plates" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">Meals &amp; Hot Plates</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="foodTypes" value="desserts/baked goods" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Desserts &amp; Baked Goods</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="foodTypes" value="desserts/baked goods" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Desserts &amp; Baked Goods</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="foodTypes" value="drinks" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Specialty Drinks / Juices</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="foodTypes" value="drinks" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Specialty Drinks / Juices</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="foodTypes" value="catering" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Event Catering</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="foodTypes" value="catering" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Event Catering</span>
                 </label>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                <input type="checkbox" id="intake-campus-dropoff" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                <span>Offers LSU Campus Drop-Off / Delivery</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" id="intake-campus-dropoff" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                <span class="text-white font-medium select-none">Offers LSU Campus Drop-Off / Delivery</span>
               </label>
-              <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                <input type="checkbox" id="intake-preorder-required" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                <span>Advance Pre-Order Required</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" id="intake-preorder-required" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                <span class="text-white font-medium select-none">Advance Pre-Order Required</span>
               </label>
             </div>
           </div>
@@ -425,35 +465,35 @@
           <!-- 2E. Fashion Specific Fields -->
           <div id="fields-fashion" class="category-field-group hidden space-y-4">
             <div>
-              <span class="block text-xs font-semibold text-slate-200 mb-1">Custom Outfit Types</span>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="outfitTypes" value="game day" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>LSU Game Day Fits</span>
+              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Custom Outfit Types</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="outfitTypes" value="game day" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">LSU Game Day Fits</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="outfitTypes" value="formal/prom" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>Formal / Prom / Gowns</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="outfitTypes" value="formal/prom" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">Formal / Prom / Gowns</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="outfitTypes" value="graduation" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>Graduation Stoles &amp; Dresses</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="outfitTypes" value="graduation" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">Graduation Stoles &amp; Dresses</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="outfitTypes" value="everyday" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Everyday Streetwear / Alterations</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="outfitTypes" value="everyday" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Everyday Streetwear / Alterations</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-200 mb-1" for="intake-fashion-turnaround">
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-fashion-turnaround">
                 Typical Turnaround Speed
               </label>
-              <select id="intake-fashion-turnaround" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm">
-                <option value="this-week">This Week (Rush Available)</option>
-                <option value="2-weeks">2 Weeks Standard</option>
-                <option value="formal-ready">Formal-Ready (3-4 weeks for custom gowns/suits)</option>
+              <select id="intake-fashion-turnaround" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
+                <option value="this-week" class="bg-slate-900 text-white">This Week (Rush Available)</option>
+                <option value="2-weeks" class="bg-slate-900 text-white">2 Weeks Standard</option>
+                <option value="formal-ready" class="bg-slate-900 text-white">Formal-Ready (3-4 weeks for custom gowns/suits)</option>
               </select>
             </div>
           </div>
@@ -461,44 +501,44 @@
           <!-- 2F. Photography Specific Fields -->
           <div id="fields-photography" class="category-field-group hidden space-y-4">
             <div>
-              <span class="block text-xs font-semibold text-slate-200 mb-1">Photography Shoot Types</span>
-              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="shootTypes" value="graduation" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>LSU Graduation Portraits</span>
+              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Photography Shoot Types</span>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="graduation" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">LSU Graduation Portraits</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="shootTypes" value="game day" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                  <span>Game Day &amp; Sports</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="game day" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                  <span class="text-white font-medium select-none">Game Day &amp; Sports</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="shootTypes" value="events" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Greek Life &amp; Events</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="events" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Greek Life &amp; Events</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="shootTypes" value="portraits" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Studio &amp; Headshots</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="portraits" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Studio &amp; Headshots</span>
                 </label>
-                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-                  <input type="checkbox" name="shootTypes" value="brand content" class="rounded text-lsu-purple focus:ring-lsu-gold">
-                  <span>Brand Content &amp; Editorial</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="brand content" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
+                  <span class="text-white font-medium select-none">Brand Content &amp; Editorial</span>
                 </label>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
               <div>
-                <label class="block text-xs font-semibold text-slate-200 mb-1" for="intake-photo-turnaround">
+                <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-photo-turnaround">
                   Gallery Turnaround
                 </label>
-                <select id="intake-photo-turnaround" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm">
-                  <option value="this-week">Fast Proofs (Within 1 Week)</option>
-                  <option value="2-weeks">2 Weeks Standard Editing</option>
+                <select id="intake-photo-turnaround" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
+                  <option value="this-week" class="bg-slate-900 text-white">Fast Proofs (Within 1 Week)</option>
+                  <option value="2-weeks" class="bg-slate-900 text-white">2 Weeks Standard Editing</option>
                 </select>
               </div>
-              <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40 mt-auto">
-                <input type="checkbox" id="intake-travels-campus" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                <span>Shoots On LSU Campus Grounds</span>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm mt-auto">
+                <input type="checkbox" id="intake-travels-campus" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                <span class="text-white font-medium select-none">Shoots On LSU Campus Grounds</span>
               </label>
             </div>
           </div>
@@ -507,14 +547,15 @@
 
         <!-- SECTION 3: PRICING, AVAILABILITY & EXPERIENCE -->
         <div class="space-y-4">
-          <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider border-b border-purple-900/30 pb-2">
-            3. Pricing, Experience &amp; Logistics
+          <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider border-b border-[#FDD023]/30 pb-2 flex items-center gap-2">
+            <span>💰</span>
+            <span>3. Pricing, Experience &amp; Logistics</span>
           </h3>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-starting-price">
-                Starting Price ($) <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-starting-price">
+                Starting Price ($) <span class="text-[#FDD023] font-bold">*</span>
               </label>
               <input 
                 id="intake-starting-price" 
@@ -523,24 +564,24 @@
                 min="5" 
                 max="5000" 
                 placeholder="e.g. 75"
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white font-mono text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 font-mono text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
 
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-price-tier">
-                Price Tier <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-price-tier">
+                Price Tier <span class="text-[#FDD023] font-bold">*</span>
               </label>
-              <select id="intake-price-tier" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer">
-                <option value="$">$ (Budget-Friendly / Student-Priced)</option>
-                <option value="$$" selected>$$ (Standard Market Rate)</option>
-                <option value="$$$">$$$ (Premium / Luxury / Specialist)</option>
+              <select id="intake-price-tier" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
+                <option value="$" class="bg-slate-900 text-white">$ (Budget-Friendly / Student-Priced)</option>
+                <option value="$$" selected class="bg-slate-900 text-white">$$ (Standard Market Rate)</option>
+                <option value="$$$" class="bg-slate-900 text-white">$$$ (Premium / Luxury / Specialist)</option>
               </select>
             </div>
 
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-experience">
-                Years of Experience <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-experience">
+                Years of Experience <span class="text-[#FDD023] font-bold">*</span>
               </label>
               <input 
                 id="intake-experience" 
@@ -549,54 +590,54 @@
                 min="1" 
                 max="50" 
                 placeholder="e.g. 3"
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white font-mono text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 font-mono text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-service-delivery">
-                Service Delivery <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-service-delivery">
+                Service Delivery <span class="text-[#FDD023] font-bold">*</span>
               </label>
-              <select id="intake-service-delivery" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer">
-                <option value="studio">Studio / Home Salon Setup</option>
-                <option value="mobile">Mobile / Travels to Campus</option>
-                <option value="both" selected>Both (Studio &amp; Mobile)</option>
+              <select id="intake-service-delivery" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
+                <option value="studio" class="bg-slate-900 text-white">Studio / Home Salon Setup</option>
+                <option value="mobile" class="bg-slate-900 text-white">Mobile / Travels to Campus</option>
+                <option value="both" selected class="bg-slate-900 text-white">Both (Studio &amp; Mobile)</option>
               </select>
             </div>
 
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-availability">
-                General Availability <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-availability">
+                General Availability <span class="text-[#FDD023] font-bold">*</span>
               </label>
-              <select id="intake-availability" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer">
-                <option value="open-this-week" selected>🟢 Open This Week</option>
-                <option value="same-day">⚡ Same-Day / Last-Minute Accepted</option>
-                <option value="bookings-open">📅 Advance Bookings Open</option>
+              <select id="intake-availability" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
+                <option value="open-this-week" selected class="bg-slate-900 text-white">🟢 Open This Week</option>
+                <option value="same-day" class="bg-slate-900 text-white">⚡ Same-Day / Last-Minute Accepted</option>
+                <option value="bookings-open" class="bg-slate-900 text-white">📅 Advance Bookings Open</option>
               </select>
             </div>
 
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-neighborhood">
-                Neighborhood Area <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-neighborhood">
+                Neighborhood Area <span class="text-[#FDD023] font-bold">*</span>
               </label>
-              <select id="intake-neighborhood" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer">
-                <option value="Northgate (LSU Walkable)" selected>Northgate (LSU Walkable)</option>
-                <option value="Highland / Burbank">Highland / Burbank</option>
-                <option value="Mid-City Baton Rouge">Mid-City Baton Rouge</option>
-                <option value="Downtown Baton Rouge">Downtown Baton Rouge</option>
-                <option value="South Baton Rouge">South Baton Rouge (Within 25 mi)</option>
+              <select id="intake-neighborhood" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
+                <option value="Northgate (LSU Walkable)" selected class="bg-slate-900 text-white">Northgate (LSU Walkable)</option>
+                <option value="Highland / Burbank" class="bg-slate-900 text-white">Highland / Burbank</option>
+                <option value="Mid-City Baton Rouge" class="bg-slate-900 text-white">Mid-City Baton Rouge</option>
+                <option value="Downtown Baton Rouge" class="bg-slate-900 text-white">Downtown Baton Rouge</option>
+                <option value="South Baton Rouge" class="bg-slate-900 text-white">South Baton Rouge (Within 25 mi)</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-950 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
-              <input type="checkbox" id="intake-student-discount" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+            <label class="flex items-start sm:items-center gap-3.5 p-3.5 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
+              <input type="checkbox" id="intake-student-discount" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0 mt-0.5 sm:mt-0" checked>
               <div>
-                <span class="text-xs font-semibold text-white block">Offers LSU Student Discount</span>
-                <span class="text-[11px] text-slate-400">Gives students a discount when presenting an active LSU Tiger Card or ID.</span>
+                <span class="text-xs sm:text-sm font-semibold text-white block select-none">Offers LSU Student Discount</span>
+                <span class="text-xs text-slate-300 select-none">Gives students a discount when presenting an active LSU Tiger Card or ID.</span>
               </div>
             </label>
           </div>
@@ -604,60 +645,61 @@
 
         <!-- SECTION 4: SOCIAL MEDIA & BOOKING LINKS -->
         <div class="space-y-4">
-          <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider border-b border-purple-900/30 pb-2">
-            4. Social Media &amp; Booking Links
+          <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider border-b border-[#FDD023]/30 pb-2 flex items-center gap-2">
+            <span>🔗</span>
+            <span>4. Social Media &amp; Booking Links</span>
           </h3>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-instagram">
-                Instagram Profile or Handle <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-instagram">
+                Instagram Profile or Handle <span class="text-[#FDD023] font-bold">*</span>
               </label>
               <input 
                 id="intake-instagram" 
                 type="text" 
                 required 
                 placeholder="@yourhandle or https://instagram.com/..."
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
 
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-tiktok">
-                TikTok Handle or URL
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-tiktok">
+                TikTok Handle or URL <span class="text-[#EAD5C0] font-normal">(Optional)</span>
               </label>
               <input 
                 id="intake-tiktok" 
                 type="text" 
                 placeholder="@yourhandle or https://tiktok.com/@..."
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-booking-url">
-                Booking Site / Direct Link <span class="text-lsu-gold">*</span>
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-booking-url">
+                Booking Site / Direct Link <span class="text-[#FDD023] font-bold">*</span>
               </label>
               <input 
                 id="intake-booking-url" 
                 type="url" 
                 required 
                 placeholder="e.g. https://styleseat.com/... or booking site / DM link"
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
 
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-website-url">
-                Website Link (Optional)
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-website-url">
+                Website Link <span class="text-[#EAD5C0] font-normal">(Optional)</span>
               </label>
               <input 
                 id="intake-website-url" 
                 type="url" 
                 placeholder="https://..."
-                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
           </div>
@@ -665,70 +707,72 @@
 
         <!-- SECTION 5: CLIENT POLICIES -->
         <div class="space-y-4">
-          <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider border-b border-purple-900/30 pb-2">
-            5. Policies &amp; Expectations
+          <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider border-b border-[#FDD023]/30 pb-2 flex items-center gap-2">
+            <span>📋</span>
+            <span>5. Policies &amp; Expectations</span>
           </h3>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
-              <label class="flex items-center gap-2 mb-2 cursor-pointer">
-                <input type="checkbox" id="intake-deposit-required" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
-                <span class="text-xs font-semibold text-white">Deposit Required Upon Booking</span>
+              <label class="flex items-center gap-3 mb-2 p-2 rounded-xl hover:bg-slate-800 transition-colors cursor-pointer">
+                <input type="checkbox" id="intake-deposit-required" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+                <span class="text-xs sm:text-sm font-semibold text-white select-none">Deposit Required Upon Booking</span>
               </label>
               <input 
                 id="intake-deposit-amount" 
                 type="text" 
                 placeholder="e.g. $25 non-refundable deposit applied to service"
-                class="w-full px-4 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
 
             <div>
-              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-cancellation-policy">
+              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-cancellation-policy">
                 Cancellation &amp; Rescheduling Policy
               </label>
               <input 
                 id="intake-cancellation-policy" 
                 type="text" 
                 placeholder="e.g. 24-hour notice required to transfer deposit"
-                class="w-full px-4 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
               >
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-refund-policy">
+            <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-refund-policy">
               Refund Policy
             </label>
             <input 
               id="intake-refund-policy" 
               type="text" 
               placeholder="e.g. Deposits non-refundable; complimentary adjustment offered within 48 hours"
-              class="w-full px-4 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
             >
           </div>
         </div>
 
         <!-- SECTION 6: PORTFOLIO PHOTO UPLOADS (Up to 4 photos) -->
         <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-purple-900/30 pb-2">
-            <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider">
-              6. Portfolio Photos
+          <div class="flex items-center justify-between border-b border-[#FDD023]/30 pb-2">
+            <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider flex items-center gap-2">
+              <span>📸</span>
+              <span>6. Portfolio Photos</span>
             </h3>
-            <span id="intake-photos-badge" class="text-[11px] font-mono text-purple-300">0/4 uploaded</span>
+            <span id="intake-photos-badge" class="text-xs font-mono font-bold text-[#FDD023] bg-black/40 px-3 py-1 rounded-full border border-[#FDD023]/30">0/4 uploaded</span>
           </div>
-          <p class="text-xs text-slate-400">
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
             Upload up to 4 photos of your work. Files are automatically compressed and stored securely. Max 5MB per photo.
           </p>
 
           <div 
             id="intake-photo-dropzone" 
-            class="border-2 border-dashed border-slate-700/80 hover:border-lsu-gold/60 rounded-2xl p-6 text-center bg-slate-950/60 hover:bg-slate-950 transition-colors cursor-pointer"
+            class="border-2 border-dashed border-slate-600 hover:border-[#FDD023] rounded-2xl p-6 text-center bg-slate-950 hover:bg-slate-900 transition-colors cursor-pointer shadow-sm"
           >
             <input type="file" id="intake-photo-input" accept="image/jpeg,image/png,image/webp,image/heic" multiple class="hidden">
-            <span class="text-3xl block mb-1">📸</span>
-            <p class="text-xs font-heading font-semibold text-white">Click or drag &amp; drop portfolio photos</p>
-            <p class="text-[11px] text-slate-500 mt-0.5">JPG, PNG, or WebP &bull; Max 5MB each</p>
+            <span class="text-3xl block mb-1.5">📸</span>
+            <p class="text-sm font-heading font-bold text-white">Click or drag &amp; drop portfolio photos</p>
+            <p class="text-xs text-slate-300 mt-1">JPG, PNG, or WebP &bull; Max 5MB each</p>
           </div>
 
           <div id="intake-photo-preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 empty:hidden pt-2">
@@ -737,20 +781,20 @@
         </div>
 
         <!-- Form Error / Alerts Container -->
-        <div id="intake-form-error" class="hidden p-4 rounded-xl bg-red-950/70 border border-red-800 text-xs text-red-300">
-          <!-- Error message -->
+        <div id="intake-form-error" class="hidden p-4 rounded-2xl bg-red-950/80 border border-red-800 text-xs text-red-200 shadow-md">
+          <!-- Friendly Error message -->
         </div>
 
         <!-- Form Submit Button -->
-        <div class="pt-4 border-t border-purple-900/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p class="text-xs text-slate-400 text-center sm:text-left">
+        <div class="pt-4 border-t border-[#FDD023]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-xs sm:text-sm text-slate-300 text-center sm:text-left font-sans">
             🔒 By submitting, you certify that your services are operating legitimately within 25 miles of LSU.
           </p>
 
           <button 
             id="intake-submit-btn" 
             type="submit" 
-            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-lsu-gold to-amber-300 hover:from-amber-300 hover:to-lsu-gold text-lsu-purple-dark font-heading font-black text-xs uppercase tracking-wider shadow-lg shadow-lsu-gold/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] border border-[#FDD023]/50 hover:border-[#FDD023] font-heading font-black text-xs uppercase tracking-wider shadow-xl hover:shadow-2xl transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <span>🚀 Submit Application for Verification</span>
           </button>
@@ -758,27 +802,48 @@
 
       </form>
 
-      <!-- SUCCESS CONFIRMATION MODAL / BANNER -->
-      <div id="intake-success-modal" class="hidden p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-purple-950 via-slate-900 to-lsu-purple-dark border border-lsu-gold/60 text-center space-y-4 shadow-2xl animate-fade-in">
-        <span class="text-4xl block">🎉</span>
-        <h3 class="text-xl sm:text-2xl font-heading font-extrabold text-white">
-          Application Submitted Successfully!
-        </h3>
-        <p class="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed">
-          Thank you for applying to be listed in <strong>Black-Owned BR</strong>. Your application has been sent to our review queue. Our student moderation team verifies credentials within 24–48 hours.
-        </p>
-        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
-          <a href="index.html" class="px-5 py-2.5 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark text-xs font-heading font-bold uppercase tracking-wider transition-colors">
-            Return to Main Directory
-          </a>
-          <button 
-            id="submit-another-btn" 
-            type="button" 
-            class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-heading font-semibold transition-colors border border-slate-700 cursor-pointer"
-          >
-            Submit Another Listing
-          </button>
+      <!-- APPLICATION SUBMITTED VIEW (Replaces form upon success) -->
+      <div id="intake-success-modal" class="hidden p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#351218] via-[#4A1C24] to-[#351218] border-2 border-[#FDD023]/70 text-center space-y-6 shadow-2xl animate-fade-in">
+        
+        <!-- Big Checkmark -->
+        <div class="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-[#FDD023]/20 border-2 border-[#FDD023] flex items-center justify-center shadow-xl text-[#FDD023]">
+          <svg class="w-10 h-10 sm:w-12 sm:h-12 stroke-current stroke-[3]" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
         </div>
+
+        <!-- Heading with Script Word -->
+        <h3 class="text-3xl sm:text-4xl md:text-5xl font-heading font-black text-[#F6EEE6] tracking-tight">
+          APPLICATION <span class="script-word text-[#FDD023]">submitted</span>!
+        </h3>
+
+        <!-- Short Message -->
+        <p class="text-sm sm:text-base text-[#E9C6CC] max-w-lg mx-auto leading-relaxed font-sans">
+          Thanks for applying to Geaux Black! We'll review your application and reach out soon.
+        </p>
+
+        <!-- Summary of Business Name and Category -->
+        <div class="max-w-md mx-auto p-4 sm:p-5 rounded-2xl bg-black/40 border border-[#EAD5C0]/30 text-left space-y-2.5 shadow-inner">
+          <div class="text-[11px] font-heading font-bold uppercase tracking-wider text-[#FDD023]/90 pb-1 border-b border-white/10">
+            Application Details
+          </div>
+          <div class="flex items-center justify-between text-xs sm:text-sm py-1 border-b border-white/10">
+            <span class="text-[#E9C6CC] font-medium">Business Name:</span>
+            <span id="submitted-summary-business" class="font-heading font-bold text-white text-sm sm:text-base text-right truncate pl-2"></span>
+          </div>
+          <div class="flex items-center justify-between text-xs sm:text-sm py-1">
+            <span class="text-[#E9C6CC] font-medium">Category:</span>
+            <span id="submitted-summary-category" class="inline-flex items-center px-3 py-1 rounded-full bg-[#E9C6CC]/20 border border-[#E9C6CC]/40 text-[#FDD023] font-heading font-bold text-xs"></span>
+          </div>
+        </div>
+
+        <!-- Button Back to Home Page -->
+        <div class="pt-3">
+          <a href="index.html" class="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-[#FDD023] hover:bg-[#ECC21C] text-[#351218] font-heading font-black text-xs sm:text-sm uppercase tracking-wider transition-all shadow-xl hover:shadow-2xl hover:scale-105 cursor-pointer">
+            Back to Home
+          </a>
+        </div>
+
       </div>
 
     </div>
@@ -786,16 +851,43 @@
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-purple-900/30 bg-slate-950 py-8 text-xs text-slate-400 text-center mt-auto">
-    <div class="max-w-7xl mx-auto px-4 space-y-1">
+  <footer class="border-t border-[#4A1C24] bg-[#351218] py-8 text-xs text-[#E9C6CC] text-center mt-auto">
+    <div class="max-w-7xl mx-auto px-4 space-y-1 font-sans">
       <p>&copy; 2026 Black-Owned BR &bull; Dedicated to Black Entrepreneurs near LSU</p>
-      <p class="text-slate-600">Free, community-curated directory within 25 miles of Louisiana State University</p>
+      <p class="text-[#E9C6CC]/70">Free, community-curated directory within 25 miles of Louisiana State University</p>
     </div>
   </footer>
 
-  <!-- Application Controller for Dynamic Category Fields & Firestore Intake -->
+  <!-- Application Controller for Dynamic Category Fields, EmailJS Notifications & Firestore Intake -->
   <script type="module">
     import { submitPendingProvider, uploadPendingProviderPhoto } from './js/firebase.js';
+    import { EMAILJS_CONFIG } from './js/emailjs-config.js';
+
+    // 0. Initialize EmailJS Browser SDK
+    if (window.emailjs && EMAILJS_CONFIG?.publicKey) {
+      try {
+        window.emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+        console.log('%c✉️ EmailJS initialized', 'color: #FDD023; background: #4A1C24; padding: 2px 6px; border-radius: 3px;');
+      } catch (initErr) {
+        console.warn('[EmailJS Init Notice]:', initErr);
+      }
+    }
+
+    // Helper: sanitize empty fields to "Not provided"
+    function sanitize(val) {
+      if (val === null || val === undefined) return "Not provided";
+      if (typeof val === 'string') {
+        const trimmed = val.trim();
+        return trimmed.length > 0 ? trimmed : "Not provided";
+      }
+      if (typeof val === 'number') {
+        return isNaN(val) ? "Not provided" : String(val);
+      }
+      if (typeof val === 'boolean') {
+        return val ? "Yes" : "No";
+      }
+      return String(val);
+    }
 
     // 1. Dynamic Category-Specific Fields Switching
     const categorySelect = document.getElementById('intake-category-select');
@@ -814,7 +906,7 @@
     categorySelect.addEventListener('change', () => {
       const selected = categorySelect.value;
 
-      // Hide all category fields first
+      // Hide all category field groups first
       Object.values(categoryFields).forEach(el => {
         if (el) el.classList.add('hidden');
       });
@@ -828,6 +920,47 @@
       }
     });
 
+    // Helper: Combine category-specific details into one readable line
+    function getCategoryDetailsLine(cat) {
+      const parts = [];
+      if (cat === 'Hair') {
+        const hairTypes = Array.from(document.querySelectorAll('input[name="hairTypes"]:checked')).map(el => el.value);
+        const specialties = Array.from(document.querySelectorAll('input[name="hairSpecialties"]:checked')).map(el => el.value);
+        const chairVibe = document.getElementById('intake-chair-vibe')?.value;
+        if (hairTypes.length > 0) parts.push(`Hair Types: ${hairTypes.join(', ')}`);
+        if (specialties.length > 0) parts.push(`Specialties: ${specialties.join(', ')}`);
+        if (chairVibe) parts.push(`Chair Vibe: ${chairVibe}`);
+      } else if (cat === 'Nails') {
+        const nailStyles = Array.from(document.querySelectorAll('input[name="nailStyles"]:checked')).map(el => el.value);
+        if (nailStyles.length > 0) parts.push(`Nail Styles: ${nailStyles.join(', ')}`);
+      } else if (cat === 'Lashes') {
+        const lashTypes = Array.from(document.querySelectorAll('input[name="lashTypes"]:checked')).map(el => el.value);
+        const offersFills = document.getElementById('intake-offers-fills')?.checked;
+        if (lashTypes.length > 0) parts.push(`Lash Types: ${lashTypes.join(', ')}`);
+        parts.push(`Offers Fills: ${offersFills ? 'Yes' : 'No'}`);
+      } else if (cat === 'Food & Beverages') {
+        const foodTypes = Array.from(document.querySelectorAll('input[name="foodTypes"]:checked')).map(el => el.value);
+        const campusDropOff = document.getElementById('intake-campus-dropoff')?.checked;
+        const preOrderRequired = document.getElementById('intake-preorder-required')?.checked;
+        if (foodTypes.length > 0) parts.push(`Offerings: ${foodTypes.join(', ')}`);
+        parts.push(`Campus Drop-Off: ${campusDropOff ? 'Yes' : 'No'}`);
+        parts.push(`Pre-Order Required: ${preOrderRequired ? 'Yes' : 'No'}`);
+      } else if (cat === 'Fashion (Custom Outfits)') {
+        const outfitTypes = Array.from(document.querySelectorAll('input[name="outfitTypes"]:checked')).map(el => el.value);
+        const turnaround = document.getElementById('intake-fashion-turnaround')?.value;
+        if (outfitTypes.length > 0) parts.push(`Custom Outfits: ${outfitTypes.join(', ')}`);
+        if (turnaround) parts.push(`Turnaround: ${turnaround}`);
+      } else if (cat === 'Photography') {
+        const shootTypes = Array.from(document.querySelectorAll('input[name="shootTypes"]:checked')).map(el => el.value);
+        const turnaround = document.getElementById('intake-photo-turnaround')?.value;
+        const travelsToCampus = document.getElementById('intake-travels-campus')?.checked;
+        if (shootTypes.length > 0) parts.push(`Shoot Types: ${shootTypes.join(', ')}`);
+        if (turnaround) parts.push(`Turnaround: ${turnaround}`);
+        parts.push(`Shoots On Campus: ${travelsToCampus ? 'Yes' : 'No'}`);
+      }
+      return parts.length > 0 ? parts.join(' | ') : 'Not provided';
+    }
+
     // 2. Photo Uploads with Canvas Compression
     let selectedFiles = [];
     const photoInput = document.getElementById('intake-photo-input');
@@ -840,6 +973,7 @@
       if (errorBox) {
         errorBox.textContent = msg;
         errorBox.classList.remove('hidden');
+        errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
 
@@ -897,7 +1031,7 @@
 
       selectedFiles.forEach((file, idx) => {
         const thumb = document.createElement('div');
-        thumb.className = 'relative h-24 rounded-xl overflow-hidden bg-slate-900 border border-slate-700 shadow';
+        thumb.className = 'relative h-24 rounded-xl overflow-hidden bg-slate-900 border-2 border-slate-600 shadow';
         
         const img = document.createElement('img');
         img.className = 'w-full h-full object-cover';
@@ -906,7 +1040,7 @@
 
         const rm = document.createElement('button');
         rm.type = 'button';
-        rm.className = 'absolute top-1 right-1 w-5 h-5 rounded-full bg-slate-950/80 text-red-400 hover:text-white flex items-center justify-center text-xs font-bold transition-colors cursor-pointer';
+        rm.className = 'absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-slate-950/90 border border-slate-600 text-red-300 hover:text-white hover:bg-red-900 flex items-center justify-center text-sm font-bold transition-colors cursor-pointer';
         rm.innerHTML = '&times;';
         rm.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -919,49 +1053,147 @@
       });
     }
 
-    // 3. Form Submission to Firestore "pendingProviders"
+    // 3. Form Submission with In-Memory Spam Protection, EmailJS & Firestore
     const form = document.getElementById('provider-intake-form');
     const submitBtn = document.getElementById('intake-submit-btn');
     const successModal = document.getElementById('intake-success-modal');
-    const submitAnotherBtn = document.getElementById('submit-another-btn');
+    const formHeader = document.getElementById('intake-form-header');
+
+    // In-memory cooldown & submission guard (cleared on reload)
+    let inMemoryLastSubmitTime = 0;
+    const IN_MEMORY_COOLDOWN_MS = 5000;
+    let isSubmitting = false;
+
+    // Remove any legacy localStorage cooldown key to ensure fresh state
+    try {
+      localStorage.removeItem('last_provider_intake_timestamp');
+      localStorage.removeItem('provider_intake_submitted');
+    } catch (e) {}
+
+    // Function to ensure fresh, empty form state
+    function resetToIntakeForm() {
+      form.reset();
+      selectedFiles = [];
+      renderPreviews();
+      specificWrapper.classList.add('hidden');
+      successModal.classList.add('hidden');
+      form.classList.remove('hidden');
+      if (formHeader) formHeader.classList.remove('hidden');
+      isSubmitting = false;
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<span>🚀 Submit Application for Verification</span>`;
+      inMemoryLastSubmitTime = 0;
+      hideError();
+    }
+
+    // Ensure fresh state on page load and browser back/forward navigation
+    resetToIntakeForm();
+    window.addEventListener('pageshow', () => {
+      resetToIntakeForm();
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (isSubmitting) return;
       hideError();
 
+      // Anti-Spam Check 1: Honeypot field (hidden from humans; trapped if filled by bots)
+      const honeypot = document.getElementById('intake-bot-trap')?.value?.trim();
+      if (honeypot) {
+        console.warn('[Spam Protection] Honeypot field was filled with:', honeypot, '- submission blocked as spam.');
+        if (formHeader) formHeader.classList.add('hidden');
+        form.classList.add('hidden');
+        successModal.classList.remove('hidden');
+        successModal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // Anti-Spam Check 2: In-memory cooldown (cleared on page reload)
+      const currentTime = Date.now();
+      if (inMemoryLastSubmitTime && (currentTime - inMemoryLastSubmitTime) < IN_MEMORY_COOLDOWN_MS) {
+        const remainingSec = Math.ceil((IN_MEMORY_COOLDOWN_MS - (currentTime - inMemoryLastSubmitTime)) / 1000);
+        console.warn(`[Cooldown] Active cooldown (${remainingSec}s remaining).`);
+        showError(`Please wait ${remainingSec} seconds before submitting another application.`);
+        return;
+      }
+
+      // Read form input values
       const businessName = document.getElementById('intake-business-name').value.trim();
       const ownerName = document.getElementById('intake-owner-name').value.trim();
+      const ownerEmail = document.getElementById('intake-owner-email').value.trim();
+      const ownerPhone = document.getElementById('intake-owner-phone')?.value.trim() || '';
       const category = categorySelect.value;
-      const lsuVerified = document.getElementById('intake-lsu-verified').value;
       const description = document.getElementById('intake-description').value.trim();
-      const startingPrice = parseFloat(document.getElementById('intake-starting-price').value) || 50;
-      const priceTier = document.getElementById('intake-price-tier').value;
-      const yearsExperience = parseInt(document.getElementById('intake-experience').value, 10) || 1;
-      const serviceDelivery = document.getElementById('intake-service-delivery').value;
-      const availability = document.getElementById('intake-availability').value;
-      const neighborhood = document.getElementById('intake-neighborhood').value;
+
+      const lsuVerifiedSelect = document.getElementById('intake-lsu-verified');
+      const lsuVerifiedVal = lsuVerifiedSelect.value;
+      const lsuStatusText = lsuVerifiedSelect.options[lsuVerifiedSelect.selectedIndex]?.text || 'Independent Community Business';
+
+      const startingPriceVal = document.getElementById('intake-starting-price').value.trim();
+      const startingPriceNum = parseFloat(startingPriceVal) || 50;
+
+      const priceTierSelect = document.getElementById('intake-price-tier');
+      const priceTierText = priceTierSelect.options[priceTierSelect.selectedIndex]?.text || priceTierSelect.value;
+
+      const experienceVal = document.getElementById('intake-experience').value.trim();
+      const experienceNum = parseInt(experienceVal, 10) || 1;
+
+      const serviceDeliverySelect = document.getElementById('intake-service-delivery');
+      const serviceDeliveryText = serviceDeliverySelect.options[serviceDeliverySelect.selectedIndex]?.text || serviceDeliverySelect.value;
+
+      const availabilitySelect = document.getElementById('intake-availability');
+      const availabilityVal = availabilitySelect.value;
+
+      const neighborhoodSelect = document.getElementById('intake-neighborhood');
+      const neighborhood = neighborhoodSelect.value;
+
       const studentDiscount = document.getElementById('intake-student-discount').checked;
 
       let rawIg = document.getElementById('intake-instagram').value.trim();
-      let instagramUrl = rawIg.startsWith('http') ? rawIg : `https://instagram.com/${rawIg.replace(/^@/, '')}`;
+      let instagramUrl = rawIg ? (rawIg.startsWith('http') ? rawIg : `https://instagram.com/${rawIg.replace(/^@/, '')}`) : '';
 
       let rawTiktok = document.getElementById('intake-tiktok').value.trim();
       let tiktokUrl = rawTiktok ? (rawTiktok.startsWith('http') ? rawTiktok : `https://tiktok.com/@${rawTiktok.replace(/^@/, '')}`) : '';
 
       const bookingUrl = document.getElementById('intake-booking-url').value.trim();
-      const websiteUrl = document.getElementById('intake-website-url').value.trim() || instagramUrl;
+      const websiteUrl = document.getElementById('intake-website-url').value.trim();
 
       const depositRequired = document.getElementById('intake-deposit-required').checked;
-      const depositAmount = document.getElementById('intake-deposit-amount').value.trim() || 'Deposit required upon booking';
-      const cancellationPolicy = document.getElementById('intake-cancellation-policy').value.trim() || '24-hour advance notice to reschedule';
-      const refundPolicy = document.getElementById('intake-refund-policy').value.trim() || 'Deposits non-refundable';
+      const depositAmountVal = document.getElementById('intake-deposit-amount').value.trim();
+      const depositPolicyText = depositRequired 
+        ? (depositAmountVal || 'Deposit required upon booking') 
+        : 'No deposit required';
 
-      if (!businessName || !ownerName || !category || !description || !bookingUrl) {
-        showError('Please fill in all required fields marked with an asterisk (*).');
+      const cancellationPolicy = document.getElementById('intake-cancellation-policy').value.trim();
+      const refundPolicy = document.getElementById('intake-refund-policy').value.trim();
+
+      // Required field validation with clear debug logs
+      if (!businessName || !ownerName || !ownerEmail || !category || !description || !bookingUrl) {
+        console.warn('[Validation] Missing required fields:', {
+          businessName: !!businessName,
+          ownerName: !!ownerName,
+          ownerEmail: !!ownerEmail,
+          category: !!category,
+          description: !!description,
+          bookingUrl: !!bookingUrl
+        });
+        showError('Please fill in all required fields marked with an asterisk (*), including your contact email and booking link.');
         return;
       }
 
-      // Default Baton Rouge coordinates based on neighborhood
+      // Basic email format check
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ownerEmail)) {
+        console.warn('[Validation] Invalid email address format:', ownerEmail);
+        showError('Please enter a valid email address so we can reach you.');
+        return;
+      }
+
+      // 1. While sending: disable submit button and show "Submitting..."
+      isSubmitting = true;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Submitting...</span>`;
+
+      // Coordinates for Baton Rouge neighborhood
       const neighborhoodCoords = {
         'Northgate (LSU Walkable)': { lat: 30.4190, lng: -91.1765 },
         'Highland / Burbank': { lat: 30.3950, lng: -91.1650 },
@@ -971,7 +1203,7 @@
       };
       const coords = neighborhoodCoords[neighborhood] || { lat: 30.4133, lng: -91.1800 };
 
-      // Collect Category-Specific Fields
+      // Collect structured Category-Specific Fields for Firestore payload
       const categoryData = {};
       if (category === 'Hair') {
         const hairTypes = Array.from(document.querySelectorAll('input[name="hairTypes"]:checked')).map(el => el.value);
@@ -1009,79 +1241,168 @@
         categoryData.travelsToCampus = travelsToCampus;
       }
 
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>⏳ Uploading photos &amp; submitting...</span>`;
+      // Generate single readable line for category_details
+      const categoryDetailsLine = getCategoryDetailsLine(category);
 
       try {
         const tempId = `temp-${Date.now()}`;
         const uploadedPhotos = [];
 
-        // Upload photos with compression
-        for (let i = 0; i < selectedFiles.length; i++) {
-          submitBtn.innerHTML = `<span>⏳ Uploading photo ${i + 1}/${selectedFiles.length}...</span>`;
-          const url = await uploadPendingProviderPhoto(selectedFiles[i], tempId, i);
-          uploadedPhotos.push(url);
+        // Upload photos to Firebase Storage if available, fallback to file names
+        if (selectedFiles.length > 0) {
+          for (let i = 0; i < selectedFiles.length; i++) {
+            try {
+              const url = await uploadPendingProviderPhoto(selectedFiles[i], tempId, i);
+              if (url && typeof url === 'string' && url.startsWith('http')) {
+                uploadedPhotos.push(url);
+              } else {
+                uploadedPhotos.push(selectedFiles[i].name);
+              }
+            } catch (storageErr) {
+              console.warn(`[Firebase Storage fallback]: ${storageErr.message}`);
+              uploadedPhotos.push(selectedFiles[i].name);
+            }
+          }
         }
 
-        submitBtn.innerHTML = `<span>⏳ Submitting to review queue...</span>`;
+        // Format photo_links: each link on its own line
+        let photoLinksText = "Not provided";
+        if (uploadedPhotos.length > 0) {
+          photoLinksText = uploadedPhotos.join('\n');
+        } else if (selectedFiles.length > 0) {
+          photoLinksText = selectedFiles.map(f => f.name).join('\n');
+        }
 
-        const payload = {
+        // Readable date and time string
+        const submittedAtReadable = new Date().toLocaleString('en-US', {
+          dateStyle: 'full',
+          timeStyle: 'short'
+        });
+
+        // 2. Prepare and send Email Notification via EmailJS
+        const emailParams = {
+          business_name: sanitize(businessName),
+          owner_name: sanitize(ownerName),
+          owner_email: sanitize(ownerEmail),
+          owner_phone: sanitize(ownerPhone),
+          category: sanitize(category),
+          lsu_status: sanitize(lsuStatusText),
+          neighborhood: sanitize(neighborhood),
+          starting_price: sanitize(startingPriceVal ? `$${startingPriceVal}` : null),
+          price_tier: sanitize(priceTierText),
+          years_experience: sanitize(experienceVal ? `${experienceVal} years` : null),
+          student_discount: sanitize(studentDiscount ? 'Yes (Student discount offered)' : 'No student discount'),
+          service_delivery: sanitize(serviceDeliveryText),
+          category_details: sanitize(categoryDetailsLine),
+          deposit_policy: sanitize(depositPolicyText),
+          cancellation_policy: sanitize(cancellationPolicy),
+          refund_policy: sanitize(refundPolicy),
+          instagram: sanitize(rawIg),
+          tiktok: sanitize(rawTiktok),
+          website: sanitize(websiteUrl),
+          booking_link: sanitize(bookingUrl),
+          photo_links: sanitize(photoLinksText),
+          submitted_at: sanitize(submittedAtReadable)
+        };
+
+        // Console log before sending
+        console.log("Sending email...");
+
+        const emailClient = window.emailjs || (typeof emailjs !== 'undefined' ? emailjs : null);
+        if (!emailClient) {
+          const err = new Error("EmailJS SDK not loaded. Check CDN link in <head>.");
+          console.error("EmailJS error:", err);
+          throw err;
+        }
+
+        // Initialize with public key before send
+        try {
+          emailClient.init(EMAILJS_CONFIG.publicKey);
+        } catch (initErr) {
+          console.warn('[EmailJS init note]:', initErr);
+        }
+
+        try {
+          const emailResponse = await emailClient.send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.templateId,
+            emailParams,
+            EMAILJS_CONFIG.publicKey
+          );
+          console.log("Email sent", emailResponse);
+        } catch (emailErr) {
+          console.error("EmailJS error:", emailErr);
+          throw emailErr;
+        }
+
+        // 3. Save application to Firestore "pendingProviders"
+        const firestorePayload = {
           businessName,
           ownerName,
+          ownerEmail,
+          ownerPhone: ownerPhone || null,
           category,
           description,
-          startingPrice,
-          priceTier,
-          yearsExperience,
+          startingPrice: startingPriceNum,
+          priceTier: priceTierSelect.value,
+          yearsExperience: experienceNum,
           studentDiscount,
-          serviceDelivery,
-          availability,
+          serviceDelivery: serviceDeliverySelect.value,
+          availability: availabilityVal,
           neighborhood,
           latitude: coords.lat,
           longitude: coords.lng,
-          lsuVerified: lsuVerified === 'null' ? null : lsuVerified,
-          instagramUrl,
-          tiktokUrl: tiktokUrl || instagramUrl,
-          websiteUrl,
+          lsuVerified: lsuVerifiedVal === 'null' ? null : lsuVerifiedVal,
+          lsuStatus: lsuStatusText,
+          instagramUrl: instagramUrl || (rawIg ? `https://instagram.com/${rawIg.replace(/^@/, '')}` : ''),
+          tiktokUrl: tiktokUrl || '',
+          websiteUrl: websiteUrl || instagramUrl || '',
           bookingUrl,
           portfolioImages: uploadedPhotos.length > 0 ? uploadedPhotos : [
             "https://images.unsplash.com/photo-1582095133179-bfd08e2fc6b3?w=600&auto=format&fit=crop&q=80"
           ],
           policies: {
             depositRequired,
-            depositAmount,
-            cancellationPolicy,
-            refundPolicy
+            depositAmount: depositPolicyText,
+            cancellationPolicy: cancellationPolicy || '24-hour notice required to transfer deposit',
+            refundPolicy: refundPolicy || 'Deposits non-refundable'
           },
+          categoryDetails: categoryDetailsLine,
           seasonalTags: ["game-day", "graduation-formal"],
           averageRating: 5.0,
           reviewCount: 0,
           ...categoryData
         };
 
-        await submitPendingProvider(payload);
+        try {
+          await submitPendingProvider(firestorePayload);
+          console.log('[Firestore] Application stored in pendingProviders collection');
+        } catch (dbErr) {
+          console.warn('[Firestore Pending Save Notice]:', dbErr);
+        }
 
+        // 4. Update in-memory cooldown timestamp (cleared on reload)
+        inMemoryLastSubmitTime = Date.now();
+
+        // 5. Populate summary and show Application Submitted view in place of form
+        const summaryBusiness = document.getElementById('submitted-summary-business');
+        const summaryCategory = document.getElementById('submitted-summary-category');
+        if (summaryBusiness) summaryBusiness.textContent = businessName;
+        if (summaryCategory) summaryCategory.textContent = category;
+
+        isSubmitting = false;
+        if (formHeader) formHeader.classList.add('hidden');
         form.classList.add('hidden');
         successModal.classList.remove('hidden');
         successModal.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
       } catch (err) {
-        console.error('Error submitting application:', err);
-        showError(`Could not submit application: ${err.message}. Please check your connection and try again.`);
+        isSubmitting = false;
+        console.error("EmailJS error:", err);
+        showError("Something went wrong. Please try again.");
         submitBtn.disabled = false;
         submitBtn.innerHTML = `<span>🚀 Submit Application for Verification</span>`;
       }
-    });
-
-    submitAnotherBtn.addEventListener('click', () => {
-      form.reset();
-      selectedFiles = [];
-      renderPreviews();
-      specificWrapper.classList.add('hidden');
-      successModal.classList.add('hidden');
-      form.classList.remove('hidden');
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = `<span>🚀 Submit Application for Verification</span>`;
     });
   </script>
 

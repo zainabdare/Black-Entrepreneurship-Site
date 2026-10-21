@@ -14,7 +14,7 @@
  * - Clear filters button and dynamic result count
  */
 
-import { getProvidersFromFirestore, seedFirestoreProviders } from './firebase.js';
+import { getProvidersFromFirestore, seedFirestoreProviders, trackLinkClick } from './firebase.js';
 import { SAMPLE_PROVIDERS } from './data/providers.js';
 import { createProviderCard } from './components/ProviderCard.js';
 import { filterProviders, MAX_ALLOWED_RADIUS_MILES } from './utils/filters.js';
@@ -23,6 +23,7 @@ import { injectNavigationDrawer } from './components/NavigationDrawer.js';
 import { injectFilterPanel } from './components/FilterPanel.js';
 import { openProviderDetailModal, closeProviderDetailModal, closePhotoLightbox } from './components/ProviderDetailModal.js';
 import { injectCampusAlertsBanner } from './components/AlertsBanner.js';
+import { injectImpactCounter } from './components/ImpactCounter.js';
 
 console.log('%c🐯 Black-Owned BR: Multi-page & Filter Panel Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
 
@@ -331,6 +332,9 @@ export async function loadProvidersData() {
   } finally {
     isProvidersLoading = false;
     updateDirectory();
+    if (document.getElementById('community-impact-mount')) {
+      injectImpactCounter('community-impact-mount', allProviders);
+    }
   }
 }
 
@@ -513,8 +517,7 @@ export function resetAllFilters() {
 
   // Reset pills
   document.querySelectorAll('.filter-pill').forEach(pill => {
-    pill.classList.remove('bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
-    pill.classList.add('bg-slate-950/80', 'border-slate-800', 'text-slate-300');
+    pill.classList.remove('active-filter', 'bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
   });
 
   document.querySelectorAll('.zone-pill').forEach(pill => {
@@ -746,12 +749,10 @@ function attachFilterListeners() {
 
         if (isSelected) {
           arr.splice(idx, 1);
-          pill.classList.remove('bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
-          pill.classList.add('bg-slate-950/80', 'border-slate-800', 'text-slate-300');
+          pill.classList.remove('active-filter', 'bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
         } else {
           arr.push(filterVal);
-          pill.classList.add('bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
-          pill.classList.remove('bg-slate-950/80', 'border-slate-800', 'text-slate-300');
+          pill.classList.add('active-filter', 'bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
         }
 
         updateDirectory();
@@ -803,6 +804,22 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('campus-alerts-mount')) {
     injectCampusAlertsBanner();
   }
+
+  // 3c. Inject Community Impact Counter Section (on Home page)
+  if (document.getElementById('community-impact-mount')) {
+    injectImpactCounter('community-impact-mount', SAMPLE_PROVIDERS);
+  }
+
+  // 3d. Global External Link Click Tracking (Instagram, TikTok, Website, Booking)
+  document.addEventListener('click', (e) => {
+    const trackTarget = e.target.closest('[data-track-type]');
+    if (trackTarget) {
+      const providerId = trackTarget.dataset.trackProvider || '';
+      const trackType = trackTarget.dataset.trackType || 'link';
+      const href = trackTarget.getAttribute('href') || '';
+      trackLinkClick(providerId, trackType, href);
+    }
+  });
 
   // 4. Initial Directory Render & Firestore Loading
   loadProvidersData();
@@ -928,4 +945,70 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // 8. Reusable Heading Script Word Parser
+  // Safely handles headings with <script-word>word</script-word>, <span class="script-word">word</span>,
+  // or user-written <script>word</script> syntax without browser JS parsing errors.
+  initScriptHeadingParser();
 });
+
+/**
+ * Custom Element Definition for <script-word> and <accent-script>
+ */
+if (typeof customElements !== 'undefined') {
+  if (!customElements.get('script-word')) {
+    customElements.define('script-word', class extends HTMLElement {
+      connectedCallback() {
+        this.classList.add('script-word');
+      }
+    });
+  }
+  if (!customElements.get('accent-script')) {
+    customElements.define('accent-script', class extends HTMLElement {
+      connectedCallback() {
+        this.classList.add('script-word');
+      }
+    });
+  }
+}
+
+/**
+ * Scans all headings and parses script-word elements or decorative script tags.
+ */
+export function initScriptHeadingParser() {
+  document.querySelectorAll('h1, h2, h3, h4, h5, h6, .font-heading').forEach(heading => {
+    // Check for inline script tags intended as decorative script words
+    const scripts = heading.querySelectorAll('script');
+    scripts.forEach(script => {
+      const text = script.textContent.trim();
+      // If short decorative word (not actual code)
+      if (text && !text.includes(';') && !text.includes('=')) {
+        const span = document.createElement('span');
+        span.className = 'script-word';
+        span.textContent = text;
+        script.parentNode.replaceChild(span, script);
+      }
+    });
+  });
+}
+
+/**
+ * Reusable utility to wrap single words inside any string or heading in the handwritten script font.
+ * Example: formatScriptHeading("FIND YOUR <script>glow</script>") -> 'FIND YOUR <span class="script-word">glow</span>'
+ * 
+ * @param {string} text 
+ * @returns {string}
+ */
+export function formatScriptHeading(text) {
+  if (!text) return '';
+  return text
+    .replace(/<script>(.*?)<\/script>/gi, '<span class="script-word">$1</span>')
+    .replace(/<script-word>(.*?)<\/script-word>/gi, '<span class="script-word">$1</span>')
+    .replace(/<accent-script>(.*?)<\/accent-script>/gi, '<span class="script-word">$1</span>');
+}
+
+// Attach to window for easy access across any template or dynamic module
+if (typeof window !== 'undefined') {
+  window.formatScriptHeading = formatScriptHeading;
+}
+

@@ -24,7 +24,9 @@ import {
   getReviewsForProvider,
   addReviewToProvider,
   deleteReviewFromProvider,
-  uploadReviewPhoto
+  uploadReviewPhoto,
+  trackProfileView,
+  trackLinkClick
 } from '../firebase.js';
 
 // ============================================================================
@@ -145,6 +147,11 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
   activeModalProvider = provider;
   modalOnStatsUpdatedCallback = onStatsUpdated;
 
+  // Track profile view in Firestore analytics
+  if (provider) {
+    trackProfileView(provider.id, provider.businessName);
+  }
+
   // Remove any existing modal
   closeProviderDetailModal();
 
@@ -251,17 +258,17 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
             <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
               <div class="flex items-center gap-2">
                 ${provider.instagramUrl ? `
-                  <a href="${provider.instagramUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 border border-slate-700 hover:border-lsu-gold/40 text-xs font-semibold text-slate-200 hover:text-white transition-colors">
+                  <a href="${provider.instagramUrl}" target="_blank" rel="noopener noreferrer" data-track-provider="${provider.id}" data-track-type="instagram" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 border border-slate-700 hover:border-lsu-gold/40 text-xs font-semibold text-slate-200 hover:text-white transition-colors">
                     Instagram &rarr;
                   </a>
                 ` : ''}
                 ${provider.tiktokUrl ? `
-                  <a href="${provider.tiktokUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 border border-slate-700 hover:border-lsu-gold/40 text-xs font-semibold text-slate-200 hover:text-white transition-colors">
+                  <a href="${provider.tiktokUrl}" target="_blank" rel="noopener noreferrer" data-track-provider="${provider.id}" data-track-type="tiktok" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 border border-slate-700 hover:border-lsu-gold/40 text-xs font-semibold text-slate-200 hover:text-white transition-colors">
                     TikTok &rarr;
                   </a>
                 ` : ''}
                 ${provider.websiteUrl ? `
-                  <a href="${provider.websiteUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 border border-slate-700 hover:border-lsu-gold/40 text-xs font-semibold text-slate-200 hover:text-white transition-colors">
+                  <a href="${provider.websiteUrl}" target="_blank" rel="noopener noreferrer" data-track-provider="${provider.id}" data-track-type="website" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-lsu-purple/40 border border-slate-700 hover:border-lsu-gold/40 text-xs font-semibold text-slate-200 hover:text-white transition-colors">
                     Website &rarr;
                   </a>
                 ` : ''}
@@ -271,6 +278,8 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                 href="${provider.bookingUrl}" 
                 target="_blank" 
                 rel="noopener noreferrer" 
+                data-track-provider="${provider.id}"
+                data-track-type="booking"
                 class="px-5 py-2.5 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center gap-2"
               >
                 <span>Book Appointment / Order</span>

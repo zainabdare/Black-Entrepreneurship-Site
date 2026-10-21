@@ -6,29 +6,51 @@
   <title>Seasonal Hubs | Black-Owned BR (LSU Directory)</title>
   <meta name="description" content="Curated seasonal hubs for LSU Tigers: Game Day & Tailgates, Homecoming & Formals, and Graduation & Commencement.">
 
-  <!-- Google Fonts: Inter & Outfit -->
+  <!-- Google Fonts: Lilita One (Headings), Caveat (Script Accent), Poppins (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lilita+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Tailwind Configuration with LSU Brand Theme -->
+  <!-- Tailwind Configuration with Burgundy, Blush, Cream, Sand & LSU Gold -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            heading: ['Outfit', 'sans-serif'],
+            sans: ['Poppins', 'sans-serif'],
+            heading: ['"Lilita One"', 'cursive', 'sans-serif'],
+            script: ['Caveat', 'cursive'],
           },
           colors: {
+            burgundy: {
+              DEFAULT: '#4A1C24',
+              dark: '#351218',
+              light: '#612731',
+              hover: '#3D151C',
+            },
+            blush: {
+              DEFAULT: '#E9C6CC',
+              light: '#F7E9EC',
+              dark: '#D4A7B0',
+            },
+            cream: {
+              DEFAULT: '#F6EEE6',
+              light: '#FDFBF8',
+              dark: '#ECE2D8',
+            },
+            sand: {
+              DEFAULT: '#EAD5C0',
+              light: '#F4E8DC',
+              dark: '#D3BAA2',
+            },
             lsu: {
-              purple: '#461D7C',
-              'purple-dark': '#2E1053',
-              'purple-deep': '#1A0830',
-              'purple-light': '#6B2FA8',
+              purple: '#4A1C24',
+              'purple-dark': '#351218',
+              'purple-deep': '#4A1C24',
+              'purple-light': '#612731',
               gold: '#FDD023',
               'gold-hover': '#ECC21C',
               'gold-light': '#FEF08A',
@@ -45,28 +67,28 @@
   <!-- JavaScript ES Modules (Includes slide-out drawer navigation) -->
   <script type="module" src="js/app.js"></script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-lsu-gold selection:text-lsu-purple-dark antialiased">
+<body class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
 
   <!-- ========================================================================
        HEADER & NAVIGATION
        ======================================================================== -->
-  <header class="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-purple-900/30 transition-all">
+  <header class="sticky top-0 z-40 bg-[#F6EEE6]/90 backdrop-blur-md border-b border-[#EAD5C0] transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20">
         
         <!-- Site Logo -->
-        <a href="index.html" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-lsu-gold rounded-xl py-1">
-          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-lsu-purple via-lsu-purple-dark to-purple-950 border border-lsu-gold/40 flex items-center justify-center shadow-lg shadow-purple-950/50 group-hover:border-lsu-gold transition-colors">
-            <span class="text-lsu-gold font-heading font-black text-base sm:text-lg tracking-wider">LSU</span>
+        <a href="index.html" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4A1C24] rounded-full py-1">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#4A1C24] border border-[#FDD023]/60 flex items-center justify-center shadow-md group-hover:border-[#FDD023] transition-colors">
+            <span class="text-[#FDD023] font-heading font-black text-base sm:text-lg tracking-wider">LSU</span>
           </div>
           <div>
             <div class="flex items-center gap-1.5">
-              <span class="font-heading font-black text-lg sm:text-xl text-white tracking-tight leading-none group-hover:text-lsu-gold transition-colors">
-                Black-Owned BR
+              <span class="font-heading font-black text-lg sm:text-2xl text-[#4A1C24] tracking-tight leading-none group-hover:text-[#612731] transition-colors">
+                BLACK-OWNED <span class="script-word text-[#4A1C24]">br</span>
               </span>
-              <span class="inline-block w-2 h-2 rounded-full bg-lsu-gold animate-pulse"></span>
+              <span class="inline-block w-2 h-2 rounded-full bg-[#FDD023] shadow-sm"></span>
             </div>
-            <p class="text-[11px] sm:text-xs text-slate-400 font-medium tracking-wide">
+            <p class="text-[11px] sm:text-xs text-[#7A535A] font-medium tracking-wide">
               LSU &bull; 25-Mile Radius Directory
             </p>
           </div>
@@ -77,12 +99,12 @@
           <button 
             id="hamburger-btn" 
             type="button" 
-            class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-purple-900/40 text-slate-200 hover:text-lsu-gold hover:border-lsu-gold/50 focus:outline-none focus:ring-2 focus:ring-lsu-gold transition-colors shadow-sm cursor-pointer"
+            class="flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] hover:text-[#FDD023] border border-[#4A1C24] focus:outline-none focus:ring-2 focus:ring-[#FDD023] transition-all shadow-md cursor-pointer"
             aria-expanded="false" 
             aria-controls="slide-out-menu"
             aria-label="Open navigation menu"
           >
-            <span class="text-xs font-heading font-bold uppercase tracking-wider text-slate-300 hidden sm:inline-block">Menu</span>
+            <span class="text-xs font-heading font-bold uppercase tracking-wider hidden sm:inline-block">Menu</span>
             <svg class="w-5 h-5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
@@ -96,35 +118,35 @@
   <!-- ========================================================================
        HERO BANNER
        ======================================================================== -->
-  <section class="relative hero-glow-bg border-b border-purple-900/20 py-12 sm:py-20 overflow-hidden">
+  <section class="relative hero-glow-bg border-b border-[#EAD5C0]/80 py-12 sm:py-20 overflow-hidden">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       
       <!-- Breadcrumb -->
-      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-lsu-gold transition-colors mb-4">
+      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-[#7A535A] hover:text-[#4A1C24] font-heading font-semibold transition-colors mb-4">
         <span>&larr;</span>
         <span>Back to Main Directory</span>
       </a>
 
       <!-- Pill -->
       <div class="block">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-lsu-purple/40 border border-lsu-gold/30 text-lsu-gold text-xs sm:text-sm font-semibold mb-4 backdrop-blur">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E9C6CC]/50 border border-[#D4A7B0] text-[#4A1C24] text-xs sm:text-sm font-heading font-bold mb-4">
           <span>🎓</span>
           <span>Curated Campus Experiences</span>
-          <span class="w-1 h-1 rounded-full bg-lsu-gold"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[#FDD023]"></span>
           <span>Coming Soon</span>
         </div>
       </div>
 
       <!-- Title -->
-      <h1 class="text-3xl sm:text-5xl font-heading font-extrabold text-white tracking-tight mb-4">
-        LSU Tiger <span class="text-transparent bg-clip-text bg-gradient-to-r from-lsu-gold via-amber-300 to-yellow-400">Seasonal Hubs</span>
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-[#4A1C24] tracking-tight mb-4">
+        LSU Tiger <span class="script-word text-[#4A1C24]">seasonal</span> Hubs
       </h1>
-      <p class="max-w-2xl mx-auto text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+      <p class="max-w-2xl mx-auto text-[#7A535A] text-sm sm:text-base leading-relaxed mb-6 font-sans">
         Curated collections of verified Black-owned vendors organized around the biggest moments on the LSU academic and athletics calendar.
       </p>
 
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-950/60 border border-purple-800/60 text-xs font-mono text-purple-200">
-        <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#EAD5C0]/50 border border-[#D3BAA2] text-xs font-semibold text-[#4A1C24]">
+        <span class="w-2 h-2 rounded-full bg-[#FDD023] animate-ping"></span>
         <span>Feature in active development for the LSU community</span>
       </div>
 
@@ -138,97 +160,106 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       
       <!-- Hub 1: Game Day & Tailgate Central -->
-      <div class="rounded-2xl bg-slate-900/70 border border-purple-900/30 p-6 flex flex-col justify-between hover:border-lsu-gold/40 transition-all hover:-translate-y-1 shadow-xl">
+      <div class="rounded-3xl bg-white border border-[#EAD5C0] p-7 flex flex-col justify-between hover:border-[#4A1C24] transition-all hover:-translate-y-1 shadow-lg shadow-[#4A1C24]/5">
         <div>
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-lsu-purple/30 border border-lsu-gold/30 flex items-center justify-center text-2xl mb-4">
+          <div class="w-14 h-14 rounded-2xl bg-[#EAD5C0]/40 border border-[#D3BAA2] flex items-center justify-center text-3xl mb-5 shadow-sm">
             🏈
           </div>
-          <div class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 text-[11px] font-semibold mb-2">
+          <div class="inline-block px-3 py-1 rounded-full bg-[#E9C6CC]/60 text-[#4A1C24] text-[11px] font-heading font-bold mb-3">
             Fall Football Season
           </div>
-          <h3 class="text-xl font-heading font-bold text-white mb-2">
+          <h3 class="text-2xl font-heading font-black text-[#4A1C24] mb-3">
             Game Day &amp; Tailgates
           </h3>
-          <p class="text-slate-400 text-xs leading-relaxed mb-4">
+          <p class="text-[#7A535A] text-xs leading-relaxed mb-5 font-sans">
             Order smoked BBQ platters delivered directly to your tailgate on the Parade Grounds, book purple &amp; gold French tip press-ons, and secure custom Tiger streetwear.
           </p>
-          <ul class="text-xs text-slate-300 space-y-1.5 mb-6">
+          <ul class="text-xs text-[#4A1C24] space-y-2 mb-6 font-medium">
             <li class="flex items-center gap-2">
-              <span class="text-lsu-gold">&check;</span> Campus tailgate food drop-offs
+              <span class="w-4 h-4 rounded-full bg-[#FDD023] flex items-center justify-center text-[10px] text-[#4A1C24] font-black">&check;</span>
+              <span>Campus tailgate food drop-offs</span>
             </li>
             <li class="flex items-center gap-2">
-              <span class="text-lsu-gold">&check;</span> Tiger Stadium action photographers
+              <span class="w-4 h-4 rounded-full bg-[#FDD023] flex items-center justify-center text-[10px] text-[#4A1C24] font-black">&check;</span>
+              <span>Tiger Stadium action photographers</span>
             </li>
             <li class="flex items-center gap-2">
-              <span class="text-lsu-gold">&check;</span> Purple &amp; Gold braided styles
+              <span class="w-4 h-4 rounded-full bg-[#FDD023] flex items-center justify-center text-[10px] text-[#4A1C24] font-black">&check;</span>
+              <span>Purple &amp; Gold braided styles</span>
             </li>
           </ul>
         </div>
-        <a href="food-and-beverages.html" class="text-center py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-lsu-purple/50 text-white hover:text-lsu-gold text-xs font-semibold border border-slate-700/60 transition-colors">
+        <a href="food-and-beverages.html" class="btn-pill-outline w-full text-center text-xs py-2.5">
           Browse Tailgate Food &rarr;
         </a>
       </div>
 
       <!-- Hub 2: Graduation & Commencement -->
-      <div class="rounded-2xl bg-slate-900/70 border border-purple-900/30 p-6 flex flex-col justify-between hover:border-lsu-gold/40 transition-all hover:-translate-y-1 shadow-xl">
+      <div class="rounded-3xl bg-white border border-[#EAD5C0] p-7 flex flex-col justify-between hover:border-[#4A1C24] transition-all hover:-translate-y-1 shadow-lg shadow-[#4A1C24]/5">
         <div>
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-lsu-purple/30 border border-lsu-gold/30 flex items-center justify-center text-2xl mb-4">
+          <div class="w-14 h-14 rounded-2xl bg-[#E9C6CC]/40 border border-[#D4A7B0] flex items-center justify-center text-3xl mb-5 shadow-sm">
             🎓
           </div>
-          <div class="inline-block px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-300 text-[11px] font-semibold mb-2">
+          <div class="inline-block px-3 py-1 rounded-full bg-[#EAD5C0]/60 text-[#4A1C24] text-[11px] font-heading font-bold mb-3">
             December &amp; May Commencement
           </div>
-          <h3 class="text-xl font-heading font-bold text-white mb-2">
+          <h3 class="text-2xl font-heading font-black text-[#4A1C24] mb-3">
             Graduation Central
           </h3>
-          <p class="text-slate-400 text-xs leading-relaxed mb-4">
+          <p class="text-[#7A535A] text-xs leading-relaxed mb-5 font-sans">
             Everything you need for graduation weekend: Memorial Tower cap &amp; gown photoshoots, handcrafted Kente stoles, celebration drip cakes, and silk presses.
           </p>
-          <ul class="text-xs text-slate-300 space-y-1.5 mb-6">
+          <ul class="text-xs text-[#4A1C24] space-y-2 mb-6 font-medium">
             <li class="flex items-center gap-2">
-              <span class="text-lsu-gold">&check;</span> Memorial Tower portrait bookings
+              <span class="w-4 h-4 rounded-full bg-[#FDD023] flex items-center justify-center text-[10px] text-[#4A1C24] font-black">&check;</span>
+              <span>Memorial Tower portrait bookings</span>
             </li>
             <li class="flex items-center gap-2">
-              <span class="text-lsu-gold">&check;</span> Custom Kente &amp; satin stoles
+              <span class="w-4 h-4 rounded-full bg-[#FDD023] flex items-center justify-center text-[10px] text-[#4A1C24] font-black">&check;</span>
+              <span>Custom Kente &amp; satin stoles</span>
             </li>
             <li class="flex items-center gap-2">
-              <span class="text-lsu-gold">&check;</span> Commencement celebration cakes
+              <span class="w-4 h-4 rounded-full bg-[#FDD023] flex items-center justify-center text-[10px] text-[#4A1C24] font-black">&check;</span>
+              <span>Commencement celebration cakes</span>
             </li>
           </ul>
         </div>
-        <a href="photography.html" class="text-center py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-lsu-purple/50 text-white hover:text-lsu-gold text-xs font-semibold border border-slate-700/60 transition-colors">
+        <a href="photography.html" class="btn-pill-outline w-full text-center text-xs py-2.5">
           Browse Graduation Photographers &rarr;
         </a>
       </div>
 
       <!-- Hub 3: Homecoming & Formals -->
-      <div class="rounded-2xl bg-slate-900/70 border border-purple-900/30 p-6 flex flex-col justify-between hover:border-lsu-gold/40 transition-all hover:-translate-y-1 shadow-xl">
+      <div class="rounded-3xl bg-white border border-[#EAD5C0] p-7 flex flex-col justify-between hover:border-[#4A1C24] transition-all hover:-translate-y-1 shadow-lg shadow-[#4A1C24]/5">
         <div>
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-purple-900/40 border border-lsu-gold/30 flex items-center justify-center text-2xl mb-4">
+          <div class="w-14 h-14 rounded-2xl bg-[#EAD5C0]/40 border border-[#D3BAA2] flex items-center justify-center text-3xl mb-5 shadow-sm">
             ✨
           </div>
-          <div class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 text-[11px] font-semibold mb-2">
+          <div class="inline-block px-3 py-1 rounded-full bg-[#E9C6CC]/60 text-[#4A1C24] text-[11px] font-heading font-bold mb-3">
             Homecoming &amp; Greek Formals
           </div>
-          <h3 class="text-xl font-heading font-bold text-white mb-2">
+          <h3 class="text-2xl font-heading font-black text-[#4A1C24] mb-3">
             Homecoming &amp; Formals
           </h3>
-          <p class="text-slate-400 text-xs leading-relaxed mb-4">
+          <p class="text-[#7A535A] text-xs leading-relaxed mb-5 font-sans">
             Get red-carpet ready for LSU Homecoming court, NPHC step shows, fraternity &amp; sorority formals, and alumni gala banquets.
           </p>
-          <ul class="text-xs text-slate-300 space-y-1.5 mb-6">
+          <ul class="text-xs text-[#4A1C24] space-y-2 mb-6 font-medium">
             <li class="flex items-center gap-2">
-              <span class="text-lsu-gold">&check;</span> Custom gowns &amp; formal alterations
+              <span class="w-4 h-4 rounded-full bg-[#FDD023] flex items-center justify-center text-[10px] text-[#4A1C24] font-black">&check;</span>
+              <span>Custom gowns &amp; formal alterations</span>
             </li>
             <li class="flex items-center gap-2">
-              <span class="text-lsu-gold">&check;</span> Volume &amp; mega volume lash sets
+              <span class="w-4 h-4 rounded-full bg-[#FDD023] flex items-center justify-center text-[10px] text-[#4A1C24] font-black">&check;</span>
+              <span>Volume &amp; mega volume lash sets</span>
             </li>
             <li class="flex items-center gap-2">
-              <span class="text-lsu-gold">&check;</span> Intricate Gel-X &amp; 3D nail art
+              <span class="w-4 h-4 rounded-full bg-[#FDD023] flex items-center justify-center text-[10px] text-[#4A1C24] font-black">&check;</span>
+              <span>Intricate Gel-X &amp; 3D nail art</span>
             </li>
           </ul>
         </div>
-        <a href="fashion.html" class="text-center py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-lsu-purple/50 text-white hover:text-lsu-gold text-xs font-semibold border border-slate-700/60 transition-colors">
+        <a href="fashion.html" class="btn-pill-outline w-full text-center text-xs py-2.5">
           Browse Formal Designers &rarr;
         </a>
       </div>
@@ -236,23 +267,23 @@
     </div>
 
     <!-- Return to directory banner -->
-    <div class="mt-12 text-center p-8 rounded-2xl bg-gradient-to-r from-lsu-purple/20 via-slate-900 to-purple-950/40 border border-purple-900/40">
-      <h3 class="text-lg font-heading font-bold text-white mb-2">
-        Looking for a service provider right now?
+    <div class="mt-14 text-center p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#4A1C24] to-[#351218] text-[#F6EEE6] shadow-xl">
+      <h3 class="text-2xl sm:text-3xl font-heading font-black text-[#F6EEE6] mb-3">
+        Looking for a service provider <span class="script-word text-[#E9C6CC]">right now</span>?
       </h3>
-      <p class="text-slate-400 text-xs max-w-lg mx-auto mb-5">
+      <p class="text-[#E9C6CC] text-sm max-w-lg mx-auto mb-6 font-sans">
         Explore over 18 verified Black-owned businesses across Hair, Nails, Lashes, Food, Fashion, and Photography within 25 miles of LSU.
       </p>
-      <a href="index.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-lsu-gold to-amber-300 text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider shadow-lg shadow-lsu-gold/20 hover:from-amber-300 hover:to-lsu-gold transition-all">
-        <span>Explore All 18 Providers</span>
-        <span>&rarr;</span>
+      <a href="index.html" class="btn-pill text-xs px-8 py-3.5 bg-[#FDD023] text-[#4A1C24] hover:bg-[#ECC21C] border-[#FDD023]">
+        <span class="text-[#4A1C24]">Explore All 18 Providers</span>
+        <span class="text-[#4A1C24] ml-1">&rarr;</span>
       </a>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-purple-900/30 bg-slate-950 py-8 text-xs text-slate-400 text-center">
-    <div class="max-w-7xl mx-auto px-4">
+  <footer class="border-t border-[#E9C6CC]/20 bg-[#351218] text-[#E9C6CC] py-8 text-xs text-center">
+    <div class="max-w-7xl mx-auto px-4 font-sans">
       <p>&copy; 2026 Black-Owned BR &bull; Dedicated to Black Entrepreneurs near LSU</p>
     </div>
   </footer>
