@@ -150,23 +150,35 @@ export function createProviderCard(provider) {
       <!-- 2. Card Body Content -->
       <div class="flex flex-col flex-grow p-4 sm:p-5">
         
-        <!-- Header: Business Name & Owner -->
+        <!-- Header: Business Name & Owner (Clickable to open Detail View) -->
         <div class="mb-2">
-          <h3 class="text-lg font-heading font-bold text-white group-hover:text-lsu-gold transition-colors leading-snug">
-            ${provider.businessName}
-          </h3>
+          <button 
+            type="button"
+            class="open-provider-modal-btn text-left group-hover:text-lsu-gold transition-colors focus:outline-none cursor-pointer w-full"
+            data-provider-id="${provider.id}"
+            title="View full profile and reviews"
+          >
+            <h3 class="text-lg font-heading font-bold text-white group-hover:text-lsu-gold transition-colors leading-snug">
+              ${provider.businessName}
+            </h3>
+          </button>
           <p class="text-xs text-slate-400 mt-0.5 font-medium">
             By <span class="text-slate-300">${provider.ownerName}</span>
           </p>
         </div>
 
-        <!-- Rating, Reviews & Distance Indicator -->
+        <!-- Rating, Reviews & Distance Indicator (Clickable to open Reviews) -->
         <div class="flex items-center justify-between mb-3 text-xs">
-          <div class="flex items-center gap-1.5">
+          <button 
+            type="button"
+            class="open-provider-modal-btn flex items-center gap-1.5 hover:text-lsu-gold transition-colors cursor-pointer text-left focus:outline-none"
+            data-provider-id="${provider.id}"
+            title="View ratings and reviews"
+          >
             <span class="text-amber-400 text-sm leading-none">★</span>
             <span class="font-bold text-white">${provider.averageRating.toFixed(1)}</span>
-            <span class="text-slate-400 font-normal">(${provider.reviewCount} reviews)</span>
-          </div>
+            <span class="text-slate-400 font-normal hover:underline">(${provider.reviewCount} reviews)</span>
+          </button>
 
           <!-- Distance from LSU Campus Center -->
           <div class="text-[11px] text-slate-400 font-mono flex items-center gap-1">
@@ -242,22 +254,33 @@ export function createProviderCard(provider) {
             </a>
           </div>
 
-          <!-- Primary Book Button -->
-          <a 
-            href="${provider.bookingUrl}" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            class="px-3.5 py-1.5 rounded-lg bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-1"
-          >
-            <span>Book</span>
-            <svg class="w-3 h-3 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-            </svg>
-          </a>
+          <!-- Action Buttons: Details/Reviews & Book -->
+          <div class="flex items-center gap-1.5">
+            <button 
+              type="button" 
+              class="open-provider-modal-btn px-2.5 py-1.5 rounded-lg bg-slate-800/90 hover:bg-lsu-purple/40 border border-slate-700/80 hover:border-lsu-gold/40 text-slate-300 hover:text-white font-heading font-semibold text-xs transition-colors flex items-center gap-1 cursor-pointer"
+              data-provider-id="${provider.id}"
+              title="View full profile and client reviews"
+            >
+              <span>Reviews</span>
+            </button>
+
+            <!-- Primary Book Button -->
+            <a 
+              href="${provider.bookingUrl}" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="px-3 py-1.5 rounded-lg bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-1"
+            >
+              <span>Book</span>
+              <svg class="w-3 h-3 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
 
         </div>
 
-      </div>
     </article>
   `;
 }

@@ -21,6 +21,7 @@ import { filterProviders, MAX_ALLOWED_RADIUS_MILES } from './utils/filters.js';
 import { calculateDistance, LSU_COORDINATES } from './utils/distance.js';
 import { injectNavigationDrawer } from './components/NavigationDrawer.js';
 import { injectFilterPanel } from './components/FilterPanel.js';
+import { openProviderDetailModal, closeProviderDetailModal, closePhotoLightbox } from './components/ProviderDetailModal.js';
 
 console.log('%c🐯 Black-Owned BR: Multi-page & Filter Panel Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
 
@@ -412,6 +413,35 @@ export function updateDirectory() {
 
   // Render provider cards
   gridElement.innerHTML = filtered.map(provider => createProviderCard(provider)).join('');
+
+  // Attach Provider Detail Modal triggers
+  attachProviderModalTriggers(gridElement);
+}
+
+/**
+ * Attaches click event listeners to provider cards to open the Provider Detail Modal.
+ * 
+ * @param {HTMLElement} container 
+ */
+export function attachProviderModalTriggers(container = document) {
+  container.querySelectorAll('.open-provider-modal-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const providerId = btn.dataset.providerId;
+      const provider = allProviders.find(p => p.id === providerId);
+      if (provider) {
+        openProviderDetailModal(provider, (updatedId, newRating, newCount) => {
+          const target = allProviders.find(p => p.id === updatedId);
+          if (target) {
+            target.averageRating = newRating;
+            target.reviewCount = newCount;
+            updateDirectory();
+          }
+        });
+      }
+    });
+  });
 }
 
 /**
@@ -800,10 +830,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      if (document.getElementById('photo-lightbox-modal')) {
+        closePhotoLightbox();
+        return;
+      }
+      if (document.getElementById('provider-detail-modal')) {
+        closeProviderDetailModal();
+        return;
+      }
       if (document.body.classList.contains('menu-open')) closeMenu();
       if (document.body.classList.contains('filter-drawer-open')) closeFilterPanel();
     }
   });
+
+  // 5b. Deep link to provider detail modal via ?provider=id
+  const providerParam = urlParams.get('provider');
+  if (providerParam) {
+    const checkAndOpen = () => {
+      const match = allProviders.find(p => p.id === providerParam);
+      if (match) {
+        openProviderDetailModal(match, (updatedId, newRating, newCount) => {
+          const target = allProviders.find(p => p.id === updatedId);
+          if (target) {
+            target.averageRating = newRating;
+            target.reviewCount = newCount;
+            updateDirectory();
+          }
+        });
+      }
+    };
+    setTimeout(checkAndOpen, 500);
+  }
 
   // 6. Hero Search Bar Live Filtering & Home Page Cross-Routing
   function getCategoryUrlForQuery(query) {

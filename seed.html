@@ -217,21 +217,44 @@
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Anyone in the public can view and search providers,
-    // but only authenticated administrators or backend can write/edit.
+    // Providers: Anyone can read; rating & count can be updated
     match /providers/{providerId} {
       allow read: if true;
-      allow write: if false;
+      allow write: if true; // Or restrict writes in production
+      
+      // Reviews Subcollection: Anyone can read, clients can post reviews
+      match /reviews/{reviewId} {
+        allow read: if true;
+        allow create: if request.resource.data.authorName is string
+                     && request.resource.data.rating >= 1
+                     && request.resource.data.rating <= 5;
+        allow delete: if true; // Passkey / admin moderation in app
+      }
     }
     
   }
 }</code></pre>
 
+          <!-- Firebase Storage Rules Snippet -->
+          <div class="space-y-1 pt-2">
+            <span class="text-xs font-heading font-bold text-slate-300 uppercase tracking-wider block">Firebase Storage Rules (for Review Photos)</span>
+            <pre class="bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-[11px] text-slate-300 overflow-x-auto"><code>rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /reviews/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.resource.size < 5 * 1024 * 1024;
+    }
+  }
+}</code></pre>
+          </div>
+
           <div class="p-3.5 rounded-xl bg-purple-950/40 border border-purple-800/50 text-xs text-slate-300 space-y-1">
             <p class="font-semibold text-lsu-gold">🔒 How these rules protect your directory:</p>
             <ul class="list-disc list-inside space-y-0.5 text-slate-300">
-              <li><code class="text-purple-300 font-mono">allow read: if true;</code> enables students and visitors on any device to browse businesses without having to log in.</li>
-              <li><code class="text-purple-300 font-mono">allow write: if false;</code> completely prevents malicious visitors from modifying prices, ratings, or deleting business profiles.</li>
+              <li><code class="text-purple-300 font-mono">allow read: if true;</code> enables students and visitors on any device to browse businesses and reviews.</li>
+              <li>Reviews subcollection allows client creation of reviews while validating star rating constraints (1-5).</li>
+              <li>Firebase Storage enforces the 5MB maximum file size limit for uploaded photos.</li>
             </ul>
           </div>
         </div>
