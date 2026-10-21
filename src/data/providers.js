@@ -6,11 +6,19 @@
  * are FICTIONAL SAMPLE RECORDS created for prototyping and development.
  * Geographical coordinates and neighborhoods are real Baton Rouge locations
  * within a 25-mile radius of Louisiana State University (LSU Memorial Tower).
+ * 
+ * Each category contains at least 3 providers with realistic category-specific attributes:
+ * - Hair: hairTypes, specialties, chairVibe
+ * - Nails: nailStyles
+ * - Lashes: lashTypes, offersFills
+ * - Food & Beverages: foodTypes, campusDropOff, preOrderRequired
+ * - Fashion (Custom Outfits): outfitTypes, turnaround
+ * - Photography: shootTypes, travelsToCampus, turnaround
  */
 
 export const SAMPLE_PROVIDERS = [
   // =========================================================================
-  // 1. HAIR PROVIDERS
+  // 1. HAIR PROVIDERS (3 providers)
   // =========================================================================
   {
     id: "sample-hair-01",
@@ -128,7 +136,8 @@ export const SAMPLE_PROVIDERS = [
   },
 
   // =========================================================================
-  // 2. NAILS PROVIDERS
+  // 2. NAILS PROVIDERS (3 providers)
+  // Fields: nailStyles (acrylic, gel-x, natural nail, press-ons, nail art)
   // =========================================================================
   {
     id: "sample-nails-01",
@@ -151,6 +160,7 @@ export const SAMPLE_PROVIDERS = [
     longitude: -91.1730,
     neighborhood: "Tigerland",
     lsuVerified: "student",
+    nailStyles: ["gel-x", "nail art", "acrylic"],
     policies: {
       depositRequired: true,
       depositAmount: "$20 non-refundable deposit required",
@@ -186,6 +196,7 @@ export const SAMPLE_PROVIDERS = [
     longitude: -91.1530,
     neighborhood: "College Town / Perkins",
     lsuVerified: null,
+    nailStyles: ["natural nail", "press-ons", "gel-x"],
     policies: {
       depositRequired: true,
       depositAmount: "$25 non-refundable deposit",
@@ -200,9 +211,46 @@ export const SAMPLE_PROVIDERS = [
     ],
     seasonalTags: ["graduation-formal", "formal-ready"]
   },
+  {
+    id: "sample-nails-03",
+    businessName: "Baton Rouge Acrylic Dynasty [SAMPLE]",
+    ownerName: "Sample Tasha Washington",
+    category: "Nails",
+    description: "Specializing in sculpted XXL acrylic sets, encapsulated glitter designs, 3D charms, and custom game-day press-on sets with campus drop-off.",
+    instagramUrl: "https://instagram.com/sample.acrylicdynasty",
+    tiktokUrl: "https://tiktok.com/@sample.acrylicdynasty",
+    websiteUrl: "https://sample-acrylicdynasty.example.com",
+    bookingUrl: "https://sample-booking.example.com/acrylicdynasty",
+    startingPrice: 65,
+    priceTier: "$$",
+    yearsExperience: 6,
+    studentDiscount: true,
+    serviceDelivery: "both",
+    availability: "same-day",
+    turnaround: null,
+    latitude: 30.4380,
+    longitude: -91.1620,
+    neighborhood: "Garden District / Government St",
+    lsuVerified: "alumni",
+    nailStyles: ["acrylic", "nail art", "press-ons"],
+    policies: {
+      depositRequired: true,
+      depositAmount: "$25 deposit required for acrylic sets",
+      cancellationPolicy: "Rescheduling must occur at least 12 hours prior to start time.",
+      refundPolicy: "Complimentary fix on broken nails within 4 days."
+    },
+    averageRating: 4.9,
+    reviewCount: 61,
+    portfolioImages: [
+      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=600&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1522337094344-660f63421113?w=600&auto=format&fit=crop&q=80"
+    ],
+    seasonalTags: ["game-day", "tailgate-glam", "campus-special"]
+  },
 
   // =========================================================================
-  // 3. LASHES PROVIDERS
+  // 3. LASHES PROVIDERS (3 providers)
+  // Fields: lashTypes (classic, hybrid, volume, mega volume), offersFills (true/false)
   // =========================================================================
   {
     id: "sample-lashes-01",
@@ -225,6 +273,8 @@ export const SAMPLE_PROVIDERS = [
     longitude: -91.1680,
     neighborhood: "Garden District",
     lsuVerified: "student",
+    lashTypes: ["hybrid", "volume", "mega volume"],
+    offersFills: true,
     policies: {
       depositRequired: true,
       depositAmount: "$25 deposit required upon booking",
@@ -239,9 +289,85 @@ export const SAMPLE_PROVIDERS = [
     ],
     seasonalTags: ["game-day", "graduation-formal"]
   },
+  {
+    id: "sample-lashes-02",
+    businessName: "Bayou Beauty Lash Bar [SAMPLE]",
+    ownerName: "Sample Kennedy Hayes",
+    category: "Lashes",
+    description: "Natural everyday classic sets, wet lash mascara mapping, and rapid bi-weekly lash fills located a short walk from LSU on Highland.",
+    instagramUrl: "https://instagram.com/sample.bayoulashbar",
+    tiktokUrl: "https://tiktok.com/@sample.bayoulashbar",
+    websiteUrl: "https://sample-bayoulashbar.example.com",
+    bookingUrl: "https://sample-booking.example.com/bayoulashbar",
+    startingPrice: 65,
+    priceTier: "$",
+    yearsExperience: 3,
+    studentDiscount: true,
+    serviceDelivery: "studio",
+    availability: "same-day",
+    turnaround: null,
+    latitude: 30.4150,
+    longitude: -91.1735,
+    neighborhood: "Highland / State St",
+    lsuVerified: "student",
+    lashTypes: ["classic", "hybrid"],
+    offersFills: true,
+    policies: {
+      depositRequired: true,
+      depositAmount: "$20 deposit secures appointment",
+      cancellationPolicy: "Same-day cancellation loses deposit; one free reschedule with 24h notice.",
+      refundPolicy: "Satisfaction guarantee: free adjustment within 48 hours."
+    },
+    averageRating: 4.8,
+    reviewCount: 44,
+    portfolioImages: [
+      "https://images.unsplash.com/photo-1522337094344-660f63421113?w=600&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=600&auto=format&fit=crop&q=80"
+    ],
+    seasonalTags: ["everyday-beauty", "rush-prep"]
+  },
+  {
+    id: "sample-lashes-03",
+    businessName: "The Glamour Gaze Studio [SAMPLE]",
+    ownerName: "Sample Simone Pierre",
+    category: "Lashes",
+    description: "High-drama Russian mega volume sets, wispy textured spikes, bottom lash extensions, and camera-ready looks for Greek formals and photo shoots.",
+    instagramUrl: "https://instagram.com/sample.glamourgaze",
+    tiktokUrl: "https://tiktok.com/@sample.glamourgaze",
+    websiteUrl: "https://sample-glamourgaze.example.com",
+    bookingUrl: "https://sample-booking.example.com/glamourgaze",
+    startingPrice: 110,
+    priceTier: "$$$",
+    yearsExperience: 6,
+    studentDiscount: false,
+    serviceDelivery: "studio",
+    availability: "bookings-open",
+    turnaround: null,
+    latitude: 30.4505,
+    longitude: -91.1850,
+    neighborhood: "Downtown Baton Rouge",
+    lsuVerified: "alumni",
+    lashTypes: ["volume", "mega volume"],
+    offersFills: false,
+    policies: {
+      depositRequired: true,
+      depositAmount: "$35 non-refundable studio deposit",
+      cancellationPolicy: "48 hours notice needed to reschedule without forfeiture.",
+      refundPolicy: "No refunds on completed lash sets."
+    },
+    averageRating: 5.0,
+    reviewCount: 38,
+    portfolioImages: [
+      "https://images.unsplash.com/photo-1583001809873-a128495da465?w=600&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&auto=format&fit=crop&q=80"
+    ],
+    seasonalTags: ["formal-ready", "graduation-formal"]
+  },
 
   // =========================================================================
-  // 4. FOOD & BEVERAGES PROVIDERS
+  // 4. FOOD & BEVERAGES PROVIDERS (3 providers)
+  // Fields: foodTypes (meals/plates, desserts/baked goods, drinks, catering),
+  //         campusDropOff (true/false), preOrderRequired (true/false)
   // =========================================================================
   {
     id: "sample-food-01",
@@ -264,6 +390,9 @@ export const SAMPLE_PROVIDERS = [
     longitude: -91.1710,
     neighborhood: "Highland Road / LSU",
     lsuVerified: "alumni",
+    foodTypes: ["meals/plates", "catering"],
+    campusDropOff: true,
+    preOrderRequired: true,
     policies: {
       depositRequired: true,
       depositAmount: "50% deposit required for catering bookings over $150",
@@ -299,6 +428,9 @@ export const SAMPLE_PROVIDERS = [
     longitude: -91.1490,
     neighborhood: "Mid City",
     lsuVerified: null,
+    foodTypes: ["desserts/baked goods", "drinks"],
+    campusDropOff: true,
+    preOrderRequired: false,
     policies: {
       depositRequired: true,
       depositAmount: "Full payment for express orders; 50% for custom multi-tier cakes",
@@ -313,9 +445,48 @@ export const SAMPLE_PROVIDERS = [
     ],
     seasonalTags: ["graduation-formal", "celebrations"]
   },
+  {
+    id: "sample-food-03",
+    businessName: "Tigerland BBQ & Loaded Plates [SAMPLE]",
+    ownerName: "Sample Deon Jackson",
+    category: "Food & Beverages",
+    description: "Smoked jerk chicken loaded mac bowls, BBQ brisket sandwiches, and cold Southern lemonade dropped off directly to campus dorms and tailgates.",
+    instagramUrl: "https://instagram.com/sample.tigerlandbbq",
+    tiktokUrl: "https://tiktok.com/@sample.tigerlandbbq",
+    websiteUrl: "https://sample-tigerlandbbq.example.com",
+    bookingUrl: "https://sample-booking.example.com/tigerlandbbq",
+    startingPrice: 18,
+    priceTier: "$",
+    yearsExperience: 4,
+    studentDiscount: true,
+    serviceDelivery: "both",
+    availability: "same-day",
+    turnaround: null,
+    latitude: 30.3980,
+    longitude: -91.1740,
+    neighborhood: "Tigerland / Burbank",
+    lsuVerified: "student",
+    foodTypes: ["meals/plates", "drinks"],
+    campusDropOff: true,
+    preOrderRequired: false,
+    policies: {
+      depositRequired: false,
+      depositAmount: "Pay on order or campus meetup",
+      cancellationPolicy: "Orders can be modified within 15 minutes of placing.",
+      refundPolicy: "Immediate replacement or refund for incorrect orders."
+    },
+    averageRating: 4.9,
+    reviewCount: 89,
+    portfolioImages: [
+      "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format&fit=crop&q=80"
+    ],
+    seasonalTags: ["game-day", "tailgate-ready", "quick-bites"]
+  },
 
   // =========================================================================
-  // 5. FASHION (CUSTOM OUTFITS) PROVIDERS
+  // 5. FASHION (CUSTOM OUTFITS) PROVIDERS (3 providers)
+  // Fields: outfitTypes (game day, formal/prom, graduation, everyday), turnaround
   // =========================================================================
   {
     id: "sample-fashion-01",
@@ -338,6 +509,7 @@ export const SAMPLE_PROVIDERS = [
     longitude: -91.0850,
     neighborhood: "Bluebonnet / Perkins Rowe",
     lsuVerified: "alumni",
+    outfitTypes: ["formal/prom", "graduation"],
     policies: {
       depositRequired: true,
       depositAmount: "50% non-refundable deposit to secure fabric and production slot",
@@ -373,6 +545,7 @@ export const SAMPLE_PROVIDERS = [
     longitude: -91.1785,
     neighborhood: "LSU Campus Vicinity",
     lsuVerified: "student",
+    outfitTypes: ["game day", "everyday"],
     policies: {
       depositRequired: false,
       depositAmount: "No deposit on basic alterations; payment upon completion",
@@ -387,9 +560,47 @@ export const SAMPLE_PROVIDERS = [
     ],
     seasonalTags: ["game-day", "greek-life", "rush-ready"]
   },
+  {
+    id: "sample-fashion-03",
+    businessName: "Heritage Haute Stoles & Tailoring [SAMPLE]",
+    ownerName: "Sample Camille Broussard",
+    category: "Fashion (Custom Outfits)",
+    description: "Handcrafted Kente graduation stoles, personalized purple and gold satin game-day corsets, and cocktail dress alterations in Mid City.",
+    instagramUrl: "https://instagram.com/sample.heritagehaute",
+    tiktokUrl: "https://tiktok.com/@sample.heritagehaute",
+    websiteUrl: "https://sample-heritagehaute.example.com",
+    bookingUrl: "https://sample-booking.example.com/heritagehaute",
+    startingPrice: 95,
+    priceTier: "$$",
+    yearsExperience: 5,
+    studentDiscount: true,
+    serviceDelivery: "studio",
+    availability: "bookings-open",
+    turnaround: "2-weeks",
+    latitude: 30.4440,
+    longitude: -91.1550,
+    neighborhood: "Mid City",
+    lsuVerified: "alumni",
+    outfitTypes: ["graduation", "formal/prom", "game day"],
+    policies: {
+      depositRequired: true,
+      depositAmount: "30% deposit required on custom orders",
+      cancellationPolicy: "Free cancellation within 24 hours of placing order.",
+      refundPolicy: "Garment adjustments covered free within 14 days."
+    },
+    averageRating: 5.0,
+    reviewCount: 29,
+    portfolioImages: [
+      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&auto=format&fit=crop&q=80"
+    ],
+    seasonalTags: ["graduation", "commencement-ready", "formal-ready"]
+  },
 
   // =========================================================================
-  // 6. PHOTOGRAPHY PROVIDERS
+  // 6. PHOTOGRAPHY PROVIDERS (3 providers)
+  // Fields: shootTypes (graduation, game day, events, portraits, brand content),
+  //         travelsToCampus (true/false), turnaround
   // =========================================================================
   {
     id: "sample-photo-01",
@@ -412,6 +623,8 @@ export const SAMPLE_PROVIDERS = [
     longitude: -91.1800,
     neighborhood: "LSU Campus (Memorial Tower)",
     lsuVerified: "student",
+    shootTypes: ["graduation", "game day", "portraits"],
+    travelsToCampus: true,
     policies: {
       depositRequired: true,
       depositAmount: "$50 booking retainer to secure shoot time and date",
@@ -447,6 +660,8 @@ export const SAMPLE_PROVIDERS = [
     longitude: -91.1890,
     neighborhood: "Downtown Baton Rouge",
     lsuVerified: "alumni",
+    shootTypes: ["brand content", "portraits", "events"],
+    travelsToCampus: false,
     policies: {
       depositRequired: true,
       depositAmount: "30% studio deposit required to reserve studio lighting bay",
@@ -460,6 +675,43 @@ export const SAMPLE_PROVIDERS = [
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&auto=format&fit=crop&q=80"
     ],
     seasonalTags: ["professional-headshots", "branding", "graduation-formal"]
+  },
+  {
+    id: "sample-photo-03",
+    businessName: "Golden Hour Campus Shutter [SAMPLE]",
+    ownerName: "Sample Kayla Davis",
+    category: "Photography",
+    description: "Express golden hour photo sessions around the LSU Lakes, fraternity/sorority tailgates, and celebratory champagne graduation pop portraits.",
+    instagramUrl: "https://instagram.com/sample.campusshutter",
+    tiktokUrl: "https://tiktok.com/@sample.campusshutter",
+    websiteUrl: "https://sample-campusshutter.example.com",
+    bookingUrl: "https://sample-booking.example.com/campusshutter",
+    startingPrice: 125,
+    priceTier: "$",
+    yearsExperience: 3,
+    studentDiscount: true,
+    serviceDelivery: "mobile",
+    availability: "same-day",
+    turnaround: "this-week",
+    latitude: 30.4210,
+    longitude: -91.1780,
+    neighborhood: "Northgate / Lakeshore",
+    lsuVerified: "student",
+    shootTypes: ["graduation", "events", "game day"],
+    travelsToCampus: true,
+    policies: {
+      depositRequired: true,
+      depositAmount: "$30 deposit required to lock in sunset slot",
+      cancellationPolicy: "Free rain check rescheduling for weather conflicts.",
+      refundPolicy: "High-resolution digital delivery included; retakes offered within 7 days."
+    },
+    averageRating: 4.9,
+    reviewCount: 51,
+    portfolioImages: [
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80"
+    ],
+    seasonalTags: ["graduation", "lsu-lakes", "golden-hour"]
   }
 ];
 
