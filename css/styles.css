@@ -5,7 +5,7 @@
    BEGINNER NOTE:
    We are using Tailwind CSS via CDN for rapid utility-based styling.
    This custom CSS file adds tailored gradients, warm celebratory effects,
-   smooth mobile transitions, and custom brand touches.
+   smooth slide-out side menu transitions, and custom brand touches.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -64,18 +64,33 @@ h1, h2, h3, h4, .font-heading {
 }
 
 /* --------------------------------------------------------------------------
-   4. Mobile Navigation Drawer Animation
+   4. Slide-out Side Menu Drawer Animations
+   Smooth slide from the right edge with backdrop blur.
    -------------------------------------------------------------------------- */
-#mobile-menu {
-  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease-in-out;
+#slide-out-menu {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#mobile-menu.hidden {
-  display: none;
+#menu-backdrop {
+  transition: opacity 0.25s ease-in-out;
+}
+
+/* When the drawer is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+body.menu-open #slide-out-menu {
+  transform: translateX(0);
+}
+
+body.menu-open #menu-backdrop {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* --------------------------------------------------------------------------
-   5. Interactive Touch Targets & Focus States (Mobile friendly)
+   5. Interactive Touch Targets & Focus States
    -------------------------------------------------------------------------- */
 a, button, input {
   transition: all 0.2s ease;
@@ -91,6 +106,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
    -------------------------------------------------------------------------- */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -104,4 +120,12 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--lsu-purple);
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

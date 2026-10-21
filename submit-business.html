@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Your Business | Black-Owned BR (LSU Directory)</title>
+  <meta name="description" content="Apply to list your Black-owned business or creative service in the Baton Rouge directory within 25 miles of LSU.">
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Configuration with LSU Brand Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            lsu: {
+              purple: '#461D7C',
+              'purple-dark': '#2E1053',
+              'purple-deep': '#1A0830',
+              'purple-light': '#6B2FA8',
+              gold: '#FDD023',
+              'gold-hover': '#ECC21C',
+              'gold-light': '#FEF08A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- JavaScript ES Modules (Includes slide-out drawer navigation) -->
+  <script type="module" src="js/app.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-lsu-gold selection:text-lsu-purple-dark antialiased">
+
+  <!-- ========================================================================
+       HEADER & NAVIGATION
+       ======================================================================== -->
+  <header class="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-purple-900/30 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        
+        <!-- Site Logo -->
+        <a href="index.html" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-lsu-gold rounded-xl py-1">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-lsu-purple via-lsu-purple-dark to-purple-950 border border-lsu-gold/40 flex items-center justify-center shadow-lg shadow-purple-950/50 group-hover:border-lsu-gold transition-colors">
+            <span class="text-lsu-gold font-heading font-black text-base sm:text-lg tracking-wider">LSU</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-heading font-black text-lg sm:text-xl text-white tracking-tight leading-none group-hover:text-lsu-gold transition-colors">
+                Black-Owned BR
+              </span>
+              <span class="inline-block w-2 h-2 rounded-full bg-lsu-gold animate-pulse"></span>
+            </div>
+            <p class="text-[11px] sm:text-xs text-slate-400 font-medium tracking-wide">
+              LSU &bull; 25-Mile Radius Directory
+            </p>
+          </div>
+        </a>
+
+        <!-- Top Corner Hamburger Menu Button -->
+        <div class="flex items-center">
+          <button 
+            id="hamburger-btn" 
+            type="button" 
+            class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-purple-900/40 text-slate-200 hover:text-lsu-gold hover:border-lsu-gold/50 focus:outline-none focus:ring-2 focus:ring-lsu-gold transition-colors shadow-sm cursor-pointer"
+            aria-expanded="false" 
+            aria-controls="slide-out-menu"
+            aria-label="Open navigation menu"
+          >
+            <span class="text-xs font-heading font-bold uppercase tracking-wider text-slate-300 hidden sm:inline-block">Menu</span>
+            <svg class="w-5 h-5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HERO BANNER
+       ======================================================================== -->
+  <section class="relative hero-glow-bg border-b border-purple-900/20 py-12 sm:py-16 overflow-hidden">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <!-- Breadcrumb -->
+      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-lsu-gold transition-colors mb-4">
+        <span>&larr;</span>
+        <span>Back to Main Directory</span>
+      </a>
+
+      <!-- Pill -->
+      <div class="block">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-lsu-purple/40 border border-lsu-gold/30 text-lsu-gold text-xs sm:text-sm font-semibold mb-4 backdrop-blur">
+          <span>📝</span>
+          <span>Community Directory Intake</span>
+          <span class="w-1 h-1 rounded-full bg-lsu-gold"></span>
+          <span>Free Listings</span>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl sm:text-5xl font-heading font-extrabold text-white tracking-tight mb-4">
+        Submit Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-lsu-gold via-amber-300 to-yellow-400">Business</span>
+      </h1>
+      <p class="max-w-xl mx-auto text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+        Are you a Black entrepreneur, student braider, nail artist, lash technician, baker, designer, or photographer within 25 miles of LSU? Get discovered by thousands of Tigers.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SUBMISSION CRITERIA & FORM
+       ======================================================================== -->
+  <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+    
+    <!-- Listing Standards Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+      <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+        <div class="text-2xl mb-1">📍</div>
+        <div class="text-xs font-heading font-bold text-white mb-1">Within 25 Miles</div>
+        <p class="text-[11px] text-slate-400">Must be located or provide mobile service within 25 miles of LSU campus.</p>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+        <div class="text-2xl mb-1">🐯</div>
+        <div class="text-xs font-heading font-bold text-white mb-1">LSU Badge Verification</div>
+        <p class="text-[11px] text-slate-400">Student &amp; Alumni verification badges available with valid LSU credentials.</p>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+        <div class="text-2xl mb-1">✨</div>
+        <div class="text-xs font-heading font-bold text-white mb-1">100% Free Directory</div>
+        <p class="text-[11px] text-slate-400">No listing fees or commissions. Built by students for our community.</p>
+      </div>
+    </div>
+
+    <!-- Intake Form Card -->
+    <div class="rounded-2xl bg-slate-900/80 border border-purple-900/40 p-6 sm:p-8 shadow-2xl backdrop-blur">
+      <h2 class="text-xl font-heading font-bold text-white mb-2">
+        Business Submission Form
+      </h2>
+      <p class="text-xs text-slate-400 mb-6">
+        Complete the information below. New submissions are reviewed and added within 48 hours.
+      </p>
+
+      <form id="submit-business-form" class="space-y-5" onsubmit="event.preventDefault(); document.getElementById('submission-toast').classList.remove('hidden');">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="business-name">
+              Business Name *
+            </label>
+            <input 
+              id="business-name" 
+              type="text" 
+              required 
+              placeholder="e.g. Geaux Braids BR"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="owner-name">
+              Owner / Artist Name *
+            </label>
+            <input 
+              id="owner-name" 
+              type="text" 
+              required 
+              placeholder="e.g. Maya Robinson"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+            >
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="business-category">
+              Primary Category *
+            </label>
+            <select 
+              id="business-category" 
+              required
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+            >
+              <option value="">Select Category</option>
+              <option value="Hair">Hair</option>
+              <option value="Nails">Nails</option>
+              <option value="Lashes">Lashes</option>
+              <option value="Food & Beverages">Food &amp; Beverages</option>
+              <option value="Fashion (Custom Outfits)">Fashion (Custom Outfits)</option>
+              <option value="Photography">Photography</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="lsu-affiliation">
+              LSU Affiliation
+            </label>
+            <select 
+              id="lsu-affiliation"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+            >
+              <option value="none">Community Entrepreneur</option>
+              <option value="student">Current LSU Student</option>
+              <option value="alumni">LSU Alumni</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="neighborhood-location">
+              Neighborhood / Area (within 25 mi) *
+            </label>
+            <input 
+              id="neighborhood-location" 
+              type="text" 
+              required 
+              placeholder="e.g. North Gates, Highland, Mid City, Downtown"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="booking-url">
+              Booking or Portfolio Link *
+            </label>
+            <input 
+              id="booking-url" 
+              type="url" 
+              required 
+              placeholder="https://instagram.com/... or booking site"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="business-description">
+            Services &amp; Description *
+          </label>
+          <textarea 
+            id="business-description" 
+            rows="3" 
+            required 
+            placeholder="Briefly describe your services, price ranges, deposit policies, and student discounts..."
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-2">
+          <button 
+            type="submit" 
+            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-lsu-gold to-amber-300 hover:from-amber-300 hover:to-lsu-gold text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider shadow-lg shadow-lsu-gold/20 transition-all cursor-pointer"
+          >
+            Submit Listing for Verification
+          </button>
+        </div>
+
+        <!-- Success Toast Notification -->
+        <div id="submission-toast" class="hidden p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-200 text-xs flex items-center gap-3">
+          <span class="text-base">&check;</span>
+          <div>
+            <strong>Thank you!</strong> Your submission has been received. Our team will verify the details within 48 hours and add your business to the directory.
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-purple-900/30 bg-slate-950 py-8 text-xs text-slate-400 text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>&copy; 2026 Black-Owned BR &bull; Dedicated to Black Entrepreneurs near LSU</p>
+    </div>
+  </footer>
+
+</body>
+</html>

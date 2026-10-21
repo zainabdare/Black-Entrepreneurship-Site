@@ -74,67 +74,24 @@
           </div>
         </a>
 
-        <!-- Desktop Navigation Links -->
-        <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium" aria-label="Main Navigation">
-          <a href="#home" class="px-3.5 py-2 rounded-lg text-white hover:text-lsu-gold hover:bg-white/5 transition-colors">
-            Home
-          </a>
-          <a href="#seasonal-hubs" class="px-3.5 py-2 rounded-lg text-slate-300 hover:text-lsu-gold hover:bg-white/5 transition-colors flex items-center gap-1.5">
-            <span>Seasonal Hubs</span>
-            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-lsu-gold/20 text-lsu-gold border border-lsu-gold/30">
-              New
-            </span>
-          </a>
-          <a href="#about-creators" class="px-3.5 py-2 rounded-lg text-slate-300 hover:text-lsu-gold hover:bg-white/5 transition-colors">
-            About the Creators
-          </a>
-          <a href="#submit-business" class="ml-2 px-4 py-2 rounded-xl bg-gradient-to-r from-lsu-gold to-amber-300 hover:from-amber-300 hover:to-lsu-gold text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-md shadow-lsu-gold/20 hover:shadow-lg hover:shadow-lsu-gold/30">
-            Submit Your Business
-          </a>
-        </nav>
-
-        <!-- Mobile Menu Toggle Button (Touch-friendly 44px+) -->
-        <div class="flex md:hidden items-center">
+        <!-- Top Corner Hamburger Menu Button (Opens slide-out side menu) -->
+        <div class="flex items-center">
           <button 
-            id="mobile-menu-btn" 
+            id="hamburger-btn" 
             type="button" 
-            class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 hover:text-lsu-gold hover:border-lsu-gold/40 focus:outline-none focus:ring-2 focus:ring-lsu-gold transition-colors"
+            class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-purple-900/40 text-slate-200 hover:text-lsu-gold hover:border-lsu-gold/50 focus:outline-none focus:ring-2 focus:ring-lsu-gold transition-colors shadow-sm cursor-pointer"
             aria-expanded="false" 
-            aria-controls="mobile-menu"
-            aria-label="Toggle navigation menu"
+            aria-controls="slide-out-menu"
+            aria-label="Open navigation menu"
           >
-            <!-- Hamburger Icon (shown by default) -->
-            <svg id="hamburger-icon" class="w-6 h-6 stroke-current block" fill="none" viewBox="0 0 24 24" stroke-width="2">
+            <span class="text-xs font-heading font-bold uppercase tracking-wider text-slate-300 hidden sm:inline-block">Menu</span>
+            <!-- Three-line Hamburger Icon -->
+            <svg class="w-5 h-5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-            <!-- Close Icon (hidden by default) -->
-            <svg id="close-icon" class="w-6 h-6 stroke-current hidden" fill="none" viewBox="0 0 24 24" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
             </svg>
           </button>
         </div>
 
-      </div>
-    </div>
-
-    <!-- Mobile Collapsible Menu (Smooth drop-down for phone screens) -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-950/95 px-4 pt-3 pb-6 space-y-2 backdrop-blur-lg">
-      <a href="#home" class="mobile-nav-link flex items-center px-4 py-3 rounded-xl text-base font-medium text-white hover:bg-lsu-purple/20 hover:text-lsu-gold">
-        Home
-      </a>
-      <a href="#seasonal-hubs" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:bg-lsu-purple/20 hover:text-lsu-gold">
-        <span>Seasonal Hubs</span>
-        <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-lsu-gold/20 text-lsu-gold border border-lsu-gold/30">
-          Game-Day &amp; Formals
-        </span>
-      </a>
-      <a href="#about-creators" class="mobile-nav-link flex items-center px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:bg-lsu-purple/20 hover:text-lsu-gold">
-        About the Creators
-      </a>
-      <div class="pt-2">
-        <a href="#submit-business" class="mobile-nav-link block text-center w-full px-4 py-3 rounded-xl bg-gradient-to-r from-lsu-gold to-amber-300 text-lsu-purple-dark font-heading font-bold text-sm uppercase tracking-wider shadow-md shadow-lsu-gold/20">
-          Submit Your Business
-        </a>
       </div>
     </div>
   </header>

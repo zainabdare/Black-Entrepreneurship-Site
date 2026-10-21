@@ -3,28 +3,31 @@
  * Main JavaScript controller for Black-Owned BR.
  * 
  * Features:
- * - Dynamic rendering of all 12 sample providers using ProviderCard component
- * - Category filter bar
- * - Real-time hero keyword search
- * - Location filtering (Haversine formula from LSU center point 30.4133, -91.1800)
- * - Quick-select zone buttons (North Gates, Highland/Burbank, Mid-City, Downtown, All BR)
- * - Interactive 1-25 mi radius slider (enforcing strict 25-mile max limit)
- * - Mobile navigation drawer
+ * - Dynamic rendering of providers via ProviderCard component
+ * - Category page detection (supports dedicated category pages with unique URLs)
+ * - Slide-out navigation side menu (opens via top-corner hamburger, closes on link click or outside tap)
+ * - Real-time keyword search
+ * - Location filtering (Haversine distance from LSU 30.4133, -91.1800, quick zone buttons, 1-25 mi radius slider)
+ * - Strict 25-mile max distance enforcement
  */
 
 import { SAMPLE_PROVIDERS } from './data/providers.js';
 import { createProviderCard } from './components/ProviderCard.js';
 import { filterProviders, MAX_ALLOWED_RADIUS_MILES } from './utils/filters.js';
 import { calculateDistance, LSU_COORDINATES } from './utils/distance.js';
+import { injectNavigationDrawer } from './components/NavigationDrawer.js';
 
-console.log('%c🐯 Black-Owned BR: Location Filtering & Directory Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
-console.log('LSU Center Coordinate:', LSU_COORDINATES.name, `(${LSU_COORDINATES.latitude}, ${LSU_COORDINATES.longitude})`);
+console.log('%c🐯 Black-Owned BR: Multi-page & Drawer Navigation Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
+
+// Detect if current page is dedicated to a specific category
+const pageCategory = document.body.dataset.category || 'All';
+const isDedicatedCategoryPage = pageCategory !== 'All';
 
 // ---------------------------------------------------------------------------
 // 1. Application Filter State
 // ---------------------------------------------------------------------------
 const appState = {
-  selectedCategory: 'All',
+  selectedCategory: pageCategory,
   searchQuery: '',
   maxRadius: 25,
   selectedZone: 'all'
@@ -33,7 +36,7 @@ const appState = {
 /**
  * Updates the directory grid and status indicators according to current filter state.
  */
-function updateDirectory() {
+export function updateDirectory() {
   const gridElement = document.getElementById('providers-grid');
   const countElement = document.getElementById('results-count');
   const statusElement = document.getElementById('directory-status-text');
@@ -109,19 +112,17 @@ function updateDirectory() {
 }
 
 /**
- * Resets all search, category, radius, and zone filters to default.
+ * Resets all search, radius, and zone filters to default.
  */
 function resetAllFilters() {
-  appState.selectedCategory = 'All';
+  appState.selectedCategory = pageCategory;
   appState.searchQuery = '';
   appState.maxRadius = 25;
   appState.selectedZone = 'all';
 
-  // Reset search input
   const searchInput = document.getElementById('hero-search-input');
   if (searchInput) searchInput.value = '';
 
-  // Reset radius slider
   const radiusSlider = document.getElementById('radius-slider');
   if (radiusSlider) radiusSlider.value = '25';
 
@@ -131,7 +132,7 @@ function resetAllFilters() {
 }
 
 /**
- * Updates Category filter button active/inactive styling.
+ * Updates Category filter button active/inactive styling (if present on the page).
  */
 function updateCategoryButtonStyles() {
   const categoryButtons = document.querySelectorAll('.category-filter-btn');
@@ -169,13 +170,78 @@ function updateZoneButtonStyles() {
 }
 
 // ---------------------------------------------------------------------------
+// 2. Slide-out Navigation Side Menu Controls
+// ---------------------------------------------------------------------------
+export function openMenu() {
+  document.body.classList.add('menu-open');
+  const backdrop = document.getElementById('menu-backdrop');
+  if (backdrop) backdrop.classList.remove('hidden');
+  const btn = document.getElementById('hamburger-btn');
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+}
+
+export function closeMenu() {
+  document.body.classList.remove('menu-open');
+  const backdrop = document.getElementById('menu-backdrop');
+  if (backdrop) backdrop.classList.add('hidden');
+  const btn = document.getElementById('hamburger-btn');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// ---------------------------------------------------------------------------
 // Document Ready: Attach All Event Handlers
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Initial Render
+  // 1. Inject slide-out side menu drawer and backdrop into DOM
+  injectNavigationDrawer();
+
+  // 2. Initial Render
+  updateCategoryButtonStyles();
+  updateZoneButtonStyles();
   updateDirectory();
 
-  // 2. Category Filter Buttons
+  // 3. Slide-out Menu Event Listeners
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const closeMenuBtn = document.getElementById('close-menu-btn');
+  const backdrop = document.getElementById('menu-backdrop');
+
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openMenu();
+    });
+  }
+
+  if (closeMenuBtn) {
+    closeMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeMenu();
+    });
+  }
+
+  if (backdrop) {
+    // Closes when tapping outside the menu
+    backdrop.addEventListener('click', () => {
+      closeMenu();
+    });
+  }
+
+  // Close when tapping any link inside the menu
+  const menuLinks = document.querySelectorAll('.menu-link');
+  menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('menu-open')) {
+      closeMenu();
+    }
+  });
+
+  // 4. Category Filter Buttons (if present on the page)
   const categoryButtons = document.querySelectorAll('.category-filter-btn');
   categoryButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -188,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Quick-Select Zone Buttons
+  // 5. Quick-Select Zone Buttons
   const zoneButtons = document.querySelectorAll('.zone-filter-btn');
   zoneButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -196,7 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (zone) {
         appState.selectedZone = zone;
         
-        // If clicking "All Baton Rouge", also reset slider to 25
         if (zone === 'all') {
           appState.maxRadius = 25;
           const slider = document.getElementById('radius-slider');
@@ -209,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 4. Radius Slider Control (1 to 25 Miles)
+  // 6. Radius Slider Control (1 to 25 Miles)
   const radiusSlider = document.getElementById('radius-slider');
   if (radiusSlider) {
     radiusSlider.addEventListener('input', (e) => {
@@ -219,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. Hero Search Bar Live Filtering
+  // 7. Hero Search Bar Live Filtering
   const searchInput = document.getElementById('hero-search-input');
   const searchForm = document.getElementById('hero-search-form');
 
@@ -244,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Popular Search Tag Chips
+  // 8. Popular Search Tag Chips
   const tagChips = document.querySelectorAll('.search-tag-chip');
   tagChips.forEach(chip => {
     chip.addEventListener('click', () => {
@@ -262,41 +327,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-  // 7. Mobile Navigation Drawer Toggle
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const hamburgerIcon = document.getElementById('hamburger-icon');
-  const closeIcon = document.getElementById('close-icon');
-
-  if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', () => {
-      const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
-      const willExpand = !isExpanded;
-
-      mobileMenuBtn.setAttribute('aria-expanded', String(willExpand));
-      mobileMenu.classList.toggle('hidden', !willExpand);
-
-      if (hamburgerIcon && closeIcon) {
-        hamburgerIcon.classList.toggle('hidden', willExpand);
-        hamburgerIcon.classList.toggle('block', !willExpand);
-        closeIcon.classList.toggle('hidden', !willExpand);
-        closeIcon.classList.toggle('block', willExpand);
-      }
-    });
-
-    const mobileLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        mobileMenuBtn.setAttribute('aria-expanded', 'false');
-        if (hamburgerIcon && closeIcon) {
-          hamburgerIcon.classList.remove('hidden');
-          hamburgerIcon.classList.add('block');
-          closeIcon.classList.add('hidden');
-          closeIcon.classList.remove('block');
-        }
-      });
-    });
-  }
 });
