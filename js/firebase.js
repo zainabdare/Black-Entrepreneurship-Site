@@ -476,6 +476,145 @@ export async function deleteAlert(alertId) {
   console.log(`[Firestore Alerts] Deleted alert [${alertId}]`);
 }
 
+// ============================================================================
+// PENDING PROVIDERS INTAKE & REVIEW QUEUE (FIRESTORE "pendingProviders")
+// ============================================================================
+
+/**
+ * Uploads a compressed portfolio photo for a pending business application.
+ * 
+ * @param {File} file 
+ * @param {string} tempId 
+ * @param {number} index 
+ * @returns {Promise<string>} Download URL or base64 data URL
+ */
+export async function uploadPendingProviderPhoto(file, tempId, index = 0) {
+  const compressed = await compressImage(file, 1200, 1200, 0.8);
+  const cleanName = file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+  const path = `pending-portfolios/${tempId}/${Date.now()}_${index}_${cleanName}`;
+
+  try {
+    const fileRef = storageRef(storage, path);
+    if (compressed instanceof Blob) {
+      await uploadBytes(fileRef, compressed, { contentType: 'image/jpeg' });
+    } else {
+      const response = await fetch(compressed);
+      const blob = await response.blob();
+      await uploadBytes(fileRef, blob, { contentType: 'image/jpeg' });
+    }
+    const downloadUrl = await getDownloadURL(fileRef);
+    console.log(`[Firebase Storage] Portfolio photo uploaded: ${downloadUrl}`);
+    return downloadUrl;
+  } catch (storageError) {
+    console.warn(`[Firebase Storage] Portfolio upload fallback to data URL: ${storageError.message}`);
+    if (typeof compressed === 'string') return compressed;
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(compressed);
+    });
+  }
+}
+
+/**
+ * Submits a new business application into the Firestore "pendingProviders" collection.
+ * 
+ * @param {Object} providerData 
+ * @returns {Promise<string>} Document ID of the submitted application
+ */
+export async function submitPendingProvider(providerData) {
+  const pendingCol = collection(db, "pendingProviders");
+
+  const newDoc = {
+    ...providerData,
+    status: 'pending',
+    submittedAt: new Date().toISOString()
+  };
+
+  const docRef = await addDoc(pendingCol, newDoc);
+  console.log(`[Firestore Pending] Business application submitted [${docRef.id}]: ${providerData.businessName}`);
+  return docRef.id;
+}
+
+/**
+ * Fetches all pending business submissions from the "pendingProviders" collection.
+ * 
+ * @returns {Promise<Array<Object>>}
+ */
+export async function getPendingProviders() {
+  try {
+    const pendingCol = collection(db, "pendingProviders");
+    const snapshot = await getDocs(pendingCol);
+
+    if (snapshot.empty) {
+      return [];
+    }
+
+    const pending = [];
+    snapshot.forEach((docSnap) => {
+      pending.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
+    });
+
+    // Sort newest applications first
+    pending.sort((a, b) => new Date(b.submittedAt || 0) - new Date(a.submittedAt || 0));
+    return pending;
+  } catch (error) {
+    console.warn(`[Firestore Pending] Could not query pendingProviders: ${error.message}`);
+    return [];
+  }
+}
+
+/**
+ * Approves a pending application: moves the document from "pendingProviders" to "providers".
+ * 
+ * @param {string} pendingId 
+ * @param {Object} providerData 
+ * @returns {Promise<Object>} Approved provider with its permanent ID
+ */
+export async function approvePendingProvider(pendingId, providerData) {
+  // Generate a clean permanent ID
+  const categorySlug = (providerData.category || 'vendor')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '-')
+    .replace(/-+/g, '-');
+  const permanentId = `provider-${categorySlug}-${Date.now().toString(36)}`;
+
+  const finalProvider = {
+    ...providerData,
+    id: permanentId,
+    averageRating: providerData.averageRating || 5.0,
+    reviewCount: providerData.reviewCount || 0,
+    approvedAt: new Date().toISOString()
+  };
+  delete finalProvider.status;
+
+  // 1. Write to official "providers" collection
+  const providerRef = doc(db, "providers", permanentId);
+  await setDoc(providerRef, finalProvider);
+
+  // 2. Remove from "pendingProviders" collection
+  const pendingRef = doc(db, "pendingProviders", pendingId);
+  await deleteDoc(pendingRef);
+
+  console.log(`[Review Queue] Approved ${providerData.businessName} -> created doc providers/${permanentId}`);
+  return finalProvider;
+}
+
+/**
+ * Rejects a pending business application by removing it from "pendingProviders".
+ * 
+ * @param {string} pendingId 
+ * @returns {Promise<void>}
+ */
+export async function rejectPendingProvider(pendingId) {
+  const pendingRef = doc(db, "pendingProviders", pendingId);
+  await deleteDoc(pendingRef);
+  console.log(`[Review Queue] Rejected & removed pending application [${pendingId}]`);
+}
+
 // Global window exposure for DevTools debugging
 if (typeof window !== 'undefined') {
   window.blackEntreFirebase = {
@@ -493,7 +632,12 @@ if (typeof window !== 'undefined') {
     getActiveAlerts,
     getAllAlerts,
     createAlert,
-    deleteAlert
+    deleteAlert,
+    submitPendingProvider,
+    getPendingProviders,
+    approvePendingProvider,
+    rejectPendingProvider,
+    uploadPendingProviderPhoto
   };
   window.seedFirestore = seedFirestoreProviders;
 }

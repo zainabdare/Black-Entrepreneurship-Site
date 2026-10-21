@@ -217,23 +217,32 @@
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Providers: Anyone can read; rating & count can be updated
+    // Providers Directory: Public read, client review rating updates
     match /providers/{providerId} {
       allow read: if true;
-      allow write: if true; // Or restrict writes in production
+      allow write: if true;
       
-      // Reviews Subcollection: Anyone can read, clients can post reviews
+      // Reviews Subcollection
       match /reviews/{reviewId} {
         allow read: if true;
         allow create: if request.resource.data.authorName is string
                      && request.resource.data.rating >= 1
                      && request.resource.data.rating <= 5;
-        allow delete: if true; // Passkey / admin moderation in app
+        allow delete: if true; // Passkey moderation
       }
-    // Campus Pop-Up & Drop-Off Alerts: Anyone can read, admin manages writes
+    }
+
+    // Campus Pop-Up & Drop-Off Alerts
     match /alerts/{alertId} {
       allow read: if true;
       allow write: if true;
+    }
+
+    // Pending Business Applications (Intake & Review Queue)
+    match /pendingProviders/{pendingId} {
+      allow read: if true;
+      allow create: if request.resource.data.businessName is string;
+      allow delete: if true; // Approved or rejected
     }
     
   }
@@ -241,11 +250,11 @@ service cloud.firestore {
 
           <!-- Firebase Storage Rules Snippet -->
           <div class="space-y-1 pt-2">
-            <span class="text-xs font-heading font-bold text-slate-300 uppercase tracking-wider block">Firebase Storage Rules (for Review Photos)</span>
+            <span class="text-xs font-heading font-bold text-slate-300 uppercase tracking-wider block">Firebase Storage Rules (Review &amp; Portfolio Photos)</span>
             <pre class="bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-[11px] text-slate-300 overflow-x-auto"><code>rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    match /reviews/{allPaths=**} {
+    match /{allPaths=**} {
       allow read: if true;
       allow write: if request.resource.size < 5 * 1024 * 1024;
     }

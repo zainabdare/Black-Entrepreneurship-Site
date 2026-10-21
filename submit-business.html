@@ -111,7 +111,7 @@
           <span>📝</span>
           <span>Community Directory Intake</span>
           <span class="w-1 h-1 rounded-full bg-lsu-gold"></span>
-          <span>Free Listings</span>
+          <span>100% Free Listing</span>
         </div>
       </div>
 
@@ -119,181 +119,971 @@
       <h1 class="text-3xl sm:text-5xl font-heading font-extrabold text-white tracking-tight mb-4">
         Submit Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-lsu-gold via-amber-300 to-yellow-400">Business</span>
       </h1>
-      <p class="max-w-xl mx-auto text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
-        Are you a Black entrepreneur, student braider, nail artist, lash technician, baker, designer, or photographer within 25 miles of LSU? Get discovered by thousands of Tigers.
+      <p class="max-w-xl mx-auto text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+        Are you a Black entrepreneur, braider, nail artist, lash tech, caterer, designer, or photographer within 25 miles of LSU? Apply below to get discovered by thousands of Tigers.
       </p>
 
     </div>
   </section>
 
   <!-- ========================================================================
-       SUBMISSION CRITERIA & FORM
+       INTAKE FORM & STANDARDS
        ======================================================================== -->
-  <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+  <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10">
     
     <!-- Listing Standards Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-      <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 text-center shadow">
         <div class="text-2xl mb-1">📍</div>
         <div class="text-xs font-heading font-bold text-white mb-1">Within 25 Miles</div>
-        <p class="text-[11px] text-slate-400">Must be located or provide mobile service within 25 miles of LSU campus.</p>
+        <p class="text-[11px] text-slate-400">Located in Baton Rouge or travels to LSU campus.</p>
       </div>
-      <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 text-center shadow">
         <div class="text-2xl mb-1">🐯</div>
-        <div class="text-xs font-heading font-bold text-white mb-1">LSU Badge Verification</div>
-        <p class="text-[11px] text-slate-400">Student &amp; Alumni verification badges available with valid LSU credentials.</p>
+        <div class="text-xs font-heading font-bold text-white mb-1">LSU Verified Badge</div>
+        <p class="text-[11px] text-slate-400">Student &amp; Alumni verification badges available.</p>
       </div>
-      <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-center">
+      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 text-center shadow">
         <div class="text-2xl mb-1">✨</div>
-        <div class="text-xs font-heading font-bold text-white mb-1">100% Free Directory</div>
-        <p class="text-[11px] text-slate-400">No listing fees or commissions. Built by students for our community.</p>
+        <div class="text-xs font-heading font-bold text-white mb-1">Free Directory</div>
+        <p class="text-[11px] text-slate-400">No listing fees, subscriptions, or commissions.</p>
       </div>
     </div>
 
     <!-- Intake Form Card -->
-    <div class="rounded-2xl bg-slate-900/80 border border-purple-900/40 p-6 sm:p-8 shadow-2xl backdrop-blur">
-      <h2 class="text-xl font-heading font-bold text-white mb-2">
-        Business Submission Form
-      </h2>
-      <p class="text-xs text-slate-400 mb-6">
-        Complete the information below. New submissions are reviewed and added within 48 hours.
-      </p>
+    <div class="rounded-3xl bg-slate-900/80 border border-purple-900/50 p-6 sm:p-10 shadow-2xl backdrop-blur space-y-8">
+      
+      <div>
+        <h2 class="text-xl sm:text-2xl font-heading font-bold text-white">
+          Provider Application Form
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">
+          Fill out your details below. Your submission will be sent to our admin review queue for verification.
+        </p>
+      </div>
 
-      <form id="submit-business-form" class="space-y-5" onsubmit="event.preventDefault(); document.getElementById('submission-toast').classList.remove('hidden');">
+      <form id="provider-intake-form" class="space-y-8" novalidate>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <!-- SECTION 1: BUSINESS IDENTITY & CATEGORY -->
+        <div class="space-y-4">
+          <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider border-b border-purple-900/30 pb-2">
+            1. Business Identity &amp; Category
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-business-name">
+                Business Name <span class="text-lsu-gold">*</span>
+              </label>
+              <input 
+                id="intake-business-name" 
+                type="text" 
+                required 
+                placeholder="e.g. Bayou Crown Braid Lounge"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-owner-name">
+                Owner / Artist Name <span class="text-lsu-gold">*</span>
+              </label>
+              <input 
+                id="intake-owner-name" 
+                type="text" 
+                required 
+                placeholder="e.g. Kiana Carter"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-category-select">
+                Primary Category <span class="text-lsu-gold">*</span>
+              </label>
+              <select 
+                id="intake-category-select" 
+                required
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer"
+              >
+                <option value="">-- Choose Category --</option>
+                <option value="Hair">Hair (Braids, Silk Press, Locs, Wigs)</option>
+                <option value="Nails">Nails (Acrylic, Gel-X, Press-Ons, Nail Art)</option>
+                <option value="Lashes">Lashes (Classic, Volume, Hybrid)</option>
+                <option value="Food & Beverages">Food &amp; Beverages (Plates, Catering, Desserts)</option>
+                <option value="Fashion (Custom Outfits)">Fashion (Custom Outfits, Tailoring, Prom)</option>
+                <option value="Photography">Photography (Graduation, Game Day, Brand)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-lsu-verified">
+                LSU Affiliation
+              </label>
+              <select 
+                id="intake-lsu-verified"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer"
+              >
+                <option value="null">Independent Community Business</option>
+                <option value="student">Current LSU Student (Student-Owned Badge)</option>
+                <option value="alumni">LSU Alumni (Alumni-Owned Badge)</option>
+              </select>
+            </div>
+          </div>
+
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="business-name">
-              Business Name *
+            <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-description">
+              Business Bio &amp; Service Description <span class="text-lsu-gold">*</span>
+            </label>
+            <textarea 
+              id="intake-description" 
+              rows="3" 
+              required 
+              maxlength="400"
+              placeholder="Tell clients what makes your service special, your setup, and what to expect..."
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors leading-relaxed"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             SECTION 2: DYNAMIC CATEGORY-SPECIFIC ATTRIBUTES
+             (Only displays fields for the selected category!)
+             ==================================================================== -->
+        <div id="category-specific-wrapper" class="hidden space-y-4 p-5 rounded-2xl bg-slate-950/80 border border-lsu-gold/30">
+          
+          <div class="flex items-center justify-between border-b border-purple-900/30 pb-2">
+            <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider flex items-center gap-1.5">
+              <span>✨</span>
+              <span id="category-specific-title">Category Details</span>
+            </h3>
+            <span class="text-[10px] text-purple-300 font-mono">Tailored to your craft</span>
+          </div>
+
+          <!-- 2A. Hair Specific Fields -->
+          <div id="fields-hair" class="category-field-group hidden space-y-4">
+            <div>
+              <span class="block text-xs font-semibold text-slate-200 mb-2">Hair Types &amp; Textures Serviced</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="hairTypes" value="3A-3C" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>3A-3C</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="hairTypes" value="4A-4C" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>4A-4C</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="hairTypes" value="Locs & Sisterlocks" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Locs &amp; Sisterlocks</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="hairTypes" value="Relaxed/Straight" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Relaxed/Straight</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <span class="block text-xs font-semibold text-slate-200 mb-2">Specialties</span>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="hairSpecialties" value="knotless braids" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Knotless Braids</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="hairSpecialties" value="wig installs" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Wig Installs</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="hairSpecialties" value="silk press" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Silk Press</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="hairSpecialties" value="loc maintenance" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Loc Maintenance</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="hairSpecialties" value="hair included" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Braiding Hair Included</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-200 mb-1" for="intake-chair-vibe">
+                Chair Vibe / Setting
+              </label>
+              <select id="intake-chair-vibe" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm">
+                <option value="home studio">Home Studio (Cozy / Quiet)</option>
+                <option value="studio">Professional Salon / Commercial Studio</option>
+                <option value="travels to you">Travels to Client / Mobile</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 2B. Nails Specific Fields -->
+          <div id="fields-nails" class="category-field-group hidden space-y-3">
+            <span class="block text-xs font-semibold text-slate-200 mb-1">Nail Styles Offered</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                <input type="checkbox" name="nailStyles" value="acrylic" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                <span>Acrylic Full Sets</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                <input type="checkbox" name="nailStyles" value="gel-x" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                <span>Gel-X Extensions</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                <input type="checkbox" name="nailStyles" value="natural nail" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                <span>Natural Nail Care &amp; Builder Gel</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                <input type="checkbox" name="nailStyles" value="press-ons" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                <span>Custom Press-On Sets</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                <input type="checkbox" name="nailStyles" value="nail art" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                <span>Intricate Hand-Painted Nail Art</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 2C. Lashes Specific Fields -->
+          <div id="fields-lashes" class="category-field-group hidden space-y-4">
+            <div>
+              <span class="block text-xs font-semibold text-slate-200 mb-1">Lash Extension Types</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="lashTypes" value="classic" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>Classic</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="lashTypes" value="hybrid" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>Hybrid</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="lashTypes" value="volume" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>Volume</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="lashTypes" value="mega volume" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Mega Volume</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                <input type="checkbox" id="intake-offers-fills" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                <div>
+                  <span class="text-xs font-semibold text-white block">Offers Lash Fills / Relashes</span>
+                  <span class="text-[11px] text-slate-400">Allows booking maintenance fills on sets from your salon or foreign work.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- 2D. Food & Beverages Specific Fields -->
+          <div id="fields-food" class="category-field-group hidden space-y-4">
+            <div>
+              <span class="block text-xs font-semibold text-slate-200 mb-1">Food Offerings</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="foodTypes" value="meals/plates" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>Meals &amp; Hot Plates</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="foodTypes" value="desserts/baked goods" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Desserts &amp; Baked Goods</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="foodTypes" value="drinks" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Specialty Drinks / Juices</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="foodTypes" value="catering" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Event Catering</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                <input type="checkbox" id="intake-campus-dropoff" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                <span>Offers LSU Campus Drop-Off / Delivery</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                <input type="checkbox" id="intake-preorder-required" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                <span>Advance Pre-Order Required</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 2E. Fashion Specific Fields -->
+          <div id="fields-fashion" class="category-field-group hidden space-y-4">
+            <div>
+              <span class="block text-xs font-semibold text-slate-200 mb-1">Custom Outfit Types</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="outfitTypes" value="game day" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>LSU Game Day Fits</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="outfitTypes" value="formal/prom" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>Formal / Prom / Gowns</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="outfitTypes" value="graduation" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>Graduation Stoles &amp; Dresses</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="outfitTypes" value="everyday" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Everyday Streetwear / Alterations</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-200 mb-1" for="intake-fashion-turnaround">
+                Typical Turnaround Speed
+              </label>
+              <select id="intake-fashion-turnaround" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm">
+                <option value="this-week">This Week (Rush Available)</option>
+                <option value="2-weeks">2 Weeks Standard</option>
+                <option value="formal-ready">Formal-Ready (3-4 weeks for custom gowns/suits)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 2F. Photography Specific Fields -->
+          <div id="fields-photography" class="category-field-group hidden space-y-4">
+            <div>
+              <span class="block text-xs font-semibold text-slate-200 mb-1">Photography Shoot Types</span>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="shootTypes" value="graduation" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>LSU Graduation Portraits</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="shootTypes" value="game day" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                  <span>Game Day &amp; Sports</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="shootTypes" value="events" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Greek Life &amp; Events</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="shootTypes" value="portraits" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Studio &amp; Headshots</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+                  <input type="checkbox" name="shootTypes" value="brand content" class="rounded text-lsu-purple focus:ring-lsu-gold">
+                  <span>Brand Content &amp; Editorial</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="block text-xs font-semibold text-slate-200 mb-1" for="intake-photo-turnaround">
+                  Gallery Turnaround
+                </label>
+                <select id="intake-photo-turnaround" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm">
+                  <option value="this-week">Fast Proofs (Within 1 Week)</option>
+                  <option value="2-weeks">2 Weeks Standard Editing</option>
+                </select>
+              </div>
+              <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-lsu-gold/40 mt-auto">
+                <input type="checkbox" id="intake-travels-campus" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                <span>Shoots On LSU Campus Grounds</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECTION 3: PRICING, AVAILABILITY & EXPERIENCE -->
+        <div class="space-y-4">
+          <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider border-b border-purple-900/30 pb-2">
+            3. Pricing, Experience &amp; Logistics
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-starting-price">
+                Starting Price ($) <span class="text-lsu-gold">*</span>
+              </label>
+              <input 
+                id="intake-starting-price" 
+                type="number" 
+                required 
+                min="5" 
+                max="5000" 
+                placeholder="e.g. 75"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white font-mono text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-price-tier">
+                Price Tier <span class="text-lsu-gold">*</span>
+              </label>
+              <select id="intake-price-tier" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer">
+                <option value="$">$ (Budget-Friendly / Student-Priced)</option>
+                <option value="$$" selected>$$ (Standard Market Rate)</option>
+                <option value="$$$">$$$ (Premium / Luxury / Specialist)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-experience">
+                Years of Experience <span class="text-lsu-gold">*</span>
+              </label>
+              <input 
+                id="intake-experience" 
+                type="number" 
+                required 
+                min="1" 
+                max="50" 
+                placeholder="e.g. 3"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white font-mono text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-service-delivery">
+                Service Delivery <span class="text-lsu-gold">*</span>
+              </label>
+              <select id="intake-service-delivery" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer">
+                <option value="studio">Studio / Home Salon Setup</option>
+                <option value="mobile">Mobile / Travels to Campus</option>
+                <option value="both" selected>Both (Studio &amp; Mobile)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-availability">
+                General Availability <span class="text-lsu-gold">*</span>
+              </label>
+              <select id="intake-availability" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer">
+                <option value="open-this-week" selected>🟢 Open This Week</option>
+                <option value="same-day">⚡ Same-Day / Last-Minute Accepted</option>
+                <option value="bookings-open">📅 Advance Bookings Open</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-neighborhood">
+                Neighborhood Area <span class="text-lsu-gold">*</span>
+              </label>
+              <select id="intake-neighborhood" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors cursor-pointer">
+                <option value="Northgate (LSU Walkable)" selected>Northgate (LSU Walkable)</option>
+                <option value="Highland / Burbank">Highland / Burbank</option>
+                <option value="Mid-City Baton Rouge">Mid-City Baton Rouge</option>
+                <option value="Downtown Baton Rouge">Downtown Baton Rouge</option>
+                <option value="South Baton Rouge">South Baton Rouge (Within 25 mi)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-950 border border-slate-800 cursor-pointer hover:border-lsu-gold/40">
+              <input type="checkbox" id="intake-student-discount" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+              <div>
+                <span class="text-xs font-semibold text-white block">Offers LSU Student Discount</span>
+                <span class="text-[11px] text-slate-400">Gives students a discount when presenting an active LSU Tiger Card or ID.</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- SECTION 4: SOCIAL MEDIA & BOOKING LINKS -->
+        <div class="space-y-4">
+          <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider border-b border-purple-900/30 pb-2">
+            4. Social Media &amp; Booking Links
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-instagram">
+                Instagram Profile or Handle <span class="text-lsu-gold">*</span>
+              </label>
+              <input 
+                id="intake-instagram" 
+                type="text" 
+                required 
+                placeholder="@yourhandle or https://instagram.com/..."
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-tiktok">
+                TikTok Handle or URL
+              </label>
+              <input 
+                id="intake-tiktok" 
+                type="text" 
+                placeholder="@yourhandle or https://tiktok.com/@..."
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-booking-url">
+                Booking Site / Direct Link <span class="text-lsu-gold">*</span>
+              </label>
+              <input 
+                id="intake-booking-url" 
+                type="url" 
+                required 
+                placeholder="e.g. https://styleseat.com/... or booking site / DM link"
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-website-url">
+                Website Link (Optional)
+              </label>
+              <input 
+                id="intake-website-url" 
+                type="url" 
+                placeholder="https://..."
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 5: CLIENT POLICIES -->
+        <div class="space-y-4">
+          <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider border-b border-purple-900/30 pb-2">
+            5. Policies &amp; Expectations
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="flex items-center gap-2 mb-2 cursor-pointer">
+                <input type="checkbox" id="intake-deposit-required" class="rounded text-lsu-purple focus:ring-lsu-gold" checked>
+                <span class="text-xs font-semibold text-white">Deposit Required Upon Booking</span>
+              </label>
+              <input 
+                id="intake-deposit-amount" 
+                type="text" 
+                placeholder="e.g. $25 non-refundable deposit applied to service"
+                class="w-full px-4 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+
+            <div>
+              <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-cancellation-policy">
+                Cancellation &amp; Rescheduling Policy
+              </label>
+              <input 
+                id="intake-cancellation-policy" 
+                type="text" 
+                placeholder="e.g. 24-hour notice required to transfer deposit"
+                class="w-full px-4 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-heading font-semibold text-slate-200 mb-1" for="intake-refund-policy">
+              Refund Policy
             </label>
             <input 
-              id="business-name" 
+              id="intake-refund-policy" 
               type="text" 
-              required 
-              placeholder="e.g. Geaux Braids BR"
-              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
-            >
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="owner-name">
-              Owner / Artist Name *
-            </label>
-            <input 
-              id="owner-name" 
-              type="text" 
-              required 
-              placeholder="e.g. Maya Robinson"
-              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
+              placeholder="e.g. Deposits non-refundable; complimentary adjustment offered within 48 hours"
+              class="w-full px-4 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
             >
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="business-category">
-              Primary Category *
-            </label>
-            <select 
-              id="business-category" 
-              required
-              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
-            >
-              <option value="">Select Category</option>
-              <option value="Hair">Hair</option>
-              <option value="Nails">Nails</option>
-              <option value="Lashes">Lashes</option>
-              <option value="Food & Beverages">Food &amp; Beverages</option>
-              <option value="Fashion (Custom Outfits)">Fashion (Custom Outfits)</option>
-              <option value="Photography">Photography</option>
-            </select>
+        <!-- SECTION 6: PORTFOLIO PHOTO UPLOADS (Up to 4 photos) -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-purple-900/30 pb-2">
+            <h3 class="text-xs font-heading font-bold text-lsu-gold uppercase tracking-wider">
+              6. Portfolio Photos
+            </h3>
+            <span id="intake-photos-badge" class="text-[11px] font-mono text-purple-300">0/4 uploaded</span>
           </div>
+          <p class="text-xs text-slate-400">
+            Upload up to 4 photos of your work. Files are automatically compressed and stored securely. Max 5MB per photo.
+          </p>
 
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="lsu-affiliation">
-              LSU Affiliation
-            </label>
-            <select 
-              id="lsu-affiliation"
-              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
-            >
-              <option value="none">Community Entrepreneur</option>
-              <option value="student">Current LSU Student</option>
-              <option value="alumni">LSU Alumni</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="neighborhood-location">
-              Neighborhood / Area (within 25 mi) *
-            </label>
-            <input 
-              id="neighborhood-location" 
-              type="text" 
-              required 
-              placeholder="e.g. North Gates, Highland, Mid City, Downtown"
-              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
-            >
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="booking-url">
-              Booking or Portfolio Link *
-            </label>
-            <input 
-              id="booking-url" 
-              type="url" 
-              required 
-              placeholder="https://instagram.com/... or booking site"
-              class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
-            >
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="business-description">
-            Services &amp; Description *
-          </label>
-          <textarea 
-            id="business-description" 
-            rows="3" 
-            required 
-            placeholder="Briefly describe your services, price ranges, deposit policies, and student discounts..."
-            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs sm:text-sm focus:border-lsu-gold focus:outline-none transition-colors"
-          ></textarea>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="pt-2">
-          <button 
-            type="submit" 
-            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-lsu-gold to-amber-300 hover:from-amber-300 hover:to-lsu-gold text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider shadow-lg shadow-lsu-gold/20 transition-all cursor-pointer"
+          <div 
+            id="intake-photo-dropzone" 
+            class="border-2 border-dashed border-slate-700/80 hover:border-lsu-gold/60 rounded-2xl p-6 text-center bg-slate-950/60 hover:bg-slate-950 transition-colors cursor-pointer"
           >
-            Submit Listing for Verification
+            <input type="file" id="intake-photo-input" accept="image/jpeg,image/png,image/webp,image/heic" multiple class="hidden">
+            <span class="text-3xl block mb-1">📸</span>
+            <p class="text-xs font-heading font-semibold text-white">Click or drag &amp; drop portfolio photos</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">JPG, PNG, or WebP &bull; Max 5MB each</p>
+          </div>
+
+          <div id="intake-photo-preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 empty:hidden pt-2">
+            <!-- Thumbnail cards injected dynamically -->
+          </div>
+        </div>
+
+        <!-- Form Error / Alerts Container -->
+        <div id="intake-form-error" class="hidden p-4 rounded-xl bg-red-950/70 border border-red-800 text-xs text-red-300">
+          <!-- Error message -->
+        </div>
+
+        <!-- Form Submit Button -->
+        <div class="pt-4 border-t border-purple-900/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-xs text-slate-400 text-center sm:text-left">
+            🔒 By submitting, you certify that your services are operating legitimately within 25 miles of LSU.
+          </p>
+
+          <button 
+            id="intake-submit-btn" 
+            type="submit" 
+            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-lsu-gold to-amber-300 hover:from-amber-300 hover:to-lsu-gold text-lsu-purple-dark font-heading font-black text-xs uppercase tracking-wider shadow-lg shadow-lsu-gold/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+          >
+            <span>🚀 Submit Application for Verification</span>
           </button>
         </div>
 
-        <!-- Success Toast Notification -->
-        <div id="submission-toast" class="hidden p-4 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-200 text-xs flex items-center gap-3">
-          <span class="text-base">&check;</span>
-          <div>
-            <strong>Thank you!</strong> Your submission has been received. Our team will verify the details within 48 hours and add your business to the directory.
-          </div>
-        </div>
-
       </form>
+
+      <!-- SUCCESS CONFIRMATION MODAL / BANNER -->
+      <div id="intake-success-modal" class="hidden p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-purple-950 via-slate-900 to-lsu-purple-dark border border-lsu-gold/60 text-center space-y-4 shadow-2xl animate-fade-in">
+        <span class="text-4xl block">🎉</span>
+        <h3 class="text-xl sm:text-2xl font-heading font-extrabold text-white">
+          Application Submitted Successfully!
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed">
+          Thank you for applying to be listed in <strong>Black-Owned BR</strong>. Your application has been sent to our review queue. Our student moderation team verifies credentials within 24–48 hours.
+        </p>
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+          <a href="index.html" class="px-5 py-2.5 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark text-xs font-heading font-bold uppercase tracking-wider transition-colors">
+            Return to Main Directory
+          </a>
+          <button 
+            id="submit-another-btn" 
+            type="button" 
+            class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-heading font-semibold transition-colors border border-slate-700 cursor-pointer"
+          >
+            Submit Another Listing
+          </button>
+        </div>
+      </div>
+
     </div>
 
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-purple-900/30 bg-slate-950 py-8 text-xs text-slate-400 text-center">
-    <div class="max-w-7xl mx-auto px-4">
+  <footer class="border-t border-purple-900/30 bg-slate-950 py-8 text-xs text-slate-400 text-center mt-auto">
+    <div class="max-w-7xl mx-auto px-4 space-y-1">
       <p>&copy; 2026 Black-Owned BR &bull; Dedicated to Black Entrepreneurs near LSU</p>
+      <p class="text-slate-600">Free, community-curated directory within 25 miles of Louisiana State University</p>
     </div>
   </footer>
+
+  <!-- Application Controller for Dynamic Category Fields & Firestore Intake -->
+  <script type="module">
+    import { submitPendingProvider, uploadPendingProviderPhoto } from './js/firebase.js';
+
+    // 1. Dynamic Category-Specific Fields Switching
+    const categorySelect = document.getElementById('intake-category-select');
+    const specificWrapper = document.getElementById('category-specific-wrapper');
+    const specificTitle = document.getElementById('category-specific-title');
+
+    const categoryFields = {
+      'Hair': document.getElementById('fields-hair'),
+      'Nails': document.getElementById('fields-nails'),
+      'Lashes': document.getElementById('fields-lashes'),
+      'Food & Beverages': document.getElementById('fields-food'),
+      'Fashion (Custom Outfits)': document.getElementById('fields-fashion'),
+      'Photography': document.getElementById('fields-photography')
+    };
+
+    categorySelect.addEventListener('change', () => {
+      const selected = categorySelect.value;
+
+      // Hide all category fields first
+      Object.values(categoryFields).forEach(el => {
+        if (el) el.classList.add('hidden');
+      });
+
+      if (selected && categoryFields[selected]) {
+        specificWrapper.classList.remove('hidden');
+        specificTitle.textContent = `${selected} Specific Details`;
+        categoryFields[selected].classList.remove('hidden');
+      } else {
+        specificWrapper.classList.add('hidden');
+      }
+    });
+
+    // 2. Photo Uploads with Canvas Compression
+    let selectedFiles = [];
+    const photoInput = document.getElementById('intake-photo-input');
+    const photoDropzone = document.getElementById('intake-photo-dropzone');
+    const previewGrid = document.getElementById('intake-photo-preview-grid');
+    const photosBadge = document.getElementById('intake-photos-badge');
+    const errorBox = document.getElementById('intake-form-error');
+
+    function showError(msg) {
+      if (errorBox) {
+        errorBox.textContent = msg;
+        errorBox.classList.remove('hidden');
+      }
+    }
+
+    function hideError() {
+      if (errorBox) errorBox.classList.add('hidden');
+    }
+
+    photoDropzone.addEventListener('click', () => photoInput.click());
+
+    photoDropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      photoDropzone.classList.add('border-lsu-gold', 'bg-slate-900');
+    });
+
+    photoDropzone.addEventListener('dragleave', () => {
+      photoDropzone.classList.remove('border-lsu-gold', 'bg-slate-900');
+    });
+
+    photoDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      photoDropzone.classList.remove('border-lsu-gold', 'bg-slate-900');
+      if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+    });
+
+    photoInput.addEventListener('change', () => {
+      if (photoInput.files) {
+        handleFiles(photoInput.files);
+        photoInput.value = '';
+      }
+    });
+
+    function handleFiles(fileList) {
+      hideError();
+      for (const file of Array.from(fileList)) {
+        if (selectedFiles.length >= 4) {
+          showError('You can upload a maximum of 4 portfolio photos.');
+          break;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+          showError(`"${file.name}" exceeds the 5MB file size limit.`);
+          continue;
+        }
+        if (!file.type.startsWith('image/')) {
+          showError(`"${file.name}" is not a valid image file.`);
+          continue;
+        }
+        selectedFiles.push(file);
+      }
+      renderPreviews();
+    }
+
+    function renderPreviews() {
+      previewGrid.innerHTML = '';
+      photosBadge.textContent = `${selectedFiles.length}/4 uploaded`;
+
+      selectedFiles.forEach((file, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'relative h-24 rounded-xl overflow-hidden bg-slate-900 border border-slate-700 shadow';
+        
+        const img = document.createElement('img');
+        img.className = 'w-full h-full object-cover';
+        img.src = URL.createObjectURL(file);
+        thumb.appendChild(img);
+
+        const rm = document.createElement('button');
+        rm.type = 'button';
+        rm.className = 'absolute top-1 right-1 w-5 h-5 rounded-full bg-slate-950/80 text-red-400 hover:text-white flex items-center justify-center text-xs font-bold transition-colors cursor-pointer';
+        rm.innerHTML = '&times;';
+        rm.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectedFiles.splice(idx, 1);
+          renderPreviews();
+        });
+        thumb.appendChild(rm);
+
+        previewGrid.appendChild(thumb);
+      });
+    }
+
+    // 3. Form Submission to Firestore "pendingProviders"
+    const form = document.getElementById('provider-intake-form');
+    const submitBtn = document.getElementById('intake-submit-btn');
+    const successModal = document.getElementById('intake-success-modal');
+    const submitAnotherBtn = document.getElementById('submit-another-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+
+      const businessName = document.getElementById('intake-business-name').value.trim();
+      const ownerName = document.getElementById('intake-owner-name').value.trim();
+      const category = categorySelect.value;
+      const lsuVerified = document.getElementById('intake-lsu-verified').value;
+      const description = document.getElementById('intake-description').value.trim();
+      const startingPrice = parseFloat(document.getElementById('intake-starting-price').value) || 50;
+      const priceTier = document.getElementById('intake-price-tier').value;
+      const yearsExperience = parseInt(document.getElementById('intake-experience').value, 10) || 1;
+      const serviceDelivery = document.getElementById('intake-service-delivery').value;
+      const availability = document.getElementById('intake-availability').value;
+      const neighborhood = document.getElementById('intake-neighborhood').value;
+      const studentDiscount = document.getElementById('intake-student-discount').checked;
+
+      let rawIg = document.getElementById('intake-instagram').value.trim();
+      let instagramUrl = rawIg.startsWith('http') ? rawIg : `https://instagram.com/${rawIg.replace(/^@/, '')}`;
+
+      let rawTiktok = document.getElementById('intake-tiktok').value.trim();
+      let tiktokUrl = rawTiktok ? (rawTiktok.startsWith('http') ? rawTiktok : `https://tiktok.com/@${rawTiktok.replace(/^@/, '')}`) : '';
+
+      const bookingUrl = document.getElementById('intake-booking-url').value.trim();
+      const websiteUrl = document.getElementById('intake-website-url').value.trim() || instagramUrl;
+
+      const depositRequired = document.getElementById('intake-deposit-required').checked;
+      const depositAmount = document.getElementById('intake-deposit-amount').value.trim() || 'Deposit required upon booking';
+      const cancellationPolicy = document.getElementById('intake-cancellation-policy').value.trim() || '24-hour advance notice to reschedule';
+      const refundPolicy = document.getElementById('intake-refund-policy').value.trim() || 'Deposits non-refundable';
+
+      if (!businessName || !ownerName || !category || !description || !bookingUrl) {
+        showError('Please fill in all required fields marked with an asterisk (*).');
+        return;
+      }
+
+      // Default Baton Rouge coordinates based on neighborhood
+      const neighborhoodCoords = {
+        'Northgate (LSU Walkable)': { lat: 30.4190, lng: -91.1765 },
+        'Highland / Burbank': { lat: 30.3950, lng: -91.1650 },
+        'Mid-City Baton Rouge': { lat: 30.4450, lng: -91.1550 },
+        'Downtown Baton Rouge': { lat: 30.4515, lng: -91.1871 },
+        'South Baton Rouge': { lat: 30.3800, lng: -91.1200 }
+      };
+      const coords = neighborhoodCoords[neighborhood] || { lat: 30.4133, lng: -91.1800 };
+
+      // Collect Category-Specific Fields
+      const categoryData = {};
+      if (category === 'Hair') {
+        const hairTypes = Array.from(document.querySelectorAll('input[name="hairTypes"]:checked')).map(el => el.value);
+        const specialties = Array.from(document.querySelectorAll('input[name="hairSpecialties"]:checked')).map(el => el.value);
+        const chairVibe = document.getElementById('intake-chair-vibe').value;
+        categoryData.hairTypes = hairTypes.length > 0 ? hairTypes : ['4A-4C'];
+        categoryData.specialties = specialties.length > 0 ? specialties : ['knotless braids'];
+        categoryData.chairVibe = chairVibe;
+      } else if (category === 'Nails') {
+        const nailStyles = Array.from(document.querySelectorAll('input[name="nailStyles"]:checked')).map(el => el.value);
+        categoryData.nailStyles = nailStyles.length > 0 ? nailStyles : ['acrylic', 'gel-x'];
+      } else if (category === 'Lashes') {
+        const lashTypes = Array.from(document.querySelectorAll('input[name="lashTypes"]:checked')).map(el => el.value);
+        const offersFills = document.getElementById('intake-offers-fills').checked;
+        categoryData.lashTypes = lashTypes.length > 0 ? lashTypes : ['classic', 'volume'];
+        categoryData.offersFills = offersFills;
+      } else if (category === 'Food & Beverages') {
+        const foodTypes = Array.from(document.querySelectorAll('input[name="foodTypes"]:checked')).map(el => el.value);
+        const campusDropOff = document.getElementById('intake-campus-dropoff').checked;
+        const preOrderRequired = document.getElementById('intake-preorder-required').checked;
+        categoryData.foodTypes = foodTypes.length > 0 ? foodTypes : ['meals/plates'];
+        categoryData.campusDropOff = campusDropOff;
+        categoryData.preOrderRequired = preOrderRequired;
+      } else if (category === 'Fashion (Custom Outfits)') {
+        const outfitTypes = Array.from(document.querySelectorAll('input[name="outfitTypes"]:checked')).map(el => el.value);
+        const turnaround = document.getElementById('intake-fashion-turnaround').value;
+        categoryData.outfitTypes = outfitTypes.length > 0 ? outfitTypes : ['game day'];
+        categoryData.turnaround = turnaround;
+      } else if (category === 'Photography') {
+        const shootTypes = Array.from(document.querySelectorAll('input[name="shootTypes"]:checked')).map(el => el.value);
+        const turnaround = document.getElementById('intake-photo-turnaround').value;
+        const travelsToCampus = document.getElementById('intake-travels-campus').checked;
+        categoryData.shootTypes = shootTypes.length > 0 ? shootTypes : ['graduation'];
+        categoryData.turnaround = turnaround;
+        categoryData.travelsToCampus = travelsToCampus;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>⏳ Uploading photos &amp; submitting...</span>`;
+
+      try {
+        const tempId = `temp-${Date.now()}`;
+        const uploadedPhotos = [];
+
+        // Upload photos with compression
+        for (let i = 0; i < selectedFiles.length; i++) {
+          submitBtn.innerHTML = `<span>⏳ Uploading photo ${i + 1}/${selectedFiles.length}...</span>`;
+          const url = await uploadPendingProviderPhoto(selectedFiles[i], tempId, i);
+          uploadedPhotos.push(url);
+        }
+
+        submitBtn.innerHTML = `<span>⏳ Submitting to review queue...</span>`;
+
+        const payload = {
+          businessName,
+          ownerName,
+          category,
+          description,
+          startingPrice,
+          priceTier,
+          yearsExperience,
+          studentDiscount,
+          serviceDelivery,
+          availability,
+          neighborhood,
+          latitude: coords.lat,
+          longitude: coords.lng,
+          lsuVerified: lsuVerified === 'null' ? null : lsuVerified,
+          instagramUrl,
+          tiktokUrl: tiktokUrl || instagramUrl,
+          websiteUrl,
+          bookingUrl,
+          portfolioImages: uploadedPhotos.length > 0 ? uploadedPhotos : [
+            "https://images.unsplash.com/photo-1582095133179-bfd08e2fc6b3?w=600&auto=format&fit=crop&q=80"
+          ],
+          policies: {
+            depositRequired,
+            depositAmount,
+            cancellationPolicy,
+            refundPolicy
+          },
+          seasonalTags: ["game-day", "graduation-formal"],
+          averageRating: 5.0,
+          reviewCount: 0,
+          ...categoryData
+        };
+
+        await submitPendingProvider(payload);
+
+        form.classList.add('hidden');
+        successModal.classList.remove('hidden');
+        successModal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      } catch (err) {
+        console.error('Error submitting application:', err);
+        showError(`Could not submit application: ${err.message}. Please check your connection and try again.`);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>🚀 Submit Application for Verification</span>`;
+      }
+    });
+
+    submitAnotherBtn.addEventListener('click', () => {
+      form.reset();
+      selectedFiles = [];
+      renderPreviews();
+      specificWrapper.classList.add('hidden');
+      successModal.classList.add('hidden');
+      form.classList.remove('hidden');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<span>🚀 Submit Application for Verification</span>`;
+    });
+  </script>
 
 </body>
 </html>
