@@ -1,58 +1,100 @@
 /* ==========================================================================
    css/styles.css
-   Project: Black Entrepreneur Service Directory (LSU / Baton Rouge)
+   Project: Black-Owned BR — LSU Student & Community Directory
    
    BEGINNER NOTE:
-   We are using Tailwind CSS via CDN for most layout and utility styling.
-   This custom CSS file is where you can write custom CSS rules, animations,
-   or specific design tweaks that go beyond standard utility classes.
+   We are using Tailwind CSS via CDN for rapid utility-based styling.
+   This custom CSS file adds tailored gradients, warm celebratory effects,
+   smooth mobile transitions, and custom brand touches.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. CSS Custom Properties (Theme Variables)
-   These store official colors so you can reuse them anywhere in CSS.
    -------------------------------------------------------------------------- */
 :root {
   /* Official Louisiana State University (LSU) Colors */
   --lsu-purple: #461D7C;
   --lsu-purple-dark: #2E1053;
+  --lsu-purple-deep: #1d0936;
   --lsu-purple-light: #5E28A3;
   --lsu-gold: #FDD023;
   --lsu-gold-hover: #ECC21C;
+  --lsu-gold-light: #FEF08A;
 
-  /* Neutral Dark Theme Backgrounds */
-  --bg-dark-primary: #0f172a;   /* Slate 900 */
-  --bg-dark-secondary: #1e293b; /* Slate 800 */
+  /* Neutral Theme Backgrounds */
+  --bg-dark-primary: #0b0f19;   /* Deep charcoal slate */
+  --bg-dark-surface: #131c2e;   /* Card surface */
+  --bg-dark-elevated: #1e293b;  /* Elevated elements */
 }
 
 /* --------------------------------------------------------------------------
-   2. Global Smooth Scrolling and Base Styles
+   2. Global Typography & Smooth Scrolling
    -------------------------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-dark-primary);
+  color: #f1f5f9;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 /* --------------------------------------------------------------------------
-   3. Custom Subtle Animations
-   Adds a gentle glow effect for interactive items.
+   3. Hero Ambient Warm Glow Gradients
+   Creates a warm, celebratory atmosphere honoring Black-owned businesses.
    -------------------------------------------------------------------------- */
-.lsu-glow {
-  box-shadow: 0 0 25px -5px rgba(253, 208, 35, 0.25);
+.hero-glow-bg {
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(70, 29, 124, 0.45) 0%, rgba(11, 15, 25, 0) 70%),
+    radial-gradient(circle at 80% 20%, rgba(253, 208, 35, 0.08) 0%, rgba(11, 15, 25, 0) 50%);
+}
+
+.gold-glow {
+  box-shadow: 0 0 35px -5px rgba(253, 208, 35, 0.3);
 }
 
 .purple-glow {
-  box-shadow: 0 0 25px -5px rgba(70, 29, 124, 0.45);
+  box-shadow: 0 0 35px -5px rgba(70, 29, 124, 0.5);
 }
 
 /* --------------------------------------------------------------------------
-   4. Custom Scrollbar Styling (Optional luxury touch)
+   4. Mobile Navigation Drawer Animation
+   -------------------------------------------------------------------------- */
+#mobile-menu {
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease-in-out;
+}
+
+#mobile-menu.hidden {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   5. Interactive Touch Targets & Focus States (Mobile friendly)
+   -------------------------------------------------------------------------- */
+a, button, input {
+  transition: all 0.2s ease;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--lsu-gold);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Custom Scrollbar Styling
    -------------------------------------------------------------------------- */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: var(--bg-dark-primary);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -61,5 +103,5 @@ html {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #461D7C;
+  background: var(--lsu-purple);
 }

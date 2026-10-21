@@ -1,23 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello LSU | Black Entrepreneur Service Directory</title>
+  <title>Black-Owned BR | LSU Student & Community Directory</title>
+  <meta name="description" content="Discover and support Black-owned businesses, student stylists, custom outfit designers, caterers, and photographers within 25 miles of LSU in Baton Rouge.">
 
-  <!-- Google Fonts: Inter & Outfit for modern, clean typography -->
+  <!-- Google Fonts: Inter & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- 
-    Tailwind CSS CDN:
-    Loads Tailwind CSS directly from the web without needing Node.js or npm!
-    This works great on school networks where Node.js installation is blocked.
-  -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Configure Tailwind theme colors (LSU Purple & Gold) directly in the browser -->
+  <!-- Tailwind Configuration with LSU Brand Theme -->
   <script>
     tailwind.config = {
       theme: {
@@ -29,11 +26,12 @@
           colors: {
             lsu: {
               purple: '#461D7C',       /* Official LSU Purple */
-              'purple-dark': '#2E1053',  /* Deeper purple for gradients */
-              'purple-light': '#5E28A3', /* Lighter purple for hovers */
+              'purple-dark': '#2E1053',  /* Rich Deep Purple */
+              'purple-deep': '#1A0830',  /* Deep background purple */
+              'purple-light': '#6B2FA8', /* Light purple for accents */
               gold: '#FDD023',         /* Official LSU Gold */
-              'gold-hover': '#ECC21C',  /* Darker gold for buttons */
-              'gold-light': '#FEF08A',  /* Soft gold accent */
+              'gold-hover': '#ECC21C',  /* Gold active hover */
+              'gold-light': '#FEF08A',  /* Pale gold accent */
             }
           }
         }
@@ -41,145 +39,379 @@
     }
   </script>
 
-  <!-- Custom CSS for specialized styles and animations -->
+  <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 
-  <!-- 
-    JavaScript ES Modules:
-    Notice type="module" below. This lets us use modern 'import' and 'export' statements
-    in our JavaScript files without any bundlers (like Vite or Webpack).
-    NOTE: Browsers require an HTTP server (like Live Server or python -m http.server)
-    to load ES modules. Opening the file directly (file://) will trigger a CORS error.
-  -->
+  <!-- JavaScript ES Modules Entry Point -->
   <script type="module" src="js/app.js"></script>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen font-sans antialiased flex flex-col justify-between selection:bg-lsu-gold selection:text-lsu-purple-dark">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-lsu-gold selection:text-lsu-purple-dark antialiased">
 
-  <!-- Header / Navigation Placeholder -->
-  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <!-- LSU Purple & Gold Emblem Icon -->
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-lsu-purple to-lsu-purple-dark border border-lsu-gold/40 flex items-center justify-center shadow-lg shadow-purple-950/40">
-          <span class="text-lsu-gold font-heading font-black text-lg tracking-wider">LSU</span>
+  <!-- ========================================================================
+       1. HEADER & NAVIGATION
+       Features site brand, responsive desktop navigation, and mobile hamburger
+       ======================================================================== -->
+  <header class="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-md border-b border-purple-900/30 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        
+        <!-- Site Logo & Name -->
+        <a href="#home" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-lsu-gold rounded-xl py-1">
+          <!-- LSU Shield Monogram -->
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-lsu-purple via-lsu-purple-dark to-purple-950 border border-lsu-gold/40 flex items-center justify-center shadow-lg shadow-purple-950/50 group-hover:border-lsu-gold transition-colors">
+            <span class="text-lsu-gold font-heading font-black text-base sm:text-lg tracking-wider">LSU</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-heading font-black text-lg sm:text-xl text-white tracking-tight leading-none group-hover:text-lsu-gold transition-colors">
+                Black-Owned BR
+              </span>
+              <span class="inline-block w-2 h-2 rounded-full bg-lsu-gold animate-pulse" title="Live Baton Rouge Directory"></span>
+            </div>
+            <p class="text-[11px] sm:text-xs text-slate-400 font-medium tracking-wide">
+              LSU &bull; 25-Mile Radius Directory
+            </p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium" aria-label="Main Navigation">
+          <a href="#home" class="px-3.5 py-2 rounded-lg text-white hover:text-lsu-gold hover:bg-white/5 transition-colors">
+            Home
+          </a>
+          <a href="#seasonal-hubs" class="px-3.5 py-2 rounded-lg text-slate-300 hover:text-lsu-gold hover:bg-white/5 transition-colors flex items-center gap-1.5">
+            <span>Seasonal Hubs</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-lsu-gold/20 text-lsu-gold border border-lsu-gold/30">
+              New
+            </span>
+          </a>
+          <a href="#about-creators" class="px-3.5 py-2 rounded-lg text-slate-300 hover:text-lsu-gold hover:bg-white/5 transition-colors">
+            About the Creators
+          </a>
+          <a href="#submit-business" class="ml-2 px-4 py-2 rounded-xl bg-gradient-to-r from-lsu-gold to-amber-300 hover:from-amber-300 hover:to-lsu-gold text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-md shadow-lsu-gold/20 hover:shadow-lg hover:shadow-lsu-gold/30">
+            Submit Your Business
+          </a>
+        </nav>
+
+        <!-- Mobile Menu Toggle Button (Touch-friendly 44px+) -->
+        <div class="flex md:hidden items-center">
+          <button 
+            id="mobile-menu-btn" 
+            type="button" 
+            class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 hover:text-lsu-gold hover:border-lsu-gold/40 focus:outline-none focus:ring-2 focus:ring-lsu-gold transition-colors"
+            aria-expanded="false" 
+            aria-controls="mobile-menu"
+            aria-label="Toggle navigation menu"
+          >
+            <!-- Hamburger Icon (shown by default) -->
+            <svg id="hamburger-icon" class="w-6 h-6 stroke-current block" fill="none" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <!-- Close Icon (hidden by default) -->
+            <svg id="close-icon" class="w-6 h-6 stroke-current hidden" fill="none" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
         </div>
-        <div>
-          <h1 class="text-base sm:text-lg font-heading font-bold text-white tracking-tight leading-tight">
-            Black Entrepreneur Directory
-          </h1>
-          <p class="text-xs text-slate-400">Baton Rouge &bull; 25-Mile Radius</p>
-        </div>
+
       </div>
+    </div>
 
-      <!-- Live Server / Environment Status Pill -->
-      <div class="hidden sm:flex items-center space-x-2 text-xs bg-slate-800/80 border border-slate-700/60 rounded-full px-3 py-1.5 text-slate-300">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span id="js-status">ES Modules Active</span>
+    <!-- Mobile Collapsible Menu (Smooth drop-down for phone screens) -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-950/95 px-4 pt-3 pb-6 space-y-2 backdrop-blur-lg">
+      <a href="#home" class="mobile-nav-link flex items-center px-4 py-3 rounded-xl text-base font-medium text-white hover:bg-lsu-purple/20 hover:text-lsu-gold">
+        Home
+      </a>
+      <a href="#seasonal-hubs" class="mobile-nav-link flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:bg-lsu-purple/20 hover:text-lsu-gold">
+        <span>Seasonal Hubs</span>
+        <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-lsu-gold/20 text-lsu-gold border border-lsu-gold/30">
+          Game-Day &amp; Formals
+        </span>
+      </a>
+      <a href="#about-creators" class="mobile-nav-link flex items-center px-4 py-3 rounded-xl text-base font-medium text-slate-300 hover:bg-lsu-purple/20 hover:text-lsu-gold">
+        About the Creators
+      </a>
+      <div class="pt-2">
+        <a href="#submit-business" class="mobile-nav-link block text-center w-full px-4 py-3 rounded-xl bg-gradient-to-r from-lsu-gold to-amber-300 text-lsu-purple-dark font-heading font-bold text-sm uppercase tracking-wider shadow-md shadow-lsu-gold/20">
+          Submit Your Business
+        </a>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 flex flex-col items-center text-center">
+  <!-- ========================================================================
+       2. HERO SECTION
+       Celebratory headline, LSU theme colors, radius badge, and search bar
+       ======================================================================== -->
+  <section id="home" class="relative hero-glow-bg border-b border-purple-900/20 pt-12 pb-16 sm:pt-20 sm:pb-24 overflow-hidden">
+    
+    <!-- Decorative Warm Ambient Glow Behind Hero -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 sm:w-[600px] h-96 sm:h-[600px] bg-lsu-purple/20 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <div class="absolute top-1/3 right-10 w-48 sm:w-72 h-48 sm:h-72 bg-lsu-gold/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
-    <!-- Campus & Geographic Radius Badge -->
-    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-lsu-purple/40 border border-lsu-gold/30 text-lsu-gold text-xs sm:text-sm font-medium mb-6 backdrop-blur">
-      <svg class="w-4 h-4 fill-current text-lsu-gold" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-      </svg>
-      <span>Baton Rouge, LA &bull; Within 25 Miles of LSU</span>
-    </div>
-
-    <!-- Hero Title: "Hello LSU" -->
-    <h2 class="text-4xl sm:text-6xl md:text-7xl font-heading font-extrabold tracking-tight text-white mb-6">
-      Hello <span class="text-transparent bg-clip-text bg-gradient-to-r from-lsu-gold via-amber-300 to-yellow-400">LSU!</span> 🐯
-    </h2>
-
-    <p class="max-w-2xl text-slate-300 text-base sm:text-lg leading-relaxed mb-10">
-      Welcome to the starter foundation for the <strong class="text-white font-semibold">Black Entrepreneur Service Provider Directory</strong>. This application is configured to run 100% in pure HTML, CSS, and vanilla JavaScript—zero Node.js or build tools required.
-    </p>
-
-    <!-- Architecture Checklist Card -->
-    <div class="w-full max-w-3xl bg-slate-800/70 border border-slate-700/70 rounded-2xl p-6 sm:p-8 text-left shadow-2xl shadow-black/40 backdrop-blur mb-10">
-      <h3 class="text-lg font-heading font-bold text-white mb-4 flex items-center gap-2">
-        <span class="text-lsu-gold text-xl">&check;</span> Project Structure Configured
-      </h3>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
-          <span class="text-emerald-400 font-bold">&check;</span>
-          <div>
-            <code class="text-lsu-gold font-mono text-xs">index.html</code>
-            <p class="text-xs text-slate-400 mt-0.5">Semantic HTML5 with Tailwind CDN</p>
-          </div>
-        </div>
+      <!-- Campus & Community Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-lsu-purple/40 to-purple-900/40 border border-lsu-gold/35 text-lsu-gold text-xs sm:text-sm font-medium mb-6 shadow-sm backdrop-blur">
+        <span class="text-base leading-none">🐯</span>
+        <span class="font-semibold text-white">Baton Rouge &bull; LSU Vicinity</span>
+        <span class="w-1 h-1 rounded-full bg-lsu-gold"></span>
+        <span class="text-lsu-gold font-medium">Within 25 Miles</span>
+      </div>
 
-        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
-          <span class="text-emerald-400 font-bold">&check;</span>
-          <div>
-            <code class="text-lsu-gold font-mono text-xs">css/styles.css</code>
-            <p class="text-xs text-slate-400 mt-0.5">Custom styles &amp; LSU color tokens</p>
-          </div>
-        </div>
+      <!-- Celebratory Hero Headline -->
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-white tracking-tight leading-tight sm:leading-none mb-6">
+        Celebrating Black Excellence,
+        <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-lsu-gold via-amber-300 to-yellow-400">
+          Craft &amp; Culture Around LSU
+        </span>
+      </h1>
 
-        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
-          <span class="text-emerald-400 font-bold">&check;</span>
-          <div>
-            <code class="text-lsu-gold font-mono text-xs">js/app.js</code>
-            <p class="text-xs text-slate-400 mt-0.5">ES Module root entry script</p>
-          </div>
-        </div>
+      <!-- Warm Mission Subtitle -->
+      <p class="max-w-2xl mx-auto text-slate-300 text-base sm:text-lg sm:leading-relaxed mb-8 sm:mb-10 font-normal">
+        Your student-first directory connecting campus and community with trusted Black braiders, nail artists, custom designers, photographers, caterers, and service providers.
+      </p>
 
-        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
-          <span class="text-emerald-400 font-bold">&check;</span>
-          <div>
-            <code class="text-lsu-gold font-mono text-xs">js/components/</code>
-            <p class="text-xs text-slate-400 mt-0.5">Modular UI rendering functions</p>
+      <!-- Prominent Search Bar (Optimized for Mobile Phones & Desktop) -->
+      <form id="hero-search-form" class="max-w-2xl mx-auto mb-6" role="search" onsubmit="event.preventDefault();">
+        <div class="relative flex flex-col sm:flex-row items-stretch gap-2.5 p-2 rounded-2xl bg-slate-900/90 border border-purple-900/50 shadow-2xl shadow-black/60 backdrop-blur-md focus-within:border-lsu-gold/60 focus-within:ring-2 focus-within:ring-lsu-gold/30 transition-all">
+          
+          <!-- Search Input Field -->
+          <div class="relative flex-grow flex items-center">
+            <div class="absolute left-3.5 text-lsu-gold/70 pointer-events-none">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <input 
+              id="hero-search-input"
+              type="search" 
+              placeholder="Search braiders, custom outfits, headshots, catering..." 
+              class="w-full pl-11 pr-4 py-3.5 bg-transparent text-white text-sm sm:text-base placeholder-slate-400 focus:outline-none"
+              aria-label="Search directory service providers"
+            >
           </div>
-        </div>
 
-        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
-          <span class="text-emerald-400 font-bold">&check;</span>
-          <div>
-            <code class="text-lsu-gold font-mono text-xs">js/data/</code>
-            <p class="text-xs text-slate-400 mt-0.5">Directory database &amp; providers</p>
-          </div>
+          <!-- Search Action Button -->
+          <button 
+            type="submit" 
+            id="hero-search-btn"
+            class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-lsu-gold via-amber-300 to-lsu-gold hover:from-amber-300 hover:to-lsu-gold text-lsu-purple-dark font-heading font-bold text-sm tracking-wide shadow-md shadow-lsu-gold/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer"
+          >
+            <span>Search</span>
+            <svg class="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </button>
         </div>
+      </form>
 
-        <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50 flex items-start space-x-3">
-          <span class="text-emerald-400 font-bold">&check;</span>
-          <div>
-            <code class="text-lsu-gold font-mono text-xs">js/utils/</code>
-            <p class="text-xs text-slate-400 mt-0.5">Distance math &amp; search filters</p>
-          </div>
+      <!-- Popular Search Suggestion Pills (Touch targets for quick browsing) -->
+      <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400 max-w-xl mx-auto">
+        <span class="font-medium text-slate-300">Popular:</span>
+        <button type="button" class="search-tag-chip px-3 py-1.5 rounded-full bg-slate-900/80 hover:bg-lsu-purple/40 border border-slate-800 hover:border-lsu-gold/40 text-slate-300 hover:text-lsu-gold transition-colors">
+          🎓 Grad Portraits
+        </button>
+        <button type="button" class="search-tag-chip px-3 py-1.5 rounded-full bg-slate-900/80 hover:bg-lsu-purple/40 border border-slate-800 hover:border-lsu-gold/40 text-slate-300 hover:text-lsu-gold transition-colors">
+          💇🏾‍♀️ Knotless Braids
+        </button>
+        <button type="button" class="search-tag-chip px-3 py-1.5 rounded-full bg-slate-900/80 hover:bg-lsu-purple/40 border border-slate-800 hover:border-lsu-gold/40 text-slate-300 hover:text-lsu-gold transition-colors">
+          💅🏾 Game-Day Nails
+        </button>
+        <button type="button" class="search-tag-chip px-3 py-1.5 rounded-full bg-slate-900/80 hover:bg-lsu-purple/40 border border-slate-800 hover:border-lsu-gold/40 text-slate-300 hover:text-lsu-gold transition-colors">
+          🍽️ Tailgate Catering
+        </button>
+        <button type="button" class="search-tag-chip px-3 py-1.5 rounded-full bg-slate-900/80 hover:bg-lsu-purple/40 border border-slate-800 hover:border-lsu-gold/40 text-slate-300 hover:text-lsu-gold transition-colors">
+          🧥 Rush Formal Fits
+        </button>
+      </div>
+
+      <!-- Quick Trust Indicators -->
+      <div class="grid grid-cols-3 gap-2 sm:gap-6 mt-12 pt-8 border-t border-slate-800/80 max-w-2xl mx-auto text-center">
+        <div class="p-2 sm:p-3">
+          <div class="text-xl sm:text-2xl font-heading font-black text-white">25 Mi</div>
+          <div class="text-[11px] sm:text-xs text-slate-400 mt-0.5">Around LSU Campus</div>
+        </div>
+        <div class="p-2 sm:p-3 border-x border-slate-800/80">
+          <div class="text-xl sm:text-2xl font-heading font-black text-lsu-gold">100%</div>
+          <div class="text-[11px] sm:text-xs text-slate-400 mt-0.5">Black-Owned Directory</div>
+        </div>
+        <div class="p-2 sm:p-3">
+          <div class="text-xl sm:text-2xl font-heading font-black text-white">Student</div>
+          <div class="text-[11px] sm:text-xs text-slate-400 mt-0.5">&amp; Alumni Verified</div>
         </div>
       </div>
-    </div>
 
-    <!-- Interactive ES Module Verification Box -->
-    <div id="module-test-box" class="w-full max-w-3xl bg-lsu-purple/20 border border-lsu-purple/60 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between text-left gap-4">
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       3. MAIN CONTENT AREA
+       Container ready for upcoming interactive filters & directory cards
+       ======================================================================== -->
+  <main id="main-directory-content" class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    
+    <!-- Section Title & Orientation -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-6 border-b border-slate-800/80 gap-4">
       <div>
-        <h4 class="text-sm font-semibold text-white">JavaScript ES Module Status:</h4>
-        <p id="module-test-message" class="text-xs text-slate-300 mt-1">
-          Loading JavaScript modules... (If this does not change, check browser console or use a local HTTP server)
+        <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-lsu-gold uppercase tracking-wider mb-2">
+          <span>Service Provider Directory</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-heading font-bold text-white tracking-tight">
+          Explore Local Professionals
+        </h2>
+        <p class="text-sm text-slate-400 mt-1 max-w-xl">
+          Browse vetted entrepreneurs, book appointments, check student discounts, and calculate driving distance from LSU Memorial Tower.
         </p>
       </div>
-      <button id="test-btn" type="button" class="shrink-0 px-4 py-2 bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs rounded-lg transition-colors shadow-md">
-        Click to Verify JS
-      </button>
+
+      <!-- Results Count Status Pill Placeholder -->
+      <div class="inline-flex items-center gap-2 self-start sm:self-auto px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300">
+        <span class="w-2 h-2 rounded-full bg-lsu-gold"></span>
+        <span id="directory-status-text">Ready for Filter &amp; Card Integration</span>
+      </div>
     </div>
+
+    <!-- Scaffolding Container for Upcoming Filters & Cards -->
+    <div id="directory-container" class="space-y-8">
+      
+      <!-- Scaffolding Placeholder Card (Clean notice of next build step) -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-900/50 border border-purple-900/40 p-8 sm:p-12 text-center shadow-xl">
+        <div class="max-w-md mx-auto">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-lsu-purple/30 border border-lsu-gold/30 flex items-center justify-center text-2xl shadow-inner">
+            📍
+          </div>
+          <h3 class="text-lg sm:text-xl font-heading font-bold text-white mb-2">
+            Directory Layout Ready
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+            The core page layout, celebratory LSU theme, mobile navigation, and hero search bar are active. The 12 sample providers from <code class="text-lsu-gold font-mono text-xs">src/data/providers.js</code> will be mounted here in the next step.
+          </p>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs text-slate-400">
+            <span class="text-emerald-400">&check;</span> Next: Filter Bar &amp; Directory Card Grid
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Seasonal Hubs Teaser Section (Anchor for Nav link) -->
+    <section id="seasonal-hubs" class="mt-16 pt-12 border-t border-slate-800/80">
+      <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-lsu-purple/30 via-slate-900 to-slate-900 border border-purple-900/40">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-lsu-gold">Campus Calendar Highlights</span>
+            <h3 class="text-xl sm:text-2xl font-heading font-bold text-white mt-1">Seasonal Hubs Coming Soon</h3>
+            <p class="text-sm text-slate-300 mt-2 max-w-xl">
+              Curated collections for LSU Game Days, Homecoming week, Greek life rush formals, and Spring Commencement senior portraits.
+            </p>
+          </div>
+          <a href="#home" class="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-700 transition-colors shrink-0">
+            Back to Top &uarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About the Creators Teaser Section (Anchor for Nav link) -->
+    <section id="about-creators" class="mt-12">
+      <div class="p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
+        <span class="text-xs font-bold uppercase tracking-wider text-lsu-gold">Student Initiative</span>
+        <h3 class="text-xl sm:text-2xl font-heading font-bold text-white mt-1">About the Project</h3>
+        <p class="text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+          Black-Owned BR is created to spotlight, celebrate, and economically empower Black student creators, stylists, designers, and local Baton Rouge service providers within 25 miles of Louisiana State University.
+        </p>
+      </div>
+    </section>
+
+    <!-- Submit Your Business Section (Anchor for Nav link) -->
+    <section id="submit-business" class="mt-12">
+      <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-lsu-purple-dark/30 to-slate-900 border border-lsu-gold/30">
+        <div class="max-w-xl">
+          <span class="text-xs font-bold uppercase tracking-wider text-lsu-gold">Get Listed</span>
+          <h3 class="text-xl sm:text-2xl font-heading font-bold text-white mt-1">Are You a Black Entrepreneur Near LSU?</h3>
+          <p class="text-sm text-slate-300 mt-2 leading-relaxed">
+            Whether you run a student styling studio in Tigerland, offer custom game-day tailoring, or cater campus events, we would love to feature your business in this directory.
+          </p>
+          <button type="button" class="mt-4 px-5 py-2.5 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-colors shadow-md">
+            Submit Provider Details
+          </button>
+        </div>
+      </div>
+    </section>
 
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-slate-950/60 py-6 text-center text-xs text-slate-500">
-    <div class="max-w-6xl mx-auto px-4">
-      <p class="text-slate-400">
-        Supporting Black-owned businesses, creators, and service providers across Baton Rouge and the LSU community.
-      </p>
-      <p class="mt-1 text-slate-500">
-        Built with HTML5 &bull; Vanilla JavaScript ES Modules &bull; Tailwind CSS CDN &bull; Zero Node.js
-      </p>
+  <!-- ========================================================================
+       4. FOOTER
+       LSU-inspired theme, community note, and mobile-friendly links
+       ======================================================================== -->
+  <footer class="border-t border-purple-900/30 bg-slate-950 pt-12 pb-8 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Top Row: 4 Column Responsive Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-slate-800/80">
+        
+        <!-- Col 1: Mission & Brand -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-lsu-purple border border-lsu-gold/40 flex items-center justify-center font-heading font-bold text-lsu-gold text-xs">
+              LSU
+            </div>
+            <span class="font-heading font-bold text-white text-base">Black-Owned BR</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Connecting LSU students and Baton Rouge residents with vetted, exceptional Black-owned service businesses within a 25-mile radius.
+          </p>
+        </div>
+
+        <!-- Col 2: Navigation Links -->
+        <div>
+          <h4 class="font-heading font-bold text-white text-sm mb-3">Explore</h4>
+          <ul class="space-y-2">
+            <li><a href="#home" class="hover:text-lsu-gold transition-colors">Home Directory</a></li>
+            <li><a href="#seasonal-hubs" class="hover:text-lsu-gold transition-colors">Seasonal Hubs</a></li>
+            <li><a href="#submit-business" class="hover:text-lsu-gold transition-colors">Submit Your Business</a></li>
+            <li><a href="#about-creators" class="hover:text-lsu-gold transition-colors">About the Creators</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Key Neighborhoods Covered -->
+        <div>
+          <h4 class="font-heading font-bold text-white text-sm mb-3">Service Areas</h4>
+          <ul class="space-y-1.5 text-slate-400">
+            <li>LSU Campus &bull; Memorial Tower</li>
+            <li>Northgate &amp; Highland Road</li>
+            <li>Tigerland &amp; College Town</li>
+            <li>Mid City &amp; Garden District</li>
+            <li>Downtown Baton Rouge</li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Tech & Campus Community Note -->
+        <div>
+          <h4 class="font-heading font-bold text-white text-sm mb-3">Community &amp; Tech</h4>
+          <p class="leading-relaxed text-slate-400">
+            Built with pure HTML5, vanilla JavaScript ES Modules, and Tailwind CSS. Zero Node.js or build tools required.
+          </p>
+          <div class="mt-3 inline-flex items-center gap-1.5 text-[11px] text-lsu-gold">
+            <span>🐯</span>
+            <span>Geaux Tigers &bull; Baton Rouge, Louisiana</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Row: Copyright & Disclaimers -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
+        <p>
+          &copy; 2026 Black-Owned BR. Independent student initiative. Not officially affiliated with Louisiana State University.
+        </p>
+        <p>
+          Sample data used for development purposes.
+        </p>
+      </div>
+
     </div>
   </footer>
 
