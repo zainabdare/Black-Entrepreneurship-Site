@@ -184,7 +184,7 @@
           style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none; width: 0; height: 0; overflow: hidden;"
           aria-hidden="true">
           <label for="intake-bot-trap">Leave this blank</label>
-          <input type="text" id="intake-bot-trap" name="bot_security_code" tabindex="-1" autocomplete="new-password">
+          <input type="text" id="intake-bot-trap" name="website_trap_field" tabindex="-1" autocomplete="off" value="">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
@@ -965,7 +965,6 @@
 
   <!-- Application Controller for Dynamic Category Fields, EmailJS Notifications & Firestore Intake -->
   <script type="module">
-    import { submitPendingProvider, uploadPendingProviderPhoto } from './js/firebase.js';
     import { EMAILJS_CONFIG, GOOGLE_SHEET_URL } from './js/emailjs-config.js';
 
     // 0. Initialize EmailJS Browser SDK
@@ -1136,7 +1135,7 @@
 
       selectedFiles.forEach((file, idx) => {
         const thumb = document.createElement('div');
-        thumb.className = 'relative h-24 rounded-xl overflow-hidden bg-white border-2 border-[#EAD5C0] sh;
+        thumb.className = 'relative h-24 rounded-xl overflow-hidden bg-white border-2 border-[#EAD5C0] shadow-sm';
         
         const img = document.createElement('img');
         img.className = 'w-full h-full object-cover';
@@ -1546,7 +1545,7 @@
       }
 
       try {
-        emailClient.init(EMAILJS_CONFIG.publicKey);
+        emailClient.init({ publicKey: EMAILJS_CONFIG.publicKey });
       } catch (initErr) {
         console.warn('[EmailJS init note]:', initErr);
       }
@@ -1637,7 +1636,7 @@
 
         const sheetUrl = EMAILJS_CONFIG.googleSheetWebAppUrl || GOOGLE_SHEET_URL;
         if (sheetUrl) {
-        heetUrl, {
+          fetch(sheetUrl, {
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'text/plain' },
@@ -1655,6 +1654,8 @@
               promise,
               new Promise((_, reject) => setTimeout(() => reject(new Error(`${name} timed out after ${ms / 1000}s`)), ms))
             ]);
+
+            const { submitPendingProvider, uploadPendingProviderPhoto } = await import('./js/firebase.js');
 
             const tempId = `temp-${Date.now()}`;
             const uploadedPhotos = [];
