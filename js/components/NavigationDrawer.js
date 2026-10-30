@@ -140,15 +140,6 @@ export function injectNavigationDrawer() {
             >
               <span>About the Creators</span>
             </a>
-            <a 
-              href="admin-alerts.html" 
-              class="menu-link flex items-center justify-between px-4 py-2 rounded-full text-sm font-medium transition-colors ${currentPath === 'admin-alerts.html' ? 'bg-[#E9C6CC]/25 text-[#FDD023] font-bold border border-[#FDD023]/40' : 'text-[#F6EEE6]/90 hover:bg-[#E9C6CC]/15 hover:text-[#FDD023]'}"
-            >
-              <div class="flex items-center gap-3">
-                <span>Pop-Up Alerts Admin</span>
-              </div>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#E9C6CC]/20 text-[#E9C6CC] border border-[#E9C6CC]/30 font-mono">Admin</span>
-            </a>
           </div>
         </div>
 
@@ -160,10 +151,6 @@ export function injectNavigationDrawer() {
           BLKENTRE &bull; Supporting Black Entrepreneurship Near LSU
         </p>
         <div class="flex items-center justify-center gap-3 text-[11px] font-mono text-[#F6EEE6]/80">
-          <a href="admin-alerts.html" class="hover:text-[#FDD023] transition-colors">
-            Pop-Up Alerts
-          </a>
-          <span>&bull;</span>
           <a href="seed.html" class="hover:text-[#FDD023] transition-colors">
             Firestore Seeder
           </a>
