@@ -1,7 +1,7 @@
 /**
  * js/components/ImpactCounter.js
  * 
- * Community Impact Counter component for Black-Owned BR Home Page.
+ * Community Impact Counter component for BLKENTRE Home Page.
  * Restyled with:
  * - Editorial Palette: Cream background, Burgundy, Blush Pink, and Sand color blocks
  * - Chunky "Lilita One" display font with "Caveat" script word accents

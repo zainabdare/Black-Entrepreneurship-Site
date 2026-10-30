@@ -35,41 +35,55 @@ import { getPriceTier, getDistanceFromLSU } from '../utils/distance.js';
 // ============================================================================
 export const CATEGORY_CRITERIA_MAP = {
   'Hair': [
-    { key: 'longevity', label: 'Longevity / Durability', icon: '⏳' },
-    { key: 'punctuality', label: 'Punctuality', icon: '⏰' },
-    { key: 'cleanliness', label: 'Cleanliness & Comfort', icon: '✨' }
+    { key: 'longevity', label: 'Longevity / Durability', icon: '' },
+    { key: 'punctuality', label: 'Punctuality', icon: '' },
+    { key: 'cleanliness', label: 'Cleanliness & Comfort', icon: '' }
   ],
   'Nails': [
-    { key: 'longevity', label: 'Longevity / Retention', icon: '⏳' },
-    { key: 'punctuality', label: 'Punctuality', icon: '⏰' },
-    { key: 'cleanliness', label: 'Cleanliness & Sanitization', icon: '✨' }
+    { key: 'longevity', label: 'Longevity / Retention', icon: '' },
+    { key: 'punctuality', label: 'Punctuality', icon: '' },
+    { key: 'cleanliness', label: 'Cleanliness & Sanitization', icon: '' }
   ],
   'Lashes': [
-    { key: 'longevity', label: 'Retention & Longevity', icon: '⏳' },
-    { key: 'punctuality', label: 'Punctuality', icon: '⏰' },
-    { key: 'cleanliness', label: 'Cleanliness & Eye Care', icon: '✨' }
+    { key: 'longevity', label: 'Retention & Longevity', icon: '' },
+    { key: 'punctuality', label: 'Punctuality', icon: '' },
+    { key: 'cleanliness', label: 'Cleanliness & Eye Care', icon: '' }
   ],
   'Food & Beverages': [
-    { key: 'taste', label: 'Taste & Flavor', icon: '😋' },
-    { key: 'portion', label: 'Portion Size & Value', icon: '🍱' },
-    { key: 'punctuality', label: 'Punctuality / Pickup Time', icon: '⏰' }
+    { key: 'taste', label: 'Taste & Flavor', icon: '' },
+    { key: 'portion', label: 'Portion Size & Value', icon: '' },
+    { key: 'punctuality', label: 'Punctuality / Pickup Time', icon: '' }
   ],
   'Fashion': [
-    { key: 'fit', label: 'Fit & Tailoring', icon: '📏' },
-    { key: 'quality', label: 'Fabric & Construction Quality', icon: '🪡' },
-    { key: 'turnaround', label: 'Turnaround Time', icon: '⚡' }
+    { key: 'fit', label: 'Fit & Tailoring', icon: '' },
+    { key: 'quality', label: 'Fabric & Construction Quality', icon: '' },
+    { key: 'turnaround', label: 'Turnaround Time', icon: '' }
   ],
   'Fashion (Custom Outfits)': [
-    { key: 'fit', label: 'Fit & Tailoring', icon: '📏' },
-    { key: 'quality', label: 'Fabric & Construction Quality', icon: '🪡' },
-    { key: 'turnaround', label: 'Turnaround Time', icon: '⚡' }
+    { key: 'fit', label: 'Fit & Tailoring', icon: '' },
+    { key: 'quality', label: 'Fabric & Construction Quality', icon: '' },
+    { key: 'turnaround', label: 'Turnaround Time', icon: '' }
   ],
   'Photography': [
-    { key: 'quality', label: 'Photo Quality & Direction', icon: '📸' },
-    { key: 'punctuality', label: 'Punctuality', icon: '⏰' },
-    { key: 'editingTurnaround', label: 'Editing Turnaround', icon: '⚡' }
+    { key: 'quality', label: 'Photo Quality & Direction', icon: '' },
+    { key: 'punctuality', label: 'Punctuality', icon: '' },
+    { key: 'editingTurnaround', label: 'Editing Turnaround', icon: '' }
   ]
 };
+
+export function getStarsSvg(rating, max = 5) {
+  const rounded = Math.round(Number(rating) || 0);
+  let html = '<span class="inline-flex items-center gap-0.5 text-amber-400">';
+  for (let i = 1; i <= max; i++) {
+    if (i <= rounded) {
+      html += `<svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+    } else {
+      html += `<svg class="w-4 h-4 text-slate-600 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+    }
+  }
+  html += '</span>';
+  return html;
+}
 
 export function getCriteriaForCategory(category) {
   if (!category) return CATEGORY_CRITERIA_MAP['Hair'];
@@ -92,8 +106,8 @@ function getSampleReviewsForProvider(provider) {
       rating: 5,
       criteria: { [c1]: 5, [c2]: 5, [c3]: 5 },
       comment: `Absolutely exceeded expectations! The attention to detail was unmatched, and booking through the site was seamless. Will definitely be a returning regular!`,
-      photos: provider.portfolioImages && provider.portfolioImages.length > 0 
-        ? [provider.portfolioImages[0]] 
+      photos: provider.portfolioImages && provider.portfolioImages.length > 0
+        ? [provider.portfolioImages[0]]
         : [],
       createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
       isSample: true
@@ -104,8 +118,8 @@ function getSampleReviewsForProvider(provider) {
       rating: 5,
       criteria: { [c1]: 5, [c2]: 4, [c3]: 5 },
       comment: `Top-tier service in Baton Rouge. Friendly atmosphere and truly professional standards. LSU verified badge is well-deserved.`,
-      photos: provider.portfolioImages && provider.portfolioImages.length > 1 
-        ? [provider.portfolioImages[1]] 
+      photos: provider.portfolioImages && provider.portfolioImages.length > 1
+        ? [provider.portfolioImages[1]]
         : [],
       createdAt: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString(),
       isSample: true
@@ -173,7 +187,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
         <div class="sticky top-0 z-30 bg-slate-900/95 backdrop-blur border-b border-purple-900/40 px-5 sm:px-8 py-4 flex items-center justify-between">
           <div class="flex items-center gap-3">
             <span class="w-8 h-8 rounded-lg bg-lsu-purple/40 border border-lsu-gold/40 flex items-center justify-center font-heading font-black text-lsu-gold text-xs shadow">
-              🐯
+              B
             </span>
             <div>
               <span class="text-xs uppercase font-heading font-bold text-lsu-gold tracking-wider block">
@@ -209,15 +223,15 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
               </span>
               ${provider.lsuVerified ? `
                 <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-400/20 text-amber-300 border border-amber-400/40 flex items-center gap-1">
-                  <span>🎓</span>
                   <span>LSU ${provider.lsuVerified === 'student' ? 'Student-Owned' : 'Alumni-Owned'}</span>
                 </span>
               ` : ''}
               <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
                 ${provider.yearsExperience}+ Years Exp
               </span>
-              <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
-                📍 ${provider.zipCode ? `ZIP ${provider.zipCode}` : (provider.neighborhood || 'Baton Rouge')} &bull; ${getDistanceFromLSU(provider)} mi
+              <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-lsu-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span>${provider.zipCode ? `ZIP ${provider.zipCode}` : (provider.neighborhood || 'Baton Rouge')} &bull; ${getDistanceFromLSU(provider)} mi</span>
               </span>
             </div>
 
@@ -248,7 +262,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
               <div>
                 <span class="text-slate-400 block text-[10px] uppercase tracking-wider font-semibold">Rating & Reviews</span>
                 <span id="modal-header-rating" class="font-bold text-white text-sm sm:text-base flex items-center gap-1">
-                  <span class="text-amber-400">★</span>
+                  <svg class="w-3.5 h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                   <span>${provider.averageRating.toFixed(1)}</span>
                   <span class="text-slate-400 text-xs font-normal">(${provider.reviewCount})</span>
                 </span>
@@ -287,6 +301,21 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                 <span>&rarr;</span>
               </a>
             </div>
+
+            <!-- Direct Message (DM) Booking Helper -->
+            <div class="p-3.5 rounded-xl bg-slate-950/80 border border-purple-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div class="space-y-0.5">
+                <span class="text-[10px] font-heading font-bold uppercase tracking-wider text-lsu-gold">Direct Message (DM) Booking Template</span>
+                <p class="text-xs text-slate-300 font-sans">"Hey ${provider.ownerName || provider.businessName}! I found you on BLKENTRE and would love to book with you."</p>
+              </div>
+              <button 
+                type="button" 
+                class="copy-dm-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 shrink-0 transition-colors cursor-pointer flex items-center gap-1.5"
+                data-dm-text="Hey ${provider.ownerName || provider.businessName}! I found you on BLKENTRE and would love to book with you."
+              >
+                <span>Copy Message</span>
+              </button>
+            </div>
           </div>
 
           <!-- 2. Portfolio Gallery (if available) -->
@@ -303,7 +332,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                   >
                     <img src="${imgUrl}" alt="${provider.businessName} photo ${idx + 1}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
                     <div class="absolute inset-0 bg-slate-950/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-semibold">
-                      🔍 Expand
+                      Expand
                     </div>
                   </div>
                 `).join('')}
@@ -318,7 +347,6 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="text-2xl">⭐</span>
                   <h3 class="text-lg sm:text-2xl font-heading font-extrabold text-white">
                     Client Reviews &amp; Ratings
                   </h3>
@@ -335,7 +363,6 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                   type="button"
                   class="px-4 py-2 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-colors shadow flex items-center gap-1.5 cursor-pointer"
                 >
-                  <span>✍️</span>
                   <span>Write a Review</span>
                 </button>
 
@@ -345,7 +372,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                   class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition-colors cursor-pointer"
                   title="Toggle Admin Moderation Mode"
                 >
-                  <span id="admin-badge-icon">${isAdminAuthenticated() ? '👑 Admin Mode (ON)' : '🔒 Moderate'}</span>
+                  <span id="admin-badge-icon">${isAdminAuthenticated() ? 'Admin Mode (ON)' : 'Moderate'}</span>
                 </button>
               </div>
             </div>
@@ -353,7 +380,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
             <!-- Admin Status Banner (shown when Admin Mode is ON) -->
             <div id="admin-mode-banner" class="${isAdminAuthenticated() ? '' : 'hidden'} p-3 rounded-xl bg-purple-950/60 border border-purple-800/80 text-xs text-purple-200 flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <span class="text-amber-400 font-bold">👑 Admin Moderation Active:</span>
+                <span class="text-amber-400 font-bold">Admin Moderation Active:</span>
                 <span>You can delete inappropriate reviews with instant average &amp; count recalculation.</span>
               </div>
               <button 
@@ -375,7 +402,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                     ${provider.averageRating.toFixed(1)}
                   </div>
                   <div id="summary-stars" class="text-amber-400 text-lg sm:text-xl">
-                    ★★★★★
+                    ${getStarsSvg(provider.averageRating)}
                   </div>
                   <p id="summary-count-text" class="text-xs text-slate-400">
                     Based on <strong class="text-white">${provider.reviewCount}</strong> review${provider.reviewCount === 1 ? '' : 's'}
@@ -446,12 +473,22 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                     Overall Rating <span class="text-lsu-gold">*</span>
                   </label>
                   <div class="flex items-center gap-2">
-                    <div id="star-rating-picker" class="flex items-center gap-1.5 text-2xl text-slate-600 cursor-pointer">
-                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="1" aria-label="1 star">★</button>
-                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="2" aria-label="2 stars">★</button>
-                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="3" aria-label="3 stars">★</button>
-                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="4" aria-label="4 stars">★</button>
-                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="5" aria-label="5 stars">★</button>
+                    <div id="star-rating-picker" class="flex items-center gap-1.5 text-slate-600 cursor-pointer">
+                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="1" aria-label="1 star">
+                        <svg class="w-6 h-6 fill-current pointer-events-none" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                      </button>
+                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="2" aria-label="2 stars">
+                        <svg class="w-6 h-6 fill-current pointer-events-none" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                      </button>
+                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="3" aria-label="3 stars">
+                        <svg class="w-6 h-6 fill-current pointer-events-none" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                      </button>
+                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="4" aria-label="4 stars">
+                        <svg class="w-6 h-6 fill-current pointer-events-none" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                      </button>
+                      <button type="button" class="star-btn hover:scale-110 transition-transform focus:outline-none" data-value="5" aria-label="5 stars">
+                        <svg class="w-6 h-6 fill-current pointer-events-none" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                      </button>
                     </div>
                     <span id="star-rating-label" class="text-xs font-semibold text-amber-400 font-mono ml-2">
                       5 - Excellent
@@ -474,14 +511,15 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                       <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
                         <div class="flex items-center justify-between text-xs">
                           <span class="font-medium text-slate-200 flex items-center gap-1">
-                            <span>${crit.icon}</span>
                             <span>${crit.label}</span>
                           </span>
                           <span id="criteria-label-${crit.key}" class="font-bold text-lsu-gold font-mono">5/5</span>
                         </div>
-                        <div class="flex items-center justify-between text-lg text-slate-600 criteria-picker" data-criteria-key="${crit.key}">
+                        <div class="flex items-center justify-between criteria-picker" data-criteria-key="${crit.key}">
                           ${[1, 2, 3, 4, 5].map(v => `
-                            <button type="button" class="criteria-star-btn hover:scale-110 transition-transform focus:outline-none text-amber-400" data-value="${v}" aria-label="${v} stars for ${crit.label}">★</button>
+                            <button type="button" class="criteria-star-btn hover:scale-110 transition-transform focus:outline-none text-amber-400" data-value="${v}" aria-label="${v} stars for ${crit.label}">
+                              <svg class="w-4 h-4 fill-current pointer-events-none" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </button>
                           `).join('')}
                         </div>
                         <input type="hidden" class="criteria-input" id="criteria-input-${crit.key}" data-key="${crit.key}" value="5">
@@ -530,7 +568,15 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                       class="hidden"
                     >
                     <div class="space-y-1">
-                      <span class="text-2xl block">📸</span>
+                      <svg class="w-8 h-8 mx-auto text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
+                      <p class="text-xs text-slate-300 font-medium">
+                        Click or drag &amp; drop photos here
+                      </p>
+                      <p class="text-[11px] text-slate-500">
+                        Images are automatically compressed before uploading to Firebase Storage.
+                      </p>
+                    </div>
+                  </div>
                       <p class="text-xs text-slate-300 font-medium">
                         Click or drag &amp; drop photos here
                       </p>
@@ -659,6 +705,24 @@ function initModalInteractions(provider) {
     });
   }
 
+  // Direct Message (DM) Copy Button
+  const copyDmBtn = modal.querySelector('.copy-dm-btn');
+  if (copyDmBtn) {
+    copyDmBtn.addEventListener('click', async () => {
+      const text = copyDmBtn.getAttribute('data-dm-text');
+      try {
+        await navigator.clipboard.writeText(text);
+        const originalText = copyDmBtn.textContent;
+        copyDmBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyDmBtn.textContent = originalText;
+        }, 2000);
+      } catch (err) {
+        console.warn('Clipboard write failed:', err);
+      }
+    });
+  }
+
   // Overall Star Picker
   const starBtns = document.querySelectorAll('#star-rating-picker .star-btn');
   const overallRatingInput = document.getElementById('review-overall-rating');
@@ -736,7 +800,7 @@ function initModalInteractions(provider) {
     selectedFiles.forEach((file, index) => {
       const thumb = document.createElement('div');
       thumb.className = 'relative h-20 rounded-xl overflow-hidden bg-slate-900 border border-slate-700 shadow';
-      
+
       const img = document.createElement('img');
       img.className = 'w-full h-full object-cover';
       img.src = URL.createObjectURL(file);
@@ -852,7 +916,7 @@ function initModalInteractions(provider) {
       else banner.classList.add('hidden');
     }
     if (badge) {
-      badge.textContent = isAdmin ? '👑 Admin Mode (ON)' : '🔒 Moderate';
+      badge.textContent = isAdmin ? 'Admin Mode (ON)' : 'Moderate';
     }
     // Re-render review cards to toggle delete buttons
     renderReviewCards(activeModalReviews, provider);
@@ -1020,12 +1084,12 @@ function renderSummaryStats(provider, reviews) {
     : provider.averageRating;
 
   if (bigRating) bigRating.textContent = avgOverall.toFixed(1);
-  if (starsEl) starsEl.textContent = '★'.repeat(Math.round(avgOverall)) + '☆'.repeat(5 - Math.round(avgOverall));
+  if (starsEl) starsEl.innerHTML = getStarsSvg(avgOverall);
   if (countText) {
     countText.innerHTML = `Based on <strong class="text-white">${totalReviews}</strong> review${totalReviews === 1 ? '' : 's'}`;
   }
   if (headerRating) {
-    headerRating.innerHTML = `<span class="text-amber-400">★</span> <span>${avgOverall.toFixed(1)}</span> <span class="text-slate-400 text-xs font-normal">(${totalReviews})</span>`;
+    headerRating.innerHTML = `<svg class="w-3.5 h-3.5 text-amber-400 fill-current inline-block" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg> <span>${avgOverall.toFixed(1)}</span> <span class="text-slate-400 text-xs font-normal">(${totalReviews})</span>`;
   }
 
   // Compute criteria breakdown averages
@@ -1047,7 +1111,6 @@ function renderSummaryStats(provider, reviews) {
         <div class="space-y-1">
           <div class="flex items-center justify-between text-xs">
             <span class="text-slate-300 font-medium flex items-center gap-1.5">
-              <span>${crit.icon}</span>
               <span>${crit.label}</span>
             </span>
             <span class="font-mono font-bold text-lsu-gold">${avg.toFixed(1)} / 5</span>
@@ -1068,7 +1131,7 @@ function renderReviewCards(reviews, provider) {
   if (reviews.length === 0) {
     container.innerHTML = `
       <div class="p-8 rounded-2xl bg-slate-950/60 border border-slate-800 text-center space-y-2">
-        <span class="text-3xl block">💬</span>
+        <svg class="w-8 h-8 mx-auto text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
         <h5 class="text-sm font-heading font-bold text-white">No reviews yet</h5>
         <p class="text-xs text-slate-400 max-w-sm mx-auto">
           Be the first to leave a review for ${provider.businessName}!
@@ -1082,8 +1145,8 @@ function renderReviewCards(reviews, provider) {
   const criteriaList = getCriteriaForCategory(provider.category);
 
   container.innerHTML = reviews.map(rev => {
-    const starStr = '★'.repeat(rev.rating || 5) + '☆'.repeat(5 - (rev.rating || 5));
-    const dateFormatted = rev.createdAt 
+    const starStr = getStarsSvg(rev.rating || 5);
+    const dateFormatted = rev.createdAt
       ? new Date(rev.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       : 'Recent';
 
@@ -1117,16 +1180,15 @@ function renderReviewCards(reviews, provider) {
         ${rev.criteria ? `
           <div class="flex flex-wrap items-center gap-1.5 pt-1">
             ${criteriaList.map(crit => {
-              const val = rev.criteria[crit.key];
-              if (val === undefined) return '';
-              return `
+      const val = rev.criteria[crit.key];
+      if (val === undefined) return '';
+      return `
                 <span class="inline-flex items-center gap-1 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-slate-900 border border-slate-700/80 text-slate-300">
-                  <span>${crit.icon}</span>
                   <span>${crit.label.split('/')[0].trim()}:</span>
                   <span class="text-lsu-gold">${val}/5</span>
                 </span>
               `;
-            }).join('')}
+    }).join('')}
           </div>
         ` : ''}
 
@@ -1149,7 +1211,7 @@ function renderReviewCards(reviews, provider) {
                 >
                   <img src="${photoUrl}" alt="Review photo ${pIdx + 1}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
                   <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[11px] font-semibold">
-                    🔍 View
+                    View
                   </div>
                 </div>
               `).join('')}
@@ -1166,7 +1228,7 @@ function renderReviewCards(reviews, provider) {
               data-review-id="${rev.id}"
               data-is-sample="${rev.isSample ? 'true' : 'false'}"
             >
-              <span>🗑️</span>
+              <svg class="w-3.5 h-3.5 text-red-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
               <span>Delete Inappropriate Review</span>
             </button>
           </div>
@@ -1199,7 +1261,7 @@ function renderReviewCards(reviews, provider) {
             // Remove from local list if sample
             activeModalReviews = activeModalReviews.filter(r => r.id !== reviewId);
             const total = activeModalReviews.length;
-            const avg = total > 0 
+            const avg = total > 0
               ? Number((activeModalReviews.reduce((sum, r) => sum + r.rating, 0) / total).toFixed(1))
               : 5.0;
             provider.averageRating = avg;

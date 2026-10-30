@@ -1,7 +1,7 @@
 /**
  * js/components/FilterPanel.js
  * 
- * Reusable Filter Panel Component for Black-Owned BR category pages.
+ * Reusable Filter Panel Component for BLKENTRE category pages.
  * Restyled with:
  * - Cream background (#F6EEE6)
  * - Burgundy headings (#4A1C24, Lilita One display)
@@ -21,7 +21,6 @@ function getCategorySpecificHtml(category) {
       return `
         <div class="col-span-full border-b border-[#EAD5C0] pb-5 mb-5">
           <div class="flex items-center gap-2 mb-3">
-            <span class="text-base">💇🏾‍♀️</span>
             <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">
               Hair Specific Filters
             </h4>
@@ -68,7 +67,6 @@ function getCategorySpecificHtml(category) {
       return `
         <div class="col-span-full border-b border-[#EAD5C0] pb-5 mb-5">
           <div class="flex items-center gap-2 mb-3">
-            <span class="text-base">💅🏾</span>
             <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">
               Nail Specific Filters
             </h4>
@@ -90,7 +88,6 @@ function getCategorySpecificHtml(category) {
       return `
         <div class="col-span-full border-b border-[#EAD5C0] pb-5 mb-5">
           <div class="flex items-center gap-2 mb-3">
-            <span class="text-base">👁️</span>
             <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">
               Lash Specific Filters
             </h4>
@@ -121,7 +118,6 @@ function getCategorySpecificHtml(category) {
       return `
         <div class="col-span-full border-b border-[#EAD5C0] pb-5 mb-5">
           <div class="flex items-center gap-2 mb-3">
-            <span class="text-base">🍽️</span>
             <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">
               Food &amp; Beverage Specific Filters
             </h4>
@@ -142,7 +138,7 @@ function getCategorySpecificHtml(category) {
             <div class="space-y-2">
               <label class="inline-flex items-center gap-2.5 p-2 rounded-2xl bg-white border border-[#EAD5C0] cursor-pointer hover:border-[#4A1C24] transition-colors w-full">
                 <input type="checkbox" id="filter-campus-dropoff" class="w-4 h-4 rounded text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
-                <span class="text-xs text-[#4A1C24] font-medium font-sans">Campus Drop-Off Available 🐯</span>
+                <span class="text-xs text-[#4A1C24] font-medium font-sans">Campus Drop-Off Available</span>
               </label>
               <label class="inline-flex items-center gap-2.5 p-2 rounded-2xl bg-white border border-[#EAD5C0] cursor-pointer hover:border-[#4A1C24] transition-colors w-full">
                 <input type="checkbox" id="filter-preorder-required" class="w-4 h-4 rounded text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
@@ -157,7 +153,6 @@ function getCategorySpecificHtml(category) {
       return `
         <div class="col-span-full border-b border-[#EAD5C0] pb-5 mb-5">
           <div class="flex items-center gap-2 mb-3">
-            <span class="text-base">🧥</span>
             <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">
               Fashion &amp; Custom Outfit Filters
             </h4>
@@ -191,7 +186,6 @@ function getCategorySpecificHtml(category) {
       return `
         <div class="col-span-full border-b border-[#EAD5C0] pb-5 mb-5">
           <div class="flex items-center gap-2 mb-3">
-            <span class="text-base">📸</span>
             <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">
               Photography Specific Filters
             </h4>
@@ -222,7 +216,7 @@ function getCategorySpecificHtml(category) {
               <div>
                 <label class="inline-flex items-center gap-2 p-2 rounded-2xl bg-white border border-[#EAD5C0] cursor-pointer hover:border-[#4A1C24] transition-colors w-full">
                   <input type="checkbox" id="filter-travels-campus" class="w-4 h-4 rounded text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
-                  <span class="text-xs text-[#4A1C24] font-medium font-sans">Travels to LSU Campus 🐯</span>
+                  <span class="text-xs text-[#4A1C24] font-medium font-sans">Travels to LSU Campus</span>
                 </label>
               </div>
             </div>
@@ -348,7 +342,7 @@ export function injectFilterPanel(categoryName, onFilterChange) {
           <!-- Col 1: Location & Distance -->
           <div class="space-y-4">
             <div class="flex items-center gap-2 pb-1.5 border-b border-[#EAD5C0]">
-              <span class="text-sm">📍</span>
+              <svg class="w-3.5 h-3.5 text-[#4A1C24]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Location &amp; Radius</h4>
             </div>
 
@@ -389,7 +383,7 @@ export function injectFilterPanel(categoryName, onFilterChange) {
           <!-- Col 2: Price & Budget -->
           <div class="space-y-4">
             <div class="flex items-center gap-2 pb-1.5 border-b border-[#EAD5C0]">
-              <span class="text-sm">💵</span>
+              <svg class="w-3.5 h-3.5 text-[#4A1C24]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 9h.01M18 15h.01"/></svg>
               <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Price &amp; Budget</h4>
             </div>
 
@@ -428,7 +422,7 @@ export function injectFilterPanel(categoryName, onFilterChange) {
             <div class="pt-1">
               <label class="inline-flex items-center gap-2.5 p-2 rounded-2xl bg-white border border-[#EAD5C0] cursor-pointer hover:border-[#4A1C24] transition-colors w-full">
                 <input type="checkbox" id="filter-student-discount" class="w-4 h-4 rounded text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
-                <span class="text-xs text-[#4A1C24] font-medium font-sans">Offers Student Discount 🐯</span>
+                <span class="text-xs text-[#4A1C24] font-medium font-sans">Offers Student Discount</span>
               </label>
             </div>
           </div>
@@ -436,7 +430,7 @@ export function injectFilterPanel(categoryName, onFilterChange) {
           <!-- Col 3: Quality & Experience -->
           <div class="space-y-4">
             <div class="flex items-center gap-2 pb-1.5 border-b border-[#EAD5C0]">
-              <span class="text-sm">⭐</span>
+              <svg class="w-3.5 h-3.5 text-[#FDD023] fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
               <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Quality &amp; Rating</h4>
             </div>
 
@@ -445,9 +439,9 @@ export function injectFilterPanel(categoryName, onFilterChange) {
               <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Minimum Star Rating</label>
               <div class="flex flex-wrap gap-1.5" role="group" aria-label="Minimum Rating">
                 <button type="button" data-rating="0" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-[#E9C6CC] text-[#4A1C24] font-bold border border-[#D4A7B0] active-rating">Any</button>
-                <button type="button" data-rating="3" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">3+ ★</button>
-                <button type="button" data-rating="4" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">4+ ★</button>
-                <button type="button" data-rating="4.5" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">4.5+ ★</button>
+                <button type="button" data-rating="3" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">3+ Stars</button>
+                <button type="button" data-rating="4" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">4+ Stars</button>
+                <button type="button" data-rating="4.5" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">4.5+ Stars</button>
               </div>
             </div>
 
@@ -465,7 +459,7 @@ export function injectFilterPanel(categoryName, onFilterChange) {
           <!-- Col 4: Delivery & Availability -->
           <div class="space-y-4">
             <div class="flex items-center gap-2 pb-1.5 border-b border-[#EAD5C0]">
-              <span class="text-sm">⚡</span>
+              <svg class="w-3.5 h-3.5 text-[#4A1C24]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
               <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Delivery &amp; Timing</h4>
             </div>
 

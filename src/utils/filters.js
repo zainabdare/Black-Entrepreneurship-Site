@@ -1,7 +1,7 @@
 /**
  * src/utils/filters.js
  * 
- * Central filtering & sorting logic for Black-Owned BR service directory:
+ * Central filtering & sorting logic for BLKENTRE service directory:
  * - Category matching
  * - Keyword search matching (name, category, description)
  * - Geographic radius filtering (Haversine formula & ZIP codes from LSU)

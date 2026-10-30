@@ -1,10 +1,10 @@
-# Black Entrepreneur Service Provider Directory (LSU & Baton Rouge)
+# BLKENTRE - Black Entrepreneur Service Provider Directory (LSU & Baton Rouge)
 
 A clean, modern web directory celebrating and connecting students, faculty, and residents with **Black-owned service providers within a 25-mile radius of Louisiana State University (LSU)** in Baton Rouge, Louisiana.
 
 ---
 
-## 🌟 Project Philosophy: Zero Build Tools Needed
+## Project Philosophy: Zero Build Tools Needed
 
 This project is intentionally built using **pure Vanilla Web Technologies** (HTML5, CSS3, and JavaScript ES Modules) with **Tailwind CSS loaded via CDN**:
 
@@ -14,7 +14,7 @@ This project is intentionally built using **pure Vanilla Web Technologies** (HTM
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 Black Entre SIte/
@@ -23,21 +23,21 @@ Black Entre SIte/
 │   └── styles.css          # Custom CSS styles, LSU theme variables, and animations
 ├── js/
 │   ├── app.js              # Root ES Module entry point
-│   ├── components/         # Reusable UI component renderers
-│   │   └── serviceCard.js  # Starter card component function
-│   ├── data/               # Local directory database
-│   │   └── directoryData.js# Directory categories & provider records
-│   └── utils/              # Helper utilities
-│       └── distance.js     # LSU campus coordinates & Haversine distance math
+│   ├── firebase.js         # Firebase Cloud Firestore integration
+│   └── components/         # Reusable UI component renderers
+├── src/
+│   └── data/               # Curated provider records
+├── favicon.svg             # BLKENTRE stylized B circular favicon
+├── images/                 # BLKENTRE brand SVGs and vector assets
 ├── .gitignore              # Files and folders ignored by Git
 └── README.md               # Project documentation & setup instructions
 ```
 
 ---
 
-## 🚀 How to Preview Locally
+## How to Preview Locally
 
-> **⚠️ IMPORTANT BEGINNER NOTE ON ES MODULES:**  
+> **IMPORTANT BEGINNER NOTE ON ES MODULES:**  
 > Because this project uses modern JavaScript ES Modules (`import` / `export`), modern web browsers enforce security (CORS) rules that **block imports if you just double-click `index.html` from File Explorer** (which opens a `file:///` URL).  
 > You must preview the site through a **local HTTP server** (which opens `http://localhost:...`). Here are the easiest ways to do this:
 
@@ -71,17 +71,20 @@ Python 3 is already installed on your machine! You can start a local server anyt
 
 ---
 
-## 🐯 LSU Brand Palette Reference
+## LSU Brand Palette Reference
 
-- **LSU Purple**: `#461D7C`
+- **Burgundy**: `#4A1C24`
+- **Blush**: `#E9C6CC`
+- **Cream**: `#F6EEE6`
+- **Sand**: `#EAD5C0`
 - **LSU Gold**: `#FDD023`
 - **Coordinates**: Latitude `30.4133° N`, Longitude `91.1800° W` (LSU Memorial Tower)
 
 ---
 
-## 🛠️ Next Steps
+## Next Steps
 
 When you're ready to start building features:
-1. Populate business listings in `js/data/directoryData.js`.
+1. Populate business listings in `src/data/providers.js`.
 2. Connect search and category filters in `js/app.js`.
-3. Render directory cards dynamically on the page using `js/components/serviceCard.js`.
+3. Render directory cards dynamically on the page using `js/components/ProviderCard.js`.

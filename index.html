@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BLKENTRE | Black-Owned Business Directory Near LSU</title>
-  <meta name="description" content="Discover and support Black-owned businesses, student stylists, custom outfit designers, caterers, and photographers within 25 miles of LSU on BLKENTRE.">
+  <meta name="description"
+    content="Discover and support Black-owned businesses, student stylists, custom outfit designers, caterers, and photographers within 25 miles of LSU on BLKENTRE.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
   <!-- Google Fonts: Lilita One (Headings), Caveat (Script Accent), Poppins (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lilita+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lilita+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap"
+    rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -68,7 +72,9 @@
   <!-- JavaScript ES Modules Entry Point -->
   <script type="module" src="js/app.js"></script>
 </head>
-<body class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
+
+<body
+  class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
 
   <!-- ========================================================================
        1. HEADER & NAVIGATION
@@ -77,33 +83,34 @@
   <header class="sticky top-0 z-50 bg-[#F6EEE6]/90 backdrop-blur-md border-b border-[#EAD5C0] transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20">
-        
+
         <!-- Site Logo & Name -->
-        <a href="#home" class="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4A1C24] rounded-full py-1">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#4A1C24] border border-[#E9C6CC]/60 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
+        <a href="#home"
+          class="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4A1C24] rounded-full py-1"
+          aria-label="BLKENTRE Home">
+          <div
+            class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#4A1C24] border border-[#E9C6CC]/60 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
             <svg class="w-5 h-5 sm:w-5.5 sm:h-5.5" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M10 7H19.5C23.1 7 26 9.7 26 13.2C26 15.2 25 16.9 23.4 18C25.4 19.1 26.8 21.2 26.8 23.7C26.8 27.5 23.7 30.5 19.8 30.5H10V7ZM15 11.5V15.5H19C20.1 15.5 21 14.6 21 13.5C21 12.4 20.1 11.5 19 11.5H15ZM15 20V26H19.5C20.9 26 22 24.9 22 23.5C22 22.1 20.9 21 19.5 21H15Z" fill="#F6EEE6"/>
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M10 7H19.5C23.1 7 26 9.7 26 13.2C26 15.2 25 16.9 23.4 18C25.4 19.1 26.8 21.2 26.8 23.7C26.8 27.5 23.7 30.5 19.8 30.5H10V7ZM15 11.5V15.5H19C20.1 15.5 21 14.6 21 13.5C21 12.4 20.1 11.5 19 11.5H15ZM15 20V26H19.5C20.9 26 22 24.9 22 23.5C22 22.1 20.9 21 19.5 21H15Z"
+                fill="#F6EEE6" />
             </svg>
           </div>
-          <span class="font-heading font-black text-2xl sm:text-3xl text-[#4A1C24] tracking-tight leading-none group-hover:text-[#612731] transition-colors">
+          <span
+            class="font-heading font-black text-2xl sm:text-3xl text-[#4A1C24] tracking-tight leading-none group-hover:text-[#612731] transition-colors">
             BLKENTRE
           </span>
         </a>
 
         <!-- Top Corner Hamburger Menu Button (Pill-shaped Burgundy button) -->
         <div class="flex items-center">
-          <button 
-            id="hamburger-btn" 
-            type="button" 
+          <button id="hamburger-btn" type="button"
             class="flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] hover:text-[#FDD023] border border-[#4A1C24] focus:outline-none focus:ring-2 focus:ring-[#FDD023] transition-all shadow-md cursor-pointer"
-            aria-expanded="false" 
-            aria-controls="slide-out-menu"
-            aria-label="Open navigation menu"
-          >
+            aria-expanded="false" aria-controls="slide-out-menu" aria-label="Open navigation menu">
             <span class="text-xs font-heading font-bold uppercase tracking-wider hidden sm:inline-block">Menu</span>
             <!-- Three-line Hamburger Icon -->
             <svg class="w-5 h-5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
@@ -119,34 +126,35 @@
        ======================================================================== -->
   <section id="home" class="relative pt-4 sm:pt-8 pb-10 sm:pb-14 overflow-hidden bg-[#F6EEE6]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
+
       <!-- Full-Width Editorial Photo Frame with Overlapping Bottom Headline -->
       <div class="hero-photo-frame relative mx-auto max-w-6xl">
         <!-- Photo Container -->
         <div class="relative w-full h-[360px] sm:h-[460px] md:h-[540px] lg:h-[600px]">
-          <img 
-            src="images/hero-editorial.jpg" 
-            alt="Find Your Glow Near LSU - Black student entrepreneur" 
-            class="w-full h-full object-cover object-[center_35%] sm:object-center select-none"
-            loading="eager"
-          />
+          <img src="images/hero-editorial.jpg" alt="Find Your Glow Near LSU - Black student entrepreneur"
+            class="w-full h-full object-cover object-[center_35%] sm:object-center select-none" loading="eager" />
 
           <!-- Gradient Overlay at Bottom to Ensure Flawless Text Readability -->
-          <div class="absolute inset-0 bg-gradient-to-t from-[#4A1C24]/90 via-[#4A1C24]/30 to-transparent pointer-events-none"></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-[#4A1C24]/90 via-[#4A1C24]/30 to-transparent pointer-events-none">
+          </div>
 
           <!-- Top-Left LSU Campus Accent Badge -->
-          <div class="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#F6EEE6]/90 backdrop-blur-md border border-[#EAD5C0] text-[#4A1C24] text-xs sm:text-sm font-heading font-bold shadow-md">
+          <div
+            class="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#F6EEE6]/90 backdrop-blur-md border border-[#EAD5C0] text-[#4A1C24] text-xs sm:text-sm font-heading font-bold shadow-md">
             <span class="tracking-wider uppercase">LSU &bull; Baton Rouge</span>
             <span class="w-1.5 h-1.5 rounded-full bg-[#FDD023]" title="Active LSU Community"></span>
           </div>
 
           <!-- Top-Right 25-Mile Radius Badge -->
-          <div class="hidden sm:inline-flex absolute top-6 right-6 z-10 items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#4A1C24]/80 backdrop-blur-md border border-[#E9C6CC]/30 text-[#F6EEE6] text-xs font-heading font-medium shadow-md">
+          <div
+            class="hidden sm:inline-flex absolute top-6 right-6 z-10 items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#4A1C24]/80 backdrop-blur-md border border-[#E9C6CC]/30 text-[#F6EEE6] text-xs font-heading font-medium shadow-md">
             <span>25-Mile Campus Radius</span>
           </div>
 
           <!-- Huge Chunky Headline Overlapping the Bottom of the Photo -->
-          <div class="absolute bottom-0 inset-x-0 z-20 px-3 sm:px-8 pb-4 sm:pb-7 pt-16 text-center flex flex-col items-center justify-end">
+          <div
+            class="absolute bottom-0 inset-x-0 z-20 px-3 sm:px-8 pb-4 sm:pb-7 pt-16 text-center flex flex-col items-center justify-end">
             <h1 class="hero-chunky-headline text-3xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl select-none">
               FIND YOUR <span class="script-word">glow</span> NEAR LSU
             </h1>
@@ -157,26 +165,21 @@
       <!-- Hero Subtitle & Action Controls Below Photo -->
       <div class="max-w-3xl mx-auto text-center mt-6 sm:mt-9 px-2">
         <p class="text-base sm:text-lg md:text-xl text-[#7A535A] font-sans font-medium leading-relaxed mb-6 sm:mb-8">
-          Find trusted Black-owned hair, nails, lashes, food, fashion, and photography near LSU.
+          Your place to easily find Black-owned businesses that cater to you.
         </p>
 
         <!-- Pill Button Scrolling to Category Titles & Secondary Submit Pill -->
         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <a 
-            href="#category-nav" 
-            id="hero-explore-btn"
-            class="btn-pill inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:py-4 text-sm sm:text-base font-heading font-black tracking-wider shadow-lg hover:shadow-xl transition-all cursor-pointer"
-          >
+          <a href="#category-nav" id="hero-explore-btn"
+            class="btn-pill inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:py-4 text-sm sm:text-base font-heading font-black tracking-wider shadow-lg hover:shadow-xl transition-all cursor-pointer">
             <span>Explore Categories</span>
             <svg class="w-4 h-4 sm:w-5 sm:h-5 stroke-current stroke-2 animate-bounce" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </a>
 
-          <a 
-            href="submit-business.html" 
-            class="btn-pill-outline inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 text-sm sm:text-base font-heading font-black tracking-wider cursor-pointer"
-          >
+          <a href="submit-business.html"
+            class="btn-pill-outline inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 text-sm sm:text-base font-heading font-black tracking-wider cursor-pointer">
             <span>Submit Your Business</span>
           </a>
         </div>
@@ -258,12 +261,14 @@
     <section id="community-impact-section" class="py-12 sm:py-16 bg-[#F6EEE6] border-b border-[#EAD5C0]/80">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="max-w-3xl mx-auto">
-          <h2 class="text-3xl sm:text-5xl font-heading font-black text-[#4A1C24] tracking-tight leading-tight sm:leading-none">
+          <h2
+            class="text-3xl sm:text-5xl font-heading font-black text-[#4A1C24] tracking-tight leading-tight sm:leading-none">
             Empowering Black Business, ONE <span class="script-word text-[#4A1C24]">booking</span> AT A TIME
           </h2>
 
           <p class="mt-4 text-sm sm:text-base text-[#7A535A] leading-relaxed max-w-2xl mx-auto font-sans">
-            Every profile view, social link, direct appointment, and student review directly recirculates the Tiger dollar into Baton Rouge’s Black creative economy.
+            Every profile view, social link, direct appointment, and student review directly recirculates the Tiger
+            dollar into Baton Rouge’s Black creative economy.
           </p>
         </div>
       </div>
@@ -274,21 +279,25 @@
        3. MAIN COMMUNITY FEATURES
        Curated hubs, student initiative, and business intake
        ======================================================================== -->
-  <main id="main-directory-content" class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10">
-    
+  <main id="main-directory-content"
+    class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10">
+
     <!-- Seasonal Hubs Teaser Section (Clean Card with Blush Accent) -->
     <section id="seasonal-hubs">
-      <div class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E9C6CC] hover:border-[#4A1C24] transition-all shadow-md">
+      <div
+        class="p-6 sm:p-8 rounded-3xl bg-white border border-[#E9C6CC] hover:border-[#4A1C24] transition-all shadow-md">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div class="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24] mb-1">
+            <div
+              class="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24] mb-1">
               <span>Campus Calendar Highlights</span>
             </div>
             <h3 class="text-2xl sm:text-3xl font-heading font-black text-[#4A1C24] mt-1">
               LSU Seasonal <span class="script-word text-[#4A1C24]">hubs</span>
             </h3>
             <p class="text-sm text-[#7A535A] mt-2 max-w-xl font-sans">
-              Curated collections for LSU Game Days, Homecoming week, Greek life rush formals, and Spring Commencement senior portraits.
+              Curated collections for LSU Game Days, Homecoming week, Greek life rush formals, and Spring Commencement
+              senior portraits.
             </p>
           </div>
           <a href="seasonal-hubs.html" class="btn-pill-outline shrink-0">
@@ -300,17 +309,20 @@
 
     <!-- About the Creators Section (Warm Sand Card) -->
     <section id="about-creators">
-      <div class="p-6 sm:p-8 rounded-3xl bg-[#EAD5C0]/40 border border-[#D3BAA2] hover:border-[#4A1C24] transition-all shadow-md">
+      <div
+        class="p-6 sm:p-8 rounded-3xl bg-[#EAD5C0]/40 border border-[#D3BAA2] hover:border-[#4A1C24] transition-all shadow-md">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div class="max-w-2xl">
-            <div class="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24] mb-1">
+            <div
+              class="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24] mb-1">
               <span>Student Initiative</span>
             </div>
             <h3 class="text-2xl sm:text-3xl font-heading font-black text-[#4A1C24] mt-1">
               About the <span class="script-word text-[#4A1C24]">project</span>
             </h3>
             <p class="text-sm text-[#7A535A] mt-2 leading-relaxed font-sans">
-              BLKENTRE is created to spotlight, celebrate, and economically empower Black student creators, stylists, designers, and local Baton Rouge service providers within 25 miles of Louisiana State University.
+              BLKENTRE is created to spotlight, celebrate, and economically empower Black student creators, stylists,
+              designers, and local Baton Rouge service providers within 25 miles of Louisiana State University.
             </p>
           </div>
           <a href="about-creators.html" class="btn-pill-outline shrink-0">
@@ -325,17 +337,20 @@
       <div class="p-6 sm:p-8 rounded-3xl bg-[#4A1C24] text-[#F6EEE6] border border-[#351218] shadow-xl">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div class="max-w-xl">
-            <div class="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-wider text-[#E9C6CC] mb-1">
+            <div
+              class="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-wider text-[#E9C6CC] mb-1">
               <span>Get Listed Free</span>
             </div>
             <h3 class="text-2xl sm:text-3xl font-heading font-black text-[#F6EEE6] mt-1">
               Are You a Black <span class="script-word text-[#E9C6CC]">entrepreneur</span> Near LSU?
             </h3>
             <p class="text-sm text-[#E9C6CC] mt-2 leading-relaxed font-sans">
-              Whether you run a student styling studio in Tigerland, offer custom game-day tailoring, or cater campus events, we would love to feature your business in this directory.
+              Whether you run a student styling studio in Tigerland, offer custom game-day tailoring, or cater campus
+              events, we would love to feature your business in this directory.
             </p>
           </div>
-          <a href="submit-business.html" class="px-7 py-3.5 rounded-full bg-[#F6EEE6] hover:bg-white text-[#4A1C24] font-heading font-black text-xs uppercase tracking-wider shadow-lg transition-all shrink-0">
+          <a href="submit-business.html"
+            class="px-7 py-3.5 rounded-full bg-[#F6EEE6] hover:bg-white text-[#4A1C24] font-heading font-black text-xs uppercase tracking-wider shadow-lg transition-all shrink-0">
             <span>Submit Your Business &rarr;</span>
           </a>
         </div>
@@ -350,22 +365,25 @@
        ======================================================================== -->
   <footer class="border-t border-[#E9C6CC]/20 bg-[#351218] text-[#E9C6CC] pt-14 pb-10 text-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
+
       <!-- Top Row: 4 Column Responsive Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-[#E9C6CC]/15">
-        
+
         <!-- Col 1: Mission & Brand -->
         <div class="space-y-3">
           <div class="flex items-center gap-2.5">
             <div class="w-8 h-8 rounded-full bg-[#E9C6CC] flex items-center justify-center shadow-md shrink-0">
               <svg class="w-4.5 h-4.5" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M10 7H19.5C23.1 7 26 9.7 26 13.2C26 15.2 25 16.9 23.4 18C25.4 19.1 26.8 21.2 26.8 23.7C26.8 27.5 23.7 30.5 19.8 30.5H10V7ZM15 11.5V15.5H19C20.1 15.5 21 14.6 21 13.5C21 12.4 20.1 11.5 19 11.5H15ZM15 20V26H19.5C20.9 26 22 24.9 22 23.5C22 22.1 20.9 21 19.5 21H15Z" fill="#4A1C24"/>
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M10 7H19.5C23.1 7 26 9.7 26 13.2C26 15.2 25 16.9 23.4 18C25.4 19.1 26.8 21.2 26.8 23.7C26.8 27.5 23.7 30.5 19.8 30.5H10V7ZM15 11.5V15.5H19C20.1 15.5 21 14.6 21 13.5C21 12.4 20.1 11.5 19 11.5H15ZM15 20V26H19.5C20.9 26 22 24.9 22 23.5C22 22.1 20.9 21 19.5 21H15Z"
+                  fill="#4A1C24" />
               </svg>
             </div>
             <span class="font-heading font-black text-[#F6EEE6] text-xl tracking-tight">BLKENTRE</span>
           </div>
           <p class="text-xs text-[#E9C6CC]/80 leading-relaxed font-sans">
-            Connecting LSU students and Baton Rouge residents with vetted, exceptional Black-owned service businesses within a 25-mile radius.
+            Connecting LSU students and Baton Rouge residents with vetted, exceptional Black-owned service businesses
+            within a 25-mile radius.
           </p>
         </div>
 
@@ -375,7 +393,8 @@
           <ul class="space-y-2">
             <li><a href="#home" class="hover:text-[#FDD023] transition-colors">Home Directory</a></li>
             <li><a href="seasonal-hubs.html" class="hover:text-[#FDD023] transition-colors">Seasonal Hubs</a></li>
-            <li><a href="submit-business.html" class="hover:text-[#FDD023] transition-colors">Submit Your Business</a></li>
+            <li><a href="submit-business.html" class="hover:text-[#FDD023] transition-colors">Submit Your Business</a>
+            </li>
             <li><a href="about-creators.html" class="hover:text-[#FDD023] transition-colors">About the Creators</a></li>
           </ul>
         </div>
@@ -406,9 +425,11 @@
       </div>
 
       <!-- Bottom Row: Copyright & Disclaimers -->
-      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#E9C6CC]/60 font-sans">
+      <div
+        class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#E9C6CC]/60 font-sans">
         <p>
-          &copy; 2026 BLKENTRE. Independent student initiative. Not officially affiliated with Louisiana State University.
+          &copy; 2026 BLKENTRE. Independent student initiative. Not officially affiliated with Louisiana State
+          University.
         </p>
         <p>
           Sample data used for development purposes.
@@ -419,4 +440,5 @@
   </footer>
 
 </body>
+
 </html>
