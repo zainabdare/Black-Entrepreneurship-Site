@@ -1,6 +1,6 @@
 /**
  * js/app.js
- * Main JavaScript controller for Black-Owned BR.
+ * Main JavaScript controller for BLKENTRE.
  * 
  * Features:
  * - Dynamic rendering of providers via ProviderCard component
@@ -25,7 +25,7 @@ import { openProviderDetailModal, closeProviderDetailModal, closePhotoLightbox }
 import { injectCampusAlertsBanner } from './components/AlertsBanner.js';
 import { injectImpactCounter } from './components/ImpactCounter.js';
 
-console.log('%c🐯 Black-Owned BR: Multi-page & Filter Panel Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
+console.log('%cBLKENTRE: Multi-page & Filter Panel Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
 
 // Master provider records loaded from Firestore (falls back to sample providers if Firestore collection is empty or API pending)
 export let allProviders = [];
@@ -225,7 +225,11 @@ export function renderFirestoreNotice(type, errorDetails = '') {
     notice.innerHTML = `
       <div class="p-3.5 sm:p-4 rounded-xl bg-lsu-purple/40 border border-lsu-gold/40 text-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg backdrop-blur">
         <div class="flex items-center gap-3">
-          <span class="text-2xl shrink-0">🔥</span>
+          <div class="w-8 h-8 rounded-lg bg-lsu-gold/20 flex items-center justify-center shrink-0 text-lsu-gold">
+            <svg class="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
           <div>
             <p class="text-xs sm:text-sm font-semibold text-white">
               Firebase Connected: Cloud Firestore collection <code class="text-lsu-gold font-mono font-bold">"providers"</code> is currently empty.
@@ -256,7 +260,11 @@ export function renderFirestoreNotice(type, errorDetails = '') {
     notice.innerHTML = `
       <div class="p-3 sm:p-3.5 rounded-xl bg-slate-900/90 border border-purple-900/50 text-slate-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
         <div class="flex items-center gap-2.5">
-          <span class="text-amber-400 text-lg shrink-0">⚡</span>
+          <div class="w-6 h-6 rounded-md bg-amber-400/20 flex items-center justify-center shrink-0 text-amber-400">
+            <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
           <p class="text-xs leading-relaxed">
             <strong class="text-white">Firebase Note:</strong> Cloud Firestore database setup in progress. Serving cached sample data until enabled in Firebase Console.
           </p>
@@ -310,22 +318,22 @@ export async function loadProvidersData() {
   }
 
   try {
-    console.log('%c🔥 Black-Owned BR: Querying Cloud Firestore "providers" collection...', 'color: #FDD023; background: #461D7C; font-weight: bold; padding: 2px 6px;');
+    console.log('%cBLKENTRE: Querying Cloud Firestore "providers" collection...', 'color: #FDD023; background: #461D7C; font-weight: bold; padding: 2px 6px;');
     const firestoreDocs = await getProvidersFromFirestore();
 
     if (Array.isArray(firestoreDocs) && firestoreDocs.length > 0) {
-      console.log(`%c🔥 Firestore Connected! Successfully loaded ${firestoreDocs.length} providers from collection "providers".`, 'color: #10B981; font-weight: bold;');
+      console.log(`%cFirestore Connected! Successfully loaded ${firestoreDocs.length} providers from collection "providers".`, 'color: #10B981; font-weight: bold;');
       allProviders = firestoreDocs;
       firestoreLoadStatus = 'firestore';
       removeFirestoreNotice();
     } else {
-      console.warn('⚠️ Cloud Firestore "providers" collection is currently empty. Serving sample providers.');
+      console.warn('Cloud Firestore "providers" collection is currently empty. Serving sample providers.');
       allProviders = SAMPLE_PROVIDERS;
       firestoreLoadStatus = 'empty';
       renderFirestoreNotice('empty');
     }
   } catch (error) {
-    console.warn('⚠️ Cloud Firestore not reachable (database may need to be created in Firebase Console). Serving local sample providers:', error.message);
+    console.warn('Cloud Firestore not reachable (database may need to be created in Firebase Console). Serving local sample providers:', error.message);
     allProviders = SAMPLE_PROVIDERS;
     firestoreLoadStatus = 'offline';
     renderFirestoreNotice('offline', error.message);
@@ -360,8 +368,8 @@ export function updateDirectory() {
     radiusDisplay.textContent = `${appState.maxRadius} mi`;
   }
   if (priceDisplay) {
-    priceDisplay.textContent = appState.maxStartingPrice && appState.maxStartingPrice < 250 
-      ? `$${appState.maxStartingPrice} max` 
+    priceDisplay.textContent = appState.maxStartingPrice && appState.maxStartingPrice < 250
+      ? `$${appState.maxStartingPrice} max`
       : 'Any ($250+)';
   }
 
@@ -375,7 +383,7 @@ export function updateDirectory() {
   if (countElement) {
     const categoryLabel = appState.selectedCategory === 'All' ? '' : ` in ${appState.selectedCategory}`;
     const sourceBadge = firestoreLoadStatus === 'firestore'
-      ? `<span class="ml-2 inline-flex items-center gap-1 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" title="Data loaded live from Cloud Firestore 'providers' collection">🔥 Firestore</span>`
+      ? `<span class="ml-2 inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" title="Data loaded live from Cloud Firestore 'providers' collection"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Firestore</span>`
       : '';
     countElement.innerHTML = `Showing <span class="text-lsu-gold font-bold font-mono">${filtered.length}</span> provider${filtered.length === 1 ? '' : 's'}${categoryLabel}${sourceBadge}`;
   }
@@ -384,8 +392,10 @@ export function updateDirectory() {
   if (filtered.length === 0) {
     gridElement.innerHTML = `
       <div class="col-span-full py-14 px-6 rounded-2xl bg-slate-900/60 border border-slate-800 text-center shadow-lg">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-lsu-purple/30 border border-lsu-gold/30 flex items-center justify-center text-3xl shadow-inner">
-          📍
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-lsu-purple/30 border border-lsu-gold/30 flex items-center justify-center text-lsu-gold shadow-inner">
+          <svg class="w-6 h-6 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
         </div>
         <h4 class="text-lg sm:text-xl font-heading font-bold text-white">
           No providers found
@@ -946,7 +956,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 8. Reusable Heading Script Word Parser
+  // 8. Explore Categories Button Smooth Scroll
+  const heroExploreBtn = document.getElementById('hero-explore-btn');
+  if (heroExploreBtn) {
+    heroExploreBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById('category-nav');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  // 9. Reusable Heading Script Word Parser
   // Safely handles headings with <script-word>word</script-word>, <span class="script-word">word</span>,
   // or user-written <script>word</script> syntax without browser JS parsing errors.
   initScriptHeadingParser();

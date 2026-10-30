@@ -585,6 +585,8 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   color: var(--color-cream);
   text-decoration: none;
   transition: color 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .marquee-item:hover {

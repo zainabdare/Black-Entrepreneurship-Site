@@ -130,10 +130,10 @@ export async function injectCampusAlertsBanner(mountId = 'campus-alerts-mount') 
 
             <a 
               href="admin-alerts.html" 
-              class="text-[11px] font-heading font-black text-[#E9C6CC] hover:text-[#FDD023] transition-colors flex items-center gap-1 px-3 py-1 rounded-full bg-[#351218] border border-[#E9C6CC]/30"
+              class="text-[11px] font-heading font-black text-[#E9C6CC] hover:text-[#FDD023] transition-colors flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#351218] border border-[#E9C6CC]/30"
               title="Post or manage campus alerts"
             >
-              <span>⚙️</span>
+              <svg class="w-3.5 h-3.5 text-[#E9C6CC]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               <span class="hidden sm:inline">Admin</span>
             </a>
           </div>
@@ -154,7 +154,6 @@ export async function injectCampusAlertsBanner(mountId = 'campus-alerts-mount') 
                 <!-- Provider Name & Tag -->
                 <div class="flex items-center justify-between gap-2">
                   <span class="text-sm font-heading font-black text-[#F6EEE6] group-hover:text-[#FDD023] transition-colors flex items-center gap-2">
-                    <span>📢</span>
                     <span>${alert.providerName}</span>
                   </span>
                   ${alert.providerCategory ? `
@@ -175,14 +174,14 @@ export async function injectCampusAlertsBanner(mountId = 'campus-alerts-mount') 
                 
                 <!-- Campus Location Badge -->
                 <div class="flex items-center gap-1.5 text-[#FDD023] font-semibold">
-                  <span>📍</span>
+                  <svg class="w-3.5 h-3.5 text-[#FDD023]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                   <span class="text-[#F6EEE6] font-medium">${alert.location}</span>
                 </div>
 
                 <!-- Expiration Countdown Badge -->
                 <div class="flex items-center gap-2">
-                  <span class="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#E9C6CC]/20 text-[#E9C6CC] border border-[#E9C6CC]/30">
-                    <span>⏳</span>
+                  <span class="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#E9C6CC]/20 text-[#E9C6CC] border border-[#E9C6CC]/30">
+                    <svg class="w-3 h-3 text-[#E9C6CC]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     <span>${formatTimeRemaining(alert.expirationTime)}</span>
                   </span>
 

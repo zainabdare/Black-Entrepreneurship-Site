@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 44" fill="none">
+  <circle cx="22" cy="22" r="20" fill="#4A1C24" stroke="#E9C6CC" stroke-width="1.5"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M14 11H23C26.8 11 29.8 13.8 29.8 17.4C29.8 19.5 28.7 21.4 27 22.4C29.1 23.6 30.6 25.8 30.6 28.4C30.6 32.4 27.4 35.5 23.3 35.5H14V11ZM19 15.5V19.5H22.9C24 19.5 24.9 18.6 24.9 17.5C24.9 16.4 24 15.5 22.9 15.5H19ZM19 24.5V31H23.3C24.8 31 26 29.8 26 28.4C26 27 24.8 24.5 23.3 24.5H19Z" fill="#F6EEE6"/>
+  <text x="52" y="31" font-family="'Lilita One', cursive, sans-serif" font-weight="900" font-size="26" fill="#4A1C24" letter-spacing="0.5">BLKENTRE</text>
+</svg>
+

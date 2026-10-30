@@ -133,9 +133,6 @@
       <!-- Pill -->
       <div class="block">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E9C6CC]/50 border border-[#D4A7B0] text-[#4A1C24] text-xs sm:text-sm font-heading font-bold mb-4">
-          <span>📝</span>
-          <span>Community Directory Intake</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[#FDD023]"></span>
           <span>100% Free Listing</span>
         </div>
       </div>
@@ -154,696 +151,684 @@
   <!-- ========================================================================
        INTAKE FORM & STANDARDS
        ======================================================================== -->
-  <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
+  <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6 sm:space-y-8">
 
-    <!-- Intake Form Card -->
-    <div class="rounded-3xl bg-slate-900/95 border border-purple-900/50 p-6 sm:p-10 shadow-2xl backdrop-blur space-y-8">
+    <div id="intake-form-header" class="text-center sm:text-left">
+      <h2 class="text-2xl sm:text-3xl font-heading font-black text-[#4A1C24]">
+        Provider Application Form
+      </h2>
+      <p class="text-xs sm:text-sm text-[#7A535A] mt-1.5 font-sans">
+        Fill out your details below. Your submission will be sent to our admin review queue for verification.
+      </p>
+    </div>
+
+    <form id="provider-intake-form" class="space-y-6 sm:space-y-8" novalidate>
       
-      <div id="intake-form-header">
-        <h2 class="text-2xl sm:text-3xl font-heading font-black text-white">
-          Provider Application Form
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-300 mt-1.5 font-sans">
-          Fill out your details below. Your submission will be sent to our admin review queue for verification.
-        </p>
-      </div>
+      <!-- ====================================================================
+           CARD 1: BUSINESS IDENTITY & CONTACT
+           ==================================================================== -->
+      <div class="rounded-3xl bg-white border border-[#E9C6CC] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow space-y-6">
+        <h3 class="text-base sm:text-lg font-heading font-bold text-[#4A1C24] border-b border-[#E9C6CC] pb-3 flex items-center gap-2">
+          <span class="text-lg">🏷️</span>
+          <span>1. Business Identity &amp; Contact</span>
+        </h3>
 
-      <form id="provider-intake-form" class="space-y-8" novalidate>
-        
-        <!-- SECTION 1: BUSINESS IDENTITY & CATEGORY -->
-        <div class="space-y-4">
-          <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider border-b border-[#FDD023]/30 pb-2 flex items-center gap-2">
-            <span>🏷️</span>
-            <span>1. Business Identity &amp; Contact</span>
-          </h3>
+        <!-- Anti-Spam Honeypot Field (Hidden from real users; bots fill this and get blocked) -->
+        <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+          <label for="intake-bot-trap">Leave this blank</label>
+          <input type="text" id="intake-bot-trap" name="bot_security_code" tabindex="-1" autocomplete="new-password">
+        </div>
 
-          <!-- Anti-Spam Honeypot Field (Hidden from real users; bots fill this and get blocked) -->
-          <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
-            <label for="intake-bot-trap">Leave this blank</label>
-            <input type="text" id="intake-bot-trap" name="bot_security_code" tabindex="-1" autocomplete="new-password">
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-business-name">
-                Business Name <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <input 
-                id="intake-business-name" 
-                type="text" 
-                required 
-                placeholder="e.g. Bayou Crown Braid Lounge"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-owner-name">
-                Owner / Artist Name <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <input 
-                id="intake-owner-name" 
-                type="text" 
-                required 
-                placeholder="e.g. Kiana Carter"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-owner-email">
-                Contact Email <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <input 
-                id="intake-owner-email" 
-                type="email" 
-                required 
-                placeholder="e.g. kiana@example.com"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-owner-phone">
-                Contact Phone <span class="text-[#EAD5C0] font-normal">(Optional)</span>
-              </label>
-              <input 
-                id="intake-owner-phone" 
-                type="tel" 
-                placeholder="e.g. (225) 555-0199"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-category-select">
-                Primary Category <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <select 
-                id="intake-category-select" 
-                required
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer"
-              >
-                <option value="" class="bg-slate-900 text-white">-- Choose Category --</option>
-                <option value="Hair" class="bg-slate-900 text-white">Hair (Braids, Silk Press, Locs, Wigs)</option>
-                <option value="Nails" class="bg-slate-900 text-white">Nails (Acrylic, Gel-X, Press-Ons, Nail Art)</option>
-                <option value="Lashes" class="bg-slate-900 text-white">Lashes (Classic, Volume, Hybrid)</option>
-                <option value="Food & Beverages" class="bg-slate-900 text-white">Food &amp; Beverages (Plates, Catering, Desserts)</option>
-                <option value="Fashion (Custom Outfits)" class="bg-slate-900 text-white">Fashion (Custom Outfits, Tailoring, Prom)</option>
-                <option value="Photography" class="bg-slate-900 text-white">Photography (Graduation, Game Day, Brand)</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-lsu-verified">
-                LSU Affiliation
-              </label>
-              <select 
-                id="intake-lsu-verified"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer"
-              >
-                <option value="null" class="bg-slate-900 text-white">Independent Community Business</option>
-                <option value="student" class="bg-slate-900 text-white">Current LSU Student (Student-Owned Badge)</option>
-                <option value="alumni" class="bg-slate-900 text-white">LSU Alumni (Alumni-Owned Badge)</option>
-              </select>
-            </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-business-name">
+              Business Name <span class="text-[#612731] font-bold">*</span>
+            </label>
+            <input 
+              id="intake-business-name" 
+              type="text" 
+              required 
+              placeholder="e.g. Bayou Crown Braid Lounge"
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
+            >
           </div>
 
           <div>
-            <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-description">
-              Business Bio &amp; Service Description <span class="text-[#FDD023] font-bold">*</span>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-owner-name">
+              Owner / Artist Name <span class="text-[#612731] font-bold">*</span>
             </label>
-            <textarea 
-              id="intake-description" 
-              rows="3" 
+            <input 
+              id="intake-owner-name" 
+              type="text" 
               required 
-              maxlength="400"
-              placeholder="Tell clients what makes your service special, your setup, and what to expect..."
-              class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors leading-relaxed"
-            ></textarea>
+              placeholder="e.g. Kiana Carter"
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
+            >
           </div>
         </div>
 
-        <!-- ====================================================================
-             SECTION 2: DYNAMIC CATEGORY-SPECIFIC ATTRIBUTES
-             (Only displays fields for the selected category!)
-             ==================================================================== -->
-        <div id="category-specific-wrapper" class="hidden space-y-5 p-5 sm:p-6 rounded-2xl bg-slate-950 border-2 border-[#FDD023]/40 shadow-inner">
-          
-          <div class="flex items-center justify-between border-b border-[#FDD023]/30 pb-3">
-            <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider flex items-center gap-2">
-              <span>✨</span>
-              <span id="category-specific-title">Category Details</span>
-            </h3>
-            <span class="text-xs text-[#E9C6CC] font-heading font-semibold bg-[#4A1C24] px-3 py-0.5 rounded-full border border-[#E9C6CC]/30">Tailored to your craft</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-owner-email">
+              Contact Email <span class="text-[#612731] font-bold">*</span>
+            </label>
+            <input 
+              id="intake-owner-email" 
+              type="email" 
+              required 
+              placeholder="e.g. kiana@example.com"
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
+            >
           </div>
 
-          <!-- 2A. Hair Specific Fields -->
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-owner-phone">
+              Contact Phone <span class="text-[#7A535A] font-normal font-sans">(Optional)</span>
+            </label>
+            <input 
+              id="intake-owner-phone" 
+              type="tel" 
+              placeholder="e.g. (225) 555-0199"
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
+            >
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-category-select">
+              Primary Category <span class="text-[#612731] font-bold">*</span>
+            </label>
+            <select 
+              id="intake-category-select" 
+              required
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer"
+            >
+              <option value="" class="bg-white text-[#4A1C24]">-- Choose Category --</option>
+              <option value="Hair" class="bg-white text-[#4A1C24]">Hair (Braids, Silk Press, Locs, Wigs)</option>
+              <option value="Nails" class="bg-white text-[#4A1C24]">Nails (Acrylic, Gel-X, Press-Ons, Nail Art)</option>
+              <option value="Lashes" class="bg-white text-[#4A1C24]">Lashes (Classic, Volume, Hybrid)</option>
+              <option value="Food & Beverages" class="bg-white text-[#4A1C24]">Food &amp; Beverages (Plates, Catering, Desserts)</option>
+              <option value="Fashion (Custom Outfits)" class="bg-white text-[#4A1C24]">Fashion (Custom Outfits, Tailoring, Prom)</option>
+              <option value="Photography" class="bg-white text-[#4A1C24]">Photography (Graduation, Game Day, Brand)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-lsu-verified">
+              LSU Affiliation
+            </label>
+            <select 
+              id="intake-lsu-verified"
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer"
+            >
+              <option value="null" class="bg-white text-[#4A1C24]">Independent Community Business</option>
+              <option value="student" class="bg-white text-[#4A1C24]">Current LSU Student (Student-Owned Badge)</option>
+              <option value="alumni" class="bg-white text-[#4A1C24]">LSU Alumni (Alumni-Owned Badge)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Category-Specific Attributes inside Section 1 -->
+        <div id="category-specific-wrapper" class="hidden space-y-5 p-5 sm:p-6 rounded-2xl bg-[#FDFBF8] border-2 border-[#E9C6CC] shadow-inner">
+          <div class="flex items-center justify-between border-b border-[#EAD5C0] pb-3">
+            <h4 class="text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] uppercase tracking-wider flex items-center gap-2">
+              <span>✨</span>
+              <span id="category-specific-title">Category Details</span>
+            </h4>
+            <span class="text-xs text-[#4A1C24] font-sans font-semibold bg-[#E9C6CC]/50 px-3 py-0.5 rounded-full border border-[#D4A7B0]">Tailored to your craft</span>
+          </div>
+
+          <!-- 1A. Hair Specific Fields -->
           <div id="fields-hair" class="category-field-group hidden space-y-5">
             <div>
-              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Hair Types &amp; Textures Serviced</span>
+              <span class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Hair Types &amp; Textures Serviced</span>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairTypes" value="3A-3C" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">3A-3C</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairTypes" value="3A-3C" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">3A-3C</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairTypes" value="4A-4C" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">4A-4C</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairTypes" value="4A-4C" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">4A-4C</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairTypes" value="Locs & Sisterlocks" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Locs &amp; Sisterlocks</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairTypes" value="Locs & Sisterlocks" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Locs &amp; Sisterlocks</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairTypes" value="Relaxed/Straight" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Relaxed/Straight</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairTypes" value="Relaxed/Straight" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Relaxed/Straight</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Specialties</span>
+              <span class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Specialties</span>
               <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairSpecialties" value="knotless braids" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Knotless Braids</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="knotless braids" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Knotless Braids</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairSpecialties" value="wig installs" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Wig Installs</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="wig installs" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Wig Installs</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairSpecialties" value="silk press" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Silk Press</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="silk press" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Silk Press</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairSpecialties" value="loc maintenance" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Loc Maintenance</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="loc maintenance" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Loc Maintenance</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairSpecialties" value="hair included" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Braiding Hair Included</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="hairSpecialties" value="hair included" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Braiding Hair Included</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-chair-vibe">
+              <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-chair-vibe">
                 Chair Vibe / Setting
               </label>
-              <select id="intake-chair-vibe" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
-                <option value="home studio" class="bg-slate-900 text-white">Home Studio (Cozy / Quiet)</option>
-                <option value="studio" class="bg-slate-900 text-white">Professional Salon / Commercial Studio</option>
-                <option value="travels to you" class="bg-slate-900 text-white">Travels to Client / Mobile</option>
+              <select id="intake-chair-vibe" class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
+                <option value="home studio" class="bg-white text-[#4A1C24]">Home Studio (Cozy / Quiet)</option>
+                <option value="studio" class="bg-white text-[#4A1C24]">Professional Salon / Commercial Studio</option>
+                <option value="travels to you" class="bg-white text-[#4A1C24]">Travels to Client / Mobile</option>
               </select>
             </div>
           </div>
 
-          <!-- 2B. Nails Specific Fields -->
+          <!-- 1B. Nails Specific Fields -->
           <div id="fields-nails" class="category-field-group hidden space-y-4">
-            <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Nail Styles Offered</span>
+            <span class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Nail Styles Offered</span>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
-              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" name="nailStyles" value="acrylic" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                <span class="text-white font-medium select-none">Acrylic Full Sets</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="acrylic" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                <span class="text-[#4A1C24] font-sans font-medium select-none">Acrylic Full Sets</span>
               </label>
-              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" name="nailStyles" value="gel-x" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                <span class="text-white font-medium select-none">Gel-X Extensions</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="gel-x" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                <span class="text-[#4A1C24] font-sans font-medium select-none">Gel-X Extensions</span>
               </label>
-              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" name="nailStyles" value="natural nail" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                <span class="text-white font-medium select-none">Natural Nail Care &amp; Builder Gel</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="natural nail" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                <span class="text-[#4A1C24] font-sans font-medium select-none">Natural Nail Care &amp; Builder Gel</span>
               </label>
-              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" name="nailStyles" value="press-ons" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                <span class="text-white font-medium select-none">Custom Press-On Sets</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="press-ons" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                <span class="text-[#4A1C24] font-sans font-medium select-none">Custom Press-On Sets</span>
               </label>
-              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" name="nailStyles" value="nail art" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                <span class="text-white font-medium select-none">Intricate Hand-Painted Nail Art</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" name="nailStyles" value="nail art" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                <span class="text-[#4A1C24] font-sans font-medium select-none">Intricate Hand-Painted Nail Art</span>
               </label>
             </div>
           </div>
 
-          <!-- 2C. Lashes Specific Fields -->
+          <!-- 1C. Lashes Specific Fields -->
           <div id="fields-lashes" class="category-field-group hidden space-y-4">
             <div>
-              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Lash Extension Types</span>
+              <span class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Lash Extension Types</span>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="lashTypes" value="classic" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">Classic</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="lashTypes" value="classic" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Classic</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="lashTypes" value="hybrid" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">Hybrid</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="lashTypes" value="hybrid" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Hybrid</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="lashTypes" value="volume" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">Volume</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="lashTypes" value="volume" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Volume</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="lashTypes" value="mega volume" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Mega Volume</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="lashTypes" value="mega volume" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Mega Volume</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" id="intake-offers-fills" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" id="intake-offers-fills" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
                 <div>
-                  <span class="text-xs sm:text-sm font-bold text-white block">Offers Lash Fills / Relashes</span>
-                  <span class="text-[11px] sm:text-xs text-slate-300 block mt-0.5">Allows booking maintenance fills on sets from your salon or foreign work.</span>
+                  <span class="text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] block">Offers Lash Fills / Relashes</span>
+                  <span class="text-[11px] sm:text-xs text-[#7A535A] font-sans block mt-0.5">Allows booking maintenance fills on sets from your salon or foreign work.</span>
                 </div>
               </label>
             </div>
           </div>
 
-          <!-- 2D. Food & Beverages Specific Fields -->
+          <!-- 1D. Food & Beverages Specific Fields -->
           <div id="fields-food" class="category-field-group hidden space-y-4">
             <div>
-              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Food Offerings</span>
+              <span class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Food Offerings</span>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="foodTypes" value="meals/plates" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">Meals &amp; Hot Plates</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="foodTypes" value="meals/plates" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Meals &amp; Hot Plates</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="foodTypes" value="desserts/baked goods" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Desserts &amp; Baked Goods</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="foodTypes" value="desserts/baked goods" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Desserts &amp; Baked Goods</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="foodTypes" value="drinks" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Specialty Drinks / Juices</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="foodTypes" value="drinks" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Specialty Drinks / Juices</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="foodTypes" value="catering" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Event Catering</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="foodTypes" value="catering" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Event Catering</span>
                 </label>
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
-              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" id="intake-campus-dropoff" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                <span class="text-white font-medium select-none">Offers LSU Campus Drop-Off / Delivery</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" id="intake-campus-dropoff" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                <span class="text-[#4A1C24] font-sans font-medium select-none">Offers LSU Campus Drop-Off / Delivery</span>
               </label>
-              <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" id="intake-preorder-required" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                <span class="text-white font-medium select-none">Advance Pre-Order Required</span>
+              <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" id="intake-preorder-required" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                <span class="text-[#4A1C24] font-sans font-medium select-none">Advance Pre-Order Required</span>
               </label>
             </div>
           </div>
 
-          <!-- 2E. Fashion Specific Fields -->
+          <!-- 1E. Fashion Specific Fields -->
           <div id="fields-fashion" class="category-field-group hidden space-y-4">
             <div>
-              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Custom Outfit Types</span>
+              <span class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Custom Outfit Types</span>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="outfitTypes" value="game day" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">LSU Game Day Fits</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="outfitTypes" value="game day" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">LSU Game Day Fits</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="outfitTypes" value="formal/prom" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">Formal / Prom / Gowns</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="outfitTypes" value="formal/prom" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Formal / Prom / Gowns</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="outfitTypes" value="graduation" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">Graduation Stoles &amp; Dresses</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="outfitTypes" value="graduation" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Graduation Stoles &amp; Dresses</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="outfitTypes" value="everyday" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Everyday Streetwear / Alterations</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="outfitTypes" value="everyday" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Everyday Streetwear / Alterations</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-fashion-turnaround">
+              <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-fashion-turnaround">
                 Typical Turnaround Speed
               </label>
-              <select id="intake-fashion-turnaround" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
-                <option value="this-week" class="bg-slate-900 text-white">This Week (Rush Available)</option>
-                <option value="2-weeks" class="bg-slate-900 text-white">2 Weeks Standard</option>
-                <option value="formal-ready" class="bg-slate-900 text-white">Formal-Ready (3-4 weeks for custom gowns/suits)</option>
+              <select id="intake-fashion-turnaround" class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
+                <option value="this-week" class="bg-white text-[#4A1C24]">This Week (Rush Available)</option>
+                <option value="2-weeks" class="bg-white text-[#4A1C24]">2 Weeks Standard</option>
+                <option value="formal-ready" class="bg-white text-[#4A1C24]">Formal-Ready (3-4 weeks for custom gowns/suits)</option>
               </select>
             </div>
           </div>
 
-          <!-- 2F. Photography Specific Fields -->
+          <!-- 1F. Photography Specific Fields -->
           <div id="fields-photography" class="category-field-group hidden space-y-4">
             <div>
-              <span class="block text-xs sm:text-sm font-heading font-bold text-[#F6EEE6] mb-2.5 uppercase tracking-wide">Photography Shoot Types</span>
+              <span class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Photography Shoot Types</span>
               <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="shootTypes" value="graduation" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">LSU Graduation Portraits</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="graduation" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">LSU Graduation Portraits</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="shootTypes" value="game day" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                  <span class="text-white font-medium select-none">Game Day &amp; Sports</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="game day" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Game Day &amp; Sports</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="shootTypes" value="events" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Greek Life &amp; Events</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="events" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Greek Life &amp; Events</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="shootTypes" value="portraits" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Studio &amp; Headshots</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="portraits" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Studio &amp; Headshots</span>
                 </label>
-                <label class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="shootTypes" value="brand content" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0">
-                  <span class="text-white font-medium select-none">Brand Content &amp; Editorial</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="shootTypes" value="brand content" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Brand Content &amp; Editorial</span>
                 </label>
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
               <div>
-                <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-photo-turnaround">
+                <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-photo-turnaround">
                   Gallery Turnaround
                 </label>
-                <select id="intake-photo-turnaround" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
-                  <option value="this-week" class="bg-slate-900 text-white">Fast Proofs (Within 1 Week)</option>
-                  <option value="2-weeks" class="bg-slate-900 text-white">2 Weeks Standard Editing</option>
+                <select id="intake-photo-turnaround" class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
+                  <option value="this-week" class="bg-white text-[#4A1C24]">Fast Proofs (Within 1 Week)</option>
+                  <option value="2-weeks" class="bg-white text-[#4A1C24]">2 Weeks Standard Editing</option>
                 </select>
               </div>
-              <label class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm mt-auto">
-                <input type="checkbox" id="intake-travels-campus" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                <span class="text-white font-medium select-none">Shoots On LSU Campus Grounds</span>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm mt-auto">
+                <input type="checkbox" id="intake-travels-campus" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0" checked>
+                <span class="text-[#4A1C24] font-sans font-medium select-none">Shoots On LSU Campus Grounds</span>
               </label>
             </div>
           </div>
 
         </div>
 
-        <!-- SECTION 3: PRICING, AVAILABILITY & EXPERIENCE -->
-        <div class="space-y-4">
-          <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider border-b border-[#FDD023]/30 pb-2 flex items-center gap-2">
-            <span>💰</span>
-            <span>3. Pricing, Experience &amp; Logistics</span>
-          </h3>
+      </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-starting-price">
-                Starting Price ($) <span class="text-[#FDD023] font-bold">*</span>
-              </label>
+      <!-- ====================================================================
+           CARD 2: PRICING, EXPERIENCE & LOGISTICS
+           ==================================================================== -->
+      <div class="rounded-3xl bg-white border border-[#E9C6CC] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow space-y-6">
+        <h3 class="text-base sm:text-lg font-heading font-bold text-[#4A1C24] border-b border-[#E9C6CC] pb-3 flex items-center gap-2">
+          <span class="text-lg">💰</span>
+          <span>2. Pricing, Experience &amp; Logistics</span>
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-starting-price">
+              Starting Price <span class="text-[#612731] font-bold">*</span>
+            </label>
+            <div class="relative rounded-xl shadow-sm">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
+                <span class="text-[#7A535A] font-sans font-semibold text-sm sm:text-base">$</span>
+              </div>
               <input 
                 id="intake-starting-price" 
                 type="number" 
                 required 
-                min="5" 
-                max="5000" 
-                placeholder="e.g. 75"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 font-mono text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
+                min="0" 
+                step="1"
+                placeholder="75"
+                onkeydown="if(['-','+','e','E'].includes(event.key)) event.preventDefault();"
+                class="w-full pl-8 pr-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
               >
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-price-tier">
-                Price Tier <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <select id="intake-price-tier" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
-                <option value="$" class="bg-slate-900 text-white">$ (Budget-Friendly / Student-Priced)</option>
-                <option value="$$" selected class="bg-slate-900 text-white">$$ (Standard Market Rate)</option>
-                <option value="$$$" class="bg-slate-900 text-white">$$$ (Premium / Luxury / Specialist)</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-experience">
-                Years of Experience <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <input 
-                id="intake-experience" 
-                type="number" 
-                required 
-                min="1" 
-                max="50" 
-                placeholder="e.g. 3"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 font-mono text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-service-delivery">
-                Service Delivery <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <select id="intake-service-delivery" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
-                <option value="studio" class="bg-slate-900 text-white">Studio / Home Salon Setup</option>
-                <option value="mobile" class="bg-slate-900 text-white">Mobile / Travels to Campus</option>
-                <option value="both" selected class="bg-slate-900 text-white">Both (Studio &amp; Mobile)</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-availability">
-                General Availability <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <select id="intake-availability" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
-                <option value="open-this-week" selected class="bg-slate-900 text-white">🟢 Open This Week</option>
-                <option value="same-day" class="bg-slate-900 text-white">⚡ Same-Day / Last-Minute Accepted</option>
-                <option value="bookings-open" class="bg-slate-900 text-white">📅 Advance Bookings Open</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-neighborhood">
-                Neighborhood Area <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <select id="intake-neighborhood" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white font-medium text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors cursor-pointer">
-                <option value="Northgate (LSU Walkable)" selected class="bg-slate-900 text-white">Northgate (LSU Walkable)</option>
-                <option value="Highland / Burbank" class="bg-slate-900 text-white">Highland / Burbank</option>
-                <option value="Mid-City Baton Rouge" class="bg-slate-900 text-white">Mid-City Baton Rouge</option>
-                <option value="Downtown Baton Rouge" class="bg-slate-900 text-white">Downtown Baton Rouge</option>
-                <option value="South Baton Rouge" class="bg-slate-900 text-white">South Baton Rouge (Within 25 mi)</option>
-              </select>
             </div>
           </div>
 
           <div>
-            <label class="flex items-start sm:items-center gap-3.5 p-3.5 rounded-xl bg-slate-900 border border-slate-600 hover:border-[#FDD023] hover:bg-slate-800 transition-all cursor-pointer shadow-sm">
-              <input type="checkbox" id="intake-student-discount" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0 mt-0.5 sm:mt-0" checked>
-              <div>
-                <span class="text-xs sm:text-sm font-semibold text-white block select-none">Offers LSU Student Discount</span>
-                <span class="text-xs text-slate-300 select-none">Gives students a discount when presenting an active LSU Tiger Card or ID.</span>
-              </div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-price-tier">
+              Price Tier <span class="text-[#612731] font-bold">*</span>
             </label>
-          </div>
-        </div>
-
-        <!-- SECTION 4: SOCIAL MEDIA & BOOKING LINKS -->
-        <div class="space-y-4">
-          <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider border-b border-[#FDD023]/30 pb-2 flex items-center gap-2">
-            <span>🔗</span>
-            <span>4. Social Media &amp; Booking Links</span>
-          </h3>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-instagram">
-                Instagram Profile or Handle <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <input 
-                id="intake-instagram" 
-                type="text" 
-                required 
-                placeholder="@yourhandle or https://instagram.com/..."
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-tiktok">
-                TikTok Handle or URL <span class="text-[#EAD5C0] font-normal">(Optional)</span>
-              </label>
-              <input 
-                id="intake-tiktok" 
-                type="text" 
-                placeholder="@yourhandle or https://tiktok.com/@..."
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-booking-url">
-                Booking Site / Direct Link <span class="text-[#FDD023] font-bold">*</span>
-              </label>
-              <input 
-                id="intake-booking-url" 
-                type="url" 
-                required 
-                placeholder="e.g. https://styleseat.com/... or booking site / DM link"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-website-url">
-                Website Link <span class="text-[#EAD5C0] font-normal">(Optional)</span>
-              </label>
-              <input 
-                id="intake-website-url" 
-                type="url" 
-                placeholder="https://..."
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 5: CLIENT POLICIES -->
-        <div class="space-y-4">
-          <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider border-b border-[#FDD023]/30 pb-2 flex items-center gap-2">
-            <span>📋</span>
-            <span>5. Policies &amp; Expectations</span>
-          </h3>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <div>
-              <label class="flex items-center gap-3 mb-2 p-2 rounded-xl hover:bg-slate-800 transition-colors cursor-pointer">
-                <input type="checkbox" id="intake-deposit-required" class="w-5 h-5 rounded border-2 border-slate-400 bg-slate-950 accent-[#FDD023] focus:ring-2 focus:ring-[#FDD023] cursor-pointer shrink-0" checked>
-                <span class="text-xs sm:text-sm font-semibold text-white select-none">Deposit Required Upon Booking</span>
-              </label>
-              <input 
-                id="intake-deposit-amount" 
-                type="text" 
-                placeholder="e.g. $25 non-refundable deposit applied to service"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
-
-            <div>
-              <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-cancellation-policy">
-                Cancellation &amp; Rescheduling Policy
-              </label>
-              <input 
-                id="intake-cancellation-policy" 
-                type="text" 
-                placeholder="e.g. 24-hour notice required to transfer deposit"
-                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
-              >
-            </div>
+            <select id="intake-price-tier" class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
+              <option value="$" class="bg-white text-[#4A1C24]">$ (Budget-Friendly / Student-Priced)</option>
+              <option value="$$" selected class="bg-white text-[#4A1C24]">$$ (Standard Market Rate)</option>
+              <option value="$$$" class="bg-white text-[#4A1C24]">$$$ (Premium / Luxury / Specialist)</option>
+            </select>
           </div>
 
           <div>
-            <label class="block text-xs sm:text-sm font-heading font-semibold text-[#F6EEE6] mb-1.5" for="intake-refund-policy">
-              Refund Policy
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-experience">
+              Years of Experience <span class="text-[#612731] font-bold">*</span>
             </label>
             <input 
-              id="intake-refund-policy" 
-              type="text" 
-              placeholder="e.g. Deposits non-refundable; complimentary adjustment offered within 48 hours"
-              class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-600 text-white placeholder:text-slate-300 text-xs sm:text-sm focus:border-[#FDD023] focus:ring-1 focus:ring-[#FDD023] focus:outline-none transition-colors"
+              id="intake-experience" 
+              type="number" 
+              required 
+              min="0" 
+              step="1"
+              placeholder="3"
+              onkeydown="if(['-','+','e','E'].includes(event.key)) event.preventDefault();"
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
             >
           </div>
         </div>
 
-        <!-- SECTION 6: PORTFOLIO PHOTO UPLOADS (Up to 4 photos) -->
-        <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-[#FDD023]/30 pb-2">
-            <h3 class="text-xs sm:text-sm font-heading font-bold text-[#FDD023] uppercase tracking-wider flex items-center gap-2">
-              <span>📸</span>
-              <span>6. Portfolio Photos</span>
-            </h3>
-            <span id="intake-photos-badge" class="text-xs font-mono font-bold text-[#FDD023] bg-black/40 px-3 py-1 rounded-full border border-[#FDD023]/30">0/4 uploaded</span>
-          </div>
-          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
-            Upload up to 4 photos of your work. Files are automatically compressed and stored securely. Max 5MB per photo.
-          </p>
-
-          <div 
-            id="intake-photo-dropzone" 
-            class="border-2 border-dashed border-slate-600 hover:border-[#FDD023] rounded-2xl p-6 text-center bg-slate-950 hover:bg-slate-900 transition-colors cursor-pointer shadow-sm"
-          >
-            <input type="file" id="intake-photo-input" accept="image/jpeg,image/png,image/webp,image/heic" multiple class="hidden">
-            <span class="text-3xl block mb-1.5">📸</span>
-            <p class="text-sm font-heading font-bold text-white">Click or drag &amp; drop portfolio photos</p>
-            <p class="text-xs text-slate-300 mt-1">JPG, PNG, or WebP &bull; Max 5MB each</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-service-delivery">
+              Service Delivery <span class="text-[#612731] font-bold">*</span>
+            </label>
+            <select id="intake-service-delivery" class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
+              <option value="studio" class="bg-white text-[#4A1C24]">Studio / Home Salon Setup</option>
+              <option value="mobile" class="bg-white text-[#4A1C24]">Mobile / Travels to Campus</option>
+              <option value="both" selected class="bg-white text-[#4A1C24]">Both (Studio &amp; Mobile)</option>
+            </select>
           </div>
 
-          <div id="intake-photo-preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 empty:hidden pt-2">
-            <!-- Thumbnail cards injected dynamically -->
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-neighborhood">
+              Neighborhood Area <span class="text-[#612731] font-bold">*</span>
+            </label>
+            <select id="intake-neighborhood" class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
+              <option value="Northgate (LSU Walkable)" selected class="bg-white text-[#4A1C24]">Northgate (LSU Walkable)</option>
+              <option value="Highland / Burbank" class="bg-white text-[#4A1C24]">Highland / Burbank</option>
+              <option value="Mid-City Baton Rouge" class="bg-white text-[#4A1C24]">Mid-City Baton Rouge</option>
+              <option value="Downtown Baton Rouge" class="bg-white text-[#4A1C24]">Downtown Baton Rouge</option>
+              <option value="South Baton Rouge" class="bg-white text-[#4A1C24]">South Baton Rouge (Within 25 mi)</option>
+            </select>
           </div>
         </div>
 
-        <!-- Form Error / Alerts Container -->
-        <div id="intake-form-error" class="hidden p-4 rounded-2xl bg-red-950/80 border border-red-800 text-xs text-red-200 shadow-md">
-          <!-- Friendly Error message -->
+        <div>
+          <label class="flex items-start sm:items-center gap-3.5 p-3.5 rounded-xl bg-[#FDFBF8] border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+            <input type="checkbox" id="intake-student-discount" class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0 mt-0.5 sm:mt-0" checked>
+            <div>
+              <span class="text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] block select-none">Offers LSU Student Discount</span>
+              <span class="text-xs text-[#7A535A] font-sans select-none">Gives students a discount when presenting an active LSU Tiger Card or ID.</span>
+            </div>
+          </label>
         </div>
+      </div>
 
-        <!-- Form Submit Button -->
-        <div class="pt-4 border-t border-[#FDD023]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p class="text-xs sm:text-sm text-slate-300 text-center sm:text-left font-sans">
-            🔒 By submitting, you certify that your services are operating legitimately within 25 miles of LSU.
-          </p>
-
-          <button 
-            id="intake-submit-btn" 
-            type="submit" 
-            class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] border border-[#FDD023]/50 hover:border-[#FDD023] font-heading font-black text-xs uppercase tracking-wider shadow-xl hover:shadow-2xl transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            <span>🚀 Submit Application for Verification</span>
-          </button>
-        </div>
-
-      </form>
-
-      <!-- APPLICATION SUBMITTED VIEW (Replaces form upon success) -->
-      <div id="intake-success-modal" class="hidden p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#351218] via-[#4A1C24] to-[#351218] border-2 border-[#FDD023]/70 text-center space-y-6 shadow-2xl animate-fade-in">
-        
-        <!-- Big Checkmark -->
-        <div class="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-[#FDD023]/20 border-2 border-[#FDD023] flex items-center justify-center shadow-xl text-[#FDD023]">
-          <svg class="w-10 h-10 sm:w-12 sm:h-12 stroke-current stroke-[3]" fill="none" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-
-        <!-- Heading with Script Word -->
-        <h3 class="text-3xl sm:text-4xl md:text-5xl font-heading font-black text-[#F6EEE6] tracking-tight">
-          APPLICATION <span class="script-word text-[#FDD023]">submitted</span>!
+      <!-- ====================================================================
+           CARD 3: SOCIAL MEDIA & BOOKING LINKS
+           ==================================================================== -->
+      <div class="rounded-3xl bg-white border border-[#E9C6CC] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow space-y-6">
+        <h3 class="text-base sm:text-lg font-heading font-bold text-[#4A1C24] border-b border-[#E9C6CC] pb-3 flex items-center gap-2">
+          <span class="text-lg">🔗</span>
+          <span>3. Social Media &amp; Booking Links</span>
         </h3>
 
-        <!-- Short Message -->
-        <p class="text-sm sm:text-base text-[#E9C6CC] max-w-lg mx-auto leading-relaxed font-sans">
-          Thanks for applying to Geaux Black! We'll review your application and reach out soon.
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-instagram">
+              Instagram Profile or Handle <span class="text-[#612731] font-bold">*</span>
+            </label>
+            <input 
+              id="intake-instagram" 
+              type="text" 
+              required 
+              placeholder="@yourhandle or https://instagram.com/..."
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-tiktok">
+              TikTok Handle or URL <span class="text-[#7A535A] font-normal font-sans">(Optional)</span>
+            </label>
+            <input 
+              id="intake-tiktok" 
+              type="text" 
+              placeholder="@yourhandle or https://tiktok.com/@..."
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-booking-url">
+            Booking Site / Direct Link <span class="text-[#612731] font-bold">*</span>
+          </label>
+          <input 
+            id="intake-booking-url" 
+            type="url" 
+            required 
+            placeholder="e.g. https://styleseat.com/... or booking site / DM link"
+            class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
+          >
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           CARD 4: POLICIES & EXPECTATIONS
+           ==================================================================== -->
+      <div class="rounded-3xl bg-white border border-[#E9C6CC] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow space-y-6">
+        <h3 class="text-base sm:text-lg font-heading font-bold text-[#4A1C24] border-b border-[#E9C6CC] pb-3 flex items-center gap-2">
+          <span class="text-lg">📋</span>
+          <span>4. Policies &amp; Expectations</span>
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div>
+            <div class="mb-2">
+              <label class="inline-flex items-center gap-2.5 cursor-pointer select-none">
+                <input type="checkbox" id="intake-deposit-required" class="w-4 h-4 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer" checked>
+                <span class="text-xs sm:text-sm font-sans font-semibold text-[#4A1C24]">Deposit Required Upon Booking</span>
+              </label>
+            </div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-deposit-amount">
+              Deposit Amount
+            </label>
+            <div class="relative rounded-xl shadow-sm">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
+                <span class="text-[#7A535A] font-sans font-semibold text-sm sm:text-base">$</span>
+              </div>
+              <input 
+                id="intake-deposit-amount" 
+                type="number" 
+                min="0"
+                step="1"
+                placeholder="25"
+                onkeydown="if(['-','+','e','E'].includes(event.key)) event.preventDefault();"
+                class="w-full pl-8 pr-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] placeholder:text-[#7A535A]/60 font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-cancellation-policy">
+              Cancellation &amp; Rescheduling Policy
+            </label>
+            <select 
+              id="intake-cancellation-policy" 
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer"
+            >
+              <option value="24 hours" selected class="bg-white text-[#4A1C24]">24 hours</option>
+              <option value="3 days" class="bg-white text-[#4A1C24]">3 days</option>
+              <option value="1 week" class="bg-white text-[#4A1C24]">1 week</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5" for="intake-refund-policy">
+            Refund Policy
+          </label>
+          <select 
+            id="intake-refund-policy" 
+            class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer"
+          >
+            <option value="No refunds" class="bg-white text-[#4A1C24]">No refunds</option>
+            <option value="Deposit non-refundable" selected class="bg-white text-[#4A1C24]">Deposit non-refundable</option>
+            <option value="Full refund with advance notice" class="bg-white text-[#4A1C24]">Full refund with advance notice</option>
+            <option value="Partial refund" class="bg-white text-[#4A1C24]">Partial refund</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           CARD 5: PORTFOLIO PHOTOS
+           ==================================================================== -->
+      <div class="rounded-3xl bg-white border border-[#E9C6CC] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow space-y-4">
+        <div class="flex items-center justify-between border-b border-[#E9C6CC] pb-3">
+          <h3 class="text-base sm:text-lg font-heading font-bold text-[#4A1C24] flex items-center gap-2">
+            <span class="text-lg">📸</span>
+            <span>5. Portfolio Photos</span>
+          </h3>
+          <span id="intake-photos-badge" class="text-xs font-sans font-bold text-[#4A1C24] bg-[#E9C6CC]/50 px-3 py-1 rounded-full border border-[#D4A7B0]">0/4 uploaded</span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#7A535A] leading-relaxed font-sans">
+          Upload up to 4 photos of your work. Files are automatically compressed and stored securely. Max 5MB per photo.
         </p>
 
-        <!-- Summary of Business Name and Category -->
-        <div class="max-w-md mx-auto p-4 sm:p-5 rounded-2xl bg-black/40 border border-[#EAD5C0]/30 text-left space-y-2.5 shadow-inner">
-          <div class="text-[11px] font-heading font-bold uppercase tracking-wider text-[#FDD023]/90 pb-1 border-b border-white/10">
-            Application Details
-          </div>
-          <div class="flex items-center justify-between text-xs sm:text-sm py-1 border-b border-white/10">
-            <span class="text-[#E9C6CC] font-medium">Business Name:</span>
-            <span id="submitted-summary-business" class="font-heading font-bold text-white text-sm sm:text-base text-right truncate pl-2"></span>
-          </div>
-          <div class="flex items-center justify-between text-xs sm:text-sm py-1">
-            <span class="text-[#E9C6CC] font-medium">Category:</span>
-            <span id="submitted-summary-category" class="inline-flex items-center px-3 py-1 rounded-full bg-[#E9C6CC]/20 border border-[#E9C6CC]/40 text-[#FDD023] font-heading font-bold text-xs"></span>
-          </div>
+        <div 
+          id="intake-photo-dropzone" 
+          class="border-2 border-dashed border-[#D4A7B0] hover:border-[#4A1C24] rounded-2xl p-6 sm:p-8 text-center bg-[#FDFBF8] hover:bg-[#F7E9EC]/50 transition-colors cursor-pointer shadow-sm"
+        >
+          <input type="file" id="intake-photo-input" accept="image/jpeg,image/png,image/webp,image/heic" multiple class="hidden">
+          <span class="text-3xl sm:text-4xl block mb-2">📸</span>
+          <p class="text-sm font-sans font-semibold text-[#4A1C24]">Click or drag &amp; drop portfolio photos</p>
+          <p class="text-xs text-[#7A535A] mt-1 font-sans">JPG, PNG, or WebP &bull; Max 5MB each</p>
         </div>
 
-        <!-- Button Back to Home Page -->
-        <div class="pt-3">
-          <a href="index.html" class="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-[#FDD023] hover:bg-[#ECC21C] text-[#351218] font-heading font-black text-xs sm:text-sm uppercase tracking-wider transition-all shadow-xl hover:shadow-2xl hover:scale-105 cursor-pointer">
-            Back to Home
-          </a>
+        <div id="intake-photo-preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 empty:hidden pt-2">
+          <!-- Thumbnail cards injected dynamically -->
         </div>
+      </div>
 
+      <!-- Form Error / Alerts Container -->
+      <div id="intake-form-error" class="hidden p-4 rounded-2xl bg-red-50 border border-red-200 text-xs sm:text-sm text-red-800 shadow-sm font-sans">
+        <!-- Friendly Error message -->
+      </div>
+
+      <!-- Form Submit Button Section Card -->
+      <div class="rounded-3xl bg-white border border-[#E9C6CC] p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-xs sm:text-sm text-[#7A535A] text-center sm:text-left font-sans">
+          🔒 By submitting, you certify that your services are operating legitimately within 25 miles of LSU.
+        </p>
+
+        <button 
+          id="intake-submit-btn" 
+          type="submit" 
+          class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] hover:text-[#FDD023] border border-[#FDD023]/60 hover:border-[#FDD023] font-heading font-black text-xs uppercase tracking-wider shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          <span>🚀 Submit Application for Verification</span>
+        </button>
+      </div>
+
+    </form>
+
+    <!-- APPLICATION SUBMITTED VIEW (Replaces form upon success) -->
+    <div id="intake-success-modal" class="hidden p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#351218] via-[#4A1C24] to-[#351218] border-2 border-[#FDD023]/70 text-center space-y-6 shadow-2xl animate-fade-in">
+      
+      <!-- Big Checkmark -->
+      <div class="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-[#FDD023]/20 border-2 border-[#FDD023] flex items-center justify-center shadow-xl text-[#FDD023]">
+        <svg class="w-10 h-10 sm:w-12 sm:h-12 stroke-current stroke-[3]" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+
+      <!-- Heading with Script Word -->
+      <h3 class="text-3xl sm:text-4xl md:text-5xl font-heading font-black text-[#F6EEE6] tracking-tight">
+        APPLICATION <span class="script-word text-[#FDD023]">submitted</span>!
+      </h3>
+
+      <!-- Short Message -->
+      <p class="text-sm sm:text-base text-[#E9C6CC] max-w-lg mx-auto leading-relaxed font-sans">
+        Thanks for applying to Geaux Black! We'll review your application and reach out soon.
+      </p>
+
+      <!-- Summary of Business Name and Category -->
+      <div class="max-w-md mx-auto p-4 sm:p-5 rounded-2xl bg-black/40 border border-[#EAD5C0]/30 text-left space-y-2.5 shadow-inner">
+        <div class="text-[11px] font-heading font-bold uppercase tracking-wider text-[#FDD023]/90 pb-1 border-b border-white/10">
+          Application Details
+        </div>
+        <div class="flex items-center justify-between text-xs sm:text-sm py-1 border-b border-white/10">
+          <span class="text-[#E9C6CC] font-medium">Business Name:</span>
+          <span id="submitted-summary-business" class="font-heading font-bold text-white text-sm sm:text-base text-right truncate pl-2"></span>
+        </div>
+        <div class="flex items-center justify-between text-xs sm:text-sm py-1">
+          <span class="text-[#E9C6CC] font-medium">Category:</span>
+          <span id="submitted-summary-category" class="inline-flex items-center px-3 py-1 rounded-full bg-[#E9C6CC]/20 border border-[#E9C6CC]/40 text-[#FDD023] font-heading font-bold text-xs"></span>
+        </div>
+      </div>
+
+      <!-- Button Back to Home Page -->
+      <div class="pt-3">
+        <a href="index.html" class="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-[#FDD023] hover:bg-[#ECC21C] text-[#351218] font-heading font-black text-xs sm:text-sm uppercase tracking-wider transition-all shadow-xl hover:shadow-2xl hover:scale-105 cursor-pointer">
+          Back to Home
+        </a>
       </div>
 
     </div>
@@ -985,16 +970,16 @@
 
     photoDropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
-      photoDropzone.classList.add('border-lsu-gold', 'bg-slate-900');
+      photoDropzone.classList.add('border-[#4A1C24]', 'bg-[#F7E9EC]/50');
     });
 
     photoDropzone.addEventListener('dragleave', () => {
-      photoDropzone.classList.remove('border-lsu-gold', 'bg-slate-900');
+      photoDropzone.classList.remove('border-[#4A1C24]', 'bg-[#F7E9EC]/50');
     });
 
     photoDropzone.addEventListener('drop', (e) => {
       e.preventDefault();
-      photoDropzone.classList.remove('border-lsu-gold', 'bg-slate-900');
+      photoDropzone.classList.remove('border-[#4A1C24]', 'bg-[#F7E9EC]/50');
       if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
     });
 
@@ -1031,7 +1016,7 @@
 
       selectedFiles.forEach((file, idx) => {
         const thumb = document.createElement('div');
-        thumb.className = 'relative h-24 rounded-xl overflow-hidden bg-slate-900 border-2 border-slate-600 shadow';
+        thumb.className = 'relative h-24 rounded-xl overflow-hidden bg-white border-2 border-[#EAD5C0] shadow-sm';
         
         const img = document.createElement('img');
         img.className = 'w-full h-full object-cover';
@@ -1040,7 +1025,7 @@
 
         const rm = document.createElement('button');
         rm.type = 'button';
-        rm.className = 'absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-slate-950/90 border border-slate-600 text-red-300 hover:text-white hover:bg-red-900 flex items-center justify-center text-sm font-bold transition-colors cursor-pointer';
+        rm.className = 'absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-[#4A1C24] hover:bg-[#351218] border border-white/60 text-[#F6EEE6] flex items-center justify-center text-sm font-bold transition-colors cursor-pointer shadow-md';
         rm.innerHTML = '&times;';
         rm.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -1123,26 +1108,22 @@
       const ownerEmail = document.getElementById('intake-owner-email').value.trim();
       const ownerPhone = document.getElementById('intake-owner-phone')?.value.trim() || '';
       const category = categorySelect.value;
-      const description = document.getElementById('intake-description').value.trim();
 
       const lsuVerifiedSelect = document.getElementById('intake-lsu-verified');
       const lsuVerifiedVal = lsuVerifiedSelect.value;
       const lsuStatusText = lsuVerifiedSelect.options[lsuVerifiedSelect.selectedIndex]?.text || 'Independent Community Business';
 
       const startingPriceVal = document.getElementById('intake-starting-price').value.trim();
-      const startingPriceNum = parseFloat(startingPriceVal) || 50;
+      const startingPriceNum = parseFloat(startingPriceVal);
 
       const priceTierSelect = document.getElementById('intake-price-tier');
       const priceTierText = priceTierSelect.options[priceTierSelect.selectedIndex]?.text || priceTierSelect.value;
 
       const experienceVal = document.getElementById('intake-experience').value.trim();
-      const experienceNum = parseInt(experienceVal, 10) || 1;
+      const experienceNum = parseInt(experienceVal, 10);
 
       const serviceDeliverySelect = document.getElementById('intake-service-delivery');
       const serviceDeliveryText = serviceDeliverySelect.options[serviceDeliverySelect.selectedIndex]?.text || serviceDeliverySelect.value;
-
-      const availabilitySelect = document.getElementById('intake-availability');
-      const availabilityVal = availabilitySelect.value;
 
       const neighborhoodSelect = document.getElementById('intake-neighborhood');
       const neighborhood = neighborhoodSelect.value;
@@ -1156,29 +1137,50 @@
       let tiktokUrl = rawTiktok ? (rawTiktok.startsWith('http') ? rawTiktok : `https://tiktok.com/@${rawTiktok.replace(/^@/, '')}`) : '';
 
       const bookingUrl = document.getElementById('intake-booking-url').value.trim();
-      const websiteUrl = document.getElementById('intake-website-url').value.trim();
 
       const depositRequired = document.getElementById('intake-deposit-required').checked;
       const depositAmountVal = document.getElementById('intake-deposit-amount').value.trim();
       const depositPolicyText = depositRequired 
-        ? (depositAmountVal || 'Deposit required upon booking') 
+        ? (depositAmountVal ? `$${depositAmountVal}` : 'Deposit required upon booking') 
         : 'No deposit required';
 
-      const cancellationPolicy = document.getElementById('intake-cancellation-policy').value.trim();
-      const refundPolicy = document.getElementById('intake-refund-policy').value.trim();
+      const cancellationPolicySelect = document.getElementById('intake-cancellation-policy');
+      const cancellationPolicy = cancellationPolicySelect.value.trim();
+
+      const refundPolicySelect = document.getElementById('intake-refund-policy');
+      const refundPolicy = refundPolicySelect.value.trim();
 
       // Required field validation with clear debug logs
-      if (!businessName || !ownerName || !ownerEmail || !category || !description || !bookingUrl) {
+      if (!businessName || !ownerName || !ownerEmail || !category || !bookingUrl || startingPriceVal === '' || experienceVal === '') {
         console.warn('[Validation] Missing required fields:', {
           businessName: !!businessName,
           ownerName: !!ownerName,
           ownerEmail: !!ownerEmail,
           category: !!category,
-          description: !!description,
+          startingPrice: startingPriceVal !== '',
+          experience: experienceVal !== '',
           bookingUrl: !!bookingUrl
         });
-        showError('Please fill in all required fields marked with an asterisk (*), including your contact email and booking link.');
+        showError('Please fill in all required fields marked with an asterisk (*), including your starting price, years of experience, and booking link.');
         return;
+      }
+
+      if (isNaN(startingPriceNum) || startingPriceNum < 0) {
+        showError('Starting price must be a valid number and cannot be negative.');
+        return;
+      }
+
+      if (isNaN(experienceNum) || experienceNum < 0) {
+        showError('Years of experience must be a valid number and cannot be negative.');
+        return;
+      }
+
+      if (depositRequired && depositAmountVal !== '') {
+        const depositNum = parseFloat(depositAmountVal);
+        if (isNaN(depositNum) || depositNum < 0) {
+          showError('Deposit amount must be a valid number and cannot be negative.');
+          return;
+        }
       }
 
       // Basic email format check
@@ -1280,6 +1282,7 @@
         });
 
         // 2. Prepare and send Email Notification via EmailJS
+        // Note: For removed fields (description, availability, website), we send "Not provided" so any template variable remains valid
         const emailParams = {
           business_name: sanitize(businessName),
           owner_name: sanitize(ownerName),
@@ -1299,7 +1302,15 @@
           refund_policy: sanitize(refundPolicy),
           instagram: sanitize(rawIg),
           tiktok: sanitize(rawTiktok),
-          website: sanitize(websiteUrl),
+          website: "Not provided",
+          website_url: "Not provided",
+          website_link: "Not provided",
+          description: "Not provided",
+          bio: "Not provided",
+          business_bio: "Not provided",
+          service_description: "Not provided",
+          availability: "Not provided",
+          general_availability: "Not provided",
           booking_link: sanitize(bookingUrl),
           photo_links: sanitize(photoLinksText),
           submitted_at: sanitize(submittedAtReadable)
@@ -1342,13 +1353,13 @@
           ownerEmail,
           ownerPhone: ownerPhone || null,
           category,
-          description,
+          description: "Not provided",
           startingPrice: startingPriceNum,
           priceTier: priceTierSelect.value,
           yearsExperience: experienceNum,
           studentDiscount,
           serviceDelivery: serviceDeliverySelect.value,
-          availability: availabilityVal,
+          availability: "open-this-week",
           neighborhood,
           latitude: coords.lat,
           longitude: coords.lng,
@@ -1356,7 +1367,7 @@
           lsuStatus: lsuStatusText,
           instagramUrl: instagramUrl || (rawIg ? `https://instagram.com/${rawIg.replace(/^@/, '')}` : ''),
           tiktokUrl: tiktokUrl || '',
-          websiteUrl: websiteUrl || instagramUrl || '',
+          websiteUrl: "Not provided",
           bookingUrl,
           portfolioImages: uploadedPhotos.length > 0 ? uploadedPhotos : [
             "https://images.unsplash.com/photo-1582095133179-bfd08e2fc6b3?w=600&auto=format&fit=crop&q=80"
@@ -1364,8 +1375,8 @@
           policies: {
             depositRequired,
             depositAmount: depositPolicyText,
-            cancellationPolicy: cancellationPolicy || '24-hour notice required to transfer deposit',
-            refundPolicy: refundPolicy || 'Deposits non-refundable'
+            cancellationPolicy: cancellationPolicy,
+            refundPolicy: refundPolicy
           },
           categoryDetails: categoryDetailsLine,
           seasonalTags: ["game-day", "graduation-formal"],

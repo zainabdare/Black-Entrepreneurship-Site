@@ -28,6 +28,7 @@ import {
   trackProfileView,
   trackLinkClick
 } from '../firebase.js';
+import { getPriceTier, getDistanceFromLSU } from '../utils/distance.js';
 
 // ============================================================================
 // 1. Category Criteria Definitions
@@ -216,7 +217,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                 ${provider.yearsExperience}+ Years Exp
               </span>
               <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
-                📍 ${provider.neighborhood || 'Baton Rouge'}
+                📍 ${provider.zipCode ? `ZIP ${provider.zipCode}` : (provider.neighborhood || 'Baton Rouge')} &bull; ${getDistanceFromLSU(provider)} mi
               </span>
             </div>
 
@@ -229,7 +230,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
               <div>
                 <span class="text-slate-400 block text-[10px] uppercase tracking-wider font-semibold">Starting Price</span>
                 <span class="font-bold text-white text-sm sm:text-base font-mono">
-                  $${provider.startingPrice} <span class="text-lsu-gold text-xs">(${provider.priceTier})</span>
+                  $${provider.startingPrice} <span class="text-lsu-gold text-xs">(${provider.priceTier || getPriceTier(provider.startingPrice)})</span>
                 </span>
               </div>
               <div>

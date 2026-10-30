@@ -1,7 +1,7 @@
 /**
  * src/data/providers.js
  * 
- * ⚠️ SAMPLE / TEST DATA NOTICE:
+ * NOTE - SAMPLE / TEST DATA NOTICE:
  * All business names, owner names, URLs, and phone numbers in this file
  * are FICTIONAL SAMPLE RECORDS created for prototyping and development.
  * Geographical coordinates and neighborhoods are real Baton Rouge locations
@@ -40,6 +40,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4190,
     longitude: -91.1765,
     neighborhood: "Northgate (LSU Walkable)",
+    zipCode: "70802",
     lsuVerified: "student",
     hairTypes: ["3A-3C", "4A-4C"],
     specialties: ["knotless braids", "hair included"],
@@ -78,6 +79,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4460,
     longitude: -91.1520,
     neighborhood: "Mid City",
+    zipCode: "70806",
     lsuVerified: "alumni",
     hairTypes: ["3A-3C", "4A-4C", "Relaxed/Straight"],
     specialties: ["silk press", "wig installs"],
@@ -116,6 +118,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4515,
     longitude: -91.1871,
     neighborhood: "Downtown Baton Rouge",
+    zipCode: "70801",
     lsuVerified: "alumni",
     hairTypes: ["Locs & Sisterlocks", "4A-4C"],
     specialties: ["loc maintenance"],
@@ -159,6 +162,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4010,
     longitude: -91.1730,
     neighborhood: "Tigerland",
+    zipCode: "70820",
     lsuVerified: "student",
     nailStyles: ["gel-x", "nail art", "acrylic"],
     policies: {
@@ -195,6 +199,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4225,
     longitude: -91.1530,
     neighborhood: "College Town / Perkins",
+    zipCode: "70808",
     lsuVerified: null,
     nailStyles: ["natural nail", "press-ons", "gel-x"],
     policies: {
@@ -231,6 +236,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4380,
     longitude: -91.1620,
     neighborhood: "Garden District / Government St",
+    zipCode: "70809",
     lsuVerified: "alumni",
     nailStyles: ["acrylic", "nail art", "press-ons"],
     policies: {
@@ -272,6 +278,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4350,
     longitude: -91.1680,
     neighborhood: "Garden District",
+    zipCode: "70810",
     lsuVerified: "student",
     lashTypes: ["hybrid", "volume", "mega volume"],
     offersFills: true,
@@ -309,6 +316,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4150,
     longitude: -91.1735,
     neighborhood: "Highland / State St",
+    zipCode: "70803",
     lsuVerified: "student",
     lashTypes: ["classic", "hybrid"],
     offersFills: true,
@@ -346,6 +354,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4505,
     longitude: -91.1850,
     neighborhood: "Downtown Baton Rouge",
+    zipCode: "70815",
     lsuVerified: "alumni",
     lashTypes: ["volume", "mega volume"],
     offersFills: false,
@@ -389,6 +398,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4195,
     longitude: -91.1710,
     neighborhood: "Highland Road / LSU",
+    zipCode: "70802",
     lsuVerified: "alumni",
     foodTypes: ["meals/plates", "catering"],
     campusDropOff: true,
@@ -427,6 +437,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4490,
     longitude: -91.1490,
     neighborhood: "Mid City",
+    zipCode: "70806",
     lsuVerified: null,
     foodTypes: ["desserts/baked goods", "drinks"],
     campusDropOff: true,
@@ -465,6 +476,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.3980,
     longitude: -91.1740,
     neighborhood: "Tigerland / Burbank",
+    zipCode: "70820",
     lsuVerified: "student",
     foodTypes: ["meals/plates", "drinks"],
     campusDropOff: true,
@@ -508,6 +520,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.3850,
     longitude: -91.0850,
     neighborhood: "Bluebonnet / Perkins Rowe",
+    zipCode: "70801",
     lsuVerified: "alumni",
     outfitTypes: ["formal/prom", "graduation"],
     policies: {
@@ -544,6 +557,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4135,
     longitude: -91.1785,
     neighborhood: "LSU Campus Vicinity",
+    zipCode: "70808",
     lsuVerified: "student",
     outfitTypes: ["game day", "everyday"],
     policies: {
@@ -580,6 +594,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4440,
     longitude: -91.1550,
     neighborhood: "Mid City",
+    zipCode: "70810",
     lsuVerified: "alumni",
     outfitTypes: ["graduation", "formal/prom", "game day"],
     policies: {
@@ -622,6 +637,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4133,
     longitude: -91.1800,
     neighborhood: "LSU Campus (Memorial Tower)",
+    zipCode: "70803",
     lsuVerified: "student",
     shootTypes: ["graduation", "game day", "portraits"],
     travelsToCampus: true,
@@ -659,6 +675,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4530,
     longitude: -91.1890,
     neighborhood: "Downtown Baton Rouge",
+    zipCode: "70820",
     lsuVerified: "alumni",
     shootTypes: ["brand content", "portraits", "events"],
     travelsToCampus: false,
@@ -696,6 +713,7 @@ export const SAMPLE_PROVIDERS = [
     latitude: 30.4210,
     longitude: -91.1780,
     neighborhood: "Northgate / Lakeshore",
+    zipCode: "70801",
     lsuVerified: "student",
     shootTypes: ["graduation", "events", "game day"],
     travelsToCampus: true,

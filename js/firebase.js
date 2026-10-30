@@ -1,6 +1,6 @@
 /**
  * js/firebase.js
- * Firebase initialization & Firestore/Storage services for Black-Owned BR.
+ * Firebase initialization & Firestore/Storage services for BLKENTRE.
  * 
  * Powered by Firebase JS SDK v13.1.0 loaded via official Google CDN (ES Modules).
  * Strictly zero npm / build tools required.
@@ -53,7 +53,7 @@ if (typeof window !== 'undefined') {
     .then((supported) => {
       if (supported) {
         analytics = getAnalytics(app);
-        console.log('%c🔥 Firebase Analytics initialized', 'color: #FDD023; background: #461D7C; padding: 2px 6px; border-radius: 3px;');
+        console.log('%cBLKENTRE: Firebase Analytics initialized', 'color: #FDD023; background: #461D7C; padding: 2px 6px; border-radius: 3px;');
       }
     })
     .catch(() => {
@@ -69,7 +69,7 @@ if (typeof window !== 'undefined') {
 export async function getProvidersFromFirestore() {
   const providersCol = collection(db, "providers");
   const snapshot = await getDocs(providersCol);
-  
+
   if (snapshot.empty) {
     return [];
   }
@@ -114,7 +114,7 @@ export async function seedFirestoreProviders(providersList = null, onProgress = 
       const docRef = doc(db, "providers", id);
       await setDoc(docRef, { ...providerData, id });
       results.count++;
-      
+
       if (onProgress) {
         onProgress(i + 1, list.length, provider.businessName);
       }
@@ -317,7 +317,7 @@ export async function addReviewToProvider(providerId, reviewData) {
       averageRating: updatedRating,
       reviewCount: updatedCount
     }, { merge: true });
-    console.log(`[Firestore Provider] Updated ${providerId} stats: ${updatedRating}★ (${updatedCount} reviews)`);
+    console.log(`[Firestore Provider] Updated ${providerId} stats: ${updatedRating} stars (${updatedCount} reviews)`);
   } catch (updateErr) {
     console.warn(`[Firestore Provider] Could not update provider stats doc: ${updateErr.message}`);
   }
@@ -672,7 +672,7 @@ export async function trackProfileView(providerId, providerName = '') {
   try {
     const current = parseInt(localStorage.getItem('impact_views_offset') || '0', 10);
     localStorage.setItem('impact_views_offset', (current + 1).toString());
-  } catch (e) {}
+  } catch (e) { }
 }
 
 /**
@@ -711,7 +711,7 @@ export async function trackLinkClick(providerId, linkType = 'link', targetUrl = 
   try {
     const current = parseInt(localStorage.getItem('impact_clicks_offset') || '0', 10);
     localStorage.setItem('impact_clicks_offset', (current + 1).toString());
-  } catch (e) {}
+  } catch (e) { }
 }
 
 /**
@@ -773,7 +773,7 @@ export async function getImpactStats(providersList = []) {
       const clicksOffset = parseInt(localStorage.getItem('impact_clicks_offset') || '0', 10);
       stats.totalViews += viewsOffset;
       stats.totalClicks += clicksOffset;
-    } catch (e) {}
+    } catch (e) { }
   }
 
   return stats;

@@ -748,10 +748,12 @@
               </div>
             </div>
 
-            <!-- Bio / Description -->
-            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
-              ${app.description}
-            </p>
+            <!-- Bio / Description (Rendered only if provided) -->
+            ${app.description && app.description !== 'Not provided' ? `
+              <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                ${app.description}
+              </p>
+            ` : ''}
 
             <!-- Metadata Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs">
@@ -795,6 +797,7 @@
               <div class="space-y-0.5 text-[11px] text-slate-400">
                 <div><strong class="text-slate-300">Deposit:</strong> ${app.policies?.depositAmount || 'Required upon booking'}</div>
                 <div><strong class="text-slate-300">Cancellation:</strong> ${app.policies?.cancellationPolicy || '24h notice'}</div>
+                <div><strong class="text-slate-300">Refunds:</strong> ${app.policies?.refundPolicy || 'Deposit non-refundable'}</div>
               </div>
             </div>
 

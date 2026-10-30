@@ -4,16 +4,16 @@
  * Central filtering & sorting logic for Black-Owned BR service directory:
  * - Category matching
  * - Keyword search matching (name, category, description)
- * - Geographic radius filtering (Haversine formula from LSU)
- * - Quick-select zone filtering
- * - Shared filters: price tiers, max starting price, min rating, experience tiers,
- *   student discount toggle, service delivery, availability, and sorting
+ * - Geographic radius filtering (Haversine formula & ZIP codes from LSU)
+ * - ZIP Code & Quick-select zone filtering
+ * - Shared filters: automatic price tiers, max starting price, min rating, experience tiers,
+ *   student discount toggle, service delivery, and sorting
  * - Category-specific filters for Hair, Nails, Lashes, Food & Beverages, Fashion, Photography
  * 
  * Strict rule: NEVER returns providers beyond 25 miles from LSU.
  */
 
-import { calculateDistance, LSU_COORDINATES } from './distance.js';
+import { calculateDistance, getDistanceFromLSU, getPriceTier, LSU_COORDINATES } from './distance.js';
 
 // Global maximum radius allowed
 export const MAX_ALLOWED_RADIUS_MILES = 25;
@@ -75,14 +75,15 @@ export function matchesSearch(provider, query) {
   const nameMatch = provider.businessName ? provider.businessName.toLowerCase().includes(cleanQuery) : false;
   const categoryMatch = provider.category ? provider.category.toLowerCase().includes(cleanQuery) : false;
   const descMatch = provider.description ? provider.description.toLowerCase().includes(cleanQuery) : false;
+  const zipMatch = provider.zipCode ? String(provider.zipCode).includes(cleanQuery) : false;
 
-  return nameMatch || categoryMatch || descMatch;
+  return nameMatch || categoryMatch || descMatch || zipMatch;
 }
 
 /**
- * Checks if a provider matches a quick-select geographic zone.
+ * Checks if a provider matches a quick-select geographic zone using coordinates, neighborhoods & ZIP codes.
  * 
- * @param {Object} provider - Provider record with coordinates and neighborhood
+ * @param {Object} provider - Provider record with coordinates, neighborhood, and zipCode
  * @param {string} zone - Zone id or label
  * @returns {boolean}
  */
@@ -91,25 +92,26 @@ export function matchesZone(provider, zone) {
     return true;
   }
 
-  const dist = calculateDistance(provider.latitude, provider.longitude);
+  const dist = getDistanceFromLSU(provider);
   const neighborhood = (provider.neighborhood || '').toLowerCase();
+  const zip = String(provider.zipCode || provider.zip || '').trim();
 
   switch (zone) {
     case 'campus':
     case 'North Gates / On-Campus (under 2 mi)':
-      return dist < 2.0;
+      return dist < 2.0 || zip === '70803' || zip === '70802';
 
     case 'highland-burbank':
     case 'Highland / Burbank':
-      return neighborhood.includes('highland') || neighborhood.includes('burbank') || neighborhood.includes('tigerland');
+      return neighborhood.includes('highland') || neighborhood.includes('burbank') || neighborhood.includes('tigerland') || zip === '70810' || zip === '70820';
 
     case 'mid-city':
     case 'Mid-City':
-      return neighborhood.includes('mid city') || neighborhood.includes('garden district');
+      return neighborhood.includes('mid city') || neighborhood.includes('garden district') || zip === '70806' || zip === '70815';
 
     case 'downtown':
     case 'Downtown':
-      return neighborhood.includes('downtown');
+      return neighborhood.includes('downtown') || zip === '70801' || zip === '70802';
 
     default:
       return true;
@@ -125,7 +127,7 @@ export function matchesZone(provider, zone) {
  * @returns {boolean}
  */
 export function matchesRadius(provider, maxRadius = 25) {
-  const dist = calculateDistance(provider.latitude, provider.longitude);
+  const dist = getDistanceFromLSU(provider);
 
   // Strict rule: Never show providers beyond 25 miles
   if (dist > MAX_ALLOWED_RADIUS_MILES) {
@@ -148,6 +150,7 @@ export function filterProviders(providers, {
   selectedCategory = 'All',
   maxRadius = 25,
   selectedZone = 'all',
+  zipCode = '',                 // Filter by specific 5-digit ZIP code
 
   // Shared Filters
   priceTiers = [],              // Array of '$', '$$', '$$$'
@@ -156,7 +159,6 @@ export function filterProviders(providers, {
   experienceTiers = [],         // Array of '1-2', '3-5', '5+'
   studentDiscountOnly = false,  // Boolean
   serviceDelivery = 'all',      // 'all', 'mobile', 'studio'
-  availabilities = [],          // Array of 'open-this-week', 'same-day', 'bookings-open'
   sortBy = 'rating',            // 'rating', 'distance', 'price', 'experience'
 
   // Category-Specific: Hair
@@ -192,7 +194,7 @@ export function filterProviders(providers, {
   // 1. Filter matching providers
   const filtered = providers.filter(provider => {
     // Distance from LSU
-    const dist = calculateDistance(provider.latitude, provider.longitude);
+    const dist = getDistanceFromLSU(provider);
 
     // Strict cap: Never show providers beyond 25 miles
     if (dist > MAX_ALLOWED_RADIUS_MILES) {
@@ -202,6 +204,15 @@ export function filterProviders(providers, {
     // Radius Limit (1 to 25 miles)
     if (!matchesRadius(provider, maxRadius)) {
       return false;
+    }
+
+    // Specific ZIP Code filter
+    if (zipCode && zipCode.trim()) {
+      const targetZip = zipCode.trim().replace(/\D/g, '').slice(0, 5);
+      const provZip = String(provider.zipCode || provider.zip || '').trim().replace(/\D/g, '').slice(0, 5);
+      if (targetZip.length === 5 && provZip !== targetZip) {
+        return false;
+      }
     }
 
     // Quick-Select Zone Check
@@ -221,9 +232,10 @@ export function filterProviders(providers, {
 
     // --- SHARED FILTERS ---
 
-    // Price Tiers (e.g. '$', '$$', '$$$')
+    // Price Tiers (e.g. '$', '$$', '$$$') - Calculated automatically from startingPrice if not explicit
     if (priceTiers && priceTiers.length > 0) {
-      if (!priceTiers.includes(provider.priceTier)) {
+      const tier = provider.priceTier || getPriceTier(provider.startingPrice);
+      if (!priceTiers.includes(tier)) {
         return false;
       }
     }
@@ -275,13 +287,6 @@ export function filterProviders(providers, {
         if (provider.serviceDelivery !== 'studio' && provider.serviceDelivery !== 'both') {
           return false;
         }
-      }
-    }
-
-    // Availability ('open-this-week', 'same-day', 'bookings-open')
-    if (availabilities && availabilities.length > 0) {
-      if (!availabilities.includes(provider.availability)) {
-        return false;
       }
     }
 
@@ -392,8 +397,8 @@ export function filterProviders(providers, {
   return filtered.sort((a, b) => {
     switch (sortBy) {
       case 'distance': {
-        const distA = calculateDistance(a.latitude, a.longitude);
-        const distB = calculateDistance(b.latitude, b.longitude);
+        const distA = getDistanceFromLSU(a);
+        const distB = getDistanceFromLSU(b);
         return distA - distB;
       }
       case 'price':
