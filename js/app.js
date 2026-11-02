@@ -14,7 +14,7 @@
  * - Clear filters button and dynamic result count
  */
 
-import { getProvidersFromFirestore, seedFirestoreProviders, trackLinkClick } from './firebase.js';
+import { getProvidersFromFirestore, trackLinkClick } from './firebase.js';
 import { SAMPLE_PROVIDERS } from './data/providers.js';
 import { createProviderCard } from './components/ProviderCard.js';
 import { filterProviders, MAX_ALLOWED_RADIUS_MILES } from './utils/filters.js';
@@ -197,117 +197,9 @@ export function renderProvidersSkeleton(gridElement) {
 }
 
 /**
- * Removes any existing Firestore status banner.
- */
-export function removeFirestoreNotice() {
-  const existing = document.getElementById('firestore-status-notice');
-  if (existing) existing.remove();
-}
-
-/**
- * Displays an LSU-themed banner indicating Firestore database status.
- * 
- * @param {'empty' | 'offline'} type 
- * @param {string} errorDetails 
- */
-export function renderFirestoreNotice(type, errorDetails = '') {
-  removeFirestoreNotice();
-
-  const mount = document.getElementById('filter-panel-mount') || document.getElementById('category-pills-bar');
-  if (!mount) return;
-
-  const notice = document.createElement('div');
-  notice.id = 'firestore-status-notice';
-  notice.className = 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4';
-
-  if (type === 'empty') {
-    notice.innerHTML = `
-      <div class="p-3.5 sm:p-4 rounded-xl bg-lsu-purple/40 border border-lsu-gold/40 text-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg backdrop-blur">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-lsu-gold/20 flex items-center justify-center shrink-0 text-lsu-gold">
-            <svg class="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-            </svg>
-          </div>
-          <div>
-            <p class="text-xs sm:text-sm font-semibold text-white">
-              Firebase Connected: Cloud Firestore collection <code class="text-lsu-gold font-mono font-bold">"providers"</code> is currently empty.
-            </p>
-            <p class="text-xs text-slate-300">
-              Showing local sample data. Click below to populate Firestore with all 18 sample records.
-            </p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
-          <button 
-            id="quick-seed-btn" 
-            type="button" 
-            class="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark text-xs font-heading font-bold uppercase tracking-wider transition-colors shadow cursor-pointer text-center"
-          >
-            Seed to Firestore
-          </button>
-          <a 
-            href="seed.html" 
-            class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-heading font-medium transition-colors border border-slate-700 text-center"
-          >
-            Seeder &rarr;
-          </a>
-        </div>
-      </div>
-    `;
-  } else if (type === 'offline') {
-    notice.innerHTML = `
-      <div class="p-3 sm:p-3.5 rounded-xl bg-slate-900/90 border border-purple-900/50 text-slate-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
-        <div class="flex items-center gap-2.5">
-          <div class="w-6 h-6 rounded-md bg-amber-400/20 flex items-center justify-center shrink-0 text-amber-400">
-            <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-          </div>
-          <p class="text-xs leading-relaxed">
-            <strong class="text-white">Firebase Note:</strong> Cloud Firestore database setup in progress. Serving cached sample data until enabled in Firebase Console.
-          </p>
-        </div>
-        <a 
-          href="seed.html" 
-          class="shrink-0 text-xs text-lsu-gold hover:underline font-semibold flex items-center gap-1"
-        >
-          View Setup &amp; Rules Guide &rarr;
-        </a>
-      </div>
-    `;
-  }
-
-  mount.parentNode.insertBefore(notice, mount.nextSibling);
-
-  const quickSeedBtn = document.getElementById('quick-seed-btn');
-  if (quickSeedBtn) {
-    quickSeedBtn.addEventListener('click', async () => {
-      quickSeedBtn.disabled = true;
-      quickSeedBtn.textContent = 'Uploading...';
-      try {
-        const res = await seedFirestoreProviders(SAMPLE_PROVIDERS);
-        if (res.success) {
-          quickSeedBtn.textContent = 'Uploaded!';
-          setTimeout(() => loadProvidersData(), 600);
-        } else {
-          alert(`Could not write: ${res.errors[0]?.error || 'Check Firestore security rules in Firebase Console'}.`);
-          quickSeedBtn.disabled = false;
-          quickSeedBtn.textContent = 'Retry Seed';
-        }
-      } catch (err) {
-        alert(`Could not write to Firestore: ${err.message}\nMake sure Cloud Firestore is enabled in Firebase Console.`);
-        quickSeedBtn.disabled = false;
-        quickSeedBtn.textContent = 'Seed to Firestore';
-      }
-    });
-  }
-}
-
-/**
  * Asynchronously loads provider documents from Cloud Firestore "providers" collection.
  * If the collection is empty or the API is not yet activated in the Firebase Console,
- * it falls back to SAMPLE_PROVIDERS and displays a helpful status guide.
+ * it falls back to SAMPLE_PROVIDERS.
  */
 export async function loadProvidersData() {
   const gridElement = document.getElementById('providers-grid');
@@ -324,18 +216,15 @@ export async function loadProvidersData() {
       console.log(`%cFirestore Connected! Successfully loaded ${firestoreDocs.length} providers from collection "providers".`, 'color: #10B981; font-weight: bold;');
       allProviders = firestoreDocs;
       firestoreLoadStatus = 'firestore';
-      removeFirestoreNotice();
     } else {
       console.warn('Cloud Firestore "providers" collection is currently empty. Serving sample providers.');
       allProviders = SAMPLE_PROVIDERS;
       firestoreLoadStatus = 'empty';
-      renderFirestoreNotice('empty');
     }
   } catch (error) {
     console.warn('Cloud Firestore not reachable (database may need to be created in Firebase Console). Serving local sample providers:', error.message);
     allProviders = SAMPLE_PROVIDERS;
     firestoreLoadStatus = 'offline';
-    renderFirestoreNotice('offline', error.message);
   } finally {
     isProvidersLoading = false;
     updateDirectory();
@@ -813,6 +702,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('community-impact-mount')) {
     injectImpactCounter('community-impact-mount', SAMPLE_PROVIDERS);
   }
+
+  // 3c. Pause category banner marquee on mobile touch
+  document.querySelectorAll('.category-marquee-wrapper').forEach(wrapper => {
+    wrapper.addEventListener('touchstart', () => {
+      wrapper.classList.add('is-paused');
+    }, { passive: true });
+    wrapper.addEventListener('touchend', () => {
+      setTimeout(() => wrapper.classList.remove('is-paused'), 1000);
+    }, { passive: true });
+  });
 
   // 3d. Global External Link Click Tracking (Instagram, TikTok, Website, Booking)
   document.addEventListener('click', (e) => {

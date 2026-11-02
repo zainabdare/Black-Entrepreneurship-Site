@@ -120,15 +120,6 @@ export function injectNavigationDrawer() {
           </div>
           <div class="space-y-1.5">
             <a 
-              href="seasonal-hubs.html" 
-              class="menu-link flex items-center justify-between px-4 py-2 rounded-full text-sm font-medium transition-colors ${currentPath === 'seasonal-hubs.html' ? 'bg-[#E9C6CC]/25 text-[#FDD023] font-bold border border-[#FDD023]/40' : 'text-[#F6EEE6]/90 hover:bg-[#E9C6CC]/15 hover:text-[#FDD023]'}"
-            >
-              <div class="flex items-center gap-3">
-                <span>Seasonal Hubs</span>
-              </div>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FDD023]/20 text-[#FDD023] border border-[#FDD023]/40 font-heading">New</span>
-            </a>
-            <a 
               href="submit-business.html" 
               class="menu-link flex items-center gap-3 px-4 py-2 rounded-full text-sm font-medium transition-colors ${currentPath === 'submit-business.html' ? 'bg-[#E9C6CC]/25 text-[#FDD023] font-bold border border-[#FDD023]/40' : 'text-[#F6EEE6]/90 hover:bg-[#E9C6CC]/15 hover:text-[#FDD023]'}"
             >
@@ -150,11 +141,6 @@ export function injectNavigationDrawer() {
         <p class="text-xs text-[#E9C6CC] font-sans">
           BLKENTRE &bull; Supporting Black Entrepreneurship Near LSU
         </p>
-        <div class="flex items-center justify-center gap-3 text-[11px] font-mono text-[#F6EEE6]/80">
-          <a href="seed.html" class="hover:text-[#FDD023] transition-colors">
-            Firestore Seeder
-          </a>
-        </div>
       </div>
     </nav>
   `;

@@ -169,40 +169,47 @@
         </a>
       </div>
 
-      <!-- Full-Width Editorial Photo Frame with Overlapping Bottom Headline -->
-      <div class="hero-photo-frame relative mx-auto max-w-6xl">
-        <div class="relative w-full h-[280px] sm:h-[380px] md:h-[440px]">
-          <img 
-            src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1600&auto=format&fit=crop&q=80" 
-            alt="Fashion and custom outfits near LSU" 
-            class="w-full h-full object-cover object-[center_35%] select-none"
-            loading="eager"
-          />
-
-          <!-- Gradient Overlay for Crisp Text Contrast -->
-          <div class="absolute inset-0 bg-gradient-to-t from-[#4A1C24]/90 via-[#4A1C24]/30 to-transparent pointer-events-none"></div>
-
-          <!-- Top-Left Category Badge -->
-          <div class="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F6EEE6]/90 backdrop-blur-md border border-[#EAD5C0] text-[#4A1C24] text-xs sm:text-sm font-heading font-bold shadow-md">
-            <span class="tracking-wider uppercase">Fashion &amp; Custom Fits</span>
-            <span class="w-1.5 h-1.5 rounded-full bg-[#FDD023]"></span>
-            <span>25-Mile Radius</span>
-          </div>
-
-          <!-- Chunky Headline Overlapping Bottom of Photo -->
-          <div class="absolute bottom-0 inset-x-0 z-20 px-4 sm:px-8 pb-4 sm:pb-7 pt-12 text-center flex flex-col items-center justify-end">
-            <h1 class="hero-chunky-headline text-3xl sm:text-5xl md:text-6xl lg:text-7xl select-none">
-              FITS THAT <span class="script-word">turn heads</span>
-            </h1>
-          </div>
-        </div>
+      <!-- Category Header Text (Headline ABOVE the banner) -->
+      <div class="max-w-4xl mx-auto mb-6 sm:mb-8 text-center flex flex-col items-center">
+        <!-- Category Headline -->
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-[#4A1C24] tracking-tight uppercase leading-none select-none">
+          FITS THAT <span class="script-word text-[#8B263E]">turn heads</span>
+        </h1>
       </div>
 
-      <!-- Short Category Subtitle -->
-      <div class="max-w-2xl mx-auto text-center mt-5 sm:mt-7">
-        <p class="text-sm sm:text-base text-[#7A535A] font-sans font-medium leading-relaxed">
-          Bespoke formal gowns, rush alterations, custom graduation stoles, and game-day streetwear created within 25 miles of LSU.
-        </p>
+      <!-- Scrolling Banner Carousel (Seamless continuous loop of full-height collage photos) -->
+      <div class="category-marquee-wrapper relative mx-auto max-w-6xl">
+        <div class="category-marquee-track" aria-label="Endless scrolling banner of fashion and custom outfits">
+          <div class="category-marquee-group">
+            <img 
+              src="images/categories/fashion_banner.jpg" 
+              alt="Collage of custom fashion and apparel including formal gowns, streetwear, tailored suits, graduation stoles, and game-day outfits" 
+              class="category-banner-img" 
+              loading="eager" 
+            />
+            <img 
+              src="images/categories/fashion_banner.jpg" 
+              alt="" 
+              aria-hidden="true" 
+              class="category-banner-img" 
+              loading="eager" 
+            />
+          </div>
+          <div class="category-marquee-group" aria-hidden="true">
+            <img 
+              src="images/categories/fashion_banner.jpg" 
+              alt="" 
+              class="category-banner-img" 
+              loading="lazy" 
+            />
+            <img 
+              src="images/categories/fashion_banner.jpg" 
+              alt="" 
+              class="category-banner-img" 
+              loading="lazy" 
+            />
+          </div>
+        </div>
       </div>
 
     </div>

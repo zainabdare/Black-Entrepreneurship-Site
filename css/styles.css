@@ -694,4 +694,87 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   transform: translateY(-1px);
 }
 
+/* --------------------------------------------------------------------------
+   16. Continuous Scrolling Category Photo Banner Marquee
+   Seamless loop, white dividers, pause on hover/touch, prefers-reduced-motion safe
+   -------------------------------------------------------------------------- */
+.category-marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(234, 213, 192, 0.8);
+  box-shadow: 0 12px 30px -8px rgba(74, 28, 36, 0.12), 0 4px 12px -2px rgba(74, 28, 36, 0.06);
+  user-select: none;
+  touch-action: pan-y;
+}
+
+@media (min-width: 640px) {
+  .category-marquee-wrapper {
+    border-radius: 2rem;
+  }
+}
+
+.category-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: category-banner-scroll 50s linear infinite;
+}
+
+.category-marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 4px;
+  padding-right: 4px;
+  background-color: #FFFFFF;
+}
+
+.category-banner-img {
+  height: 180px;
+  width: auto;
+  aspect-ratio: 2400 / 900;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .category-banner-img {
+    height: 250px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .category-banner-img {
+    height: 320px;
+  }
+}
+
+@keyframes category-banner-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause on hover, active touch, or JS paused state */
+.category-marquee-wrapper:hover .category-marquee-track,
+.category-marquee-wrapper:active .category-marquee-track,
+.category-marquee-wrapper.is-paused .category-marquee-track {
+  animation-play-state: paused;
+}
+
+/* For users with reduced motion preferences, show static banner */
+@media (prefers-reduced-motion: reduce) {
+  .category-marquee-track {
+    animation: none !important;
+  }
+}
+
 

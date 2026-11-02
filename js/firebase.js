@@ -85,50 +85,6 @@ export async function getProvidersFromFirestore() {
   return providers;
 }
 
-/**
- * Seeds the sample providers into the Firestore "providers" collection.
- * 
- * @param {Array<Object>} providersList Optional array of providers to seed (defaults to SAMPLE_PROVIDERS)
- * @param {Function} onProgress Optional progress callback (current, total, providerName)
- * @returns {Promise<{success: boolean, count: number, errors: Array}>}
- */
-export async function seedFirestoreProviders(providersList = null, onProgress = null) {
-  let list = providersList;
-  if (!list) {
-    const module = await import('../src/data/providers.js');
-    list = module.SAMPLE_PROVIDERS;
-  }
-
-  console.log(`[Firebase Seeder] Starting upload of ${list.length} providers to Firestore 'providers' collection...`);
-
-  const results = {
-    success: true,
-    count: 0,
-    errors: []
-  };
-
-  for (let i = 0; i < list.length; i++) {
-    const provider = list[i];
-    try {
-      const { id, ...providerData } = provider;
-      const docRef = doc(db, "providers", id);
-      await setDoc(docRef, { ...providerData, id });
-      results.count++;
-
-      if (onProgress) {
-        onProgress(i + 1, list.length, provider.businessName);
-      }
-      console.log(`[Firebase Seeder] (${i + 1}/${list.length}) Saved: ${provider.businessName} [${id}]`);
-    } catch (err) {
-      console.error(`[Firebase Seeder] Failed to save ${provider.id}:`, err);
-      results.errors.push({ id: provider.id, error: err.message });
-      results.success = false;
-    }
-  }
-
-  return results;
-}
-
 // ============================================================================
 // IMAGE COMPRESSION & FIREBASE STORAGE UPLOAD
 // ============================================================================
@@ -605,7 +561,7 @@ export async function trackLinkClick(providerId, linkType = 'link', targetUrl = 
 
 /**
  * Fetches Community Impact statistics from Firestore "analytics/impact".
- * If the doc does not exist, it seeds the initial baseline into Firestore.
+ * If the doc does not exist, it initializes the baseline in Firestore.
  * 
  * @param {Array<Object>} providersList 
  * @returns {Promise<{totalProviders: number, totalViews: number, totalClicks: number, totalReviews: number}>}
@@ -676,7 +632,6 @@ if (typeof window !== 'undefined') {
     storage,
     analytics,
     getProvidersFromFirestore,
-    seedFirestoreProviders,
     compressImage,
     uploadReviewPhoto,
     getReviewsForProvider,
@@ -691,7 +646,6 @@ if (typeof window !== 'undefined') {
     trackLinkClick,
     getImpactStats
   };
-  window.seedFirestore = seedFirestoreProviders;
   window.trackProfileView = trackProfileView;
   window.trackLinkClick = trackLinkClick;
   window.getImpactStats = getImpactStats;
