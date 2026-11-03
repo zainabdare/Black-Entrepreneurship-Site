@@ -33,12 +33,9 @@ export function injectNavigationDrawer() {
     >
       <!-- Drawer Header -->
       <div class="p-5 sm:p-6 border-b border-[#E9C6CC]/20 flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-2.5 group" aria-label="BLKENTRE Home">
-          <svg class="h-8 w-auto text-[#F6EEE6]" viewBox="0 0 160 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="32" height="32" rx="16" fill="#F6EEE6"/>
-            <path d="M12 9.5H19.5C22.5 9.5 24.5 11 24.5 13.5C24.5 15.2 23.5 16.3 22 16.8C24 17.3 25.2 18.6 25.2 20.7C25.2 23.5 22.8 25.5 19.5 25.5H12V9.5ZM16.2 12.8V15.7H19.2C20.5 15.7 21.3 15 21.3 14.2C21.3 13.4 20.5 12.8 19.2 12.8H16.2ZM16.2 18.8V22.2H19.5C20.9 22.2 21.9 21.5 21.9 20.5C21.9 19.5 20.9 18.8 19.5 18.8H16.2Z" fill="#4A1C24"/>
-            <text x="44" y="26" font-family="'Lilita One', cursive, sans-serif" font-size="22" font-weight="900" fill="#F6EEE6" letter-spacing="0.5">BLKENTRE</text>
-          </svg>
+        <a href="index.html" class="setlist-logo on-dark group py-1 select-none" aria-label="SETLIST Marketplace Home">
+          <span class="setlist-logo-main">SETLIST</span>
+          <span class="setlist-logo-sub">MARKETPLACE</span>
         </a>
 
         <!-- Close Button (X) -->
@@ -70,8 +67,8 @@ export function injectNavigationDrawer() {
 
         <!-- Categories Section -->
         <div>
-          <div class="px-4 pb-2 text-[11px] font-heading font-bold uppercase tracking-wider text-[#E9C6CC]">
-            Browse by <span class="script-word text-white">category</span>
+          <div class="px-4 pb-2 text-[11px] font-heading font-medium uppercase tracking-[0.12em] text-[#E9C6CC]">
+            Browse by Category
           </div>
           <div class="space-y-1.5">
             <a 
@@ -115,8 +112,8 @@ export function injectNavigationDrawer() {
 
         <!-- Campus & Community Section -->
         <div class="pt-4 border-t border-[#E9C6CC]/20">
-          <div class="px-4 pb-2 text-[11px] font-heading font-bold uppercase tracking-wider text-[#E9C6CC]">
-            Campus &amp; <span class="script-word text-white">community</span>
+          <div class="px-4 pb-2 text-[11px] font-heading font-medium uppercase tracking-[0.12em] text-[#E9C6CC]">
+            Campus &amp; Community
           </div>
           <div class="space-y-1.5">
             <a 
@@ -139,7 +136,7 @@ export function injectNavigationDrawer() {
       <!-- Drawer Footer -->
       <div class="p-5 border-t border-[#E9C6CC]/20 bg-[#351218] text-center space-y-2">
         <p class="text-xs text-[#E9C6CC] font-sans">
-          BLKENTRE &bull; Supporting Black Entrepreneurship Near LSU
+          <strong class="font-bold">SETLIST</strong> Marketplace &bull; Supporting Black Entrepreneurship Near LSU
         </p>
       </div>
     </nav>

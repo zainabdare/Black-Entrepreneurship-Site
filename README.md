@@ -1,4 +1,4 @@
-# BLKENTRE - Black Entrepreneur Service Provider Directory (LSU & Baton Rouge)
+# SETLIST Marketplace - Black Entrepreneur Service Provider Directory (LSU & Baton Rouge)
 
 A clean, modern web directory celebrating and connecting students, faculty, and residents with **Black-owned service providers within a 25-mile radius of Louisiana State University (LSU)** in Baton Rouge, Louisiana.
 
@@ -27,8 +27,8 @@ Black Entre SIte/
 │   └── components/         # Reusable UI component renderers
 ├── src/
 │   └── data/               # Curated provider records
-├── favicon.svg             # BLKENTRE stylized B circular favicon
-├── images/                 # BLKENTRE brand SVGs and vector assets
+├── favicon.svg             # SETLIST Marketplace stylized S circular favicon
+├── images/                 # SETLIST Marketplace brand SVGs and vector assets
 ├── .gitignore              # Files and folders ignored by Git
 └── README.md               # Project documentation & setup instructions
 ```

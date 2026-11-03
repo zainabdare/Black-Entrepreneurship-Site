@@ -1,10 +1,10 @@
 /**
  * js/components/ImpactCounter.js
  * 
- * Community Impact Counter component for BLKENTRE Home Page.
+ * Community Impact Counter component for SETLIST Marketplace Home Page.
  * Restyled with:
  * - Editorial Palette: Cream background, Burgundy, Blush Pink, and Sand color blocks
- * - Chunky "Lilita One" display font with "Caveat" script word accents
+ * - Elegant Raleway font hierarchy with wide letter-spacing
  * - Rounded 3xl corners & warm soft shadows
  * - Fully rounded pill-shaped buttons and badges
  * - Animated count-up on scroll
@@ -111,12 +111,12 @@ export async function injectImpactCounter(mountId = 'community-impact-mount', pr
         
         <!-- Section Header -->
         <div class="text-center max-w-3xl mx-auto">
-          <h2 class="text-3xl sm:text-5xl font-heading font-black text-[#4A1C24] tracking-tight leading-tight sm:leading-none">
-            Empowering Black Business, ONE <span class="script-word text-[#4A1C24]">booking</span> AT A TIME
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-heading font-light text-[#4A1C24] uppercase tracking-[0.15em] leading-tight mb-3">
+            WHY WE BUILT <strong class="font-bold">SETLIST</strong> MARKETPLACE
           </h2>
 
           <p class="mt-4 text-sm sm:text-base text-[#7A535A] leading-relaxed max-w-2xl mx-auto font-sans">
-            Every profile view, social link, direct appointment, and student review directly recirculates the Tiger dollar into Baton Rouge’s Black creative economy.
+            <strong class="font-bold">SETLIST</strong> is a campus-first marketplace connecting LSU students directly with local Black-owned businesses. Whether you need a fresh set, event photos, or game-day catering, we replace fragmented word-of-mouth with verified pricing, direct booking links, and distance filtering—all in one place.
           </p>
         </div>
 

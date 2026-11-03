@@ -1,6 +1,6 @@
 /**
  * js/app.js
- * Main JavaScript controller for BLKENTRE.
+ * Main JavaScript controller for SETLIST Marketplace.
  * 
  * Features:
  * - Dynamic rendering of providers via ProviderCard component
@@ -14,7 +14,7 @@
  * - Clear filters button and dynamic result count
  */
 
-import { getProvidersFromFirestore, trackLinkClick } from './firebase.js';
+import { getProvidersFromFirestore, getAllRatingsFromFirestore, trackLinkClick } from './firebase.js';
 import { SAMPLE_PROVIDERS } from './data/providers.js';
 import { createProviderCard } from './components/ProviderCard.js';
 import { filterProviders, MAX_ALLOWED_RADIUS_MILES } from './utils/filters.js';
@@ -24,7 +24,7 @@ import { injectFilterPanel } from './components/FilterPanel.js';
 import { openProviderDetailModal, closeProviderDetailModal, closePhotoLightbox } from './components/ProviderDetailModal.js';
 import { injectImpactCounter } from './components/ImpactCounter.js';
 
-console.log('%cBLKENTRE: Multi-page & Filter Panel Active', 'color: #FDD023; background: #461D7C; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
+console.log('%cSETLIST Marketplace: Multi-page & Filter Panel Active', 'color: #FDD023; background: #4A1C24; font-size: 14px; padding: 4px 8px; border-radius: 4px;');
 
 // Master provider records loaded from Firestore (falls back to sample providers if Firestore collection is empty or API pending)
 export let allProviders = [];
@@ -209,7 +209,7 @@ export async function loadProvidersData() {
   }
 
   try {
-    console.log('%cBLKENTRE: Querying Cloud Firestore "providers" collection...', 'color: #FDD023; background: #461D7C; font-weight: bold; padding: 2px 6px;');
+    console.log('%cSETLIST Marketplace: Querying Cloud Firestore "providers" collection...', 'color: #FDD023; background: #4A1C24; font-weight: bold; padding: 2px 6px;');
     const firestoreDocs = await getProvidersFromFirestore();
 
     if (Array.isArray(firestoreDocs) && firestoreDocs.length > 0) {
@@ -225,6 +225,43 @@ export async function loadProvidersData() {
     console.warn('Cloud Firestore not reachable (database may need to be created in Firebase Console). Serving local sample providers:', error.message);
     allProviders = SAMPLE_PROVIDERS;
     firestoreLoadStatus = 'offline';
+  }
+
+  // Calculate real averageRating and ratingCount from Firestore "ratings" collection
+  // Ignore fake sample rating numbers
+  allProviders.forEach(p => {
+    p.averageRating = null;
+    p.ratingCount = 0;
+    p.reviewCount = 0;
+    p.ratings = [];
+  });
+
+  try {
+    const realRatings = await getAllRatingsFromFirestore();
+    if (Array.isArray(realRatings) && realRatings.length > 0) {
+      console.log(`%cLoaded ${realRatings.length} real ratings from Firestore "ratings" collection.`, 'color: #10B981;');
+      const ratingsByProvider = {};
+      realRatings.forEach(r => {
+        if (!r.providerId) return;
+        if (!ratingsByProvider[r.providerId]) ratingsByProvider[r.providerId] = [];
+        ratingsByProvider[r.providerId].push(r);
+      });
+
+      allProviders.forEach(p => {
+        const list = ratingsByProvider[p.id];
+        if (list && list.length > 0) {
+          p.ratings = list;
+          p.ratingCount = list.length;
+          p.reviewCount = list.length;
+          const sum = list.reduce((acc, r) => acc + Number(r.overall || r.rating || 5), 0);
+          p.averageRating = Number((sum / list.length).toFixed(1));
+        }
+      });
+    } else {
+      console.log('No ratings yet in Firestore "ratings" collection. Providers will display "No ratings yet".');
+    }
+  } catch (ratingsErr) {
+    console.warn('Could not load real ratings from Firestore:', ratingsErr);
   } finally {
     isProvidersLoading = false;
     updateDirectory();
@@ -244,6 +281,20 @@ export function updateDirectory() {
   const priceDisplay = document.getElementById('filter-price-display');
 
   if (!gridElement) return;
+
+  // Update results counter text with source indicator (Never shows a count, even after filtering)
+  if (countElement) {
+    const activeCat = (appState.selectedCategory && appState.selectedCategory !== 'All')
+      ? appState.selectedCategory
+      : (pageCategory !== 'All' ? pageCategory : '');
+    const displayCategory = activeCat
+      ? (activeCat.startsWith('Fashion') ? ' in Fashion' : ` in ${activeCat}`)
+      : '';
+    const sourceBadge = firestoreLoadStatus === 'firestore'
+      ? `<span class="ml-2 inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" title="Data loaded live from Cloud Firestore 'providers' collection"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Firestore</span>`
+      : '';
+    countElement.innerHTML = `Showing providers${displayCategory}${sourceBadge}`;
+  }
 
   // If still loading from Firestore, show skeleton loader
   if (isProvidersLoading) {
@@ -266,15 +317,6 @@ export function updateDirectory() {
 
   // Update active filter badge & clear button
   updateActiveFilterBadges();
-
-  // Update results counter text with source indicator
-  if (countElement) {
-    const categoryLabel = appState.selectedCategory === 'All' ? '' : ` in ${appState.selectedCategory}`;
-    const sourceBadge = firestoreLoadStatus === 'firestore'
-      ? `<span class="ml-2 inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" title="Data loaded live from Cloud Firestore 'providers' collection"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Firestore</span>`
-      : '';
-    countElement.innerHTML = `Showing <span class="text-lsu-gold font-bold font-mono">${filtered.length}</span> provider${filtered.length === 1 ? '' : 's'}${categoryLabel}${sourceBadge}`;
-  }
 
   // Handle empty state: "No providers found"
   if (filtered.length === 0) {
@@ -329,6 +371,10 @@ export function updateDirectory() {
 export function attachProviderModalTriggers(container = document) {
   container.querySelectorAll('.open-provider-modal-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
+      // If clicking inside an external link icon, let the link open and do not trigger modal
+      if (e.target.closest('a') || e.target.closest('[data-track-type]')) {
+        return;
+      }
       e.preventDefault();
       e.stopPropagation();
       const providerId = btn.dataset.providerId;
@@ -338,6 +384,7 @@ export function attachProviderModalTriggers(container = document) {
           const target = allProviders.find(p => p.id === updatedId);
           if (target) {
             target.averageRating = newRating;
+            target.ratingCount = newCount;
             target.reviewCount = newCount;
             updateDirectory();
           }
@@ -779,6 +826,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const target = allProviders.find(p => p.id === updatedId);
           if (target) {
             target.averageRating = newRating;
+            target.ratingCount = newCount;
             target.reviewCount = newCount;
             updateDirectory();
           }

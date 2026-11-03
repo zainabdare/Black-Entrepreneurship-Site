@@ -2,86 +2,16 @@
  * js/components/ProviderCard.js
  * 
  * Reusable component for rendering individual service provider cards.
- * Restyled with:
- * - Tab-style label above card (BEGINNER / INTERMEDIATE / ADVANCED like the screenshot)
- * - Rounded photo at the top
- * - Business name in chunky display font (Lilita One)
- * - Price in bold with starting price callout
- * - Badges in Blush, Sand, Burgundy, and LSU Gold accent
- * - Fully rounded pill-shaped social and booking buttons
+ * Simplified card layout:
+ * - Clean photo at the top
+ * - Business name & owner name
+ * - Star rating number & Student Discount badge
+ * - Starting price strip
+ * - Instagram, TikTok, and direct booking/website link icons
+ * - Entire card clickable to open provider detail modal
  */
 
-import { calculateDistance, getDistanceFromLSU, getPriceTier } from '../utils/distance.js';
-
-/**
- * Returns experience tab configuration (label & styling) above the card.
- */
-function getExperienceTab(years, category) {
-  if (years <= 2) {
-    return {
-      label: `BEGINNER • ${category.toUpperCase()}`,
-      badgeClass: 'bg-[#EAD5C0] text-[#4A1C24] border-[#D3BAA2]'
-    };
-  } else if (years <= 5) {
-    return {
-      label: `INTERMEDIATE • ${category.toUpperCase()}`,
-      badgeClass: 'bg-[#E9C6CC] text-[#4A1C24] border-[#D4A7B0]'
-    };
-  } else {
-    return {
-      label: `ADVANCED • ${category.toUpperCase()}`,
-      badgeClass: 'bg-[#4A1C24] text-[#F6EEE6] border-[#4A1C24]'
-    };
-  }
-}
-
-/**
- * Returns an experience badge HTML based on years of experience.
- */
-function getExperienceBadge(years) {
-  if (years <= 2) {
-    return `
-      <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#EAD5C0]/60 text-[#4A1C24] border border-[#EAD5C0]" title="${years} years of professional experience">
-        <span class="w-1.5 h-1.5 rounded-full bg-[#D3BAA2]"></span>
-        Rising (${years} yrs)
-      </span>
-    `;
-  } else if (years <= 5) {
-    return `
-      <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#E9C6CC]/60 text-[#4A1C24] border border-[#E9C6CC]" title="${years} years of professional experience">
-        <span class="w-1.5 h-1.5 rounded-full bg-[#D4A7B0]"></span>
-        Pro (${years} yrs)
-      </span>
-    `;
-  } else {
-    return `
-      <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#4A1C24] text-[#F6EEE6] border border-[#4A1C24]" title="${years}+ years of professional experience">
-        <span class="w-1.5 h-1.5 rounded-full bg-[#FDD023]"></span>
-        Master (${years}+ yrs)
-      </span>
-    `;
-  }
-}
-
-/**
- * Returns LSU verified affiliation badge (Student-Owned or Alumni-Owned).
- */
-function getLsuVerifiedBadge(verified) {
-  if (verified === 'student') {
-    return `
-      <span class="inline-flex items-center gap-1.5 text-[11px] font-heading font-black px-3 py-1 rounded-full bg-[#4A1C24] text-[#FDD023] border border-[#FDD023]/60 shadow-sm">
-        <span>LSU Student-Owned</span>
-      </span>
-    `;
-  } else if (verified === 'alumni') {
-    return `
-      <span class="inline-flex items-center gap-1.5 text-[11px] font-heading font-black px-3 py-1 rounded-full bg-[#351218] text-[#E9C6CC] border border-[#E9C6CC]/40 shadow-sm">
-        <span>LSU Alumni-Owned</span>
-      </span>
-    `;
-  }
-  return '';
-}
+import { getDistanceFromLSU } from '../utils/distance.js';
 
 /**
  * Main ProviderCard Component function.
@@ -93,32 +23,33 @@ export function createProviderCard(provider) {
     ? provider.portfolioImages[0]
     : 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&auto=format&fit=crop&q=80';
 
-  const expTab = getExperienceTab(provider.yearsExperience, provider.category);
-  const expBadge = getExperienceBadge(provider.yearsExperience);
-  const lsuBadge = getLsuVerifiedBadge(provider.lsuVerified);
-  const priceTier = provider.priceTier || getPriceTier(provider.startingPrice);
-
-  // Calculate distance from LSU Memorial Tower using coordinates or ZIP code
+  // Calculate distance from LSU Memorial Tower for data-distance attribute (used by filters/sorting)
   const distance = getDistanceFromLSU(provider);
 
-  return `
-    <div class="relative pt-4 flex flex-col h-full">
-      
-      <!-- Small Tab-Style Label Above Card (BEGINNER / INTERMEDIATE / ADVANCED) -->
-      <div class="absolute top-0 left-6 sm:left-7 z-10">
-        <span class="inline-block px-3.5 py-1 text-[10px] sm:text-[11px] font-heading font-black uppercase tracking-widest ${expTab.badgeClass} rounded-t-xl border-t border-x shadow-sm">
-          ${expTab.label}
-        </span>
-      </div>
+  // Link icon prioritizes bookingUrl, then falls back to websiteUrl
+  const directLink = (provider.bookingUrl && provider.bookingUrl !== 'Not provided')
+    ? provider.bookingUrl
+    : ((provider.websiteUrl && provider.websiteUrl !== 'Not provided') ? provider.websiteUrl : null);
 
-      <!-- Main Provider Card -->
+  const directLinkTitle = (provider.bookingUrl && provider.bookingUrl !== 'Not provided')
+    ? 'Book Appointment (opens in new tab)'
+    : 'Visit Website (opens in new tab)';
+
+  const directLinkType = (provider.bookingUrl && provider.bookingUrl !== 'Not provided')
+    ? 'booking'
+    : 'website';
+
+  return `
+    <div class="flex flex-col h-full">
+      <!-- Main Provider Card (Clickable to open Detail Modal) -->
       <article 
-        class="group relative flex flex-col flex-grow rounded-3xl bg-white border border-[#E9C6CC] hover:border-[#4A1C24] shadow-md hover:shadow-xl shadow-[#4A1C24]/8 transition-all duration-300 overflow-hidden"
+        class="open-provider-modal-btn group relative flex flex-col flex-grow rounded-3xl bg-white border border-[#E9C6CC] hover:border-[#4A1C24] shadow-md hover:shadow-xl shadow-[#4A1C24]/8 transition-all duration-300 overflow-hidden cursor-pointer"
         data-provider-id="${provider.id}"
         data-category="${provider.category}"
         data-distance="${distance}"
+        title="Click to view full profile and details for ${provider.businessName}"
       >
-        <!-- 1. Rounded Photo at the Top of the Card -->
+        <!-- 1. Photo at Top of Card -->
         <div class="p-3 sm:p-3.5 pb-0">
           <div class="relative w-full aspect-[16/11] rounded-2xl overflow-hidden bg-[#F6EEE6] shadow-sm">
             <img 
@@ -128,89 +59,58 @@ export function createProviderCard(provider) {
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out rounded-2xl"
               onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&auto=format&fit=crop&q=80';"
             />
-
-            <!-- Top Corner Badges -->
-            <div class="absolute top-2.5 left-2.5 right-2.5 flex items-start justify-between gap-1.5 pointer-events-none">
-              <div class="flex flex-col gap-1 items-start">
-                ${lsuBadge}
-              </div>
-            </div>
-
-            <!-- Distance Pill in Bottom Corner of Photo -->
-            <div class="absolute bottom-2.5 left-2.5">
-              <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#4A1C24] px-2.5 py-0.5 rounded-full bg-white/95 backdrop-blur-sm border border-[#EAD5C0] shadow-sm">
-                <svg class="w-3.5 h-3.5 text-[#4A1C24]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <span>${provider.zipCode ? `ZIP ${provider.zipCode}` : provider.neighborhood} &bull; <strong class="font-mono">${distance} mi</strong></span>
-              </span>
-            </div>
           </div>
         </div>
 
         <!-- 2. Card Body Content -->
         <div class="flex flex-col flex-grow p-5 sm:p-6 bg-white">
           
-          <!-- Header: Business Name in Chunky Heading Font & Owner -->
-          <div class="mb-2">
-            <button 
-              type="button"
-              class="open-provider-modal-btn text-left group-hover:text-[#612731] transition-colors focus:outline-none cursor-pointer w-full"
-              data-provider-id="${provider.id}"
-              title="View full profile and reviews"
-            >
-              <h3 class="text-xl sm:text-2xl font-heading font-black text-[#4A1C24] group-hover:text-[#612731] transition-colors leading-tight">
-                ${provider.businessName}
-              </h3>
-            </button>
-            <p class="text-xs text-[#7A535A] mt-0.5 font-medium">
+          <!-- Header: Business Name & Owner -->
+          <div class="mb-2.5">
+            <h3 class="text-xl sm:text-2xl font-heading font-bold text-[#4A1C24] group-hover:text-[#612731] transition-colors leading-tight">
+              ${provider.businessName}
+            </h3>
+            <p class="text-xs text-[#7A535A] mt-1 font-medium font-sans">
               By <span class="text-[#4A1C24] font-semibold">${provider.ownerName}</span>
             </p>
           </div>
 
-          <!-- Rating & Reviews Indicator -->
-          <div class="flex items-center justify-between mb-3 text-xs">
-            <button 
-              type="button"
-              class="open-provider-modal-btn flex items-center gap-1.5 hover:text-[#4A1C24] transition-colors cursor-pointer text-left focus:outline-none"
-              data-provider-id="${provider.id}"
-              title="View ratings and reviews"
-            >
-              <svg class="w-3.5 h-3.5 text-[#FDD023] fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-              <span class="font-bold text-[#4A1C24] font-mono">${provider.averageRating.toFixed(1)}</span>
-              <span class="text-[#7A535A] font-normal hover:underline">(${provider.reviewCount} reviews)</span>
-            </button>
+          <!-- Rating & Student Discount Badge -->
+          <div class="flex items-center justify-between mb-4 text-xs">
+            ${(provider.ratingCount > 0 && provider.averageRating) ? `
+              <div class="flex items-center gap-1.5" title="Rated ${provider.averageRating.toFixed(1)} out of 5 stars">
+                <svg class="w-4 h-4 text-[#FDD023] fill-current" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="font-bold text-[#4A1C24] font-mono text-sm">${provider.averageRating.toFixed(1)}</span>
+              </div>
+            ` : `
+              <div class="flex items-center gap-1.5 text-xs text-[#7A535A] font-medium font-sans">
+                <span>No ratings yet</span>
+              </div>
+            `}
 
             <!-- Student Discount Callout Pill -->
             ${provider.studentDiscount ? `
-              <span class="inline-flex items-center gap-1 text-[10px] font-heading font-bold px-2 py-0.5 rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] border border-[#D4A7B0]">
+              <span class="inline-flex items-center gap-1 text-[11px] font-heading font-semibold px-2.5 py-0.5 rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] border border-[#D4A7B0]">
                 Student Discount
               </span>
             ` : ''}
           </div>
 
-          <!-- Description Snippet -->
-          <p class="text-xs text-[#523B40] leading-relaxed line-clamp-2 mb-4 flex-grow font-sans">
-            ${provider.description}
-          </p>
-
-          <!-- Pricing & Experience Strip (Price in Bold) -->
+          <!-- Starting Price Strip (Clean, bold price) -->
           <div class="flex items-center justify-between py-2.5 px-3.5 rounded-2xl bg-[#F6EEE6] border border-[#EAD5C0]/70 mb-4 text-xs">
-            <div>
-              <span class="text-[10px] text-[#7A535A] uppercase tracking-wider block font-heading font-bold">Starting Price</span>
-              <span class="font-black text-[#4A1C24] font-heading text-base sm:text-lg">
-                $${provider.startingPrice} <span class="text-[#FDD023] font-mono text-xs font-bold">${priceTier}</span>
-              </span>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-[#7A535A] uppercase tracking-wider block font-heading font-bold">Experience</span>
-              ${expBadge}
-            </div>
+            <span class="text-[11px] text-[#7A535A] uppercase tracking-wider font-heading font-semibold">Starting Price</span>
+            <span class="font-bold text-[#4A1C24] font-heading text-base sm:text-lg">
+              $${provider.startingPrice}
+            </span>
           </div>
 
-          <!-- Card Footer: Pill-shaped Social Media Icons & Booking Buttons -->
+          <!-- Card Footer: Pill-shaped Social & Booking Link Icons -->
           <div class="pt-3 border-t border-[#E9C6CC]/40 flex items-center justify-between gap-2 mt-auto">
             
-            <!-- Social Media Pill Icon Buttons -->
-            <div class="flex items-center gap-1.5">
+            <!-- Social & Booking Link Icon Buttons -->
+            <div class="flex items-center gap-2">
               <!-- Instagram Button -->
               ${provider.instagramUrl && provider.instagramUrl !== 'Not provided' ? `
               <a 
@@ -247,17 +147,17 @@ export function createProviderCard(provider) {
               </a>
               ` : ''}
 
-              <!-- Website Button -->
-              ${provider.websiteUrl && provider.websiteUrl !== 'Not provided' ? `
+              <!-- Booking / Website Link Button -->
+              ${directLink ? `
               <a 
-                href="${provider.websiteUrl}" 
+                href="${directLink}" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 data-track-provider="${provider.id}"
-                data-track-type="website"
+                data-track-type="${directLinkType}"
                 class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#F6EEE6] hover:bg-[#4A1C24] border border-[#EAD5C0] hover:border-[#4A1C24] flex items-center justify-center text-[#4A1C24] hover:text-[#F6EEE6] transition-all shadow-sm"
-                title="Visit Website (opens in new tab)"
-                aria-label="${provider.businessName} Website"
+                title="${directLinkTitle}"
+                aria-label="${provider.businessName} Booking Link"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
@@ -266,33 +166,13 @@ export function createProviderCard(provider) {
               ` : ''}
             </div>
 
-            <!-- Pill-shaped Action Buttons -->
-            <div class="flex items-center gap-2">
-              <!-- Outlined Pill: Reviews -->
-              <button 
-                type="button" 
-                class="open-provider-modal-btn px-3.5 py-1.5 rounded-full border-2 border-[#4A1C24] text-[#4A1C24] hover:bg-[#4A1C24] hover:text-[#F6EEE6] font-heading font-black text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm"
-                data-provider-id="${provider.id}"
-                title="View full profile and client reviews"
-              >
-                <span>Reviews</span>
-              </button>
-
-              <!-- Solid Pill: Book -->
-              <a 
-                href="${provider.bookingUrl}" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                data-track-provider="${provider.id}"
-                data-track-type="booking"
-                class="px-4 sm:px-5 py-1.5 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] font-heading font-black text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center gap-1.5 cursor-pointer"
-              >
-                <span>Book</span>
-                <svg class="w-3 h-3 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                </svg>
-              </a>
-            </div>
+            <!-- View Profile Hint Link -->
+            <span class="text-xs font-heading font-semibold text-[#7A535A] group-hover:text-[#4A1C24] transition-colors inline-flex items-center gap-1">
+              <span>View Profile</span>
+              <svg class="w-3.5 h-3.5 stroke-current stroke-2 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </span>
 
           </div>
 

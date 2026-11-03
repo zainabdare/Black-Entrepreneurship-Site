@@ -1,6 +1,6 @@
 /**
  * js/firebase.js
- * Firebase initialization & Firestore/Storage services for BLKENTRE.
+ * Firebase initialization & Firestore/Storage services for SETLIST Marketplace.
  * 
  * Powered by Firebase JS SDK v13.1.0 loaded via official Google CDN (ES Modules).
  * Strictly zero npm / build tools required.
@@ -53,7 +53,7 @@ if (typeof window !== 'undefined') {
     .then((supported) => {
       if (supported) {
         analytics = getAnalytics(app);
-        console.log('%cBLKENTRE: Firebase Analytics initialized', 'color: #FDD023; background: #461D7C; padding: 2px 6px; border-radius: 3px;');
+        console.log('%cSETLIST Marketplace: Firebase Analytics initialized', 'color: #FDD023; background: #4A1C24; padding: 2px 6px; border-radius: 3px;');
       }
     })
     .catch(() => {
@@ -189,6 +189,119 @@ export async function uploadReviewPhoto(file, providerId, index = 0) {
       reader.onloadend = () => resolve(reader.result);
       reader.readAsDataURL(compressed);
     });
+  }
+}
+
+// ============================================================================
+// RATINGS MANAGEMENT (TOP-LEVEL FIRESTORE "ratings" COLLECTION)
+// ============================================================================
+
+/**
+ * Fetches all real ratings from the top-level Firestore "ratings" collection.
+ * 
+ * @returns {Promise<Array<Object>>}
+ */
+export async function getAllRatingsFromFirestore() {
+  try {
+    const ratingsCol = collection(db, "ratings");
+    const snapshot = await getDocs(ratingsCol);
+    if (snapshot.empty) return [];
+    const list = [];
+    snapshot.forEach(docSnap => {
+      list.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
+    });
+    return list;
+  } catch (error) {
+    console.warn('[Firestore Ratings] Could not fetch "ratings" collection:', error.message);
+    return [];
+  }
+}
+
+/**
+ * Fetches ratings for a specific provider from the top-level "ratings" collection.
+ * 
+ * @param {string} providerId 
+ * @returns {Promise<Array<Object>>}
+ */
+export async function getRatingsForProvider(providerId) {
+  try {
+    const allRatings = await getAllRatingsFromFirestore();
+    return allRatings.filter(r => r.providerId === providerId);
+  } catch (error) {
+    console.warn(`[Firestore Ratings] Error fetching ratings for ${providerId}:`, error.message);
+    return [];
+  }
+}
+
+/**
+ * Submits a new star rating to the top-level Firestore "ratings" collection.
+ * Includes spam protection (one per provider per browser) and whole-number validation (1-5).
+ * 
+ * @param {Object} ratingPayload { providerId, category, overall, criteria }
+ * @returns {Promise<Object>} The saved rating document
+ */
+export async function submitRatingToFirestore(ratingPayload) {
+  const { providerId, category, overall, criteria } = ratingPayload;
+
+  // 1. Spam protection: one rating per provider per browser
+  const storageKey = `rated_provider_${providerId}`;
+  if (localStorage.getItem(storageKey)) {
+    const err = new Error('You have already submitted a rating for this business from this browser.');
+    console.error('Error submitting rating:', err.message);
+    throw err;
+  }
+
+  // 2. Validate overall rating: whole number 1-5
+  const intOverall = parseInt(overall, 10);
+  if (isNaN(intOverall) || intOverall < 1 || intOverall > 5 || intOverall !== Number(overall)) {
+    const err = new Error('Overall rating must be a whole number between 1 and 5.');
+    console.error('Error submitting rating:', err.message);
+    throw err;
+  }
+
+  // 3. Validate criteria ratings: whole numbers 1-5
+  const cleanCriteria = {};
+  if (criteria && typeof criteria === 'object') {
+    for (const [key, val] of Object.entries(criteria)) {
+      const intVal = parseInt(val, 10);
+      if (isNaN(intVal) || intVal < 1 || intVal > 5 || intVal !== Number(val)) {
+        const err = new Error(`Criteria rating for "${key}" must be a whole number between 1 and 5.`);
+        console.error('Error submitting rating:', err.message);
+        throw err;
+      }
+      cleanCriteria[key] = intVal;
+    }
+  }
+
+  const docData = {
+    providerId: String(providerId),
+    category: String(category || 'General'),
+    overall: intOverall,
+    rating: intOverall,
+    criteria: cleanCriteria,
+    timestamp: new Date().toISOString()
+  };
+
+  console.log("Submitting rating...", docData);
+
+  try {
+    const ratingsCol = collection(db, "ratings");
+    const docRef = await addDoc(ratingsCol, docData);
+    console.log("Rating saved", docRef.id);
+
+    // Save in localStorage for spam protection
+    localStorage.setItem(storageKey, 'true');
+
+    return {
+      id: docRef.id,
+      ...docData
+    };
+  } catch (error) {
+    console.error("Error submitting rating:", error);
+    throw error;
   }
 }
 

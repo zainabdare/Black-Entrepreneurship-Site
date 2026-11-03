@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About the Creators | BLKENTRE</title>
-  <meta name="description" content="Learn about the mission behind BLKENTRE, supporting Black-owned businesses within 25 miles of LSU.">
+  <title>About the Creators | SETLIST Marketplace</title>
+  <meta name="description"
+    content="Learn about the mission behind SETLIST Marketplace, supporting Black-owned businesses within 25 miles of LSU.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-  <!-- Google Fonts: Lilita One (Headings), Caveat (Script Accent), Poppins (Body) -->
+  <!-- Google Fonts: Raleway -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lilita+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -21,9 +24,9 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Poppins', 'sans-serif'],
-            heading: ['"Lilita One"', 'cursive', 'sans-serif'],
-            script: ['Caveat', 'cursive'],
+            sans: ['Raleway', 'sans-serif'],
+            heading: ['Raleway', 'sans-serif'],
+            body: ['Raleway', 'sans-serif'],
           },
           colors: {
             burgundy: {
@@ -68,7 +71,9 @@
   <!-- JavaScript ES Modules (Includes slide-out drawer navigation) -->
   <script type="module" src="js/app.js"></script>
 </head>
-<body class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
+
+<body
+  class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
 
   <!-- ========================================================================
        HEADER & NAVIGATION
@@ -76,32 +81,23 @@
   <header class="sticky top-0 z-40 bg-[#F6EEE6]/90 backdrop-blur-md border-b border-[#EAD5C0] transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20">
-        
+
         <!-- Site Logo -->
-        <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4A1C24] rounded-full py-1" aria-label="BLKENTRE Home">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#4A1C24] border border-[#E9C6CC]/60 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
-            <svg class="w-5 h-5 sm:w-5.5 sm:h-5.5" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M10 7H19.5C23.1 7 26 9.7 26 13.2C26 15.2 25 16.9 23.4 18C25.4 19.1 26.8 21.2 26.8 23.7C26.8 27.5 23.7 30.5 19.8 30.5H10V7ZM15 11.5V15.5H19C20.1 15.5 21 14.6 21 13.5C21 12.4 20.1 11.5 19 11.5H15ZM15 20V26H19.5C20.9 26 22 24.9 22 23.5C22 22.1 20.9 21 19.5 21H15Z" fill="#F6EEE6"/>
-            </svg>
-          </div>
-          <span class="font-heading font-black text-2xl sm:text-3xl text-[#4A1C24] tracking-tight leading-none group-hover:text-[#612731] transition-colors">
-            BLKENTRE
-          </span>
+        <a href="index.html"
+          class="setlist-logo group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4A1C24] py-1"
+          aria-label="SETLIST Marketplace Home">
+          <span class="setlist-logo-main">SETLIST</span>
+          <span class="setlist-logo-sub">MARKETPLACE</span>
         </a>
 
         <!-- Top Corner Hamburger Menu Button -->
         <div class="flex items-center">
-          <button 
-            id="hamburger-btn" 
-            type="button" 
+          <button id="hamburger-btn" type="button"
             class="flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] hover:text-[#FDD023] border border-[#4A1C24] focus:outline-none focus:ring-2 focus:ring-[#FDD023] transition-all shadow-md cursor-pointer"
-            aria-expanded="false" 
-            aria-controls="slide-out-menu"
-            aria-label="Open navigation menu"
-          >
+            aria-expanded="false" aria-controls="slide-out-menu" aria-label="Open navigation menu">
             <span class="text-xs font-heading font-bold uppercase tracking-wider hidden sm:inline-block">Menu</span>
             <svg class="w-5 h-5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
@@ -113,31 +109,20 @@
   <!-- ========================================================================
        HERO BANNER
        ======================================================================== -->
-  <section class="relative hero-glow-bg border-b border-[#EAD5C0]/80 py-12 sm:py-20 overflow-hidden">
+  <section class="relative hero-glow-bg border-b border-[#EAD5C0]/80 py-12 sm:py-16 overflow-hidden">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      
+
       <!-- Breadcrumb -->
-      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs text-[#7A535A] hover:text-[#4A1C24] font-heading font-semibold transition-colors mb-4">
+      <a href="index.html"
+        class="inline-flex items-center gap-1.5 text-xs text-[#7A535A] hover:text-[#4A1C24] font-heading font-semibold transition-colors mb-4">
         <span>&larr;</span>
         <span>Back to Main Directory</span>
       </a>
 
-      <!-- Pill -->
-      <div class="block">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E9C6CC]/50 border border-[#D4A7B0] text-[#4A1C24] text-xs sm:text-sm font-heading font-bold mb-4">
-          <span>Our Story &amp; Purpose</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[#FDD023]"></span>
-          <span>Baton Rouge, LA</span>
-        </div>
-      </div>
-
       <!-- Title -->
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-[#4A1C24] tracking-tight mb-4">
-        Empowering Black Business Around <span class="script-word text-[#4A1C24]">lsu</span> Campus
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-light text-[#4A1C24] tracking-[0.18em] uppercase">
+        THE <strong class="font-bold">SETLIST</strong> WHY
       </h1>
-      <p class="max-w-2xl mx-auto text-[#7A535A] text-sm sm:text-base leading-relaxed mb-6 font-sans">
-        Bridging the gap between Louisiana State University students, faculty, and local residents with talented Black entrepreneurs across Baton Rouge.
-      </p>
 
     </div>
   </section>
@@ -146,79 +131,142 @@
        MISSION & IMPACT CONTENT
        ======================================================================== -->
   <main class="flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12">
-    
+
     <!-- Mission Statement -->
     <div class="p-7 sm:p-10 rounded-3xl bg-white border border-[#EAD5C0] shadow-lg shadow-[#4A1C24]/5">
-      <h2 class="text-2xl sm:text-3xl font-heading font-black text-[#4A1C24] mb-4">
-        Why We Built <span class="script-word text-[#4A1C24]">blkentre</span>
+      <h2 class="text-2xl sm:text-3xl font-light text-[#4A1C24] tracking-[0.14em] uppercase mb-4">
+        Why We Built <strong class="font-bold">SETLIST</strong> Marketplace
       </h2>
-      <div class="space-y-4 text-xs sm:text-sm text-[#7A535A] leading-relaxed font-sans">
+      <div class="text-sm sm:text-base text-[#7A535A] leading-relaxed font-sans">
         <p>
-          As students and creatives living in Baton Rouge, we noticed that finding reliable, high-quality Black service providers—whether looking for silk presses, precision lash fills, game day tailgating plates, or graduation portraits—often relied solely on fragmented word-of-mouth or buried Instagram hashtags.
-        </p>
-        <p>
-          At the same time, hundreds of hardworking Black entrepreneurs, student hustlers, and alumni small business owners operate within miles of LSU without a unified directory to showcase their craft, pricing, booking links, and service radius.
-        </p>
-        <p class="text-[#4A1C24] font-medium">
-          <strong>BLKENTRE</strong> was created to solve this problem: a modern, mobile-friendly directory that connects the LSU community directly to local Black-owned businesses within a 25-mile radius of LSU’s historic Memorial Tower.
+          <strong class="font-bold">SETLIST</strong> is a campus-first marketplace connecting LSU students directly with
+          local Black-owned businesses. Whether you need a fresh set, event photos, or game-day catering, we replace
+          fragmented word-of-mouth with verified pricing, direct booking links, and distance filtering—all in one place.
         </p>
       </div>
     </div>
 
-    <!-- Core Pillars -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-      
-      <div class="p-6 rounded-3xl bg-white border border-[#EAD5C0] shadow-sm">
-        <div class="w-12 h-12 rounded-2xl bg-[#EAD5C0]/40 flex items-center justify-center text-[#4A1C24] mb-4">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        </div>
-        <h3 class="text-lg font-heading font-black text-[#4A1C24] mb-2">
-          Strict 25-Mile Radius
-        </h3>
-        <p class="text-xs text-[#7A535A] leading-relaxed font-sans">
-          Centered directly at LSU Memorial Tower (30.4133&deg; N, 91.1800&deg; W) so students and campus residents can always find providers close to them.
-        </p>
+    <!-- ========================================================================
+         MEET THE CREATORS SECTION
+         ======================================================================== -->
+    <section class="space-y-6 sm:space-y-8">
+
+      <div class="text-center">
+        <h2 class="text-2xl sm:text-3xl font-light text-[#4A1C24] tracking-[0.14em] uppercase">
+          Meet the Creators
+        </h2>
       </div>
 
-      <div class="p-6 rounded-3xl bg-white border border-[#EAD5C0] shadow-sm">
-        <div class="w-12 h-12 rounded-2xl bg-[#E9C6CC]/40 flex items-center justify-center text-[#4A1C24] mb-4">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-        </div>
-        <h3 class="text-lg font-heading font-black text-[#4A1C24] mb-2">
-          LSU Verification
-        </h3>
-        <p class="text-xs text-[#7A535A] leading-relaxed font-sans">
-          We highlight verified current LSU student-owned and alumni-owned businesses, encouraging peer-to-peer economic empowerment on campus.
-        </p>
-      </div>
+      <!-- Two Creator Cards (Side-by-side on desktop/tablet, stacked on mobile) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
 
-      <div class="p-6 rounded-3xl bg-white border border-[#EAD5C0] shadow-sm">
-        <div class="w-12 h-12 rounded-2xl bg-[#EAD5C0]/40 flex items-center justify-center text-[#4A1C24] mb-4">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        </div>
-        <h3 class="text-lg font-heading font-black text-[#4A1C24] mb-2">
-          Zero Barriers to Access
-        </h3>
-        <p class="text-xs text-[#7A535A] leading-relaxed font-sans">
-          Built using lightweight, ultra-fast web standards with direct booking links, transparent pricing tiers, and zero commission cuts.
-        </p>
-      </div>
+        <!-- Creator 1 Card: Zainab Dare -->
+        <div
+          class="p-7 sm:p-8 rounded-3xl bg-white border border-[#EAD5C0] shadow-lg shadow-[#4A1C24]/5 flex flex-col items-center text-center">
 
-    </div>
+          <!-- Round Headshot: Zainab Dare -->
+          <div
+            class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden mb-5 border-2 border-[#D4A7B0] shadow-md shrink-0 bg-[#E9C6CC]">
+            <img src="images/zainab_headshot.jpg" alt="Headshot of Zainab Dare"
+              class="w-full h-full object-cover rounded-full"
+              style="object-position: center 30%;" />
+          </div>
+
+          <!-- Name -->
+          <h3 class="text-xl sm:text-2xl font-heading font-bold text-[#4A1C24] tracking-wide mb-1">
+            Zainab Dare
+          </h3>
+
+          <!-- Class Year and Major (Two separate centered lines without dot) -->
+          <div class="creator-subtitle-group">
+            <span class="creator-cohort">CO&rsquo;28</span>
+            <span class="creator-major">Information Systems &amp; Decision Sciences</span>
+          </div>
+
+          <!-- Social Icon Links (LinkedIn & Instagram) -->
+          <div class="flex items-center justify-center gap-3 pt-4 border-t border-[#EAD5C0]/60 w-full mt-auto">
+            <a href="https://www.linkedin.com/in/zainab-dare-b6b320384" target="_blank" rel="noopener noreferrer"
+              class="w-9 h-9 rounded-full bg-[#F6EEE6] hover:bg-[#4A1C24] text-[#4A1C24] hover:text-[#F6EEE6] border border-[#EAD5C0] hover:border-[#4A1C24] flex items-center justify-center transition-colors shadow-sm"
+              aria-label="Zainab Dare LinkedIn Profile" title="LinkedIn Profile">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.6a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z" />
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/zainabdaree" target="_blank" rel="noopener noreferrer"
+              class="w-9 h-9 rounded-full bg-[#F6EEE6] hover:bg-[#4A1C24] text-[#4A1C24] hover:text-[#F6EEE6] border border-[#EAD5C0] hover:border-[#4A1C24] flex items-center justify-center transition-colors shadow-sm"
+              aria-label="Zainab Dare Instagram Profile" title="Instagram Profile">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Creator 2 Card: Jasmyne Earle -->
+        <div
+          class="p-7 sm:p-8 rounded-3xl bg-white border border-[#EAD5C0] shadow-lg shadow-[#4A1C24]/5 flex flex-col items-center text-center">
+
+          <!-- Round Headshot Placeholder (Neat circle with JE initials fallback until images/creator-2.jpg is uploaded) -->
+          <div
+            class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden mb-5 bg-[#EAD5C0] border-2 border-[#D3BAA2] flex items-center justify-center shrink-0 shadow-inner">
+            <span
+              class="text-2xl sm:text-3xl font-heading font-bold text-[#4A1C24] tracking-wider select-none">JE</span>
+            <img src="images/creator-2.jpg" alt="Jasmyne Earle - Co-founder of SETLIST Marketplace"
+              class="absolute inset-0 w-full h-full object-cover rounded-full" onerror="this.style.display='none'" />
+          </div>
+
+          <!-- Name -->
+          <h3 class="text-xl sm:text-2xl font-heading font-bold text-[#4A1C24] tracking-wide mb-1">
+            Jasmyne Earle
+          </h3>
+
+          <!-- Class Year and Major (Two separate centered lines without dot) -->
+          <div class="creator-subtitle-group">
+            <span class="creator-cohort">CO&rsquo;28</span>
+            <span class="creator-major">Information Systems &amp; Decision Sciences</span>
+          </div>
+
+          <!-- Social Icon Links (Visible placeholders that do not navigate or jump the page) -->
+          <div class="flex items-center justify-center gap-3 pt-4 border-t border-[#EAD5C0]/60 w-full mt-auto">
+            <!-- To link Jasmyne's socials later: replace <span class="..."> with <a href="YOUR_URL" target="_blank" rel="noopener noreferrer" class="..."> -->
+            <span
+              class="w-9 h-9 rounded-full bg-[#F6EEE6] text-[#4A1C24] border border-[#EAD5C0] flex items-center justify-center shadow-sm cursor-default"
+              title="LinkedIn (Coming soon)" aria-label="Jasmyne Earle LinkedIn">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.6a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z" />
+              </svg>
+            </span>
+            <span
+              class="w-9 h-9 rounded-full bg-[#F6EEE6] text-[#4A1C24] border border-[#EAD5C0] flex items-center justify-center shadow-sm cursor-default"
+              title="Instagram (Coming soon)" aria-label="Jasmyne Earle Instagram">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
 
     <!-- Ready to Explore CTA -->
-    <div class="text-center p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#4A1C24] to-[#351218] text-[#F6EEE6] shadow-xl">
-      <h3 class="text-2xl sm:text-3xl font-heading font-black text-[#F6EEE6] mb-3">
-        Ready to support <span class="script-word text-[#E9C6CC]">local</span> businesses?
+    <div
+      class="text-center p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-[#4A1C24] to-[#351218] text-[#F6EEE6] shadow-xl">
+      <h3 class="text-2xl sm:text-3xl font-light text-[#F6EEE6] tracking-[0.14em] uppercase mb-6 sm:mb-8">
+        Ready to support local businesses?
       </h3>
-      <p class="text-[#E9C6CC] text-xs sm:text-sm max-w-lg mx-auto mb-6 font-sans">
-        Browse our 6 categories or use the slide-out navigation menu to find the exact service you need.
-      </p>
       <div class="flex flex-wrap items-center justify-center gap-3">
-        <a href="index.html" class="btn-pill text-xs px-6 py-3 bg-[#FDD023] text-[#4A1C24] hover:bg-[#ECC21C] border-[#FDD023]">
+        <a href="index.html"
+          class="btn-pill text-xs px-6 py-3 bg-[#FDD023] text-[#4A1C24] hover:bg-[#ECC21C] border-[#FDD023]">
           Browse Full Directory
         </a>
-        <a href="submit-business.html" class="btn-pill-outline text-xs px-6 py-3 border-[#E9C6CC] text-[#F6EEE6] hover:bg-[#E9C6CC] hover:text-[#4A1C24]">
+        <a href="submit-business.html" class="btn-pill-cream-outline text-xs px-6 py-3">
           Submit Your Business
         </a>
       </div>
@@ -229,9 +277,11 @@
   <!-- Footer -->
   <footer class="border-t border-[#E9C6CC]/20 bg-[#351218] text-[#E9C6CC] py-8 text-xs text-center">
     <div class="max-w-7xl mx-auto px-4 font-sans">
-      <p>&copy; 2026 BLKENTRE &bull; Dedicated to Black Entrepreneurs near LSU</p>
+      <p>&copy; 2026 <strong class="font-bold">SETLIST</strong> Marketplace &bull; Dedicated to Black Entrepreneurs near
+        LSU</p>
     </div>
   </footer>
 
 </body>
+
 </html>

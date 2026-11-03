@@ -1,6 +1,6 @@
 /**
  * js/emailjs-config.js
- * Central configuration for EmailJS notification services and Google Sheets intake in BLKENTRE.
+ * Central configuration for EmailJS notification services and Google Sheets intake in SETLIST Marketplace.
  * 
  * Service ID: service_yp3g91b
  * Template ID: template_7zv1ows (contains lowercase letter 'o', not zero '0')

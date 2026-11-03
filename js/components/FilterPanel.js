@@ -1,10 +1,10 @@
 /**
  * js/components/FilterPanel.js
  * 
- * Reusable Filter Panel Component for BLKENTRE category pages.
+ * Reusable Filter Panel Component for SETLIST Marketplace category pages.
  * Restyled with:
  * - Cream background (#F6EEE6)
- * - Burgundy headings (#4A1C24, Lilita One display)
+ * - Burgundy headings (#4A1C24, Raleway display)
  * - Blush pink selected states (#E9C6CC with #4A1C24 text)
  * - Pill-shaped buttons and inputs
  */
@@ -240,6 +240,10 @@ export function injectFilterPanel(categoryName, onFilterChange) {
   if (!mount) return;
 
   const categorySpecificHtml = getCategorySpecificHtml(categoryName);
+  const displayCat = categoryName && categoryName !== 'All'
+    ? (categoryName.startsWith('Fashion') ? 'Fashion' : categoryName)
+    : '';
+  const initialCategoryText = displayCat ? ` in ${displayCat}` : '';
 
   mount.innerHTML = `
     <!-- ======================================================================
@@ -277,7 +281,7 @@ export function injectFilterPanel(categoryName, onFilterChange) {
         
         <!-- Results count display -->
         <span id="results-count" class="text-xs text-[#7A535A] font-medium font-sans">
-          Showing <span class="text-[#4A1C24] font-bold">3</span> providers
+          Showing providers${initialCategoryText}
         </span>
 
         <!-- Sort Dropdown -->

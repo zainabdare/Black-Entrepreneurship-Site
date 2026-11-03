@@ -4,16 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submit Your Business | BLKENTRE</title>
+  <title>Submit Your Business | SETLIST Marketplace</title>
   <meta name="description"
-    content="Apply to list your Black-owned business or creative service on BLKENTRE within 25 miles of LSU.">
+    content="Apply to list your Black-owned business or creative service on SETLIST Marketplace within 25 miles of LSU.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-  <!-- Google Fonts: Lilita One (Headings), Caveat (Script Accent), Poppins (Body) -->
+  <!-- Google Fonts: Raleway -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lilita+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
@@ -25,9 +24,9 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Poppins', 'sans-serif'],
-            heading: ['"Lilita One"', 'cursive', 'sans-serif'],
-            script: ['Caveat', 'cursive'],
+            sans: ['Raleway', 'sans-serif'],
+            heading: ['Raleway', 'sans-serif'],
+            body: ['Raleway', 'sans-serif'],
           },
           colors: {
             burgundy: {
@@ -88,20 +87,10 @@
 
         <!-- Site Logo -->
         <a href="index.html"
-          class="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4A1C24] rounded-full py-1"
-          aria-label="BLKENTRE Home">
-          <div
-            class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#4A1C24] border border-[#E9C6CC]/60 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
-            <svg class="w-5 h-5 sm:w-5.5 sm:h-5.5" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M10 7H19.5C23.1 7 26 9.7 26 13.2C26 15.2 25 16.9 23.4 18C25.4 19.1 26.8 21.2 26.8 23.7C26.8 27.5 23.7 30.5 19.8 30.5H10V7ZM15 11.5V15.5H19C20.1 15.5 21 14.6 21 13.5C21 12.4 20.1 11.5 19 11.5H15ZM15 20V26H19.5C20.9 26 22 24.9 22 23.5C22 22.1 20.9 21 19.5 21H15Z"
-                fill="#F6EEE6" />
-            </svg>
-          </div>
-          <span
-            class="font-heading font-black text-2xl sm:text-3xl text-[#4A1C24] tracking-tight leading-none group-hover:text-[#612731] transition-colors">
-            BLKENTRE
-          </span>
+          class="setlist-logo group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4A1C24] py-1"
+          aria-label="SETLIST Marketplace Home">
+          <span class="setlist-logo-main">SETLIST</span>
+          <span class="setlist-logo-sub">MARKETPLACE</span>
         </a>
 
         <!-- Top Corner Hamburger Menu Button -->
@@ -142,8 +131,8 @@
       </div>
 
       <!-- Title -->
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-heading font-black text-[#4A1C24] tracking-tight mb-4">
-        Submit Your <span class="script-word text-[#4A1C24]">business</span>
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-light text-[#4A1C24] tracking-[0.18em] uppercase mb-4">
+        Submit Your Business
       </h1>
       <p class="max-w-xl mx-auto text-[#7A535A] text-sm sm:text-base leading-relaxed mb-4 font-sans">
         Are you a Black entrepreneur, braider, nail artist, lash tech, caterer, designer, or photographer within 25
@@ -920,7 +909,8 @@
 
       <!-- Message -->
       <p class="text-sm sm:text-base text-[#7A535A] max-w-lg mx-auto leading-relaxed font-sans font-medium">
-        Thank you for applying to BLKENTRE! Your business has been submitted and is now under review. We'll reach out
+        Thank you for applying to <strong class="font-bold">SETLIST</strong> Marketplace! Your business has been submitted and is now under review. We'll
+        reach out
         soon.
       </p>
 
@@ -958,7 +948,7 @@
   <!-- Footer -->
   <footer class="border-t border-[#4A1C24] bg-[#351218] py-8 text-xs text-[#E9C6CC] text-center mt-auto">
     <div class="max-w-7xl mx-auto px-4 space-y-1 font-sans">
-      <p>&copy; 2026 BLKENTRE &bull; Dedicated to Black Entrepreneurs near LSU</p>
+      <p>&copy; 2026 <strong class="font-bold">SETLIST</strong> Marketplace &bull; Dedicated to Black Entrepreneurs near LSU</p>
       <p class="text-[#E9C6CC]/70">Free, community-curated directory within 25 miles of Louisiana State University</p>
     </div>
   </footer>
@@ -971,7 +961,7 @@
     if (window.emailjs && EMAILJS_CONFIG?.publicKey) {
       try {
         window.emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
-        console.log('%cBLKENTRE: EmailJS initialized', 'color: #FDD023; background: #4A1C24; padding: 2px 6px; border-radius: 3px;');
+        console.log('%cSETLIST Marketplace: EmailJS initialized', 'color: #FDD023; background: #4A1C24; padding: 2px 6px; border-radius: 3px;');
       } catch (initErr) {
         console.warn('[EmailJS Init Notice]:', initErr);
       }
@@ -1136,7 +1126,7 @@
       selectedFiles.forEach((file, idx) => {
         const thumb = document.createElement('div');
         thumb.className = 'relative h-24 rounded-xl overflow-hidden bg-white border-2 border-[#EAD5C0] shadow-sm';
-        
+
         const img = document.createElement('img');
         img.className = 'w-full h-full object-cover';
         img.src = URL.createObjectURL(file);
@@ -1170,7 +1160,7 @@
 
     // Dropdown placeholder style updater (blank "Select..." appears in light gray, selected values in dark burgundy)
     const allFormSelects = form.querySelectorAll('select');
-    function  updateSelectStyle(selectEl) {
+    function updateSelectStyle(selectEl) {
       if (!selectEl) return;
       if (!selectEl.value || selectEl.value === "") {
         selectEl.classList.add('text-[#7A535A]/60');
@@ -1190,7 +1180,7 @@
     try {
       localStorage.removeItem('last_provider_intake_timestamp');
       localStorage.removeItem('provider_intake_submitted');
-    } catch (e) {}
+    } catch (e) { }
 
     // Function to ensure fresh, empty form state
     function resetToIntakeForm() {
@@ -1300,7 +1290,7 @@
       const honeypot = document.getElementById('intake-bot-trap')?.value?.trim();
       if (honeypot) {
         console.warn('[Spam Proection] Honeypot field was filled with:', honeypot, '- submission blocked as spam.');
-       if (formHeader) formHeader.classList.add('hidden');
+        if (formHeader) formHeader.classList.add('hidden');
         form.classList.add('hidden');
         successModal.classList.remove('hidden');
         successModal.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1357,8 +1347,8 @@
 
       const depositRequired = document.getElementById('intake-deposit-required').checked;
       const depositAmountVal = document.getElementById('intake-deposit-amount').value.trim();
-      const depositPolicyText = depositRequired 
-        ? (depositAmountVal ? `$${depositAmountVal}` : 'Deposit required upon booking') 
+      const depositPolicyText = depositRequired
+        ? (depositAmountVal ? `$${depositAmountVal}` : 'Deposit required upon booking')
         : 'No deposit required';
 
       const cancellationPolicySelect = document.getElementById('intake-cancellation-policy');
@@ -1489,8 +1479,8 @@
       const categoryDetailsLine = getCategoryDetailsLine(category);
 
       // Photo links: if photo uploads fail or are not available, send "Photos could not be uploaded"
-      const photoLinksText = selectedFiles.length > 0 
-        ? "Photos could not be uploaded" 
+      const photoLinksText = selectedFiles.length > 0
+        ? "Photos could not be uploaded"
         : "Not provided";
 
       // Readable date and time string
@@ -1642,8 +1632,8 @@
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(googleSheetPayload)
           })
-          .then(() => console.log('[Google Sheet] Application sent to Google Sheet in background'))
-          .catch(sheetErr => console.error("Google Sheet error:", sheetErr));
+            .then(() => console.log('[Google Sheet] Application sent to Google Sheet in background'))
+            .catch(sheetErr => console.error("Google Sheet error:", sheetErr));
         }
 
         // 4. Also in the background, try the Firebase save and photo uploads, each wrapped in try/catch with a 10-second timeout

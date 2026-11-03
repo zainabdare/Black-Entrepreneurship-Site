@@ -1,7 +1,7 @@
 /**
  * src/utils/filters.js
  * 
- * Central filtering & sorting logic for BLKENTRE service directory:
+ * Central filtering & sorting logic for SETLIST Marketplace service directory:
  * - Category matching
  * - Keyword search matching (name, category, description)
  * - Geographic radius filtering (Haversine formula & ZIP codes from LSU)
@@ -249,7 +249,8 @@ export function filterProviders(providers, {
 
     // Minimum Rating (3+, 4+, 4.5+)
     if (minRating && Number(minRating) > 0) {
-      if ((provider.averageRating || 0) < Number(minRating)) {
+      const avg = (provider.ratingCount > 0 && provider.averageRating) ? provider.averageRating : 0;
+      if (avg < Number(minRating)) {
         return false;
       }
     }
@@ -409,9 +410,11 @@ export function filterProviders(providers, {
 
       case 'rating':
       default: {
-        const ratingDiff = (b.averageRating || 0) - (a.averageRating || 0);
+        const ratingA = (a.ratingCount > 0 && a.averageRating) ? a.averageRating : 0;
+        const ratingB = (b.ratingCount > 0 && b.averageRating) ? b.averageRating : 0;
+        const ratingDiff = ratingB - ratingA;
         if (ratingDiff !== 0) return ratingDiff;
-        return (b.reviewCount || 0) - (a.reviewCount || 0);
+        return (b.ratingCount || 0) - (a.ratingCount || 0);
       }
     }
   });

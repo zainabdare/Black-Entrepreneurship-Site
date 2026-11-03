@@ -1,40 +1,63 @@
 /* ==========================================================================
    css/styles.css
-   Project: Black-Owned BR — LSU Student & Community Directory
+   Project: SETLIST Marketplace — Black Entrepreneur & LSU Community Directory
    
    Style System:
    - Palette: Cream (#F6EEE6), Burgundy (#4A1C24), Blush Pink (#E9C6CC), Sand (#EAD5C0), Accent Gold (#FDD023)
    - Fonts:
-       - Headings: "Lilita One" (Chunky, all-caps display)
-       - Accent script: "Caveat" (Handwritten single-word script)
-       - Body: "Poppins" (Clean modern sans-serif)
+       - Universal: "Raleway", sans-serif
+       - Big Headings: Raleway 300 (Light, all capitals, wide letter spacing)
+       - Section Headings & Labels: Raleway 500 (Medium, capitals, letter spacing)
+       - Body, Buttons, Forms: Raleway 400 & 500 (Clean, legible)
    - Buttons: Fully rounded pill buttons (Burgundy with cream text & outlined version)
    - Cards: Soft rounded corners, warm gentle shadows
    - Navigation: Burgundy slide-out drawer with cream text
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Google Fonts Import (Lilita One, Caveat, Poppins)
+   1. Google Fonts Import (Raleway) & Custom Cathalia Script Font
    -------------------------------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lilita+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+@font-face {
+  font-family: 'Cathalia';
+  src: url('../fonts/Cathalia.otf') format('opentype'),
+       url('fonts/Cathalia.otf') format('opentype'),
+       url('/fonts/Cathalia.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* --------------------------------------------------------------------------
    2. CSS Custom Properties (Easy to change later)
    -------------------------------------------------------------------------- */
 :root {
   /* Brand Palette defined by User */
-  --color-burgundy: #4A1C24;         /* Main dark color, headings, dark sections, buttons */
-  --color-burgundy-dark: #351218;    /* Deep burgundy active */
-  --color-burgundy-light: #612731;   /* Medium burgundy */
-  --color-blush: #E9C6CC;            /* Blush pink accent & cards */
-  --color-blush-light: #F7E9EC;      /* Soft blush wash */
-  --color-blush-dark: #D4A7B0;       /* Muted blush border */
-  --color-cream: #F6EEE6;            /* Main page background */
-  --color-cream-light: #FDFBF8;      /* Clean card surface */
-  --color-sand: #EAD5C0;             /* Warm sand neutral */
-  --color-sand-light: #F4E8DC;       /* Sand tint */
-  --color-sand-dark: #D3BAA2;        /* Dark sand border */
-  --color-lsu-gold: #FDD023;         /* Small accent only for badges/highlights */
+  --color-burgundy: #4A1C24;
+  /* Main dark color, headings, dark sections, buttons */
+  --color-burgundy-dark: #351218;
+  /* Deep burgundy active */
+  --color-burgundy-light: #612731;
+  /* Medium burgundy */
+  --color-blush: #E9C6CC;
+  /* Blush pink accent & cards */
+  --color-blush-light: #F7E9EC;
+  /* Soft blush wash */
+  --color-blush-dark: #D4A7B0;
+  /* Muted blush border */
+  --color-cream: #F6EEE6;
+  /* Main page background */
+  --color-cream-light: #FDFBF8;
+  /* Clean card surface */
+  --color-sand: #EAD5C0;
+  /* Warm sand neutral */
+  --color-sand-light: #F4E8DC;
+  /* Sand tint */
+  --color-sand-dark: #D3BAA2;
+  /* Dark sand border */
+  --color-lsu-gold: #FDD023;
+  /* Small accent only for badges/highlights */
   --color-lsu-gold-hover: #ECC21C;
   --color-lsu-gold-light: #FEF08A;
 
@@ -66,7 +89,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. Global Typography & Smooth Scrolling
+   3. Global Typography & Smooth Scrolling (Raleway Universal System)
    -------------------------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
@@ -75,25 +98,154 @@ html {
 }
 
 body {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Raleway', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 400;
   background-color: var(--color-cream);
   color: var(--color-burgundy);
 }
 
-/* Chunky, heavy, all-caps display font for headings */
-h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: 'Lilita One', 'Arial Black', Impact, cursive, sans-serif;
-  letter-spacing: 0.04em;
+/* Big Headings: Raleway weight 300, all capitals, wide letter spacing */
+h1,
+.hero-headline,
+.hero-chunky-headline {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
+/* Section Headings: Raleway weight 500, capitals, letter spacing */
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-weight: 400;
+  letter-spacing: 0.14em;
+}
+
+h3,
+h4 {
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+/* Section labels, filter labels, form labels: Raleway weight 500 */
+label,
+.filter-label,
+.section-label {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+/* Body text, buttons, form fields: Raleway weight 400 or 500 */
+p,
+span,
+li,
+a,
+td,
+th {
+  font-family: 'Raleway', sans-serif;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+}
+
 /* --------------------------------------------------------------------------
-   4. Reusable Script Word Accent
-   Allows single words in headings to be rendered in handwritten script font
-   Usage:
-     - <h2>WHAT KIND OF <span class="script-word">results</span> CAN YOU <span class="script-word">expect</span>?</h2>
-     - <h1>FIND YOUR <script-word>glow</script-word></h1>
-     - <h3>TURN UP <span class="font-script">the</span> HEAT.</h3>
+   4. SETLIST Marketplace Text Logo Component
+   Raleway 700 (bold) for SETLIST, 400 for MARKETPLACE, wide letter spacing, centered
+   -------------------------------------------------------------------------- */
+.setlist-logo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+  user-select: none;
+}
+
+.setlist-logo-main {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: 1.55rem;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #4A1C24;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+@media (min-width: 640px) {
+  .setlist-logo-main {
+    font-size: 1.85rem;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+  }
+}
+
+.setlist-logo-sub {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 0.5rem;
+  letter-spacing: 0.44em;
+  text-indent: 0.44em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-top: 0.35rem;
+  color: #7A535A;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+@media (min-width: 640px) {
+  .setlist-logo-sub {
+    font-size: 0.575rem;
+    letter-spacing: 0.48em;
+    text-indent: 0.48em;
+    margin-top: 0.4rem;
+  }
+}
+
+.setlist-logo:hover .setlist-logo-main {
+  color: #612731;
+}
+
+.setlist-logo:hover .setlist-logo-sub {
+  color: #4A1C24;
+}
+
+/* Dark background variant (Navigation Drawer, Dark Footer) */
+.setlist-logo.on-dark .setlist-logo-main {
+  color: #F6EEE6;
+}
+
+.setlist-logo.on-dark .setlist-logo-sub {
+  color: #E9C6CC;
+}
+
+.setlist-logo.on-dark:hover .setlist-logo-main,
+.setlist-logo.on-dark:hover .setlist-logo-sub {
+  color: #FDD023;
+}
+
+/* --------------------------------------------------------------------------
+   5. Reusable Plain Accent Normalizer (Removed cursive script font)
    -------------------------------------------------------------------------- */
 .script-word,
 .font-script,
@@ -101,28 +253,63 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 script-word,
 accent-script,
 [data-script] {
-  font-family: 'Caveat', cursive, sans-serif !important;
-  font-weight: 700;
-  text-transform: lowercase !important;
-  font-style: normal;
-  letter-spacing: 0.01em;
-  font-size: 1.25em;
-  display: inline-block;
-  transform: rotate(-3deg);
-  margin: 0 0.12em;
-  vertical-align: baseline;
-  line-height: 0.9;
+  font-family: inherit !important;
+  font-style: normal !important;
+  text-transform: uppercase !important;
+  font-weight: inherit !important;
+  letter-spacing: inherit !important;
+  display: inline;
+  transform: none !important;
+  margin: 0;
+  line-height: inherit;
   color: inherit;
-  transition: transform 0.2s ease;
 }
 
 .script-word:hover,
 script-word:hover {
-  transform: rotate(0deg) scale(1.05);
+  transform: none;
 }
 
 /* --------------------------------------------------------------------------
-   5. Buttons: Pill-Shaped (Fully Rounded) & Outlined
+   5b. Category Headline Script Accent ("Cathalia" cursive script font)
+   Emphasized last word in main category page headlines
+   -------------------------------------------------------------------------- */
+.category-script-accent {
+  font-family: 'Cathalia', cursive !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 1.35em !important;
+  text-transform: lowercase !important;
+  letter-spacing: normal !important;
+  color: #A3456A !important;
+  display: inline-block;
+  line-height: 1 !important;
+  vertical-align: -0.05em;
+  padding-left: 0.12em;
+  padding-right: 0.18em;
+  text-shadow: none !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Blush accent on dark backgrounds if ever used */
+.category-script-accent.on-dark,
+.bg-burgundy .category-script-accent,
+.bg-\[\#351218\] .category-script-accent,
+.bg-\[\#4A1C24\] .category-script-accent {
+  color: #E9C6CC !important;
+}
+
+@media (max-width: 640px) {
+  .category-script-accent {
+    font-size: 1.25em !important;
+    vertical-align: -0.03em;
+    padding-left: 0.08em;
+    padding-right: 0.12em;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Buttons: Pill-Shaped (Fully Rounded) & Outlined
    -------------------------------------------------------------------------- */
 /* Primary Pill Button: Burgundy with cream text */
 .btn-pill,
@@ -134,8 +321,9 @@ script-word:hover {
   border-radius: 9999px !important;
   background-color: var(--color-burgundy);
   color: var(--color-cream) !important;
-  font-family: 'Lilita One', cursive, sans-serif;
-  letter-spacing: 0.05em;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 0.65rem 1.6rem;
   font-size: 0.875rem;
@@ -171,8 +359,9 @@ script-word:hover {
   border: 2px solid var(--color-burgundy) !important;
   background-color: transparent;
   color: var(--color-burgundy) !important;
-  font-family: 'Lilita One', cursive, sans-serif;
-  letter-spacing: 0.05em;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 0.6rem 1.5rem;
   font-size: 0.875rem;
@@ -193,6 +382,112 @@ script-word:hover {
   transform: translateY(0);
 }
 
+/* Outlined Version for Dark/Burgundy backgrounds: 2px Cream border with cream text */
+.btn-pill-cream-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px !important;
+  border: 2px solid #F6EEE6 !important;
+  background-color: transparent !important;
+  color: #F6EEE6 !important;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-pill-cream-outline:hover {
+  background-color: #F6EEE6 !important;
+  color: #4A1C24 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.btn-pill-cream-outline:active {
+  transform: translateY(0);
+}
+
+/* Explicit Raleway 700 Bold for SETLIST Everywhere */
+.bold-setlist,
+strong.font-bold,
+b.font-bold,
+span.font-bold {
+  font-family: 'Raleway', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* --------------------------------------------------------------------------
+   Creator Card Subtitle (Two separate centered lines: CO’28 / Major)
+   Major is kept on a SINGLE line with white-space: nowrap across all devices.
+   -------------------------------------------------------------------------- */
+.creator-subtitle-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  width: 100%;
+}
+
+.creator-cohort {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #7A535A;
+  font-size: 0.75rem; /* 12px */
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+
+.creator-major {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #7A535A;
+  white-space: nowrap !important;
+  line-height: 1.3;
+  margin-top: 0.25rem;
+  font-size: 0.625rem; /* ~10px on small mobile phones to prevent card overflow */
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 380px) {
+  .creator-major {
+    font-size: 0.6875rem; /* ~11px */
+    letter-spacing: 0.025em;
+  }
+}
+
+@media (min-width: 640px) {
+  .creator-major {
+    font-size: 0.75rem; /* 12px */
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* On tablets where cards share 2 columns */
+  .creator-major {
+    font-size: 0.6875rem; /* ~11px */
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .creator-major {
+    font-size: 0.75rem; /* 12px */
+    letter-spacing: 0.04em;
+  }
+}
+
 /* Small Pill Accent Button */
 .btn-pill-sm {
   padding: 0.35rem 1rem;
@@ -205,7 +500,8 @@ script-word:hover {
    -------------------------------------------------------------------------- */
 .card-soft,
 .card-styled {
-  border-radius: 1.5rem !important; /* 24px */
+  border-radius: 1.5rem !important;
+  /* 24px */
   background-color: var(--bg-card);
   border: 1px solid var(--color-blush);
   box-shadow: var(--shadow-soft);
@@ -298,10 +594,11 @@ body.menu-open #menu-backdrop {
 #filter-panel h3,
 #filter-drawer h4,
 #filter-drawer h3 {
-  font-family: 'Lilita One', 'Arial Black', cursive, sans-serif !important;
+  font-family: 'Raleway', sans-serif !important;
+  font-weight: 500 !important;
   color: var(--color-burgundy) !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: 0.08em !important;
 }
 
 #filter-backdrop {
@@ -332,9 +629,10 @@ body.filter-drawer-open #filter-backdrop {
   background-color: #FFFFFF !important;
   border: 1.5px solid var(--color-sand) !important;
   color: var(--color-burgundy) !important;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Raleway', sans-serif !important;
   font-size: 0.75rem !important;
   font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
   padding: 0.35rem 0.95rem !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   cursor: pointer;
@@ -448,7 +746,7 @@ body.filter-drawer-open #filter-backdrop {
    10. Ambient Glows & Background Accents
    -------------------------------------------------------------------------- */
 .hero-glow-bg {
-  background: 
+  background:
     radial-gradient(circle at 50% 0%, rgba(233, 198, 204, 0.5) 0%, rgba(246, 238, 230, 0) 70%),
     radial-gradient(circle at 80% 20%, rgba(253, 208, 35, 0.12) 0%, rgba(246, 238, 230, 0) 50%);
 }
@@ -456,8 +754,9 @@ body.filter-drawer-open #filter-backdrop {
 .gold-accent-badge {
   background-color: var(--color-lsu-gold);
   color: var(--color-burgundy);
-  font-family: 'Lilita One', cursive, sans-serif;
-  letter-spacing: 0.05em;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   border-radius: 9999px;
   box-shadow: 0 2px 8px rgba(253, 208, 35, 0.3);
 }
@@ -465,11 +764,15 @@ body.filter-drawer-open #filter-backdrop {
 /* --------------------------------------------------------------------------
    11. Interactive Touch Targets & Focus States
    -------------------------------------------------------------------------- */
-a, button, input {
+a,
+button,
+input {
   transition: all 0.2s ease;
 }
 
-a:focus-visible, button:focus-visible, input:focus-visible {
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
   outline: 2px solid var(--color-burgundy);
   outline-offset: 2px;
 }
@@ -498,13 +801,15 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 /* --------------------------------------------------------------------------
-   13. Hero Photo & Chunky Overlap Headline Styles
+   13. Hero Photo & Headline Styles
+   Raleway 300, all capitals, wide letter spacing
    -------------------------------------------------------------------------- */
 .hero-photo-frame {
   position: relative;
@@ -523,20 +828,14 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 }
 
 .hero-chunky-headline {
-  font-family: 'Lilita One', 'Arial Black', Impact, cursive, sans-serif;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: 0.92;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  line-height: 1.05;
   color: #FFFFFF;
-  text-shadow: 0 4px 18px rgba(74, 28, 36, 0.65), 0 2px 4px rgba(74, 28, 36, 0.4);
-}
-
-.hero-chunky-headline .script-word {
-  color: var(--color-blush) !important;
-  text-shadow: 0 3px 12px rgba(74, 28, 36, 0.5);
-  font-size: 1.15em;
-  display: inline-block;
-  transform: rotate(-4deg);
+  text-shadow: 0 4px 20px rgba(74, 28, 36, 0.75), 0 2px 6px rgba(74, 28, 36, 0.5);
 }
 
 /* --------------------------------------------------------------------------
@@ -576,10 +875,11 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .marquee-item {
   display: inline-flex;
   align-items: center;
-  font-family: 'Lilita One', 'Arial Black', Impact, cursive, sans-serif;
-  font-size: clamp(1.35rem, 3.2vw, 2.75rem);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.2rem, 2.8vw, 2.4rem);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.22em;
   line-height: 1;
   padding: 0.85rem 0;
   color: var(--color-cream);
@@ -591,14 +891,14 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
 .marquee-item:hover {
   color: var(--color-lsu-gold);
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .marquee-slash {
   color: var(--color-lsu-gold);
   margin: 0 clamp(0.75rem, 2vw, 1.75rem);
-  font-weight: 900;
-  opacity: 0.95;
+  font-weight: 400;
+  opacity: 0.85;
   display: inline-block;
 }
 
@@ -606,6 +906,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   0% {
     transform: translate3d(0, 0, 0);
   }
+
   100% {
     transform: translate3d(-50%, 0, 0);
   }
@@ -619,6 +920,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     width: 100%;
     scrollbar-width: none;
   }
+
   .marquee-track::-webkit-scrollbar {
     display: none;
   }
@@ -632,8 +934,9 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   align-items: center;
   justify-content: center;
   border-radius: 9999px !important;
-  font-family: 'Lilita One', 'Arial Black', Impact, cursive, sans-serif;
-  letter-spacing: 0.05em;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 0.8125rem;
   line-height: 1;
@@ -758,6 +1061,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }
@@ -776,5 +1080,3 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     animation: none !important;
   }
 }
-
-
