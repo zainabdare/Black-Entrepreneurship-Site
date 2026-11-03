@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth bg-[#F5EDE2]">
 
 <head>
   <meta charset="UTF-8">
@@ -12,8 +12,7 @@
   <!-- Google Fonts: Raleway -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
@@ -74,13 +73,13 @@
 </head>
 
 <body
-  class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
+  class="home-page bg-[#F5EDE2] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
 
   <!-- ========================================================================
        1. HEADER & NAVIGATION
        Features site brand, responsive desktop navigation, and mobile hamburger
        ======================================================================== -->
-  <header class="sticky top-0 z-50 bg-[#F6EEE6]/90 backdrop-blur-md border-b border-[#EAD5C0] transition-all">
+  <header class="sticky top-0 z-50 bg-[#F5EDE2]/90 backdrop-blur-md border-b border-[#EAD5C0] transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20">
 
@@ -110,41 +109,35 @@
   </header>
 
   <!-- ========================================================================
-       2. HERO SECTION (Editorial Style with Overlapping Headline)
-       Large full-width photo with huge chunky headline overlapping the bottom,
-       accent script word, short subtitle, and pill button scrolling to categories.
+       2. HERO SECTION (Big SETLIST Logo Banner)
+       Burgundy banner with large bold Raleway SETLIST, MARKETPLACE in thin capitals,
+       tagline, and action controls below.
        ======================================================================== -->
-  <section id="home" class="relative pt-4 sm:pt-8 pb-10 sm:pb-14 overflow-hidden bg-[#F6EEE6]">
+  <section id="home" class="relative pt-4 sm:pt-8 pb-10 sm:pb-14 overflow-hidden bg-transparent">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <!-- Full-Width Editorial Photo Frame with Overlapping Bottom Headline -->
-      <div class="hero-photo-frame relative mx-auto max-w-6xl">
-        <!-- Photo Container -->
-        <div class="relative w-full h-[360px] sm:h-[460px] md:h-[540px] lg:h-[600px]">
-          <img src="images/hero-editorial.jpg"
-            alt="Editorial photograph of an energetic Black woman smiling warmly with natural curls in soft ambient light, showcasing local student entrepreneurs and service providers near LSU"
-            class="w-full h-full object-cover object-[center_35%] sm:object-center select-none" loading="eager" />
+      <!-- Big SETLIST Logo Banner (Burgundy background, cream text, rounded corners) -->
+      <div class="hero-logo-banner relative mx-auto max-w-6xl">
+        <!-- Big SETLIST Logo Group -->
+        <h1 class="hero-logo-group">
+          <span class="hero-logo-main">SETLIST</span>
+          <span class="hero-logo-sub">MARKETPLACE</span>
+        </h1>
 
-          <!-- Gradient Overlay at Bottom to Ensure Flawless Text Readability -->
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-[#4A1C24]/90 via-[#4A1C24]/30 to-transparent pointer-events-none">
-          </div>
-
-          <!-- Huge Headline Overlapping the Bottom of the Photo -->
-          <div
-            class="absolute bottom-0 inset-x-0 z-20 px-3 sm:px-8 pb-4 sm:pb-7 pt-16 text-center flex flex-col items-center justify-end">
-            <h1 class="hero-chunky-headline text-3xl sm:text-6xl md:text-7xl lg:text-8xl select-none">
-              FIND YOUR GLOW NEAR LSU
-            </h1>
-          </div>
-        </div>
+        <!-- Tagline Under Logo -->
+        <p class="hero-logo-tagline">
+          FIND YOUR GLOW NEAR LSU
+        </p>
       </div>
 
       <!-- Hero Subtitle & Action Controls Below Photo -->
       <div class="max-w-3xl mx-auto text-center mt-6 sm:mt-9 px-2">
-        <p class="text-base sm:text-lg md:text-xl text-[#7A535A] font-sans font-medium leading-relaxed mb-6 sm:mb-8">
-          Your place to easily find Black-owned businesses that cater to you.
-        </p>
+        <div
+          class="inline-block bg-[#F5EDE2]/85 backdrop-blur-sm px-6 py-3 rounded-2xl border border-[#EAD5C0]/60 shadow-sm mb-6 sm:mb-8 max-w-2xl">
+          <p class="text-base sm:text-lg md:text-xl text-[#4A1C24] font-sans font-semibold leading-relaxed">
+            Your place to easily find Black-owned businesses that cater to you.
+          </p>
+        </div>
 
         <!-- Pill Button Scrolling to Category Titles & Secondary Submit Pill -->
         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
@@ -157,7 +150,7 @@
           </a>
 
           <a href="submit-business.html"
-            class="btn-pill-outline inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 text-sm sm:text-base font-heading font-black tracking-wider cursor-pointer">
+            class="btn-pill-outline bg-[#F5EDE2] inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 text-sm sm:text-base font-heading font-black tracking-wider cursor-pointer">
             <span>Submit Your Business</span>
           </a>
         </div>
@@ -242,7 +235,7 @@
     <!-- About the Creators Section (Warm Sand Card) -->
     <section id="about-creators">
       <div
-        class="p-6 sm:p-8 rounded-3xl bg-[#EAD5C0]/40 border border-[#D3BAA2] hover:border-[#4A1C24] transition-all shadow-md">
+        class="p-6 sm:p-8 rounded-3xl bg-[#FDFBF8] border border-[#D3BAA2] hover:border-[#4A1C24] transition-all shadow-md">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div class="max-w-2xl">
             <div
@@ -253,10 +246,13 @@
               ABOUT THE PROJECT
             </h3>
             <p class="text-sm text-[#7A535A] mt-2 leading-relaxed font-sans">
-              <strong class="font-bold">SETLIST</strong> is a campus-first marketplace connecting LSU students directly with local Black-owned businesses. Whether you need a fresh set, event photos, or game-day catering, we replace fragmented word-of-mouth with verified pricing, direct booking links, and distance filtering—all in one place.
+              <strong class="font-bold">SETLIST</strong> is a campus-first marketplace connecting LSU students directly
+              with local Black-owned businesses. Whether you need a fresh set, event photos, or game-day catering, we
+              replace fragmented word-of-mouth with verified pricing, direct booking links, and distance filtering—all
+              in one place.
             </p>
           </div>
-          <a href="about-creators.html" class="btn-pill-outline shrink-0">
+          <a href="about-creators.html" class="btn-pill-outline bg-[#F5EDE2] shrink-0">
             <span>Read Our Mission &rarr;</span>
           </a>
         </div>
@@ -272,7 +268,8 @@
               class="inline-flex items-center gap-2 text-xs font-heading font-medium uppercase tracking-[0.12em] text-[#E9C6CC] mb-1">
               <span>Get Listed Free</span>
             </div>
-            <h3 class="text-2xl sm:text-3xl md:text-4xl font-heading font-light text-[#F6EEE6] uppercase tracking-[0.15em] mt-1">
+            <h3
+              class="text-2xl sm:text-3xl md:text-4xl font-heading font-light text-[#F6EEE6] uppercase tracking-[0.15em] mt-1">
               ARE YOU A BLACK ENTREPRENEUR NEAR LSU?
             </h3>
             <p class="text-sm text-[#E9C6CC] mt-2 leading-relaxed font-sans">
@@ -297,13 +294,14 @@
   <footer class="border-t border-[#E9C6CC]/20 bg-[#351218] text-[#E9C6CC] pt-14 pb-10 text-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <!-- Top Row: 4 Column Responsive Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-[#E9C6CC]/15">
+      <!-- Top Row: Responsive Layout -->
+      <div class="flex flex-col sm:flex-row items-start justify-between gap-8 pb-10 border-b border-[#E9C6CC]/15">
 
         <!-- Col 1: Mission & Brand -->
-        <div class="space-y-3">
+        <div class="space-y-3 max-w-md">
           <div class="flex items-center">
-            <a href="#home" class="setlist-logo on-dark group select-none items-start text-left" aria-label="SETLIST Marketplace Home">
+            <a href="#home" class="setlist-logo on-dark group select-none items-start text-left"
+              aria-label="SETLIST Marketplace Home">
               <span class="setlist-logo-main text-left">SETLIST</span>
               <span class="setlist-logo-sub text-left">MARKETPLACE</span>
             </a>
@@ -325,40 +323,14 @@
           </ul>
         </div>
 
-        <!-- Col 3: Key Neighborhoods Covered -->
-        <div>
-          <h4 class="font-heading font-medium uppercase tracking-[0.12em] text-[#F6EEE6] text-sm mb-3">Service Areas</h4>
-          <ul class="space-y-1.5 text-[#E9C6CC]/80">
-            <li>LSU Campus &bull; Memorial Tower</li>
-            <li>Northgate &amp; Highland Road</li>
-            <li>Tigerland &amp; College Town</li>
-            <li>Mid City &amp; Garden District</li>
-            <li>Downtown Baton Rouge</li>
-          </ul>
-        </div>
-
-        <!-- Col 4: Tech & Campus Community Note -->
-        <div>
-          <h4 class="font-heading font-medium uppercase tracking-[0.12em] text-[#F6EEE6] text-sm mb-3">Community &amp; Tech</h4>
-          <p class="leading-relaxed text-[#E9C6CC]/80">
-            Built with pure HTML5, vanilla JavaScript ES Modules, and Tailwind CSS.
-          </p>
-          <div class="mt-3 inline-flex items-center gap-1.5 text-[11px] text-[#FDD023] font-heading font-medium">
-            <span>Baton Rouge, Louisiana</span>
-          </div>
-        </div>
-
       </div>
 
       <!-- Bottom Row: Copyright & Disclaimers -->
-      <div
-        class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#E9C6CC]/60 font-sans">
+      <div class="pt-6 text-[11px] text-[#E9C6CC]/60 font-sans">
         <p>
-          &copy; 2026 <strong class="font-bold">SETLIST</strong> Marketplace. Independent student initiative. Not officially affiliated with Louisiana State
+          &copy; 2026 <strong class="font-bold">SETLIST</strong> Marketplace. Independent student initiative. Not
+          officially affiliated with Louisiana State
           University.
-        </p>
-        <p>
-          Sample data used for development purposes.
         </p>
       </div>
 

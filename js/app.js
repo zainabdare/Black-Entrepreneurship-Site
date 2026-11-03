@@ -41,6 +41,7 @@ const isDedicatedCategoryPage = pageCategory !== 'All';
 export const appState = {
   selectedCategory: pageCategory,
   searchQuery: '',
+  locationFilter: 'all',        // 'all', 'on-campus', 'off-campus'
   maxRadius: 25,
   selectedZone: 'all',
 
@@ -88,18 +89,13 @@ export const appState = {
  */
 export function getActiveFilterCount() {
   let count = 0;
-  if (appState.maxRadius < 25) count++;
-  if (appState.selectedZone !== 'all') count++;
-  if (appState.priceTiers.length > 0) count += appState.priceTiers.length;
+  if (appState.locationFilter && appState.locationFilter !== 'all') count++;
   if (appState.maxStartingPrice !== null && appState.maxStartingPrice < 250) count++;
   if (appState.minRating > 0) count++;
-  if (appState.experienceTiers.length > 0) count += appState.experienceTiers.length;
   if (appState.studentDiscountOnly) count++;
   if (appState.serviceDelivery !== 'all') count++;
-  if (appState.availabilities.length > 0) count += appState.availabilities.length;
 
   // Hair
-  if (appState.hairTypes.length > 0) count += appState.hairTypes.length;
   if (appState.hairSpecialties.length > 0) count += appState.hairSpecialties.length;
   if (appState.chairVibes.length > 0) count += appState.chairVibes.length;
 
@@ -400,6 +396,7 @@ export function attachProviderModalTriggers(container = document) {
 export function resetAllFilters() {
   appState.selectedCategory = pageCategory;
   appState.searchQuery = '';
+  appState.locationFilter = 'all';
   appState.maxRadius = 25;
   appState.selectedZone = 'all';
 
@@ -431,14 +428,27 @@ export function resetAllFilters() {
   const searchInput = document.getElementById('hero-search-input');
   if (searchInput) searchInput.value = '';
 
-  const radiusSlider = document.getElementById('filter-radius-slider') || document.getElementById('radius-slider');
-  if (radiusSlider) radiusSlider.value = '25';
-
   const priceSlider = document.getElementById('filter-max-price');
   if (priceSlider) priceSlider.value = '250';
+  const priceDisplay = document.getElementById('filter-price-display');
+  if (priceDisplay) priceDisplay.textContent = 'Any ($250+)';
 
   const sortSelect = document.getElementById('sort-by-select');
   if (sortSelect) sortSelect.value = 'rating';
+
+  const hairSpecialtySelect = document.getElementById('filter-hair-specialty-select');
+  if (hairSpecialtySelect) hairSpecialtySelect.value = '';
+
+  // Reset Location Pills
+  document.querySelectorAll('.location-pill').forEach(pill => {
+    const isAll = pill.dataset.location === 'all';
+    pill.classList.toggle('bg-[#E9C6CC]', isAll);
+    pill.classList.toggle('text-[#4A1C24]', isAll);
+    pill.classList.toggle('font-bold', isAll);
+    pill.classList.toggle('border-[#D4A7B0]', isAll);
+    pill.classList.toggle('bg-white', !isAll);
+    pill.classList.toggle('border-[#EAD5C0]', !isAll);
+  });
 
   // Reset checkboxes
   const studentDiscountCb = document.getElementById('filter-student-discount');
@@ -462,25 +472,18 @@ export function resetAllFilters() {
 
   // Reset pills
   document.querySelectorAll('.filter-pill').forEach(pill => {
-    pill.classList.remove('active-filter', 'bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
-  });
-
-  document.querySelectorAll('.zone-pill').forEach(pill => {
-    const isAll = pill.dataset.zone === 'all';
-    pill.classList.toggle('bg-lsu-gold', isAll);
-    pill.classList.toggle('text-lsu-purple-dark', isAll);
-    pill.classList.toggle('font-bold', isAll);
-    pill.classList.toggle('bg-slate-950/80', !isAll);
-    pill.classList.toggle('text-slate-300', !isAll);
+    pill.classList.remove('active-filter', 'bg-[#E9C6CC]', 'text-[#4A1C24]', 'font-bold', 'border-[#D4A7B0]', 'bg-lsu-gold', 'text-lsu-purple-dark', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
+    pill.classList.add('bg-white', 'border-[#EAD5C0]', 'text-[#4A1C24]');
   });
 
   document.querySelectorAll('.rating-pill').forEach(pill => {
     const isZero = pill.dataset.rating === '0';
-    pill.classList.toggle('bg-lsu-gold', isZero);
-    pill.classList.toggle('text-lsu-purple-dark', isZero);
+    pill.classList.toggle('bg-[#E9C6CC]', isZero);
+    pill.classList.toggle('text-[#4A1C24]', isZero);
     pill.classList.toggle('font-bold', isZero);
-    pill.classList.toggle('bg-slate-950/80', !isZero);
-    pill.classList.toggle('text-slate-300', !isZero);
+    pill.classList.toggle('border-[#D4A7B0]', isZero);
+    pill.classList.toggle('bg-white', !isZero);
+    pill.classList.toggle('border-[#EAD5C0]', !isZero);
   });
 
   updateDirectory();
@@ -504,9 +507,8 @@ export function openFilterPanel() {
       const isOpen = !panel.classList.contains('md:hidden');
       if (toggleBtn) {
         toggleBtn.setAttribute('aria-expanded', String(isOpen));
-        toggleBtn.classList.toggle('bg-lsu-purple/40', isOpen);
-        toggleBtn.classList.toggle('border-lsu-gold/60', isOpen);
-        toggleBtn.classList.toggle('text-lsu-gold', isOpen);
+        toggleBtn.classList.toggle('bg-[#351218]', isOpen);
+        toggleBtn.classList.toggle('shadow-inner', isOpen);
       }
     }
   }
@@ -516,6 +518,15 @@ export function closeFilterPanel() {
   document.body.classList.remove('filter-drawer-open');
   const backdrop = document.getElementById('filter-backdrop');
   if (backdrop) backdrop.classList.add('hidden');
+  const panel = document.getElementById('filter-panel');
+  if (panel && window.innerWidth >= 768) {
+    panel.classList.add('md:hidden');
+  }
+  const toggleBtn = document.getElementById('toggle-filters-btn');
+  if (toggleBtn) {
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.classList.remove('bg-[#351218]', 'shadow-inner');
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -580,13 +591,7 @@ function attachFilterListeners() {
   const collapseBtn = document.getElementById('collapse-panel-btn');
   if (collapseBtn) {
     collapseBtn.addEventListener('click', () => {
-      const panel = document.getElementById('filter-panel');
-      const btn = document.getElementById('toggle-filters-btn');
-      if (panel) panel.classList.add('md:hidden');
-      if (btn) {
-        btn.setAttribute('aria-expanded', 'false');
-        btn.classList.remove('bg-lsu-purple/40', 'border-lsu-gold/60', 'text-lsu-gold');
-      }
+      closeFilterPanel();
     });
   }
 
@@ -601,38 +606,36 @@ function attachFilterListeners() {
     clearBtnPanel.addEventListener('click', () => resetAllFilters());
   }
 
-  // Radius Slider (1 to 25 mi)
-  const radiusSlider = document.getElementById('filter-radius-slider') || document.getElementById('radius-slider');
-  if (radiusSlider) {
-    radiusSlider.addEventListener('input', (e) => {
-      appState.maxRadius = Math.min(Math.max(Number(e.target.value) || 25, 1), 25);
-      updateDirectory();
-    });
-  }
-
-  // Quick Zone Pills
-  const zonePills = document.querySelectorAll('.zone-pill');
-  zonePills.forEach(pill => {
+  // Location Pills (All, On Campus, Off Campus)
+  const locationPills = document.querySelectorAll('.location-pill');
+  locationPills.forEach(pill => {
     pill.addEventListener('click', () => {
-      const zone = pill.dataset.zone;
-      if (zone) {
-        appState.selectedZone = zone;
-        if (zone === 'all') {
-          appState.maxRadius = 25;
-          if (radiusSlider) radiusSlider.value = '25';
-        }
-        zonePills.forEach(p => {
-          const isSelected = p.dataset.zone === zone;
-          p.classList.toggle('bg-lsu-gold', isSelected);
-          p.classList.toggle('text-lsu-purple-dark', isSelected);
+      const loc = pill.dataset.location;
+      if (loc) {
+        appState.locationFilter = loc;
+        locationPills.forEach(p => {
+          const isSelected = p.dataset.location === loc;
+          p.classList.toggle('bg-[#E9C6CC]', isSelected);
+          p.classList.toggle('text-[#4A1C24]', isSelected);
           p.classList.toggle('font-bold', isSelected);
-          p.classList.toggle('bg-slate-950/80', !isSelected);
-          p.classList.toggle('text-slate-300', !isSelected);
+          p.classList.toggle('border-[#D4A7B0]', isSelected);
+          p.classList.toggle('bg-white', !isSelected);
+          p.classList.toggle('border-[#EAD5C0]', !isSelected);
         });
         updateDirectory();
       }
     });
   });
+
+  // Hair Specialty Dropdown
+  const hairSpecialtySelect = document.getElementById('filter-hair-specialty-select');
+  if (hairSpecialtySelect) {
+    hairSpecialtySelect.addEventListener('change', (e) => {
+      const val = e.target.value;
+      appState.hairSpecialties = val ? [val] : [];
+      updateDirectory();
+    });
+  }
 
   // Price Slider
   const priceSlider = document.getElementById('filter-max-price');
@@ -652,11 +655,12 @@ function attachFilterListeners() {
       appState.minRating = rating;
       ratingPills.forEach(p => {
         const isSelected = Number(p.dataset.rating) === rating;
-        p.classList.toggle('bg-lsu-gold', isSelected);
-        p.classList.toggle('text-lsu-purple-dark', isSelected);
+        p.classList.toggle('bg-[#E9C6CC]', isSelected);
+        p.classList.toggle('text-[#4A1C24]', isSelected);
         p.classList.toggle('font-bold', isSelected);
-        p.classList.toggle('bg-slate-950/80', !isSelected);
-        p.classList.toggle('text-slate-300', !isSelected);
+        p.classList.toggle('border-[#D4A7B0]', isSelected);
+        p.classList.toggle('bg-white', !isSelected);
+        p.classList.toggle('border-[#EAD5C0]', !isSelected);
       });
       updateDirectory();
     });
@@ -680,7 +684,7 @@ function attachFilterListeners() {
     });
   }
 
-  // Generic Multi-Select Filter Pills (priceTiers, experienceTiers, availabilities, hairTypes, etc.)
+  // Generic Multi-Select Filter Pills (nailStyles, lashTypes, foodTypes, outfitTypes, chairVibes, turnarounds, etc.)
   const filterPills = document.querySelectorAll('.filter-pill');
   filterPills.forEach(pill => {
     pill.addEventListener('click', () => {
@@ -694,10 +698,12 @@ function attachFilterListeners() {
 
         if (isSelected) {
           arr.splice(idx, 1);
-          pill.classList.remove('active-filter', 'bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
+          pill.classList.remove('active-filter', 'bg-[#E9C6CC]', 'text-[#4A1C24]', 'font-bold', 'border-[#D4A7B0]');
+          pill.classList.add('bg-white', 'border-[#EAD5C0]', 'text-[#4A1C24]');
         } else {
           arr.push(filterVal);
-          pill.classList.add('active-filter', 'bg-lsu-gold', 'text-lsu-purple-dark', 'font-bold', 'border-lsu-gold', 'shadow-sm', 'shadow-lsu-gold/20');
+          pill.classList.add('active-filter', 'bg-[#E9C6CC]', 'text-[#4A1C24]', 'font-bold', 'border-[#D4A7B0]');
+          pill.classList.remove('bg-white', 'border-[#EAD5C0]');
         }
 
         updateDirectory();

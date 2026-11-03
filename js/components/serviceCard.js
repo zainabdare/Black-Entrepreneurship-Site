@@ -23,7 +23,7 @@ export function createServiceCard(provider) {
           <h4 class="text-base font-heading font-bold text-white">${provider.businessName}</h4>
         </div>
         <span class="text-xs text-slate-400 font-mono">
-          ${provider.distanceFromLSU} mi
+          ${provider.zipCode ? `ZIP ${provider.zipCode}` : ''}
         </span>
       </div>
       <p class="text-xs text-slate-300 mt-2">${provider.description}</p>

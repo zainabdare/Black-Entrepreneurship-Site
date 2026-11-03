@@ -226,7 +226,7 @@
               class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#7A535A]/60 font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
               <option value="" disabled selected class="text-gray-400">Select...</option>
               <option value="Hair" class="bg-white text-[#4A1C24]">Hair (Braids, Silk Press, Locs, Wigs)</option>
-              <option value="Nails" class="bg-white text-[#4A1C24]">Nails (Acrylic, Gel-X, Press-Ons, Nail Art)</option>
+              <option value="Nails" class="bg-white text-[#4A1C24]">Nails (Acrylic, Gel-X, Natural Nail)</option>
               <option value="Lashes" class="bg-white text-[#4A1C24]">Lashes (Classic, Volume, Hybrid)</option>
               <option value="Food & Beverages" class="bg-white text-[#4A1C24]">Food &amp; Beverages (Plates, Catering,
                 Desserts)</option>
@@ -239,15 +239,14 @@
 
           <div>
             <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5"
-              for="intake-lsu-verified">
-              LSU Affiliation <span class="text-[#612731] font-bold">*</span>
+              for="intake-campus-location">
+              Location <span class="text-[#612731] font-bold">*</span>
             </label>
-            <select id="intake-lsu-verified" required
+            <select id="intake-campus-location" required
               class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#7A535A]/60 font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
               <option value="" disabled selected class="text-gray-400">Select...</option>
-              <option value="none" class="bg-white text-[#4A1C24]">None</option>
-              <option value="student" class="bg-white text-[#4A1C24]">LSU Student-Owned</option>
-              <option value="alumni" class="bg-white text-[#4A1C24]">LSU Alumni-Owned</option>
+              <option value="On Campus" class="bg-white text-[#4A1C24]">On Campus</option>
+              <option value="Off Campus" class="bg-white text-[#4A1C24]">Off Campus</option>
             </select>
           </div>
         </div>
@@ -269,41 +268,8 @@
           <div id="fields-hair" class="category-field-group hidden space-y-5">
             <div>
               <span
-                class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Hair
-                Types &amp; Textures Serviced</span>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
-                <label
-                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairTypes" value="3A-3C"
-                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
-                  <span class="text-[#4A1C24] font-sans font-medium select-none">3A-3C</span>
-                </label>
-                <label
-                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairTypes" value="4A-4C"
-                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0"
-                    checked>
-                  <span class="text-[#4A1C24] font-sans font-medium select-none">4A-4C</span>
-                </label>
-                <label
-                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairTypes" value="Locs & Sisterlocks"
-                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
-                  <span class="text-[#4A1C24] font-sans font-medium select-none">Locs &amp; Sisterlocks</span>
-                </label>
-                <label
-                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairTypes" value="Relaxed/Straight"
-                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
-                  <span class="text-[#4A1C24] font-sans font-medium select-none">Relaxed/Straight</span>
-                </label>
-              </div>
-            </div>
-
-            <div>
-              <span
                 class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Specialties</span>
-              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs sm:text-sm">
                 <label
                   class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
                   <input type="checkbox" name="hairSpecialties" value="knotless braids"
@@ -328,12 +294,6 @@
                     class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
                   <span class="text-[#4A1C24] font-sans font-medium select-none">Loc Maintenance</span>
                 </label>
-                <label
-                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
-                  <input type="checkbox" name="hairSpecialties" value="hair included"
-                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
-                  <span class="text-[#4A1C24] font-sans font-medium select-none">Braiding Hair Included</span>
-                </label>
               </div>
             </div>
 
@@ -357,7 +317,7 @@
             <span
               class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Nail
               Styles Offered</span>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
               <label
                 class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
                 <input type="checkbox" name="nailStyles" value="acrylic"
@@ -378,19 +338,6 @@
                   class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
                 <span class="text-[#4A1C24] font-sans font-medium select-none">Natural Nail Care &amp; Builder
                   Gel</span>
-              </label>
-              <label
-                class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" name="nailStyles" value="press-ons"
-                  class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
-                <span class="text-[#4A1C24] font-sans font-medium select-none">Custom Press-On Sets</span>
-              </label>
-              <label
-                class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
-                <input type="checkbox" name="nailStyles" value="nail art"
-                  class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0"
-                  checked>
-                <span class="text-[#4A1C24] font-sans font-medium select-none">Intricate Hand-Painted Nail Art</span>
               </label>
             </div>
           </div>
@@ -439,9 +386,8 @@
                   class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0"
                   checked>
                 <div>
-                  <span class="text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] block">Offers Lash Fills /
-                    Relashes</span>
-                  <span class="text-[11px] sm:text-xs text-[#7A535A] font-sans block mt-0.5">Allows booking maintenance
+                  <span class="text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] block select-none">Offers 2-3 Week Refills</span>
+                  <span class="text-[11px] sm:text-xs text-[#7A535A] font-sans block mt-0.5 select-none">Allows booking maintenance
                     fills on sets from your salon or foreign work.</span>
                 </div>
               </label>
@@ -652,32 +598,6 @@
 
           <div>
             <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5"
-              for="intake-price-tier">
-              Price Tier <span class="text-[#612731] font-bold">*</span>
-            </label>
-            <select id="intake-price-tier" required
-              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#7A535A]/60 font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
-              <option value="" disabled selected class="text-gray-400">Select...</option>
-              <option value="$" class="bg-white text-[#4A1C24]">$ (Budget-Friendly / Student-Priced)</option>
-              <option value="$$" class="bg-white text-[#4A1C24]">$$ (Standard Market Rate)</option>
-              <option value="$$$" class="bg-white text-[#4A1C24]">$$$ (Premium / Luxury / Specialist)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5"
-              for="intake-experience">
-              Years of Experience <span class="text-[#612731] font-bold">*</span>
-            </label>
-            <input id="intake-experience" type="number" required min="0" step="1"
-              onkeydown="if(['-','+','e','E'].includes(event.key)) event.preventDefault();"
-              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-          <div>
-            <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5"
               for="intake-service-delivery">
               Service Delivery <span class="text-[#612731] font-bold">*</span>
             </label>
@@ -692,19 +612,12 @@
 
           <div>
             <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5"
-              for="intake-neighborhood">
-              Neighborhood Area <span class="text-[#612731] font-bold">*</span>
+              for="intake-zip-code">
+              ZIP Code <span class="text-[#612731] font-bold">*</span>
             </label>
-            <select id="intake-neighborhood" required
-              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#7A535A]/60 font-sans font-medium text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors cursor-pointer">
-              <option value="" disabled selected class="text-gray-400">Select...</option>
-              <option value="Northgate (LSU Walkable)" class="bg-white text-[#4A1C24]">Northgate (LSU Walkable)</option>
-              <option value="Highland / Burbank" class="bg-white text-[#4A1C24]">Highland / Burbank</option>
-              <option value="Mid-City Baton Rouge" class="bg-white text-[#4A1C24]">Mid-City Baton Rouge</option>
-              <option value="Downtown Baton Rouge" class="bg-white text-[#4A1C24]">Downtown Baton Rouge</option>
-              <option value="South Baton Rouge" class="bg-white text-[#4A1C24]">South Baton Rouge (Within 25 mi)
-              </option>
-            </select>
+            <input id="intake-zip-code" type="text" required pattern="[0-9]{5}" maxlength="5" inputmode="numeric" placeholder="e.g. 70803"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 5);"
+              class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors">
           </div>
         </div>
 
@@ -948,7 +861,7 @@
   <!-- Footer -->
   <footer class="border-t border-[#4A1C24] bg-[#351218] py-8 text-xs text-[#E9C6CC] text-center mt-auto">
     <div class="max-w-7xl mx-auto px-4 space-y-1 font-sans">
-      <p>&copy; 2026 <strong class="font-bold">SETLIST</strong> Marketplace &bull; Dedicated to Black Entrepreneurs near LSU</p>
+      <p>&copy; 2026 <strong class="font-bold">SETLIST</strong> Marketplace</p>
       <p class="text-[#E9C6CC]/70">Free, community-curated directory within 25 miles of Louisiana State University</p>
     </div>
   </footer>
@@ -1018,10 +931,8 @@
     function getCategoryDetailsLine(cat) {
       const parts = [];
       if (cat === 'Hair') {
-        const hairTypes = Array.from(document.querySelectorAll('input[name="hairTypes"]:checked')).map(el => el.value);
         const specialties = Array.from(document.querySelectorAll('input[name="hairSpecialties"]:checked')).map(el => el.value);
         const chairVibe = document.getElementById('intake-chair-vibe')?.value;
-        if (hairTypes.length > 0) parts.push(`Hair Types: ${hairTypes.join(', ')}`);
         if (specialties.length > 0) parts.push(`Specialties: ${specialties.join(', ')}`);
         if (chairVibe) parts.push(`Chair Vibe: ${chairVibe}`);
       } else if (cat === 'Nails') {
@@ -1314,26 +1225,17 @@
       const ownerPhone = document.getElementById('intake-owner-phone')?.value.trim() || '';
       const category = categorySelect.value;
 
-      const lsuVerifiedSelect = document.getElementById('intake-lsu-verified');
-      const lsuVerifiedVal = lsuVerifiedSelect.value;
-      const lsuStatusText = lsuVerifiedSelect.options[lsuVerifiedSelect.selectedIndex]?.text || 'None';
+      const campusLocationSelect = document.getElementById('intake-campus-location');
+      const campusLocation = campusLocationSelect.value;
 
       const startingPriceVal = document.getElementById('intake-starting-price').value.trim();
       const startingPriceNum = parseFloat(startingPriceVal);
-
-      const priceTierSelect = document.getElementById('intake-price-tier');
-      const priceTierVal = priceTierSelect.value;
-      const priceTierText = priceTierSelect.options[priceTierSelect.selectedIndex]?.text || priceTierVal;
-
-      const experienceVal = document.getElementById('intake-experience').value.trim();
-      const experienceNum = parseInt(experienceVal, 10);
 
       const serviceDeliverySelect = document.getElementById('intake-service-delivery');
       const serviceDeliveryVal = serviceDeliverySelect.value;
       const serviceDeliveryText = serviceDeliverySelect.options[serviceDeliverySelect.selectedIndex]?.text || serviceDeliveryVal;
 
-      const neighborhoodSelect = document.getElementById('intake-neighborhood');
-      const neighborhood = neighborhoodSelect.value;
+      const zipCode = document.getElementById('intake-zip-code').value.trim();
 
       const studentDiscount = document.getElementById('intake-student-discount').checked;
 
@@ -1358,7 +1260,7 @@
       const refundPolicy = refundPolicySelect.value.trim();
 
       // Required field validation
-      if (!businessName || !ownerName || !ownerEmail || !bookingUrl || startingPriceVal === '' || experienceVal === '') {
+      if (!businessName || !ownerName || !ownerEmail || !bookingUrl || startingPriceVal === '' || !zipCode) {
         showError('Please fill in all required fields marked with an asterisk (*).');
         return;
       }
@@ -1368,8 +1270,8 @@
         return;
       }
 
-      if (!lsuVerifiedVal) {
-        showError('Please select an LSU Affiliation.');
+      if (!campusLocation) {
+        showError('Please select a Location (On Campus or Off Campus).');
         return;
       }
 
@@ -1378,23 +1280,13 @@
         return;
       }
 
-      if (!priceTierVal) {
-        showError('Please choose a Price Tier.');
-        return;
-      }
-
-      if (isNaN(experienceNum) || experienceNum < 0) {
-        showError('Years of experience must be a valid number and cannot be negative.');
-        return;
-      }
-
       if (!serviceDeliveryVal) {
         showError('Please choose a Service Delivery option.');
         return;
       }
 
-      if (!neighborhood) {
-        showError('Please select a Neighborhood Area.');
+      if (!/^\d{5}$/.test(zipCode)) {
+        showError('Please enter a valid 5-digit ZIP code (e.g. 70803).');
         return;
       }
 
@@ -1427,23 +1319,43 @@
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<span>Submitting...</span>`;
 
-      // Coordinates for Baton Rouge neighborhood
-      const neighborhoodCoords = {
-        'Northgate (LSU Walkable)': { lat: 30.4190, lng: -91.1765 },
-        'Highland / Burbank': { lat: 30.3950, lng: -91.1650 },
-        'Mid-City Baton Rouge': { lat: 30.4450, lng: -91.1550 },
-        'Downtown Baton Rouge': { lat: 30.4515, lng: -91.1871 },
-        'South Baton Rouge': { lat: 30.3800, lng: -91.1200 }
+      // Coordinates by ZIP code (centered in Baton Rouge / LSU area)
+      const ZIP_COORDINATES = {
+        '70803': { lat: 30.4133, lng: -91.1800 },
+        '70802': { lat: 30.4350, lng: -91.1730 },
+        '70808': { lat: 30.4120, lng: -91.1430 },
+        '70801': { lat: 30.4510, lng: -91.1870 },
+        '70820': { lat: 30.3700, lng: -91.1850 },
+        '70767': { lat: 30.4530, lng: -91.2100 },
+        '70806': { lat: 30.4480, lng: -91.1400 },
+        '70722': { lat: 30.3890, lng: -91.2380 },
+        '70805': { lat: 30.4850, lng: -91.1470 },
+        '70809': { lat: 30.4050, lng: -91.0900 },
+        '70810': { lat: 30.3550, lng: -91.1050 },
+        '70710': { lat: 30.3560, lng: -91.2630 },
+        '70812': { lat: 30.5050, lng: -91.1350 },
+        '70815': { lat: 30.4420, lng: -91.0650 },
+        '70814': { lat: 30.4720, lng: -91.0770 },
+        '70811': { lat: 30.5250, lng: -91.1680 },
+        '70816': { lat: 30.4080, lng: -91.0250 },
+        '70776': { lat: 30.2880, lng: -91.2340 },
+        '70817': { lat: 30.3780, lng: -91.0000 },
+        '70819': { lat: 30.4950, lng: -91.0200 },
+        '70774': { lat: 30.2580, lng: -91.1000 },
+        '70714': { lat: 30.5880, lng: -91.1690 },
+        '70818': { lat: 30.5350, lng: -91.0300 },
+        '70726': { lat: 30.4850, lng: -90.9600 },
+        '70739': { lat: 30.5400, lng: -90.9800 },
+        '70769': { lat: 30.3050, lng: -90.9650 },
+        '70729': { lat: 30.2050, lng: -91.1150 }
       };
-      const coords = neighborhoodCoords[neighborhood] || { lat: 30.4133, lng: -91.1800 };
+      const coords = ZIP_COORDINATES[zipCode] || { lat: 30.4133, lng: -91.1800 };
 
       // Collect structured Category-Specific Fields
       const categoryData = {};
       if (category === 'Hair') {
-        const hairTypes = Array.from(document.querySelectorAll('input[name="hairTypes"]:checked')).map(el => el.value);
         const specialties = Array.from(document.querySelectorAll('input[name="hairSpecialties"]:checked')).map(el => el.value);
         const chairVibe = document.getElementById('intake-chair-vibe')?.value;
-        categoryData.hairTypes = hairTypes.length > 0 ? hairTypes : ['4A-4C'];
         categoryData.specialties = specialties.length > 0 ? specialties : ['knotless braids'];
         categoryData.chairVibe = chairVibe || '';
       } else if (category === 'Nails') {
@@ -1496,11 +1408,9 @@
         owner_email: sanitize(ownerEmail),
         owner_phone: sanitize(ownerPhone),
         category: sanitize(category),
-        lsu_status: sanitize(lsuStatusText),
-        neighborhood: sanitize(neighborhood),
+        campus_location: sanitize(campusLocation),
+        zip_code: sanitize(zipCode),
         starting_price: sanitize(startingPriceVal ? `$${startingPriceVal}` : null),
-        price_tier: sanitize(priceTierText),
-        years_experience: sanitize(experienceVal ? `${experienceVal} years` : null),
         student_discount: sanitize(studentDiscount ? 'Yes (Student discount offered)' : 'No student discount'),
         service_delivery: sanitize(serviceDeliveryText),
         category_details: sanitize(categoryDetailsLine),
@@ -1581,11 +1491,9 @@
           owner_email: ownerEmail,
           owner_phone: ownerPhone || "Not provided",
           category: category,
-          lsu_status: lsuStatusText,
-          neighborhood: neighborhood,
+          campus_location: campusLocation,
+          zip_code: zipCode,
           starting_price: !isNaN(startingPriceNum) ? startingPriceNum : 0,
-          price_tier: priceTierText,
-          years_experience: !isNaN(experienceNum) ? experienceNum : 0,
           student_discount: studentDiscount ? 'Yes' : 'No',
           service_delivery: serviceDeliveryText,
           category_details: categoryDetailsLine,
@@ -1609,7 +1517,6 @@
           photo_links: photoLinksText,
           submitted_at: submittedAtReadable,
           // Checkbox and multi-choice category answers as comma-separated values
-          hair_types: categoryData.hairTypes ? categoryData.hairTypes.join(', ') : '',
           specialties: categoryData.specialties ? categoryData.specialties.join(', ') : '',
           chair_vibe: categoryData.chairVibe || '',
           nail_styles: categoryData.nailStyles ? categoryData.nailStyles.join(', ') : '',
@@ -1675,16 +1582,15 @@
               category,
               description: "Not provided",
               startingPrice: startingPriceNum,
-              priceTier: priceTierSelect.value,
-              yearsExperience: experienceNum,
               studentDiscount,
               serviceDelivery: serviceDeliverySelect.value,
               availability: "open-this-week",
-              neighborhood,
+              campusLocation,
+              campus_location: campusLocation,
+              zipCode: zipCode,
               latitude: coords.lat,
               longitude: coords.lng,
-              lsuVerified: (lsuVerifiedVal === 'student' || lsuVerifiedVal === 'alumni') ? lsuVerifiedVal : null,
-              lsuStatus: lsuStatusText,
+              lsuVerified: null,
               instagramUrl: instagramUrl || (rawIg ? `https://instagram.com/${rawIg.replace(/^@/, '')}` : ''),
               tiktokUrl: tiktokUrl || '',
               websiteUrl: "Not provided",

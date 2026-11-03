@@ -148,6 +148,7 @@ export function matchesRadius(provider, maxRadius = 25) {
 export function filterProviders(providers, {
   searchQuery = '',
   selectedCategory = 'All',
+  locationFilter = 'all',        // 'all', 'on-campus', 'off-campus'
   maxRadius = 25,
   selectedZone = 'all',
   zipCode = '',                 // Filter by specific 5-digit ZIP code
@@ -212,6 +213,34 @@ export function filterProviders(providers, {
       const provZip = String(provider.zipCode || provider.zip || '').trim().replace(/\D/g, '').slice(0, 5);
       if (targetZip.length === 5 && provZip !== targetZip) {
         return false;
+      }
+    }
+
+    // Location Filter (All, On Campus, Off Campus)
+    // Uses campus_location / campusLocation if set; falls back to ZIP code rule (70803 = On Campus)
+    if (locationFilter === 'on-campus') {
+      const campusLoc = String(provider.campus_location || provider.campusLocation || '').trim().toLowerCase();
+      if (campusLoc) {
+        if (campusLoc !== 'on campus' && campusLoc !== 'on-campus') {
+          return false;
+        }
+      } else {
+        const provZip = String(provider.zipCode || provider.zip || '').trim().replace(/\D/g, '').slice(0, 5);
+        if (provZip !== '70803') {
+          return false;
+        }
+      }
+    } else if (locationFilter === 'off-campus') {
+      const campusLoc = String(provider.campus_location || provider.campusLocation || '').trim().toLowerCase();
+      if (campusLoc) {
+        if (campusLoc !== 'off campus' && campusLoc !== 'off-campus') {
+          return false;
+        }
+      } else {
+        const provZip = String(provider.zipCode || provider.zip || '').trim().replace(/\D/g, '').slice(0, 5);
+        if (provZip === '70803') {
+          return false;
+        }
       }
     }
 

@@ -26,27 +26,21 @@ function getCategorySpecificHtml(category) {
             </h4>
           </div>
           
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            <!-- Hair Type & Texture -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- Specialties Dropdown -->
             <div>
-              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Hair Type &amp; Texture</label>
-              <div class="flex flex-wrap gap-1.5" role="group" aria-label="Hair Type">
-                <button type="button" data-filter="hairTypes" data-value="3A-3C" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">3A-3C</button>
-                <button type="button" data-filter="hairTypes" data-value="4A-4C" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">4A-4C</button>
-                <button type="button" data-filter="hairTypes" data-value="Locs & Sisterlocks" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Locs &amp; Sisterlocks</button>
-                <button type="button" data-filter="hairTypes" data-value="Relaxed/Straight" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Relaxed/Straight</button>
-              </div>
-            </div>
-
-            <!-- Specialties -->
-            <div>
-              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Specialties</label>
-              <div class="flex flex-wrap gap-1.5" role="group" aria-label="Specialties">
-                <button type="button" data-filter="hairSpecialties" data-value="knotless braids" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Knotless Braids</button>
-                <button type="button" data-filter="hairSpecialties" data-value="wig installs" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Wig Installs</button>
-                <button type="button" data-filter="hairSpecialties" data-value="silk press" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Silk Press</button>
-                <button type="button" data-filter="hairSpecialties" data-value="loc maintenance" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Loc Maintenance</button>
-                <button type="button" data-filter="hairSpecialties" data-value="hair included" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Hair Included</button>
+              <label for="filter-hair-specialty-select" class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Specialties</label>
+              <div class="relative max-w-xs">
+                <select 
+                  id="filter-hair-specialty-select"
+                  class="w-full bg-white border border-[#EAD5C0] rounded-full px-4 py-2 text-xs font-semibold text-[#4A1C24] focus:outline-none focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shadow-sm font-sans"
+                >
+                  <option value="">All Specialties</option>
+                  <option value="knotless braids">Knotless Braids</option>
+                  <option value="wig installs">Wig Installs</option>
+                  <option value="silk press">Silk Press</option>
+                  <option value="loc maintenance">Loc Maintenance</option>
+                </select>
               </div>
             </div>
 
@@ -77,8 +71,6 @@ function getCategorySpecificHtml(category) {
               <button type="button" data-filter="nailStyles" data-value="acrylic" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Acrylic</button>
               <button type="button" data-filter="nailStyles" data-value="gel-x" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Gel-X</button>
               <button type="button" data-filter="nailStyles" data-value="natural nail" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Natural Nail</button>
-              <button type="button" data-filter="nailStyles" data-value="press-ons" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Press-Ons</button>
-              <button type="button" data-filter="nailStyles" data-value="nail art" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Nail Art</button>
             </div>
           </div>
         </div>
@@ -314,7 +306,7 @@ export function injectFilterPanel(categoryName, onFilterChange) {
          ====================================================================== -->
     <div 
       id="filter-panel" 
-      class="fixed inset-y-0 right-0 w-88 max-w-[92vw] z-50 bg-[#F6EEE6] border-l-2 border-[#EAD5C0] shadow-2xl translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between overflow-y-auto md:static md:w-full md:max-w-none md:z-auto md:border md:rounded-3xl md:shadow-lg md:mb-6 md:hidden"
+      class="fixed inset-y-0 right-0 w-88 max-w-[92vw] z-50 bg-[#F6EEE6] border-l-2 border-[#EAD5C0] shadow-2xl translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between overflow-y-auto md:static md:translate-x-0 md:transform-none md:w-full md:max-w-none md:z-auto md:border md:rounded-3xl md:shadow-lg md:mb-6 md:hidden"
     >
       <!-- Mobile Drawer Header -->
       <div class="p-4 border-b border-[#EAD5C0] flex items-center justify-between md:hidden bg-[#F6EEE6]">
@@ -343,44 +335,23 @@ export function injectFilterPanel(categoryName, onFilterChange) {
         <!-- Shared Section: 4 Column Grid on Desktop -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-          <!-- Col 1: Location & Distance -->
+          <!-- Col 1: Location Filter (All, On Campus, Off Campus) -->
           <div class="space-y-4">
             <div class="flex items-center gap-2 pb-1.5 border-b border-[#EAD5C0]">
               <svg class="w-3.5 h-3.5 text-[#4A1C24]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-              <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Location &amp; Radius</h4>
+              <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Location</h4>
             </div>
 
-            <!-- Max Radius Slider (1-25 mi) -->
             <div>
-              <div class="flex items-center justify-between text-xs mb-1.5">
-                <label for="filter-radius-slider" class="font-semibold text-[#7A535A] font-sans">Max Radius:</label>
-                <span id="filter-radius-display" class="font-mono font-bold text-[#4A1C24]">25 mi</span>
+              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Campus Vicinity</label>
+              <div class="flex flex-wrap gap-1.5" role="group" aria-label="Location Filter">
+                <button type="button" data-location="all" class="location-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-[#E9C6CC] text-[#4A1C24] font-bold border border-[#D4A7B0] active-location">All</button>
+                <button type="button" data-location="on-campus" class="location-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">On Campus</button>
+                <button type="button" data-location="off-campus" class="location-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Off Campus</button>
               </div>
-              <input 
-                id="filter-radius-slider" 
-                type="range" 
-                min="1" 
-                max="25" 
-                value="25" 
-                step="1"
-                class="w-full h-2 bg-[#EAD5C0] rounded-lg appearance-none cursor-pointer accent-[#4A1C24]"
-              />
-              <div class="flex justify-between text-[10px] text-[#7A535A] mt-1 font-sans">
-                <span>1 mi (Campus)</span>
-                <span>25 mi (BR Max)</span>
-              </div>
-            </div>
-
-            <!-- Quick Zones -->
-            <div>
-              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Baton Rouge Zones</label>
-              <div class="flex flex-wrap gap-1.5" role="group" aria-label="Zones">
-                <button type="button" data-zone="all" class="zone-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-[#E9C6CC] text-[#4A1C24] font-bold border border-[#D4A7B0] active-zone">All BR</button>
-                <button type="button" data-zone="campus" class="zone-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Campus (&lt;2 mi)</button>
-                <button type="button" data-zone="highland-burbank" class="zone-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Highland/Burbank</button>
-                <button type="button" data-zone="mid-city" class="zone-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Mid-City</button>
-                <button type="button" data-zone="downtown" class="zone-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Downtown</button>
-              </div>
+              <p class="text-[10px] text-[#7A535A] mt-2 font-sans">
+                On Campus: LSU ZIP 70803
+              </p>
             </div>
           </div>
 
@@ -389,16 +360,6 @@ export function injectFilterPanel(categoryName, onFilterChange) {
             <div class="flex items-center gap-2 pb-1.5 border-b border-[#EAD5C0]">
               <svg class="w-3.5 h-3.5 text-[#4A1C24]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 9h.01M18 15h.01"/></svg>
               <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Price &amp; Budget</h4>
-            </div>
-
-            <!-- Price Tiers -->
-            <div>
-              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Price Tier</label>
-              <div class="flex gap-2" role="group" aria-label="Price Tier">
-                <button type="button" data-filter="priceTiers" data-value="$" class="filter-pill flex-1 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC] text-center">$</button>
-                <button type="button" data-filter="priceTiers" data-value="$$" class="filter-pill flex-1 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC] text-center">$$</button>
-                <button type="button" data-filter="priceTiers" data-value="$$$" class="filter-pill flex-1 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC] text-center">$$$</button>
-              </div>
             </div>
 
             <!-- Max Starting Price Slider -->
@@ -431,10 +392,10 @@ export function injectFilterPanel(categoryName, onFilterChange) {
             </div>
           </div>
 
-          <!-- Col 3: Quality & Experience -->
+          <!-- Col 3: Quality & Rating -->
           <div class="space-y-4">
             <div class="flex items-center gap-2 pb-1.5 border-b border-[#EAD5C0]">
-              <svg class="w-3.5 h-3.5 text-[#FDD023] fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-3.5 h-3.5 text-[#A3456A] fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
               <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Quality &amp; Rating</h4>
             </div>
 
@@ -448,23 +409,13 @@ export function injectFilterPanel(categoryName, onFilterChange) {
                 <button type="button" data-rating="4.5" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">4.5+ Stars</button>
               </div>
             </div>
-
-            <!-- Experience Tier -->
-            <div>
-              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Years of Experience</label>
-              <div class="flex flex-wrap gap-1.5" role="group" aria-label="Experience Tier">
-                <button type="button" data-filter="experienceTiers" data-value="1-2" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">1-2 yrs (Rising)</button>
-                <button type="button" data-filter="experienceTiers" data-value="3-5" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">3-5 yrs</button>
-                <button type="button" data-filter="experienceTiers" data-value="5+" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">5+ yrs (Master)</button>
-              </div>
-            </div>
           </div>
 
-          <!-- Col 4: Delivery & Availability -->
+          <!-- Col 4: Service Setup -->
           <div class="space-y-4">
             <div class="flex items-center gap-2 pb-1.5 border-b border-[#EAD5C0]">
               <svg class="w-3.5 h-3.5 text-[#4A1C24]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Delivery &amp; Timing</h4>
+              <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Service Setup</h4>
             </div>
 
             <!-- Service Delivery -->
@@ -483,16 +434,6 @@ export function injectFilterPanel(categoryName, onFilterChange) {
                   <input type="radio" name="service-delivery-radio" value="studio" class="text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
                   <span>Studio / Home Setup</span>
                 </label>
-              </div>
-            </div>
-
-            <!-- Availability -->
-            <div>
-              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Availability Timing</label>
-              <div class="flex flex-wrap gap-1.5" role="group" aria-label="Availability">
-                <button type="button" data-filter="availabilities" data-value="open-this-week" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Open This Week</button>
-                <button type="button" data-filter="availabilities" data-value="same-day" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Same-Day / Last-Min</button>
-                <button type="button" data-filter="availabilities" data-value="bookings-open" class="filter-pill px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Bookings Open</button>
               </div>
             </div>
           </div>
