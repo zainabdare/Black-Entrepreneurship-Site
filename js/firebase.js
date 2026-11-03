@@ -553,6 +553,10 @@ export async function approvePendingProvider(pendingId, providerData) {
     .replace(/-+/g, '-');
   const permanentId = `provider-${categorySlug}-${Date.now().toString(36)}`;
 
+  // Extract private contact info
+  const ownerEmail = providerData.ownerEmail || null;
+  const ownerPhone = providerData.ownerPhone || null;
+
   const finalProvider = {
     ...providerData,
     id: permanentId,
@@ -560,13 +564,36 @@ export async function approvePendingProvider(pendingId, providerData) {
     reviewCount: providerData.reviewCount || 0,
     approvedAt: new Date().toISOString()
   };
-  delete finalProvider.status;
 
-  // 1. Write to official "providers" collection
+  // PRIVACY: NEVER copy ownerEmail or ownerPhone into public "providers" collection
+  delete finalProvider.ownerEmail;
+  delete finalProvider.ownerPhone;
+  delete finalProvider.status;
+  delete finalProvider.campus_location; // Keep only campusLocation
+
+  // 1. Save private contact info into the admin-only "providerContacts" collection
+  if (ownerEmail || ownerPhone) {
+    try {
+      const contactRef = doc(db, "providerContacts", permanentId);
+      await setDoc(contactRef, {
+        providerId: permanentId,
+        businessName: providerData.businessName || '',
+        ownerName: providerData.ownerName || '',
+        ownerEmail: ownerEmail,
+        ownerPhone: ownerPhone,
+        createdAt: new Date().toISOString()
+      });
+      console.log(`[Review Queue] Saved private contact details to providerContacts/${permanentId}`);
+    } catch (contactErr) {
+      console.warn(`[Review Queue] Could not save providerContacts doc: ${contactErr.message}`);
+    }
+  }
+
+  // 2. Write to official public "providers" collection
   const providerRef = doc(db, "providers", permanentId);
   await setDoc(providerRef, finalProvider);
 
-  // 2. Remove from "pendingProviders" collection
+  // 3. Remove from "pendingProviders" collection
   const pendingRef = doc(db, "pendingProviders", pendingId);
   await deleteDoc(pendingRef);
 

@@ -131,6 +131,19 @@ export function injectNavigationDrawer() {
           </div>
         </div>
 
+        <!-- Admin Section (Subtle divider and small link) -->
+        <div class="pt-4 border-t border-[#E9C6CC]/20">
+          <a 
+            href="admin.html" 
+            class="menu-link flex items-center gap-2 px-4 py-1.5 rounded-full text-xs transition-colors ${currentPath === 'admin.html' ? 'bg-[#E9C6CC]/20 text-[#FDD023] font-medium' : 'text-[#E9C6CC]/60 hover:text-[#F6EEE6] hover:bg-[#E9C6CC]/10'}"
+          >
+            <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <span class="font-sans">Admin</span>
+          </a>
+        </div>
+
       </div>
 
       <!-- Drawer Footer -->

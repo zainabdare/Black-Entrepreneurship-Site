@@ -14,14 +14,99 @@
 import { getDistanceFromLSU } from '../utils/distance.js';
 
 /**
+ * Category-specific burgundy shades for CSS-only default image banners.
+ * Distinct shades within the burgundy palette for each category.
+ */
+export const CATEGORY_BURGUNDY_SHADES = {
+  'Hair': '#4A1C24',                     // Signature deep burgundy
+  'Nails': '#561C2C',                    // Rich berry wine burgundy
+  'Lashes': '#3A121A',                   // Noir dark burgundy
+  'Food & Beverages': '#5C2022',         // Warm spiced terracotta burgundy
+  'Fashion': '#44182E',                  // Royal plum burgundy
+  'Fashion (Custom Outfits)': '#44182E', // Royal plum burgundy
+  'Photography': '#32141D'               // Espresso charcoal burgundy
+};
+
+/**
+ * Returns the burgundy color shade for a given category.
+ * @param {string} category 
+ * @returns {string} Hex color string
+ */
+export function getCategoryBurgundyShade(category = '') {
+  if (!category) return '#4A1C24';
+  if (CATEGORY_BURGUNDY_SHADES[category]) {
+    return CATEGORY_BURGUNDY_SHADES[category];
+  }
+  const lower = category.toLowerCase();
+  if (lower.includes('hair')) return CATEGORY_BURGUNDY_SHADES['Hair'];
+  if (lower.includes('nail')) return CATEGORY_BURGUNDY_SHADES['Nails'];
+  if (lower.includes('lash')) return CATEGORY_BURGUNDY_SHADES['Lashes'];
+  if (lower.includes('food') || lower.includes('beverage')) return CATEGORY_BURGUNDY_SHADES['Food & Beverages'];
+  if (lower.includes('fashion') || lower.includes('outfit')) return CATEGORY_BURGUNDY_SHADES['Fashion'];
+  if (lower.includes('photo')) return CATEGORY_BURGUNDY_SHADES['Photography'];
+  return '#4A1C24';
+}
+
+/**
+ * Normalizes category title for banner display.
+ * @param {string} category 
+ * @returns {string}
+ */
+export function formatCategoryDisplayName(category = '') {
+  if (!category) return 'SETLIST';
+  const clean = category.trim();
+  if (clean.toLowerCase().includes('fashion')) return 'FASHION';
+  return clean.toUpperCase();
+}
+
+/**
+ * Generates a 100% CSS-only default image HTML element (zero external image files).
+ * Features burgundy background, uppercase category name in cream Raleway with wide letter spacing,
+ * and a small "SETLIST" subtitle underneath.
+ * 
+ * @param {string} category Category name (e.g., "Hair", "Food & Beverages")
+ * @param {string} extraClasses Additional Tailwind utility classes
+ * @returns {string} HTML markup string
+ */
+export function getCategoryDefaultImageHtml(category = '', extraClasses = '') {
+  const shade = getCategoryBurgundyShade(category);
+  const displayName = formatCategoryDisplayName(category);
+
+  return `
+    <div 
+      class="w-full h-full flex flex-col items-center justify-center p-4 text-center select-none relative overflow-hidden ${extraClasses}"
+      style="background-color: ${shade}; font-family: 'Raleway', sans-serif;"
+      aria-label="${displayName} - SETLIST"
+    >
+      <div class="relative z-10 flex flex-col items-center justify-center">
+        <span 
+          class="font-heading font-extrabold uppercase text-[#F6EEE6] text-sm sm:text-base md:text-lg tracking-[0.25em] pl-[0.25em] leading-snug drop-shadow-sm"
+        >
+          ${displayName}
+        </span>
+        <span 
+          class="font-heading font-medium uppercase text-[#E9C6CC] text-[10px] sm:text-[11px] tracking-[0.35em] pl-[0.35em] mt-1.5 opacity-90"
+        >
+          SETLIST
+        </span>
+      </div>
+    </div>
+  `;
+}
+
+/**
  * Main ProviderCard Component function.
  * @param {Object} provider - Provider business data object
  * @returns {string} HTML markup string for the card
  */
 export function createProviderCard(provider) {
-  const primaryImage = provider.portfolioImages && provider.portfolioImages.length > 0
-    ? provider.portfolioImages[0]
-    : 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&auto=format&fit=crop&q=80';
+  const hasImage = Boolean(
+    provider.portfolioImages &&
+    Array.isArray(provider.portfolioImages) &&
+    provider.portfolioImages.length > 0 &&
+    typeof provider.portfolioImages[0] === 'string' &&
+    provider.portfolioImages[0].trim() !== ''
+  );
 
   // Calculate distance from LSU Memorial Tower for data-distance attribute (used by filters/sorting)
   const distance = getDistanceFromLSU(provider);
@@ -52,13 +137,22 @@ export function createProviderCard(provider) {
         <!-- 1. Photo at Top of Card -->
         <div class="p-3 sm:p-3.5 pb-0">
           <div class="relative w-full aspect-[16/11] rounded-2xl overflow-hidden bg-[#F6EEE6] shadow-sm">
-            <img 
-              src="${primaryImage}" 
-              alt="${provider.businessName} portfolio preview" 
-              loading="lazy"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out rounded-2xl"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&auto=format&fit=crop&q=80';"
-            />
+            ${hasImage ? `
+              <img 
+                src="${provider.portfolioImages[0]}" 
+                alt="${provider.businessName} portfolio preview" 
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out rounded-2xl"
+                onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.classList.remove('hidden');"
+              />
+              <div class="hidden w-full h-full">
+                ${getCategoryDefaultImageHtml(provider.category, 'rounded-2xl')}
+              </div>
+            ` : `
+              <div class="w-full h-full group-hover:scale-105 transition-transform duration-500 ease-out">
+                ${getCategoryDefaultImageHtml(provider.category, 'rounded-2xl')}
+              </div>
+            `}
           </div>
         </div>
 

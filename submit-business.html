@@ -743,42 +743,6 @@
         </div>
       </div>
 
-      <!-- ====================================================================
-           CARD 5: PORTFOLIO PHOTOS
-           ==================================================================== -->
-      <div
-        class="rounded-3xl bg-white border border-[#E9C6CC] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow space-y-4">
-        <div class="flex items-center justify-between border-b border-[#E9C6CC] pb-3">
-          <h3 class="text-base sm:text-lg font-heading font-bold text-[#4A1C24] flex items-center gap-2">
-            <span>5. Portfolio Photos</span>
-          </h3>
-          <span id="intake-photos-badge"
-            class="text-xs font-sans font-bold text-[#4A1C24] bg-[#E9C6CC]/50 px-3 py-1 rounded-full border border-[#D4A7B0]">0/4
-            uploaded</span>
-        </div>
-        <p class="text-xs sm:text-sm text-[#7A535A] leading-relaxed font-sans">
-          Upload up to 4 photos of your work. Files are automatically compressed and stored securely. Max 5MB per photo.
-        </p>
-
-        <div id="intake-photo-dropzone"
-          class="border-2 border-dashed border-[#D4A7B0] hover:border-[#4A1C24] rounded-2xl p-6 sm:p-8 text-center bg-[#FDFBF8] hover:bg-[#F7E9EC]/50 transition-colors cursor-pointer shadow-sm">
-          <input type="file" id="intake-photo-input" accept="image/jpeg,image/png,image/webp,image/heic" multiple
-            class="hidden">
-          <svg class="w-8 h-8 sm:w-10 sm:h-10 mx-auto text-[#7A535A] mb-2" fill="none" stroke="currentColor"
-            stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-            <circle cx="12" cy="13" r="3" />
-          </svg>
-          <p class="text-sm font-sans font-semibold text-[#4A1C24]">Click or drag &amp; drop portfolio photos</p>
-          <p class="text-xs text-[#7A535A] mt-1 font-sans">JPG, PNG, or WebP &bull; Max 5MB each</p>
-        </div>
-
-        <div id="intake-photo-preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 empty:hidden pt-2">
-          <!-- Thumbnail cards injected dynamically -->
-        </div>
-      </div>
-
       <!-- Form Error / Alerts Container -->
       <div id="intake-form-error"
         class="hidden p-4 rounded-2xl bg-red-50 border border-red-200 text-xs sm:text-sm text-red-800 shadow-sm font-sans">
@@ -966,12 +930,7 @@
       return parts.length > 0 ? parts.join(' | ') : 'Not provided';
     }
 
-    // 2. Photo Uploads with Canvas Compression
-    let selectedFiles = [];
-    const photoInput = document.getElementById('intake-photo-input');
-    const photoDropzone = document.getElementById('intake-photo-dropzone');
-    const previewGrid = document.getElementById('intake-photo-preview-grid');
-    const photosBadge = document.getElementById('intake-photos-badge');
+    // 2. Form Error Alerts Handling
     const errorBox = document.getElementById('intake-form-error');
 
     function showError(msg) {
@@ -984,78 +943,6 @@
 
     function hideError() {
       if (errorBox) errorBox.classList.add('hidden');
-    }
-
-    photoDropzone.addEventListener('click', () => photoInput.click());
-
-    photoDropzone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      photoDropzone.classList.add('border-[#4A1C24]', 'bg-[#F7E9EC]/50');
-    });
-
-    photoDropzone.addEventListener('dragleave', () => {
-      photoDropzone.classList.remove('border-[#4A1C24]', 'bg-[#F7E9EC]/50');
-    });
-
-    photoDropzone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      photoDropzone.classList.remove('border-[#4A1C24]', 'bg-[#F7E9EC]/50');
-      if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
-    });
-
-    photoInput.addEventListener('change', () => {
-      if (photoInput.files) {
-        handleFiles(photoInput.files);
-        photoInput.value = '';
-      }
-    });
-
-    function handleFiles(fileList) {
-      hideError();
-      for (const file of Array.from(fileList)) {
-        if (selectedFiles.length >= 4) {
-          showError('You can upload a maximum of 4 portfolio photos.');
-          break;
-        }
-        if (file.size > 5 * 1024 * 1024) {
-          showError(`"${file.name}" exceeds the 5MB file size limit.`);
-          continue;
-        }
-        if (!file.type.startsWith('image/')) {
-          showError(`"${file.name}" is not a valid image file.`);
-          continue;
-        }
-        selectedFiles.push(file);
-      }
-      renderPreviews();
-    }
-
-    function renderPreviews() {
-      previewGrid.innerHTML = '';
-      photosBadge.textContent = `${selectedFiles.length}/4 uploaded`;
-
-      selectedFiles.forEach((file, idx) => {
-        const thumb = document.createElement('div');
-        thumb.className = 'relative h-24 rounded-xl overflow-hidden bg-white border-2 border-[#EAD5C0] shadow-sm';
-
-        const img = document.createElement('img');
-        img.className = 'w-full h-full object-cover';
-        img.src = URL.createObjectURL(file);
-        thumb.appendChild(img);
-
-        const rm = document.createElement('button');
-        rm.type = 'button';
-        rm.className = 'absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-[#4A1C24] hover:bg-[#351218] border border-white/60 text-[#F6EEE6] flex items-center justify-center text-sm font-bold transition-colors cursor-pointer shadow-md';
-        rm.innerHTML = '&times;';
-        rm.addEventListener('click', (e) => {
-          e.stopPropagation();
-          selectedFiles.splice(idx, 1);
-          renderPreviews();
-        });
-        thumb.appendChild(rm);
-
-        previewGrid.appendChild(thumb);
-      });
     }
 
     // 3. Form Submission with In-Memory Spam Protection, EmailJS & Background Google Sheet/Firestore
@@ -1101,8 +988,6 @@
         sel.value = "";
         updateSelectStyle(sel);
       });
-      selectedFiles = [];
-      renderPreviews();
       specificWrapper.classList.add('hidden');
       successModal.classList.add('hidden');
       form.classList.remove('hidden');
@@ -1390,11 +1275,6 @@
       // Generate single readable line for category_details
       const categoryDetailsLine = getCategoryDetailsLine(category);
 
-      // Photo links: if photo uploads fail or are not available, send "Photos could not be uploaded"
-      const photoLinksText = selectedFiles.length > 0
-        ? "Photos could not be uploaded"
-        : "Not provided";
-
       // Readable date and time string
       const submittedAtReadable = new Date().toLocaleString('en-US', {
         dateStyle: 'full',
@@ -1429,7 +1309,6 @@
         availability: "Not provided",
         general_availability: "Not provided",
         booking_link: sanitize(bookingUrl),
-        photo_links: sanitize(photoLinksText),
         submitted_at: sanitize(submittedAtReadable)
       };
 
@@ -1514,7 +1393,6 @@
           availability: "Not provided",
           general_availability: "Not provided",
           booking_link: bookingUrl,
-          photo_links: photoLinksText,
           submitted_at: submittedAtReadable,
           // Checkbox and multi-choice category answers as comma-separated values
           specialties: categoryData.specialties ? categoryData.specialties.join(', ') : '',
@@ -1543,7 +1421,7 @@
             .catch(sheetErr => console.error("Google Sheet error:", sheetErr));
         }
 
-        // 4. Also in the background, try the Firebase save and photo uploads, each wrapped in try/catch with a 10-second timeout
+        // 4. Also in the background, save to Firestore with a 10-second timeout
         (async () => {
           console.log("Firebase save started");
           try {
@@ -1552,27 +1430,7 @@
               new Promise((_, reject) => setTimeout(() => reject(new Error(`${name} timed out after ${ms / 1000}s`)), ms))
             ]);
 
-            const { submitPendingProvider, uploadPendingProviderPhoto } = await import('./js/firebase.js');
-
-            const tempId = `temp-${Date.now()}`;
-            const uploadedPhotos = [];
-
-            if (selectedFiles.length > 0) {
-              for (let i = 0; i < selectedFiles.length; i++) {
-                try {
-                  const url = await withTimeout(
-                    uploadPendingProviderPhoto(selectedFiles[i], tempId, i),
-                    10000,
-                    `Photo upload (${selectedFiles[i].name})`
-                  );
-                  if (url && typeof url === 'string' && url.startsWith('http')) {
-                    uploadedPhotos.push(url);
-                  }
-                } catch (photoErr) {
-                  console.error(`Firebase photo upload failed for "${selectedFiles[i].name}":`, photoErr.message || photoErr);
-                }
-              }
-            }
+            const { submitPendingProvider } = await import('./js/firebase.js');
 
             const firestorePayload = {
               businessName,
@@ -1595,9 +1453,7 @@
               tiktokUrl: tiktokUrl || '',
               websiteUrl: "Not provided",
               bookingUrl,
-              portfolioImages: uploadedPhotos.length > 0 ? uploadedPhotos : [
-                "https://images.unsplash.com/photo-1582095133179-bfd08e2fc6b3?w=600&auto=format&fit=crop&q=80"
-              ],
+              portfolioImages: [],
               policies: {
                 depositRequired,
                 depositAmount: depositPolicyText,

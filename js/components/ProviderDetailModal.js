@@ -27,6 +27,7 @@ import {
   trackLinkClick
 } from '../firebase.js';
 import { getPriceTier, getDistanceFromLSU } from '../utils/distance.js';
+import { getCategoryDefaultImageHtml } from './ProviderCard.js';
 
 // ============================================================================
 // 1. Category Criteria Definitions
@@ -128,6 +129,14 @@ let modalOnStatsUpdatedCallback = null;
 export async function openProviderDetailModal(provider, onStatsUpdated = null) {
   activeModalProvider = provider;
   modalOnStatsUpdatedCallback = onStatsUpdated;
+
+  const hasImage = Boolean(
+    provider.portfolioImages &&
+    Array.isArray(provider.portfolioImages) &&
+    provider.portfolioImages.length > 0 &&
+    typeof provider.portfolioImages[0] === 'string' &&
+    provider.portfolioImages[0].trim() !== ''
+  );
 
   // Track profile view in Firestore analytics
   if (provider) {
@@ -275,8 +284,27 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
         </div>
 
         <!-- Scrollable Modal Body -->
-        <div class="overflow-y-auto flex-1 p-5 sm:p-8 space-y-8">
+        <div class="overflow-y-auto flex-1 p-5 sm:p-8 space-y-6">
           
+          <!-- Provider Photo Banner or CSS Default Image -->
+          <div class="relative w-full h-44 sm:h-56 rounded-2xl overflow-hidden shadow-sm">
+            ${hasImage ? `
+              <img 
+                src="${provider.portfolioImages[0]}" 
+                alt="${provider.businessName}" 
+                class="w-full h-full object-cover rounded-2xl" 
+                onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.classList.remove('hidden');"
+              />
+              <div class="hidden w-full h-full">
+                ${getCategoryDefaultImageHtml(provider.category, 'rounded-2xl')}
+              </div>
+            ` : `
+              <div class="w-full h-full">
+                ${getCategoryDefaultImageHtml(provider.category, 'rounded-2xl')}
+              </div>
+            `}
+          </div>
+
           <!-- 1. Provider Profile Header & Highlights -->
           <div class="space-y-4">
             <div class="flex flex-wrap items-center gap-2">
@@ -294,9 +322,11 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
               </span>
             </div>
 
+            ${provider.description ? `
             <p class="text-sm sm:text-base text-[#1A1A1A] font-sans font-medium leading-relaxed">
               ${provider.description}
             </p>
+            ` : ''}
 
             <!-- Quick Info Strip: Burgundy with cream text -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 sm:p-5 rounded-2xl bg-[#4A1C24] text-[#F6EEE6] border border-[#351218] text-xs shadow-md">
@@ -333,6 +363,25 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
 
             <!-- Single "BOOK" Button (Direct link if 1 link, expanding menu if multiple) -->
             ${bookActionHtml}
+
+            <!-- Additional Portfolio Showcase (if multiple photos available) -->
+            ${(hasImage && provider.portfolioImages.length > 1) ? `
+              <div class="space-y-3 pt-3 border-t border-[#EAD5C0]">
+                <h4 class="text-xs font-heading font-bold text-[#7A535A] uppercase tracking-wider">
+                  Portfolio Showcase
+                </h4>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  ${provider.portfolioImages.map((imgUrl, idx) => `
+                    <div 
+                      class="group relative h-24 sm:h-28 rounded-xl overflow-hidden bg-white border border-[#EAD5C0] cursor-pointer shadow-sm hover:border-[#4A1C24] transition-all"
+                      onclick="window.openPhotoLightbox('${imgUrl}', '${provider.businessName} Portfolio')"
+                    >
+                      <img src="${imgUrl}" alt="${provider.businessName} photo ${idx + 1}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
           </div>
 
           <!-- 3. REVIEWS & RATINGS SECTION -->
