@@ -24,7 +24,8 @@ import {
   getRatingsForProvider,
   submitRatingToFirestore,
   trackProfileView,
-  trackLinkClick
+  trackLinkClick,
+  getProviderPhotosFromFirestore
 } from '../firebase.js';
 import { getPriceTier, getDistanceFromLSU } from '../utils/distance.js';
 import { getCategoryDefaultImageHtml } from './ProviderCard.js';
@@ -130,13 +131,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
   activeModalProvider = provider;
   modalOnStatsUpdatedCallback = onStatsUpdated;
 
-  const hasImage = Boolean(
-    provider.portfolioImages &&
-    Array.isArray(provider.portfolioImages) &&
-    provider.portfolioImages.length > 0 &&
-    typeof provider.portfolioImages[0] === 'string' &&
-    provider.portfolioImages[0].trim() !== ''
-  );
+  const initialThumb = provider.thumbnail || (Array.isArray(provider.portfolioImages) && provider.portfolioImages[0] ? provider.portfolioImages[0] : null);
 
   // Track profile view in Firestore analytics
   if (provider) {
@@ -243,6 +238,26 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
     `;
   }
 
+  // Resolve Location (On Campus vs Off Campus)
+  let locationText = null;
+  const rawCampusLoc = provider.campusLocation || provider.campus_location;
+  if (rawCampusLoc) {
+    const norm = String(rawCampusLoc).trim().toLowerCase();
+    if (norm === 'on campus' || norm === 'on-campus') {
+      locationText = 'On Campus';
+    } else if (norm === 'off campus' || norm === 'off-campus') {
+      locationText = 'Off Campus';
+    } else {
+      locationText = String(rawCampusLoc).trim();
+    }
+  } else {
+    const rawZip = provider.zipCode || provider.zip_code || provider.zip;
+    if (rawZip) {
+      const cleanZip = String(rawZip).trim();
+      locationText = (cleanZip === '70803') ? 'On Campus' : 'Off Campus';
+    }
+  }
+
   const modalHtml = `
     <div id="provider-detail-modal" class="fixed inset-0 z-50 overflow-y-auto bg-[#4A1C24]/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 transition-opacity duration-300">
       
@@ -286,11 +301,11 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
         <!-- Scrollable Modal Body -->
         <div class="overflow-y-auto flex-1 p-5 sm:p-8 space-y-6">
           
-          <!-- Provider Photo Banner or CSS Default Image -->
-          <div class="relative w-full h-44 sm:h-56 rounded-2xl overflow-hidden shadow-sm">
-            ${hasImage ? `
+          <!-- Provider Photo Gallery Mount -->
+          <div id="modal-gallery-mount" class="relative w-full h-48 sm:h-64 rounded-2xl overflow-hidden shadow-sm bg-[#4A1C24]/10">
+            ${initialThumb ? `
               <img 
-                src="${provider.portfolioImages[0]}" 
+                src="${initialThumb}" 
                 alt="${provider.businessName}" 
                 class="w-full h-full object-cover rounded-2xl" 
                 onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.classList.remove('hidden');"
@@ -329,19 +344,21 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
             ` : ''}
 
             <!-- Quick Info Strip: Burgundy with cream text -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 sm:p-5 rounded-2xl bg-[#4A1C24] text-[#F6EEE6] border border-[#351218] text-xs shadow-md">
+            <div class="grid grid-cols-2 ${locationText ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-3 p-4 sm:p-5 rounded-2xl bg-[#4A1C24] text-[#F6EEE6] border border-[#351218] text-xs shadow-md">
               <div>
                 <span class="text-[#E9C6CC] block text-[10px] uppercase tracking-wider font-semibold font-sans">Starting Price</span>
                 <span class="font-bold text-[#F6EEE6] text-sm sm:text-base font-sans">
                   $${provider.startingPrice}
                 </span>
               </div>
+              ${locationText ? `
               <div>
-                <span class="text-[#E9C6CC] block text-[10px] uppercase tracking-wider font-semibold font-sans">Service Delivery</span>
-                <span class="font-bold text-[#F6EEE6] text-sm sm:text-base capitalize font-sans">
-                  ${provider.serviceDelivery === 'both' ? 'Studio & Mobile' : provider.serviceDelivery}
+                <span class="text-[#E9C6CC] block text-[10px] uppercase tracking-wider font-semibold font-sans">Location</span>
+                <span class="font-bold text-[#F6EEE6] text-sm sm:text-base font-sans">
+                  ${locationText}
                 </span>
               </div>
+              ` : ''}
               <div>
                 <span class="text-[#E9C6CC] block text-[10px] uppercase tracking-wider font-semibold font-sans">Student Discount</span>
                 <span class="font-bold text-[#F6EEE6] text-sm sm:text-base font-sans">
@@ -363,25 +380,6 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
 
             <!-- Single "BOOK" Button (Direct link if 1 link, expanding menu if multiple) -->
             ${bookActionHtml}
-
-            <!-- Additional Portfolio Showcase (if multiple photos available) -->
-            ${(hasImage && provider.portfolioImages.length > 1) ? `
-              <div class="space-y-3 pt-3 border-t border-[#EAD5C0]">
-                <h4 class="text-xs font-heading font-bold text-[#7A535A] uppercase tracking-wider">
-                  Portfolio Showcase
-                </h4>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  ${provider.portfolioImages.map((imgUrl, idx) => `
-                    <div 
-                      class="group relative h-24 sm:h-28 rounded-xl overflow-hidden bg-white border border-[#EAD5C0] cursor-pointer shadow-sm hover:border-[#4A1C24] transition-all"
-                      onclick="window.openPhotoLightbox('${imgUrl}', '${provider.businessName} Portfolio')"
-                    >
-                      <img src="${imgUrl}" alt="${provider.businessName} photo ${idx + 1}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-            ` : ''}
           </div>
 
           <!-- 3. REVIEWS & RATINGS SECTION -->
@@ -571,8 +569,139 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
   // Attach event handlers
   initModalInteractions(provider);
 
+  // Load photos into swipeable gallery
+  setupModalGallery(provider.id, provider.businessName, provider.category, initialThumb);
+
   // Fetch reviews from Firestore
   await loadAndRenderReviews(provider);
+}
+
+/**
+ * Loads providerPhotos from Firestore and mounts a swipeable photo gallery in the modal.
+ */
+async function setupModalGallery(providerId, businessName, category, initialThumb) {
+  const mount = document.getElementById('modal-gallery-mount');
+  if (!mount || !providerId) return;
+
+  try {
+    const photoResult = await getProviderPhotosFromFirestore(providerId);
+    const rawImages = Array.isArray(photoResult) ? photoResult : (photoResult?.images || []);
+    const images = rawImages.filter(img => typeof img === 'string' && img.trim() !== '');
+
+    if (images.length === 0) {
+      // Keep initial thumbnail or category default image
+      return;
+    }
+
+    if (images.length === 1) {
+      // Single full-size photo
+      mount.innerHTML = `
+        <div class="relative w-full h-full group cursor-pointer" id="gallery-single-img-wrap">
+          <img src="${images[0]}" alt="${businessName}" class="w-full h-full object-cover rounded-2xl" />
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity px-3 py-1.5 rounded-full bg-black/60 text-white text-xs font-semibold backdrop-blur-sm flex items-center gap-1.5 shadow">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+              <span>View Full Photo</span>
+            </span>
+          </div>
+        </div>
+      `;
+      const singleWrap = document.getElementById('gallery-single-img-wrap');
+      if (singleWrap) {
+        singleWrap.addEventListener('click', () => {
+          openPhotoLightbox(images[0], businessName);
+        });
+      }
+      return;
+    }
+
+    // Multiple photos (2 to 4): Swipeable touch-snap gallery
+    mount.innerHTML = `
+      <div class="relative w-full h-full group select-none">
+        <!-- Swipeable Track -->
+        <div 
+          id="modal-gallery-track" 
+          class="w-full h-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth"
+          style="scrollbar-width: none; -ms-overflow-style: none;"
+        >
+          ${images.map((imgUrl, idx) => `
+            <div 
+              class="min-w-full h-full flex-shrink-0 snap-center relative cursor-pointer gallery-slide-item" 
+              data-img-index="${idx}"
+            >
+              <img src="${imgUrl}" alt="${businessName} photo ${idx + 1}" class="w-full h-full object-cover rounded-2xl" loading="lazy" />
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Counter Badge -->
+        <div class="absolute bottom-3 right-3 z-10 pointer-events-none">
+          <span id="gallery-counter-badge" class="px-2.5 py-1 rounded-full bg-black/70 text-white text-[11px] font-mono font-medium backdrop-blur-sm shadow">
+            1 / ${images.length}
+          </span>
+        </div>
+
+        <!-- Prev Button -->
+        <button 
+          id="gallery-prev-btn" 
+          type="button" 
+          aria-label="Previous photo"
+          class="absolute left-2.5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm opacity-90 sm:opacity-0 sm:group-hover:opacity-100"
+        >
+          <svg class="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+
+        <!-- Next Button -->
+        <button 
+          id="gallery-next-btn" 
+          type="button" 
+          aria-label="Next photo"
+          class="absolute right-2.5 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm opacity-90 sm:opacity-0 sm:group-hover:opacity-100"
+        >
+          <svg class="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    `;
+
+    const track = document.getElementById('modal-gallery-track');
+    const counter = document.getElementById('gallery-counter-badge');
+    const prevBtn = document.getElementById('gallery-prev-btn');
+    const nextBtn = document.getElementById('gallery-next-btn');
+    const slides = mount.querySelectorAll('.gallery-slide-item');
+
+    slides.forEach((slide) => {
+      slide.addEventListener('click', () => {
+        const idx = Number(slide.dataset.imgIndex);
+        if (!isNaN(idx) && images[idx]) {
+          openPhotoLightbox(images[idx], `${businessName} (Photo ${idx + 1} of ${images.length})`);
+        }
+      });
+    });
+
+    if (track && counter) {
+      track.addEventListener('scroll', () => {
+        const slideWidth = track.clientWidth || 1;
+        const activeIndex = Math.min(images.length - 1, Math.max(0, Math.round(track.scrollLeft / slideWidth)));
+        counter.textContent = `${activeIndex + 1} / ${images.length}`;
+      }, { passive: true });
+    }
+
+    if (prevBtn && track) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
+      });
+    }
+
+    if (nextBtn && track) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
+      });
+    }
+  } catch (err) {
+    console.warn('[ProviderDetailModal] Could not load providerPhotos:', err);
+  }
 }
 
 /**

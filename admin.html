@@ -228,81 +228,185 @@
     </div>
 
     <!-- ====================================================================
-         4. ADMIN DASHBOARD & PENDING APPLICATIONS QUEUE
+         4. ADMIN DASHBOARD (Pending Queue & Approved Providers Directory)
          ==================================================================== -->
     <div id="dashboard-view" class="hidden space-y-8">
       
-      <!-- Dashboard Header -->
+      <!-- Dashboard Header & Navigation Tabs -->
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#EAD5C0] pb-6">
         <div>
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold mb-2">
             <span>Verified Administrator</span>
           </span>
           <h1 class="text-3xl sm:text-4xl font-heading font-light tracking-[0.12em] text-[#4A1C24] uppercase">
-            Pending <span class="category-script-accent text-4xl sm:text-5xl lowercase">applications</span>
+            Admin <span class="category-script-accent text-4xl sm:text-5xl lowercase">dashboard</span>
           </h1>
           <p class="text-xs sm:text-sm text-[#7A535A] font-sans mt-1">
-            Review incoming business submissions. Listed newest first.
+            Review incoming applications and manage live marketplace listings.
           </p>
         </div>
 
-        <div class="flex items-center gap-3">
+        <!-- Navigation Tabs: Pending / Approved -->
+        <div class="flex items-center gap-1.5 p-1.5 bg-[#FDFBF8] rounded-2xl border border-[#EAD5C0] shadow-sm">
+          <button id="tab-btn-pending" type="button"
+            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 bg-[#4A1C24] text-[#F6EEE6] shadow-sm cursor-pointer">
+            <span>Pending</span>
+            <span id="tab-count-pending" class="px-2 py-0.5 rounded-full text-[11px] font-mono bg-white/20 text-white">0</span>
+          </button>
+          <button id="tab-btn-approved" type="button"
+            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 text-[#7A535A] hover:text-[#4A1C24] hover:bg-stone-100/60 cursor-pointer">
+            <span>Approved</span>
+            <span id="tab-count-approved" class="px-2 py-0.5 rounded-full text-[11px] font-mono bg-[#E9C6CC]/60 text-[#4A1C24]">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB PANE 1: PENDING APPLICATIONS -->
+      <div id="pending-tab-pane" class="space-y-6">
+        <!-- Queue Status & Refresh Bar -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm font-sans font-semibold text-[#7A535A] px-1">
+          <div class="flex items-center gap-3">
+            <span id="queue-count-label">Loading applications...</span>
+            <span class="text-[11px] text-[#7A535A]/70 uppercase tracking-wider font-heading">&bull; Newest First</span>
+          </div>
           <button id="dashboard-refresh-btn" type="button"
-            class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white hover:bg-[#F7E9EC] text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-2 cursor-pointer">
-            <svg class="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+            class="self-start sm:self-auto px-4 py-1.5 rounded-full bg-white hover:bg-[#F7E9EC] text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-2 cursor-pointer">
+            <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
             <span>Refresh Queue</span>
           </button>
         </div>
-      </div>
 
-      <!-- Queue Status Counter Bar -->
-      <div class="flex items-center justify-between text-xs sm:text-sm font-sans font-semibold text-[#7A535A] px-1">
-        <span id="queue-count-label">Loading applications...</span>
-        <span class="text-[11px] text-[#7A535A]/70 uppercase tracking-wider font-heading">Auto-Sorted Newest First</span>
-      </div>
-
-      <!-- Queue Error Alert Container -->
-      <div id="queue-error-box" class="hidden p-5 rounded-3xl bg-red-50 border-2 border-red-200 text-red-900 space-y-3 shadow-sm font-sans">
-        <div class="flex items-center gap-2 font-bold text-sm text-red-800">
-          <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          <span>Unable to Load Applications</span>
+        <!-- Queue Error Alert Container -->
+        <div id="queue-error-box" class="hidden p-5 rounded-3xl bg-red-50 border-2 border-red-200 text-red-900 space-y-3 shadow-sm font-sans">
+          <div class="flex items-center gap-2 font-bold text-sm text-red-800">
+            <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span>Unable to Load Applications</span>
+          </div>
+          <p id="queue-error-text" class="text-xs sm:text-sm leading-relaxed text-red-800">
+            <!-- Injected dynamically -->
+          </p>
+          <div>
+            <button id="queue-retry-btn" type="button"
+              class="px-4 py-1.5 rounded-full bg-red-700 hover:bg-red-800 text-white font-heading font-bold text-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer">
+              Retry Connection
+            </button>
+          </div>
         </div>
-        <p id="queue-error-text" class="text-xs sm:text-sm leading-relaxed text-red-800">
+
+        <!-- Action Notification Banner (Approve / Reject Feedback) -->
+        <div id="action-notification-banner" class="hidden p-4 sm:p-5 rounded-3xl border shadow-sm transition-all font-sans">
           <!-- Injected dynamically -->
-        </p>
-        <div>
-          <button id="queue-retry-btn" type="button"
-            class="px-4 py-1.5 rounded-full bg-red-700 hover:bg-red-800 text-white font-heading font-bold text-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer">
-            Retry Connection
-          </button>
+        </div>
+
+        <!-- Applications List Container -->
+        <div id="applications-container" class="space-y-6">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Empty Queue View -->
+        <div id="empty-queue-box" class="hidden text-center py-16 px-4 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm space-y-3">
+          <div class="w-14 h-14 mx-auto rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] flex items-center justify-center">
+            <svg class="w-7 h-7 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-heading font-bold text-[#4A1C24]">Queue is Clear</h3>
+          <p class="text-xs sm:text-sm text-[#7A535A] max-w-sm mx-auto font-sans">
+            There are currently no pending business applications awaiting review.
+          </p>
         </div>
       </div>
 
-      <!-- Action Notification Banner (Approve / Reject Feedback) -->
-      <div id="action-notification-banner" class="hidden p-4 sm:p-5 rounded-3xl border shadow-sm transition-all font-sans">
-        <!-- Injected dynamically -->
-      </div>
+      <!-- TAB PANE 2: APPROVED PROVIDERS DIRECTORY -->
+      <div id="approved-tab-pane" class="hidden space-y-6">
+        <!-- Search and Filter Controls -->
+        <div class="p-4 sm:p-5 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+          <!-- Search Box -->
+          <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#7A535A]">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <input type="text" id="approved-search-input"
+              class="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-[#D4A7B0] focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] bg-[#FDFBF8] text-xs sm:text-sm font-sans placeholder-[#7A535A]/60 text-[#4A1C24]"
+              placeholder="Search by business name or owner name..." />
+          </div>
 
-      <!-- Applications List Container -->
-      <div id="applications-container" class="space-y-6">
-        <!-- Rendered dynamically -->
-      </div>
+          <!-- Category Filter & Refresh -->
+          <div class="flex items-center gap-2 sm:gap-3">
+            <select id="approved-category-filter"
+              class="flex-1 md:flex-none px-3.5 py-2.5 rounded-2xl border border-[#D4A7B0] focus:border-[#4A1C24] bg-[#FDFBF8] text-xs sm:text-sm font-heading font-medium text-[#4A1C24] cursor-pointer">
+              <option value="all">All Categories</option>
+              <option value="Hair">Hair</option>
+              <option value="Nails">Nails</option>
+              <option value="Lashes">Lashes</option>
+              <option value="Food & Beverages">Food &amp; Beverages</option>
+              <option value="Fashion (Custom Outfits)">Fashion (Custom Outfits)</option>
+              <option value="Photography">Photography</option>
+            </select>
 
-      <!-- Empty Queue View -->
-      <div id="empty-queue-box" class="hidden text-center py-16 px-4 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm space-y-3">
-        <div class="w-14 h-14 mx-auto rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] flex items-center justify-center">
-          <svg class="w-7 h-7 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
+            <button id="approved-refresh-btn" type="button"
+              class="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#F7E9EC] text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>Refresh</span>
+            </button>
+          </div>
         </div>
-        <h3 class="text-lg font-heading font-bold text-[#4A1C24]">Queue is Clear</h3>
-        <p class="text-xs sm:text-sm text-[#7A535A] max-w-sm mx-auto font-sans">
-          There are currently no pending business applications awaiting review.
-        </p>
+
+        <!-- Count Status Bar -->
+        <div class="flex items-center justify-between text-xs sm:text-sm font-sans font-semibold text-[#7A535A] px-1">
+          <span id="approved-count-label">Loading live providers...</span>
+          <span class="text-[11px] text-[#7A535A]/70 uppercase tracking-wider font-heading">Auto-Sorted Newest First</span>
+        </div>
+
+        <!-- Action Notification Banner (Removal Feedback) -->
+        <div id="approved-action-banner" class="hidden p-4 sm:p-5 rounded-3xl border shadow-sm transition-all font-sans">
+          <!-- Injected dynamically -->
+        </div>
+
+        <!-- Approved Error Alert Container -->
+        <div id="approved-error-box" class="hidden p-5 rounded-3xl bg-red-50 border-2 border-red-200 text-red-900 space-y-3 shadow-sm font-sans">
+          <div class="flex items-center gap-2 font-bold text-sm text-red-800">
+            <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span>Unable to Load Live Providers</span>
+          </div>
+          <p id="approved-error-text" class="text-xs sm:text-sm leading-relaxed text-red-800">
+            <!-- Injected dynamically -->
+          </p>
+          <div>
+            <button id="approved-retry-btn" type="button"
+              class="px-4 py-1.5 rounded-full bg-red-700 hover:bg-red-800 text-white font-heading font-bold text-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer">
+              Retry Connection
+            </button>
+          </div>
+        </div>
+
+        <!-- Approved Cards Container -->
+        <div id="approved-container" class="space-y-4">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Empty Approved Box -->
+        <div id="empty-approved-box" class="hidden text-center py-16 px-4 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm space-y-3">
+          <div class="w-14 h-14 mx-auto rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] flex items-center justify-center">
+            <svg class="w-7 h-7 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-heading font-bold text-[#4A1C24]">No Providers Found</h3>
+          <p id="empty-approved-message" class="text-xs sm:text-sm text-[#7A535A] max-w-sm mx-auto font-sans">
+            There are currently no live approved providers matching your criteria.
+          </p>
+        </div>
       </div>
 
     </div>
@@ -336,7 +440,12 @@
       app,
       getPendingProviders,
       approvePendingProvider,
-      rejectPendingProvider
+      rejectPendingProvider,
+      getProvidersFromFirestore,
+      deleteLiveProvider,
+      getProviderContacts,
+      getProviderPhotosFromFirestore,
+      saveProviderPhotosToFirestore
     } from "./js/firebase.js";
 
     // 2. Administrator Access Control List
@@ -355,7 +464,15 @@
     // 3. Initialize Firebase Auth
     const auth = getAuth(app);
 
-    // 4. DOM Elements
+    // 4. State Management
+    let currentActiveTab = 'pending';
+    let pendingApplicationsList = [];
+    let liveProvidersList = [];
+    let providerContactsMap = {};
+    let isApprovedLoaded = false;
+    let isLoadingApproved = false;
+
+    // 5. DOM Elements
     const initialLoadingView = document.getElementById('initial-loading-view');
     const loginView = document.getElementById('login-view');
     const unverifiedView = document.getElementById('unverified-view');
@@ -378,7 +495,15 @@
     const refreshVerifBtn = document.getElementById('refresh-verif-btn');
     const unverifiedActionMsg = document.getElementById('unverified-action-msg');
 
-    // Dashboard Elements
+    // Dashboard Tabs Elements
+    const tabBtnPending = document.getElementById('tab-btn-pending');
+    const tabBtnApproved = document.getElementById('tab-btn-approved');
+    const tabCountPending = document.getElementById('tab-count-pending');
+    const tabCountApproved = document.getElementById('tab-count-approved');
+    const pendingTabPane = document.getElementById('pending-tab-pane');
+    const approvedTabPane = document.getElementById('approved-tab-pane');
+
+    // Pending Tab Elements
     const applicationsContainer = document.getElementById('applications-container');
     const emptyQueueBox = document.getElementById('empty-queue-box');
     const queueErrorBox = document.getElementById('queue-error-box');
@@ -388,7 +513,20 @@
     const dashboardRefreshBtn = document.getElementById('dashboard-refresh-btn');
     const actionNotificationBanner = document.getElementById('action-notification-banner');
 
-    // 5. Screen View Switcher
+    // Approved Tab Elements
+    const approvedSearchInput = document.getElementById('approved-search-input');
+    const approvedCategoryFilter = document.getElementById('approved-category-filter');
+    const approvedRefreshBtn = document.getElementById('approved-refresh-btn');
+    const approvedCountLabel = document.getElementById('approved-count-label');
+    const approvedActionBanner = document.getElementById('approved-action-banner');
+    const approvedErrorBox = document.getElementById('approved-error-box');
+    const approvedErrorText = document.getElementById('approved-error-text');
+    const approvedRetryBtn = document.getElementById('approved-retry-btn');
+    const approvedContainer = document.getElementById('approved-container');
+    const emptyApprovedBox = document.getElementById('empty-approved-box');
+    const emptyApprovedMessage = document.getElementById('empty-approved-message');
+
+    // 6. Screen View Switcher
     function showView(viewName) {
       initialLoadingView.classList.add('hidden');
       loginView.classList.add('hidden');
@@ -421,8 +559,56 @@
       }
     }
 
-    // 6. Auth State Observer
+    // 7. Tab Switching Logic
+    function switchDashboardTab(tabName) {
+      currentActiveTab = tabName;
+      if (tabName === 'pending') {
+        tabBtnPending.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 bg-[#4A1C24] text-[#F6EEE6] shadow-sm cursor-pointer';
+        tabCountPending.className = 'px-2 py-0.5 rounded-full text-[11px] font-mono bg-white/20 text-white';
+
+        tabBtnApproved.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 text-[#7A535A] hover:text-[#4A1C24] hover:bg-stone-100/60 cursor-pointer';
+        tabCountApproved.className = 'px-2 py-0.5 rounded-full text-[11px] font-mono bg-[#E9C6CC]/60 text-[#4A1C24]';
+
+        pendingTabPane.classList.remove('hidden');
+        approvedTabPane.classList.add('hidden');
+      } else {
+        tabBtnApproved.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 bg-[#4A1C24] text-[#F6EEE6] shadow-sm cursor-pointer';
+        tabCountApproved.className = 'px-2 py-0.5 rounded-full text-[11px] font-mono bg-white/20 text-white';
+
+        tabBtnPending.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 text-[#7A535A] hover:text-[#4A1C24] hover:bg-stone-100/60 cursor-pointer';
+        tabCountPending.className = 'px-2 py-0.5 rounded-full text-[11px] font-mono bg-[#E9C6CC]/60 text-[#4A1C24]';
+
+        approvedTabPane.classList.remove('hidden');
+        pendingTabPane.classList.add('hidden');
+
+        // Always render the list when switching to Approved, even if pre-fetched in background
+        if (!isApprovedLoaded) {
+          loadApprovedProviders(true);
+        } else {
+          renderFilteredApprovedList();
+        }
+      }
+    }
+
+    tabBtnPending.addEventListener('click', () => switchDashboardTab('pending'));
+    tabBtnApproved.addEventListener('click', () => switchDashboardTab('approved'));
+
+    // 8. Auth State Observer with 8-Second Safety Timeout
+    console.log("Auth check started");
+
+    let authResolved = false;
+    const authTimeoutId = setTimeout(() => {
+      if (!authResolved) {
+        console.warn("Auth check timed out after 8s");
+        showView('login');
+        showLoginError("Session check timed out. Please enter your email and password to sign in.");
+      }
+    }, 8000);
+
     onAuthStateChanged(auth, async (user) => {
+      authResolved = true;
+      clearTimeout(authTimeoutId);
+
       if (!user) {
         // Signed out
         showView('login');
@@ -430,6 +616,7 @@
       }
 
       const email = (user.email || '').toLowerCase().trim();
+      console.log("Signed in as " + user.email);
 
       // Check if email is in the admin authorization list
       if (!isAuthorizedAdmin(email)) {
@@ -451,6 +638,14 @@
       // Fully authenticated and verified admin
       showView('dashboard');
       loadPendingApplications();
+      // Pre-fetch live approved providers in the background
+      loadApprovedProviders(false);
+    }, (authError) => {
+      authResolved = true;
+      clearTimeout(authTimeoutId);
+      console.error("Auth listener error:", authError);
+      showView('login');
+      showLoginError(`Authentication error: ${authError.message || 'Please sign in.'}`);
     });
 
     // 7. Login Submission Handler
@@ -580,6 +775,7 @@
     });
 
     async function loadPendingApplications() {
+      console.log("Loading pending");
       queueErrorBox.classList.add('hidden');
       emptyQueueBox.classList.add('hidden');
       applicationsContainer.innerHTML = `
@@ -630,16 +826,19 @@
 
     function renderApplicationsList(applications) {
       applicationsContainer.innerHTML = '';
+      pendingApplicationsList = applications || [];
 
       if (!applications || applications.length === 0) {
         emptyQueueBox.classList.remove('hidden');
         queueCountLabel.textContent = '0 Pending Applications';
+        tabCountPending.textContent = '0';
         return;
       }
 
       emptyQueueBox.classList.add('hidden');
       const totalCount = applications.length;
       queueCountLabel.textContent = `${totalCount} Pending Application${totalCount === 1 ? '' : 's'}`;
+      tabCountPending.textContent = totalCount;
 
       applications.forEach((appItem, index) => {
         const card = createApplicationCard(appItem, index + 1, totalCount);
@@ -820,14 +1019,123 @@
       };
     }
 
-    // Data cleaning: Parse up to 4 photo URLs from textarea
-    function parsePhotosText(text) {
-      if (!text || typeof text !== 'string') return [];
-      return text
-        .split('\n')
-        .map(line => line.trim())
-        .filter(line => line.length > 0)
-        .slice(0, 4);
+    // ========================================================================
+    // Client-Side Canvas Image Resizing & Compression Helpers (<200KB)
+    // ========================================================================
+
+    /**
+     * Resizes and compresses an image File or Data URL to a JPEG Data URL.
+     * Keeps max dimension <= 1000px, JPEG quality ~0.70, and strictly under ~200KB.
+     */
+    async function compressImageToDataUrl(fileOrDataUrl, maxDimension = 1000, initialQuality = 0.7, maxBytes = 204800) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+
+          // Scale down longest side to maxDimension
+          if (width > maxDimension || height > maxDimension) {
+            if (width >= height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, width, height);
+          ctx.drawImage(img, 0, 0, width, height);
+
+          let quality = initialQuality;
+          let dataUrl = canvas.toDataURL('image/jpeg', quality);
+          let sizeBytes = Math.round((dataUrl.length - 23) * 0.75);
+
+          // Step down quality if needed to get under maxBytes
+          while (sizeBytes > maxBytes && quality > 0.35) {
+            quality -= 0.08;
+            dataUrl = canvas.toDataURL('image/jpeg', quality);
+            sizeBytes = Math.round((dataUrl.length - 23) * 0.75);
+          }
+
+          // Step down dimensions if still slightly over maxBytes
+          if (sizeBytes > maxBytes) {
+            const smallerCanvas = document.createElement('canvas');
+            smallerCanvas.width = Math.round(width * 0.75);
+            smallerCanvas.height = Math.round(height * 0.75);
+            const smCtx = smallerCanvas.getContext('2d');
+            smCtx.fillStyle = '#FFFFFF';
+            smCtx.fillRect(0, 0, smallerCanvas.width, smallerCanvas.height);
+            smCtx.drawImage(canvas, 0, 0, smallerCanvas.width, smallerCanvas.height);
+            dataUrl = smallerCanvas.toDataURL('image/jpeg', 0.6);
+            sizeBytes = Math.round((dataUrl.length - 23) * 0.75);
+          }
+
+          if (sizeBytes > maxBytes) {
+            reject(new Error(`Photo is ${Math.round(sizeBytes / 1024)}KB, which exceeds the 200KB limit after compression. Please choose a smaller photo.`));
+            return;
+          }
+
+          resolve({ dataUrl, sizeBytes });
+        };
+
+        img.onerror = () => {
+          reject(new Error('Unable to read this photo file.'));
+        };
+
+        if (typeof fileOrDataUrl === 'string') {
+          img.src = fileOrDataUrl;
+        } else {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            img.src = e.target.result;
+          };
+          reader.onerror = () => reject(new Error('Could not open file from storage.'));
+          reader.readAsDataURL(fileOrDataUrl);
+        }
+      });
+    }
+
+    /**
+     * Generates a 400px thumbnail Data URL (JPEG quality ~0.60) for provider cards.
+     */
+    async function createThumbnailFromDataUrl(fullDataUrl, maxDimension = 400, quality = 0.6) {
+      if (!fullDataUrl) return null;
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxDimension || height > maxDimension) {
+            if (width >= height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, width, height);
+          ctx.drawImage(img, 0, 0, width, height);
+          const thumbDataUrl = canvas.toDataURL('image/jpeg', quality);
+          resolve(thumbDataUrl);
+        };
+        img.onerror = () => resolve(null);
+        img.src = fullDataUrl;
+      });
     }
 
     // Top Action Notification Banner display
@@ -843,38 +1151,6 @@
       }
 
       actionNotificationBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    // Updates live thumbnail preview grid in each application card
-    function updateThumbnailPreviews(card) {
-      const textarea = card.querySelector('.field-photos');
-      const container = card.querySelector('.photos-preview-grid');
-      if (!textarea || !container) return;
-
-      const urls = parsePhotosText(textarea.value);
-      container.innerHTML = '';
-
-      for (let i = 0; i < 4; i++) {
-        const url = urls[i];
-        const slot = document.createElement('div');
-        slot.className = 'relative aspect-[4/3] rounded-2xl overflow-hidden border border-[#EAD5C0] bg-[#FDFBF8] flex items-center justify-center';
-
-        if (url) {
-          slot.innerHTML = `
-            <img src="${escAttr(url)}" alt="Photo ${i + 1}" class="w-full h-full object-cover rounded-2xl" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.classList.remove('hidden');" />
-            <div class="hidden text-center p-2 text-[10px] text-red-600 font-sans font-medium">Image not found</div>
-            <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#4A1C24]/85 text-[#F6EEE6] font-mono shadow-sm">#${i + 1}</span>
-          `;
-        } else {
-          slot.innerHTML = `
-            <div class="text-center p-2 text-[11px] text-[#7A535A]/60 font-sans">
-              <span class="font-bold text-[#7A535A]/80 block mb-0.5">Photo #${i + 1}</span>
-              <span class="text-[10px]">(Empty)</span>
-            </div>
-          `;
-        }
-        container.appendChild(slot);
-      }
     }
 
     // Show card inline validation error
@@ -898,6 +1174,7 @@
     // Decrement pending queue counter and update UI
     function decrementQueueCount() {
       const remainingCards = applicationsContainer.querySelectorAll('article').length;
+      tabCountPending.textContent = remainingCards;
       if (remainingCards === 0) {
         emptyQueueBox.classList.remove('hidden');
         queueCountLabel.textContent = '0 Pending Applications';
@@ -1160,11 +1437,6 @@
         else if (lower.includes('photo')) matchedCategory = 'Photography';
       }
 
-      // Existing photo lines
-      let initialPhotos = '';
-      if (Array.isArray(app.portfolioImages) && app.portfolioImages.length > 0) {
-        initialPhotos = app.portfolioImages.join('\n');
-      }
 
       // Policies
       const policies = app.policies || {};
@@ -1498,26 +1770,45 @@
             </div>
           </div>
 
-          <!-- Section 5: Photos Field with Live Thumbnail Previews -->
-          <div class="space-y-3 p-4 rounded-2xl bg-[#FDFBF8] border border-[#EAD5C0]">
-            <div class="flex items-center justify-between">
-              <h3 class="text-xs font-heading font-bold uppercase tracking-wider text-[#7A535A]">
-                5. Portfolio Photos (Up to 4)
-              </h3>
-              <span class="text-[11px] text-[#7A535A]">One image path or URL per line</span>
+          <!-- Section 5: Photos Picker with Client-Side Compression & Previews -->
+          <div class="photos-section space-y-3 p-4 rounded-2xl bg-[#FDFBF8] border border-[#EAD5C0]">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h3 class="text-xs font-heading font-bold uppercase tracking-wider text-[#7A535A] flex items-center gap-1.5">
+                  <span>5. Photos (Up to 4)</span>
+                  <span class="photos-count-badge text-[10px] px-2 py-0.5 rounded-full bg-[#EAD5C0] text-[#4A1C24] font-mono font-bold">0 / 4</span>
+                </h3>
+                <p class="text-[11px] text-[#7A535A] font-sans mt-0.5">
+                  Add up to 4 photos from your device. Photo #1 is automatically the Cover Thumbnail.
+                </p>
+              </div>
+
+              <div>
+                <input type="file" class="input-photo-picker hidden" accept="image/*" multiple />
+                <button type="button" class="btn-add-photos px-4 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
+                  <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                  <span>Add photos</span>
+                </button>
+              </div>
             </div>
 
-            <textarea class="field-photos w-full p-3 text-xs font-mono rounded-xl border border-[#D4A7B0] focus:border-[#4A1C24] bg-white text-[#4A1C24]"
-              rows="3" placeholder="images/sample-photo-1.jpg&#10;https://example.com/photo2.jpg&#10;(Leave empty to use category default graphic)">${esc(initialPhotos)}</textarea>
+            <!-- Compression Status Indicator -->
+            <div class="photos-compress-status hidden p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-sans flex items-center gap-2">
+              <span class="w-3.5 h-3.5 border-2 border-amber-600 border-t-transparent rounded-full animate-spin shrink-0"></span>
+              <span class="status-text">Processing and compressing photo...</span>
+            </div>
 
-            <p class="text-[11px] text-[#7A535A] font-sans">
-              Enter local paths (e.g. <code>images/photo.jpg</code>) or web URLs. If left empty, the business automatically uses the category's signature burgundy graphic.
+            <!-- Photo Error Box -->
+            <div class="photos-error-box hidden p-2.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-800 font-sans"></div>
+
+            <!-- 4-Slot Photo Previews Grid with Reordering & Deletion -->
+            <div class="photos-preview-grid grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+              <!-- Rendered by renderCardPhotos -->
+            </div>
+
+            <p class="text-[11px] text-[#7A535A] font-sans italic">
+              Leave empty if the provider has no photos yet; they will use the category's signature graphic.
             </p>
-
-            <!-- 4-Slot Live Thumbnail Preview Row -->
-            <div class="photos-preview-grid grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
-              <!-- Rendered by updateThumbnailPreviews -->
-            </div>
           </div>
 
           <!-- Section 6: Client Policies -->
@@ -1592,10 +1883,33 @@
         </div>
       `;
 
+      // Photos State for this pending application: array of { full: dataUrl, sizeBytes: number }
+      let cardPhotos = [];
+      if (Array.isArray(app.portfolioImages) && app.portfolioImages.length > 0) {
+        cardPhotos = app.portfolioImages.slice(0, 4).map(url => ({
+          full: url,
+          sizeBytes: Math.round((url.length - 23) * 0.75)
+        }));
+      } else if (Array.isArray(app.images) && app.images.length > 0) {
+        cardPhotos = app.images.slice(0, 4).map(url => ({
+          full: url,
+          sizeBytes: Math.round((url.length - 23) * 0.75)
+        }));
+      } else if (app.thumbnail) {
+        cardPhotos = [{
+          full: app.thumbnail,
+          sizeBytes: Math.round((app.thumbnail.length - 23) * 0.75)
+        }];
+      }
+
       // DOM Elements inside the card
       const categorySelect = card.querySelector('.field-category');
       const questionsContainer = card.querySelector('.category-questions-container');
-      const photosTextarea = card.querySelector('.field-photos');
+      const fileInput = card.querySelector('.input-photo-picker');
+      const addPhotosBtn = card.querySelector('.btn-add-photos');
+      const compressStatus = card.querySelector('.photos-compress-status');
+      const statusText = card.querySelector('.photos-compress-status .status-text');
+      const photoErrorBox = card.querySelector('.photos-error-box');
 
       // Drawer toggle elements
       const toggleBtn = card.querySelector('.btn-toggle-details');
@@ -1626,9 +1940,161 @@
       const campusSelect = card.querySelector('.field-campus-location');
       const zipInput = card.querySelector('.field-zip-code');
 
+      // Helper to render the 4-slot photo previews grid
+      function renderCardPhotos() {
+        const grid = card.querySelector('.photos-preview-grid');
+        const badge = card.querySelector('.photos-count-badge');
+        if (!grid) return;
+
+        if (badge) {
+          badge.textContent = `${cardPhotos.length} / 4`;
+        }
+        if (addPhotosBtn) {
+          addPhotosBtn.disabled = cardPhotos.length >= 4;
+          if (cardPhotos.length >= 4) {
+            addPhotosBtn.classList.add('opacity-50', 'cursor-not-allowed');
+          } else {
+            addPhotosBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+          }
+        }
+
+        grid.innerHTML = '';
+
+        for (let i = 0; i < 4; i++) {
+          const photo = cardPhotos[i];
+          const slot = document.createElement('div');
+          slot.className = 'relative aspect-[4/3] rounded-2xl overflow-hidden border border-[#EAD5C0] bg-[#FDFBF8] flex items-center justify-center';
+
+          if (photo) {
+            const kb = Math.round(photo.sizeBytes / 1024);
+            const isCover = (i === 0);
+
+            slot.innerHTML = `
+              <img src="${escAttr(photo.full)}" alt="Photo ${i + 1}" class="w-full h-full object-cover rounded-2xl" />
+              
+              <!-- Badge: Cover (#1) or Index -->
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${isCover ? 'bg-[#A3456A] text-white' : 'bg-black/65 text-white'} shadow-sm font-sans flex items-center gap-1 select-none">
+                <span>#${i + 1}</span>
+                ${isCover ? '<span class="text-[9px] uppercase font-bold tracking-wider">Cover</span>' : ''}
+              </span>
+
+              <!-- Size badge -->
+              <span class="absolute bottom-2 left-2 px-1.5 py-0.5 rounded text-[9px] font-mono bg-black/65 text-white select-none">
+                ${kb > 0 ? `${kb}KB` : '<200KB'}
+              </span>
+
+              <!-- Remove Button (X) -->
+              <button type="button" class="btn-del-photo absolute top-2 right-2 w-6 h-6 rounded-full bg-black/65 hover:bg-red-600 text-white flex items-center justify-center text-xs font-bold transition-all shadow-md cursor-pointer" data-index="${i}" title="Remove photo">
+                &times;
+              </button>
+
+              <!-- Reorder Buttons -->
+              <div class="absolute bottom-2 right-2 flex items-center gap-1">
+                ${i > 0 ? `
+                  <button type="button" class="btn-move-left w-6 h-6 rounded-full bg-black/65 hover:bg-black/90 text-white flex items-center justify-center text-xs font-bold transition-all shadow-md cursor-pointer" data-index="${i}" title="Move left / make earlier">
+                    &larr;
+                  </button>
+                ` : ''}
+                ${i < cardPhotos.length - 1 ? `
+                  <button type="button" class="btn-move-right w-6 h-6 rounded-full bg-black/65 hover:bg-black/90 text-white flex items-center justify-center text-xs font-bold transition-all shadow-md cursor-pointer" data-index="${i}" title="Move right / make later">
+                    &rarr;
+                  </button>
+                ` : ''}
+              </div>
+            `;
+
+            // Delete handler
+            slot.querySelector('.btn-del-photo')?.addEventListener('click', (e) => {
+              e.stopPropagation();
+              cardPhotos.splice(i, 1);
+              renderCardPhotos();
+            });
+
+            // Move Left
+            slot.querySelector('.btn-move-left')?.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const temp = cardPhotos[i];
+              cardPhotos[i] = cardPhotos[i - 1];
+              cardPhotos[i - 1] = temp;
+              renderCardPhotos();
+            });
+
+            // Move Right
+            slot.querySelector('.btn-move-right')?.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const temp = cardPhotos[i];
+              cardPhotos[i] = cardPhotos[i + 1];
+              cardPhotos[i + 1] = temp;
+              renderCardPhotos();
+            });
+
+          } else {
+            // Empty placeholder slot
+            slot.innerHTML = `
+              <div class="text-center p-2 text-[11px] text-[#7A535A]/50 font-sans border-2 border-dashed border-[#EAD5C0]/80 rounded-2xl w-full h-full flex flex-col items-center justify-center">
+                <span class="font-bold text-[#7A535A]/70 block mb-0.5">Photo #${i + 1}</span>
+                <span class="text-[10px]">(Empty)</span>
+              </div>
+            `;
+          }
+
+          grid.appendChild(slot);
+        }
+      }
+
+      // Wire Photo Picker
+      addPhotosBtn?.addEventListener('click', () => {
+        if (cardPhotos.length >= 4) {
+          alert('You can upload up to 4 photos per provider.');
+          return;
+        }
+        fileInput?.click();
+      });
+
+      fileInput?.addEventListener('change', async (e) => {
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
+
+        photoErrorBox.classList.add('hidden');
+        photoErrorBox.textContent = '';
+
+        for (const file of files) {
+          if (cardPhotos.length >= 4) {
+            photoErrorBox.textContent = 'Maximum 4 photos reached. Remaining photos were skipped.';
+            photoErrorBox.classList.remove('hidden');
+            break;
+          }
+
+          if (!file.type.startsWith('image/')) {
+            photoErrorBox.textContent = `Skipped "${file.name}": Only image files (JPEG, PNG, WebP) are allowed.`;
+            photoErrorBox.classList.remove('hidden');
+            continue;
+          }
+
+          compressStatus?.classList.remove('hidden');
+          if (statusText) statusText.textContent = `Compressing ${file.name}...`;
+
+          try {
+            const compressed = await compressImageToDataUrl(file, 1000, 0.70, 204800);
+            cardPhotos.push({
+              full: compressed.dataUrl,
+              sizeBytes: compressed.sizeBytes
+            });
+            renderCardPhotos();
+          } catch (err) {
+            photoErrorBox.textContent = `Could not add "${file.name}": ${err.message}`;
+            photoErrorBox.classList.remove('hidden');
+          } finally {
+            compressStatus?.classList.add('hidden');
+          }
+        }
+
+        fileInput.value = '';
+      });
+
       // 1. Initial renders
       renderCategoryQuestions(categorySelect.value, app, questionsContainer);
-      updateThumbnailPreviews(card);
+      renderCardPhotos();
 
       // 2. Drawer Toggle Function
       function toggleDrawer(forceOpen = null) {
@@ -1745,10 +2211,6 @@
         renderCategoryQuestions(cat, app, questionsContainer);
       });
 
-      photosTextarea.addEventListener('input', () => {
-        updateThumbnailPreviews(card);
-      });
-
       // 4. Processing State Helper for Buttons
       function setCardProcessing(isProcessing, label = '', isRejecting = false) {
         const approveBtns = card.querySelectorAll('.btn-approve, .btn-drawer-approve');
@@ -1837,8 +2299,13 @@
         const bookUrl = cleanUrl(card.querySelector('.field-booking')?.value);
         const webUrl = cleanUrl(card.querySelector('.field-website')?.value);
 
-        // Photos
-        const portfolioImgs = parsePhotosText(photosTextarea.value);
+        // Process Photos & Thumbnail
+        let thumbnailVal = null;
+        const fullPhotosArray = cardPhotos.map(p => p.full);
+        if (fullPhotosArray.length > 0) {
+          setCardProcessing(true, 'Creating thumbnail...');
+          thumbnailVal = await createThumbnailFromDataUrl(fullPhotosArray[0], 400, 0.6);
+        }
 
         // Policies
         const policiesObj = {
@@ -1870,7 +2337,8 @@
           tiktokUrl: ttUrl,
           bookingUrl: bookUrl,
           websiteUrl: webUrl,
-          portfolioImages: portfolioImgs,
+          thumbnail: thumbnailVal,
+          fullPhotos: fullPhotosArray,
           policies: policiesObj,
           ...catFields,
           availability: app.availability || "open-this-week",
@@ -1883,6 +2351,28 @@
 
         try {
           await approvePendingProvider(app.id, cleanedProviderData);
+
+          // Update live providers cache in memory
+          const newlyApproved = {
+            id: app.id,
+            ...cleanedProviderData,
+            approvedAt: new Date().toISOString()
+          };
+          liveProvidersList = [newlyApproved, ...liveProvidersList.filter(p => p.id !== app.id)];
+          tabCountApproved.textContent = liveProvidersList.length;
+
+          if (cleanedProviderData.ownerEmail || cleanedProviderData.ownerPhone) {
+            providerContactsMap[app.id] = {
+              ownerEmail: cleanedProviderData.ownerEmail,
+              ownerPhone: cleanedProviderData.ownerPhone,
+              businessName: cleanedProviderData.businessName,
+              ownerName: cleanedProviderData.ownerName
+            };
+          }
+
+          if (currentActiveTab === 'approved') {
+            renderFilteredApprovedList();
+          }
 
           showActionNotification(`
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -1977,7 +2467,852 @@
 
       return card;
     }
+
+    // ========================================================================
+    // 12. APPROVED PROVIDERS DIRECTORY CONTROLLER
+    // ========================================================================
+
+    // Category URL router: maps category to page filename
+    function getCategoryPageUrl(category) {
+      if (!category) return 'index.html';
+      const c = category.toLowerCase().trim();
+      if (c.includes('hair')) return 'hair.html';
+      if (c.includes('nail')) return 'nails.html';
+      if (c.includes('lash')) return 'lashes.html';
+      if (c.includes('food') || c.includes('beverage')) return 'food-and-beverages.html';
+      if (c.includes('fashion')) return 'fashion.html';
+      if (c.includes('photograph')) return 'photography.html';
+      return 'index.html';
+    }
+
+    // Default category thumbnail SVG graphics in brand colors
+    function getCategoryGraphicHtml(category) {
+      const cat = (category || '').toLowerCase();
+      let bg = '#4A1C24';
+      let icon = 'SETLIST';
+      if (cat.includes('hair')) { bg = '#4A1C24'; icon = 'Hair'; }
+      else if (cat.includes('nail')) { bg = '#561C2C'; icon = 'Nails'; }
+      else if (cat.includes('lash')) { bg = '#3A121A'; icon = 'Lashes'; }
+      else if (cat.includes('food') || cat.includes('beverage')) { bg = '#5C2022'; icon = 'Food'; }
+      else if (cat.includes('fashion')) { bg = '#44182E'; icon = 'Fashion'; }
+      else if (cat.includes('photograph')) { bg = '#32141D'; icon = 'Photo'; }
+
+      return `
+        <div class="w-full h-full flex flex-col items-center justify-center text-[#F6EEE6] p-1.5 text-center select-none" style="background-color: ${bg};">
+          <span class="font-heading font-light text-lg sm:text-xl tracking-wider leading-none">${icon.slice(0, 1)}</span>
+          <span class="text-[9px] font-sans tracking-wider uppercase opacity-85 mt-0.5">${esc(icon)}</span>
+        </div>
+      `;
+    }
+
+    // Extracts thumbnail URL from any known provider photo field (checks thumbnail first)
+    function getProviderThumbnailUrl(provider) {
+      if (!provider) return null;
+      if (typeof provider.thumbnail === 'string' && provider.thumbnail.trim()) {
+        return provider.thumbnail.trim();
+      }
+      if (Array.isArray(provider.portfolioImages) && provider.portfolioImages.length > 0) {
+        const first = provider.portfolioImages[0];
+        if (typeof first === 'string' && first.trim()) return first.trim();
+      }
+      if (typeof provider.imageUrl === 'string' && provider.imageUrl.trim()) return provider.imageUrl.trim();
+      if (typeof provider.photoUrl === 'string' && provider.photoUrl.trim()) return provider.photoUrl.trim();
+      if (typeof provider.portfolioImage === 'string' && provider.portfolioImage.trim()) return provider.portfolioImage.trim();
+      if (typeof provider.image === 'string' && provider.image.trim()) return provider.image.trim();
+      return null;
+    }
+
+    // Robust parser for approvedAt: supports Firestore Timestamp, Date, number, ISO string
+    function parseApprovedTime(provider) {
+      if (!provider) return -1;
+      const val = provider.approvedAt || provider.approved_at || provider.createdAt || provider.created_at;
+      if (!val) return -1;
+
+      // Firestore Timestamp instance (has toDate method)
+      if (typeof val.toDate === 'function') {
+        const d = val.toDate();
+        return isNaN(d.getTime()) ? -1 : d.getTime();
+      }
+      // Firestore raw timestamp object with seconds property
+      if (typeof val.seconds === 'number') {
+        return val.seconds * 1000;
+      }
+      // Standard Date instance
+      if (val instanceof Date) {
+        return isNaN(val.getTime()) ? -1 : val.getTime();
+      }
+      // Numeric timestamp
+      if (typeof val === 'number') {
+        return isNaN(val) ? -1 : val;
+      }
+      // ISO date string or RFC string
+      if (typeof val === 'string') {
+        const parsed = Date.parse(val);
+        return isNaN(parsed) ? -1 : parsed;
+      }
+      return -1;
+    }
+
+    // Sort providers by approvedAt descending (newest first). Providers without date go at the end.
+    function sortProvidersByApprovedAt(list) {
+      return [...list].sort((a, b) => {
+        const timeA = parseApprovedTime(a);
+        const timeB = parseApprovedTime(b);
+        if (timeA === -1 && timeB === -1) return 0;
+        if (timeA === -1) return 1;
+        if (timeB === -1) return -1;
+        return timeB - timeA;
+      });
+    }
+
+    // Formats approved date for display
+    function formatApprovedDate(val) {
+      if (!val) return 'Date not recorded';
+      try {
+        let d;
+        if (typeof val.toDate === 'function') {
+          d = val.toDate();
+        } else if (typeof val.seconds === 'number') {
+          d = new Date(val.seconds * 1000);
+        } else if (val instanceof Date) {
+          d = val;
+        } else {
+          d = new Date(val);
+        }
+        if (isNaN(d.getTime())) return 'Date not recorded';
+        return d.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+      } catch (e) {
+        return 'Date not recorded';
+      }
+    }
+
+    // Notification banner display for Approved tab
+    function showApprovedNotification(htmlContent, type = 'success') {
+      if (!approvedActionBanner) return;
+      approvedActionBanner.innerHTML = htmlContent;
+      approvedActionBanner.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300', 'text-emerald-950', 'bg-stone-100', 'border-stone-300', 'text-stone-900');
+
+      if (type === 'success') {
+        approvedActionBanner.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-950');
+      } else {
+        approvedActionBanner.classList.add('bg-stone-100', 'border-stone-300', 'text-stone-900');
+      }
+
+      approvedActionBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Load all approved providers from Firestore without orderBy query
+    async function loadApprovedProviders(renderImmediate = true) {
+      if (isLoadingApproved) return;
+      isLoadingApproved = true;
+
+      if (renderImmediate && (!liveProvidersList || liveProvidersList.length === 0)) {
+        approvedErrorBox.classList.add('hidden');
+        emptyApprovedBox.classList.add('hidden');
+        approvedContainer.innerHTML = `
+          <div class="text-center py-12 space-y-3">
+            <div class="inline-block w-8 h-8 border-4 border-[#D4A7B0] border-t-[#4A1C24] rounded-full animate-spin"></div>
+            <p class="text-xs font-sans text-[#7A535A]">Retrieving live marketplace providers from Firestore...</p>
+          </div>
+        `;
+        approvedCountLabel.textContent = 'Loading live providers...';
+      }
+
+      try {
+        // Load all documents from the "providers" collection without a Firestore orderBy query
+        const rawProviders = await getProvidersFromFirestore();
+        liveProvidersList = sortProvidersByApprovedAt(rawProviders || []);
+        isApprovedLoaded = true;
+
+        console.log(`Loaded ${liveProvidersList.length} approved providers`);
+        tabCountApproved.textContent = liveProvidersList.length;
+
+        if (renderImmediate || currentActiveTab === 'approved') {
+          renderFilteredApprovedList();
+        }
+
+        // Load private contact info (email and phone) from "providerContacts" SEPARATELY in the background
+        loadProviderContactsSeparately();
+
+      } catch (err) {
+        console.error('[Load Approved Providers Error]:', err);
+        if (renderImmediate || currentActiveTab === 'approved') {
+          approvedContainer.innerHTML = '';
+          approvedCountLabel.textContent = 'Error loading live providers';
+
+          let friendlyReason = err.message || 'Unknown Firestore error occurred.';
+          if (friendlyReason.toLowerCase().includes('permission') || friendlyReason.toLowerCase().includes('insufficient')) {
+            friendlyReason = 'Missing or insufficient Firestore permissions to read the providers collection. Verify your Firestore security rules.';
+          } else if (friendlyReason.toLowerCase().includes('network') || friendlyReason.toLowerCase().includes('offline')) {
+            friendlyReason = 'Network connection problem. Please check your internet connectivity and try again.';
+          }
+
+          approvedErrorText.textContent = friendlyReason;
+          approvedErrorBox.classList.remove('hidden');
+        }
+      } finally {
+        isLoadingApproved = false;
+      }
+    }
+
+    // Loads private contacts separately without blocking provider list
+    async function loadProviderContactsSeparately() {
+      try {
+        const contactsMap = await getProviderContacts();
+        providerContactsMap = contactsMap || {};
+
+        // Populate contact fields on rendered cards if present
+        Object.keys(providerContactsMap).forEach(provId => {
+          const contact = providerContactsMap[provId];
+          if (!contact) return;
+          const card = approvedContainer.querySelector(`[data-approved-id="${provId}"]`);
+          if (card) {
+            updateCardContactInfo(card, contact);
+          }
+        });
+      } catch (err) {
+        console.warn('[Live Directory] Private providerContacts could not be loaded:', err.message);
+        // Provider list still shows, just without private contact info!
+      }
+    }
+
+    function updateCardContactInfo(card, contact) {
+      const emailEl = card.querySelector('.contact-email-val');
+      const phoneEl = card.querySelector('.contact-phone-val');
+      if (emailEl && contact.ownerEmail) {
+        emailEl.innerHTML = `<a href="mailto:${escAttr(contact.ownerEmail)}" class="underline hover:text-[#4A1C24]">${esc(contact.ownerEmail)}</a>`;
+      }
+      if (phoneEl && contact.ownerPhone) {
+        phoneEl.innerHTML = `<a href="tel:${escAttr(contact.ownerPhone.replace(/\D/g, ''))}" class="underline hover:text-[#4A1C24]">${esc(contact.ownerPhone)}</a>`;
+      }
+    }
+
+    // Render filtered list of approved providers based on search query and category filter
+    function renderFilteredApprovedList() {
+      const query = (approvedSearchInput?.value || '').toLowerCase().trim();
+      const selectedCat = approvedCategoryFilter?.value || 'all';
+
+      const filtered = liveProvidersList.filter(p => {
+        // Category filter
+        if (selectedCat !== 'all') {
+          const cat = (p.category || '').toLowerCase().trim();
+          if (cat !== selectedCat.toLowerCase().trim()) return false;
+        }
+        // Search query filter (matches businessName or ownerName)
+        if (query) {
+          const bName = (p.businessName || p.name || '').toLowerCase();
+          const oName = (p.ownerName || p.owner || p.artistName || '').toLowerCase();
+          if (!bName.includes(query) && !oName.includes(query)) return false;
+        }
+        return true;
+      });
+
+      approvedContainer.innerHTML = '';
+      approvedErrorBox.classList.add('hidden');
+
+      const totalCount = liveProvidersList.length;
+      const filteredCount = filtered.length;
+
+      if (totalCount === 0) {
+        emptyApprovedBox.classList.remove('hidden');
+        emptyApprovedMessage.textContent = 'There are no live approved providers in the marketplace yet.';
+        approvedCountLabel.textContent = '0 Live Providers';
+        return;
+      }
+
+      if (filteredCount === 0) {
+        emptyApprovedBox.classList.remove('hidden');
+        emptyApprovedMessage.textContent = 'No approved providers match your search or category filter.';
+        approvedCountLabel.textContent = `Showing 0 of ${totalCount} Live Providers`;
+        return;
+      }
+
+      emptyApprovedBox.classList.add('hidden');
+      if (filteredCount === totalCount) {
+        approvedCountLabel.textContent = `${totalCount} Live Provider${totalCount === 1 ? '' : 's'} on Site`;
+      } else {
+        approvedCountLabel.textContent = `Showing ${filteredCount} of ${totalCount} Live Providers`;
+      }
+
+      filtered.forEach(provider => {
+        const card = createApprovedProviderCard(provider, providerContactsMap[provider.id]);
+        approvedContainer.appendChild(card);
+      });
+    }
+
+    // Creates an Approved Provider Card with metadata, confidential contacts, link, and remove button
+    function createApprovedProviderCard(provider, contactData) {
+      const card = document.createElement('article');
+      card.className = 'p-5 sm:p-6 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm space-y-4 transition-all';
+      card.setAttribute('data-approved-id', provider.id);
+
+      const bName = provider.businessName || provider.name || 'Untitled Business';
+      const oName = provider.ownerName || provider.owner || provider.artistName || 'Artist not specified';
+      const category = provider.category || 'General';
+      const campusLoc = provider.campusLocation || provider.campus_location || 'Off Campus';
+      const zipCode = provider.zipCode || provider.zip_code || provider.zip || '70803';
+      const price = typeof provider.startingPrice === 'number' ? `$${provider.startingPrice}` : (provider.startingPrice || 'Varies');
+      const approvedDateStr = formatApprovedDate(provider.approvedAt || provider.approved_at || provider.createdAt);
+      const categoryUrl = getCategoryPageUrl(category);
+
+      // Thumbnail
+      const photoUrl = getProviderThumbnailUrl(provider);
+
+      // Contact info
+      const email = contactData?.ownerEmail || provider.ownerEmail || null;
+      const phone = contactData?.ownerPhone || provider.ownerPhone || null;
+
+      // Category Icon SVG & color
+      const catGraphic = getCategoryGraphicHtml(category);
+
+      card.innerHTML = `
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#F6EEE6]">
+          <div class="flex items-center gap-3 sm:gap-4">
+            <!-- Thumbnail or Category Graphic -->
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shrink-0 border border-[#EAD5C0] bg-[#FDFBF8] flex items-center justify-center">
+              ${photoUrl ? `
+                <img src="${escAttr(photoUrl)}" alt="${escAttr(bName)}" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.classList.remove('hidden');" />
+                <div class="hidden w-full h-full">
+                  ${catGraphic}
+                </div>
+              ` : catGraphic}
+            </div>
+
+            <div>
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-heading font-bold uppercase tracking-wider bg-[#E9C6CC]/60 text-[#4A1C24]">
+                  ${esc(category)}
+                </span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-sans font-medium ${campusLoc === 'On Campus' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-stone-100 text-stone-700 border border-stone-200'}">
+                  ${esc(campusLoc)}
+                </span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-heading font-bold text-[#4A1C24] leading-tight">
+                ${esc(bName)}
+              </h3>
+              <p class="text-xs sm:text-sm text-[#7A535A] font-sans">
+                By <strong class="text-[#4A1C24]">${esc(oName)}</strong> &bull; ZIP ${esc(zipCode)} &bull; Starts at ${esc(price)}
+              </p>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end pt-2 sm:pt-0">
+            <button type="button" class="btn-edit-photos px-3.5 py-2 rounded-full bg-[#F6EEE6] hover:bg-[#E9C6CC] text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5 cursor-pointer" title="Edit provider photos">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span>Edit Photos</span>
+            </button>
+
+            <a href="${escAttr(categoryUrl)}" target="_blank" rel="noopener noreferrer"
+              class="px-3.5 py-2 rounded-full bg-white hover:bg-[#F7E9EC] text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
+              <span>View on Site</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+
+            <button type="button" class="btn-remove-provider px-3.5 py-2 rounded-full bg-stone-100 hover:bg-red-50 text-stone-700 hover:text-red-700 border border-stone-300 hover:border-red-300 text-xs font-heading font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              <span>Remove</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Provider Metadata & Confidential Contacts Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs font-sans">
+          <div class="p-3 rounded-2xl bg-[#FDFBF8] border border-[#EAD5C0]/60 space-y-1">
+            <div class="text-[11px] font-heading font-bold uppercase tracking-wider text-[#7A535A]">
+              Approval Record
+            </div>
+            <div class="text-stone-700">
+              Approved: <strong class="text-[#4A1C24]">${esc(approvedDateStr)}</strong>
+            </div>
+            <div class="text-[11px] text-[#7A535A]/80 font-mono">
+              ID: ${esc(provider.id)}
+            </div>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-[#FDFBF8] border border-[#EAD5C0]/60 space-y-1">
+            <div class="flex items-center justify-between text-[11px] font-heading font-bold uppercase tracking-wider text-[#7A535A]">
+              <span>Private Contact Info</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">Admin Only</span>
+            </div>
+            <div class="text-stone-700 flex items-center gap-1.5">
+              <span class="text-[#7A535A]">Email:</span>
+              <span class="contact-email-val font-medium text-[#4A1C24]">
+                ${email ? `<a href="mailto:${escAttr(email)}" class="underline hover:text-[#4A1C24]">${esc(email)}</a>` : '<span class="text-stone-400 italic">Loading or private</span>'}
+              </span>
+            </div>
+            <div class="text-stone-700 flex items-center gap-1.5">
+              <span class="text-[#7A535A]">Phone:</span>
+              <span class="contact-phone-val font-medium text-[#4A1C24]">
+                ${phone ? `<a href="tel:${escAttr(phone.replace(/\D/g, ''))}" class="underline hover:text-[#4A1C24]">${esc(phone)}</a>` : '<span class="text-stone-400 italic">Loading or private</span>'}
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Attach Edit Photos Handler
+      const editPhotosBtn = card.querySelector('.btn-edit-photos');
+      editPhotosBtn?.addEventListener('click', () => {
+        openEditPhotosModal(provider, card);
+      });
+
+      // Attach Remove Handler
+      const removeBtn = card.querySelector('.btn-remove-provider');
+      removeBtn.addEventListener('click', async () => {
+        if (!confirm(`Are you sure? This takes ${bName} off the site.`)) {
+          return;
+        }
+
+        removeBtn.disabled = true;
+        removeBtn.innerHTML = `
+          <div class="w-3.5 h-3.5 border-2 border-stone-400 border-t-stone-800 rounded-full animate-spin"></div>
+          <span>Removing...</span>
+        `;
+
+        try {
+          await deleteLiveProvider(provider.id);
+
+          // Update memory state
+          liveProvidersList = liveProvidersList.filter(p => p.id !== provider.id);
+          delete providerContactsMap[provider.id];
+          tabCountApproved.textContent = liveProvidersList.length;
+
+          showApprovedNotification(`
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-stone-200 text-stone-700 flex items-center justify-center shrink-0">
+                <svg class="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </div>
+              <div>
+                <p class="font-heading font-bold text-sm text-stone-900">
+                  <strong>${esc(bName)}</strong> has been removed.
+                </p>
+                <p class="text-xs text-stone-700">
+                  The business was taken off the site immediately.
+                </p>
+              </div>
+            </div>
+          `, 'neutral');
+
+          card.style.transition = 'all 0.3s ease-out';
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(-10px)';
+          setTimeout(() => {
+            card.remove();
+            renderFilteredApprovedList();
+          }, 300);
+
+        } catch (err) {
+          console.error('[Remove Live Provider Error]:', err);
+          alert(`Could not remove ${bName}: ${err.message || 'Please check your permissions.'}`);
+          removeBtn.disabled = false;
+          removeBtn.innerHTML = `
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            <span>Remove</span>
+          `;
+        }
+      });
+
+      return card;
+    }
+
+    // ========================================================================
+    // 13. EDIT PHOTOS MODAL CONTROLLER (FOR APPROVED PROVIDERS)
+    // ========================================================================
+
+    let currentEditModalProvider = null;
+    let currentEditModalCard = null;
+    let modalPhotosList = []; // [{ full: dataUrl, sizeBytes: number }]
+
+    const editPhotosModal = document.getElementById('edit-photos-modal');
+    const editPhotosTitle = document.getElementById('edit-photos-modal-title');
+    const modalCloseBtn = document.getElementById('close-edit-photos-modal-btn');
+    const modalCancelBtn = document.getElementById('cancel-edit-photos-btn');
+    const modalSaveBtn = document.getElementById('save-edit-photos-btn');
+    const modalFileInput = document.getElementById('modal-photo-file-input');
+    const modalAddBtn = document.getElementById('modal-add-photos-btn');
+    const modalCompressStatus = document.getElementById('modal-compress-status');
+    const modalStatusText = document.getElementById('modal-compress-status-text');
+    const modalErrorBox = document.getElementById('modal-photos-error-box');
+    const modalGrid = document.getElementById('modal-photos-preview-grid');
+    const modalCountBadge = document.getElementById('modal-photos-count-badge');
+
+    function closeEditPhotosModal() {
+      if (editPhotosModal) {
+        editPhotosModal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+      currentEditModalProvider = null;
+      currentEditModalCard = null;
+      modalPhotosList = [];
+    }
+
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeEditPhotosModal);
+    if (modalCancelBtn) modalCancelBtn.addEventListener('click', closeEditPhotosModal);
+    if (editPhotosModal) {
+      editPhotosModal.addEventListener('click', (e) => {
+        if (e.target === editPhotosModal) closeEditPhotosModal();
+      });
+    }
+
+    function renderModalPhotosGrid() {
+      if (!modalGrid) return;
+      if (modalCountBadge) {
+        modalCountBadge.textContent = `${modalPhotosList.length} / 4`;
+      }
+      if (modalAddBtn) {
+        modalAddBtn.disabled = modalPhotosList.length >= 4;
+        if (modalPhotosList.length >= 4) {
+          modalAddBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+          modalAddBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+      }
+
+      modalGrid.innerHTML = '';
+
+      for (let i = 0; i < 4; i++) {
+        const photo = modalPhotosList[i];
+        const slot = document.createElement('div');
+        slot.className = 'relative aspect-[4/3] rounded-2xl overflow-hidden border border-[#EAD5C0] bg-[#FDFBF8] flex items-center justify-center';
+
+        if (photo) {
+          const kb = Math.round(photo.sizeBytes / 1024);
+          const isCover = (i === 0);
+
+          slot.innerHTML = `
+            <img src="${escAttr(photo.full)}" alt="Photo ${i + 1}" class="w-full h-full object-cover rounded-2xl" />
+            
+            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${isCover ? 'bg-[#A3456A] text-white' : 'bg-black/65 text-white'} shadow-sm font-sans flex items-center gap-1 select-none">
+              <span>#${i + 1}</span>
+              ${isCover ? '<span class="text-[9px] uppercase font-bold tracking-wider">Cover</span>' : ''}
+            </span>
+
+            <span class="absolute bottom-2 left-2 px-1.5 py-0.5 rounded text-[9px] font-mono bg-black/65 text-white select-none">
+              ${kb > 0 ? `${kb}KB` : '<200KB'}
+            </span>
+
+            <button type="button" class="btn-modal-del-photo absolute top-2 right-2 w-6 h-6 rounded-full bg-black/65 hover:bg-red-600 text-white flex items-center justify-center text-xs font-bold transition-all shadow-md cursor-pointer" data-index="${i}" title="Remove photo">
+              &times;
+            </button>
+
+            <div class="absolute bottom-2 right-2 flex items-center gap-1">
+              ${i > 0 ? `
+                <button type="button" class="btn-modal-move-left w-6 h-6 rounded-full bg-black/65 hover:bg-black/90 text-white flex items-center justify-center text-xs font-bold transition-all shadow-md cursor-pointer" data-index="${i}" title="Move earlier">
+                  &larr;
+                </button>
+              ` : ''}
+              ${i < modalPhotosList.length - 1 ? `
+                <button type="button" class="btn-modal-move-right w-6 h-6 rounded-full bg-black/65 hover:bg-black/90 text-white flex items-center justify-center text-xs font-bold transition-all shadow-md cursor-pointer" data-index="${i}" title="Move later">
+                  &rarr;
+                </button>
+              ` : ''}
+            </div>
+          `;
+
+          slot.querySelector('.btn-modal-del-photo')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            modalPhotosList.splice(i, 1);
+            renderModalPhotosGrid();
+          });
+
+          slot.querySelector('.btn-modal-move-left')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const temp = modalPhotosList[i];
+            modalPhotosList[i] = modalPhotosList[i - 1];
+            modalPhotosList[i - 1] = temp;
+            renderModalPhotosGrid();
+          });
+
+          slot.querySelector('.btn-modal-move-right')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const temp = modalPhotosList[i];
+            modalPhotosList[i] = modalPhotosList[i + 1];
+            modalPhotosList[i + 1] = temp;
+            renderModalPhotosGrid();
+          });
+
+        } else {
+          slot.innerHTML = `
+            <div class="text-center p-2 text-[11px] text-[#7A535A]/50 font-sans border-2 border-dashed border-[#EAD5C0]/80 rounded-2xl w-full h-full flex flex-col items-center justify-center">
+              <span class="font-bold text-[#7A535A]/70 block mb-0.5">Photo #${i + 1}</span>
+              <span class="text-[10px]">(Empty)</span>
+            </div>
+          `;
+        }
+
+        modalGrid.appendChild(slot);
+      }
+    }
+
+    modalAddBtn?.addEventListener('click', () => {
+      if (modalPhotosList.length >= 4) {
+        alert('You can upload up to 4 photos per provider.');
+        return;
+      }
+      modalFileInput?.click();
+    });
+
+    modalFileInput?.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files || []);
+      if (files.length === 0) return;
+
+      modalErrorBox?.classList.add('hidden');
+      if (modalErrorBox) modalErrorBox.textContent = '';
+
+      for (const file of files) {
+        if (modalPhotosList.length >= 4) {
+          if (modalErrorBox) {
+            modalErrorBox.textContent = 'Maximum 4 photos reached. Remaining photos were skipped.';
+            modalErrorBox.classList.remove('hidden');
+          }
+          break;
+        }
+
+        if (!file.type.startsWith('image/')) {
+          if (modalErrorBox) {
+            modalErrorBox.textContent = `Skipped "${file.name}": Only image files (JPEG, PNG, WebP) are supported.`;
+            modalErrorBox.classList.remove('hidden');
+          }
+          continue;
+        }
+
+        modalCompressStatus?.classList.remove('hidden');
+        if (modalStatusText) modalStatusText.textContent = `Compressing ${file.name}...`;
+
+        try {
+          const compressed = await compressImageToDataUrl(file, 1000, 0.70, 204800);
+          modalPhotosList.push({
+            full: compressed.dataUrl,
+            sizeBytes: compressed.sizeBytes
+          });
+          renderModalPhotosGrid();
+        } catch (err) {
+          if (modalErrorBox) {
+            modalErrorBox.textContent = `Could not add "${file.name}": ${err.message}`;
+            modalErrorBox.classList.remove('hidden');
+          }
+        } finally {
+          modalCompressStatus?.classList.add('hidden');
+        }
+      }
+
+      modalFileInput.value = '';
+    });
+
+    async function openEditPhotosModal(provider, cardEl) {
+      currentEditModalProvider = provider;
+      currentEditModalCard = cardEl;
+      modalPhotosList = [];
+
+      const bName = provider.businessName || provider.name || 'Provider';
+      if (editPhotosTitle) {
+        editPhotosTitle.textContent = `Edit Photos: ${bName}`;
+      }
+      if (modalErrorBox) {
+        modalErrorBox.classList.add('hidden');
+        modalErrorBox.textContent = '';
+      }
+
+      if (modalGrid) {
+        modalGrid.innerHTML = `
+          <div class="col-span-2 sm:col-span-4 text-center py-8 space-y-2">
+            <div class="inline-block w-6 h-6 border-3 border-[#D4A7B0] border-t-[#4A1C24] rounded-full animate-spin"></div>
+            <p class="text-xs text-[#7A535A]">Loading photos from Firestore...</p>
+          </div>
+        `;
+      }
+
+      editPhotosModal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+
+      try {
+        const existing = await getProviderPhotosFromFirestore(provider.id);
+        const images = Array.isArray(existing) ? existing : (existing?.images || []);
+
+        if (images.length > 0) {
+          modalPhotosList = images.map(url => ({
+            full: url,
+            sizeBytes: Math.round((url.length - 23) * 0.75)
+          }));
+        } else if (provider.thumbnail) {
+          modalPhotosList = [{
+            full: provider.thumbnail,
+            sizeBytes: Math.round((provider.thumbnail.length - 23) * 0.75)
+          }];
+        }
+      } catch (err) {
+        console.warn('[Edit Photos] Error loading photos:', err);
+      }
+
+      renderModalPhotosGrid();
+    }
+
+    modalSaveBtn?.addEventListener('click', async () => {
+      if (!currentEditModalProvider) return;
+      const provider = currentEditModalProvider;
+      const bName = provider.businessName || provider.name || 'Provider';
+
+      modalSaveBtn.disabled = true;
+      modalSaveBtn.innerHTML = `
+        <span class="inline-block w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>
+        <span>Saving...</span>
+      `;
+
+      try {
+        const fullImages = modalPhotosList.map(p => p.full);
+        let thumbUrl = null;
+        if (fullImages.length > 0) {
+          thumbUrl = await createThumbnailFromDataUrl(fullImages[0], 400, 0.6);
+        }
+
+        await saveProviderPhotosToFirestore(provider.id, fullImages, thumbUrl);
+
+        // Update in-memory provider data
+        provider.thumbnail = thumbUrl;
+        provider.portfolioImages = fullImages;
+
+        // Update card in DOM if visible
+        if (currentEditModalCard) {
+          const thumbWrap = currentEditModalCard.querySelector('.w-16.h-16, .w-20.h-20');
+          if (thumbWrap) {
+            const catGraphic = getCategoryGraphicHtml(provider.category);
+            if (thumbUrl) {
+              thumbWrap.innerHTML = `
+                <img src="${escAttr(thumbUrl)}" alt="${escAttr(bName)}" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.classList.remove('hidden');" />
+                <div class="hidden w-full h-full">
+                  ${catGraphic}
+                </div>
+              `;
+            } else {
+              thumbWrap.innerHTML = catGraphic;
+            }
+          }
+        }
+
+        closeEditPhotosModal();
+        showApprovedNotification(`
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+              <svg class="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <p class="font-heading font-bold text-sm text-emerald-950">Photos updated for <strong>${esc(bName)}</strong>.</p>
+              <p class="text-xs text-emerald-800">The thumbnail and full gallery were saved to Firestore and are live immediately.</p>
+            </div>
+          </div>
+        `, 'success');
+
+      } catch (err) {
+        console.error('[Save Photos Error]:', err);
+        if (modalErrorBox) {
+          modalErrorBox.textContent = `Could not save photos: ${err.message || 'Please check your permissions and try again.'}`;
+          modalErrorBox.classList.remove('hidden');
+        }
+      } finally {
+        modalSaveBtn.disabled = false;
+        modalSaveBtn.innerHTML = `
+          <span>Save Photos</span>
+          <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        `;
+      }
+    });
+
+    // Attach search and filter event listeners for Approved tab
+    approvedSearchInput.addEventListener('input', () => {
+      renderFilteredApprovedList();
+    });
+
+    approvedCategoryFilter.addEventListener('change', () => {
+      renderFilteredApprovedList();
+    });
+
+    approvedRefreshBtn.addEventListener('click', () => {
+      loadApprovedProviders(true);
+    });
+
+    approvedRetryBtn.addEventListener('click', () => {
+      loadApprovedProviders(true);
+    });
   </script>
+
+  <!-- Edit Photos Modal for Approved Providers -->
+  <div id="edit-photos-modal" class="hidden fixed inset-0 z-50 bg-[#4A1C24]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="relative w-full max-w-2xl bg-[#F6EEE6] border border-[#EAD5C0] rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-[#4A1C24]" role="dialog" aria-modal="true">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-[#EAD5C0] bg-[#F6EEE6]/90 backdrop-blur flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-heading font-bold uppercase tracking-wider text-[#7A535A] block">
+            Approved Provider &bull; Manage Photos
+          </span>
+          <h3 id="edit-photos-modal-title" class="text-lg sm:text-xl font-heading font-bold text-[#4A1C24] leading-tight">
+            Edit Photos
+          </h3>
+        </div>
+        <button type="button" id="close-edit-photos-modal-btn" class="w-8 h-8 rounded-full bg-white hover:bg-[#4A1C24] text-[#4A1C24] hover:text-[#F6EEE6] border border-[#EAD5C0] flex items-center justify-center text-lg font-bold transition-all cursor-pointer shadow-sm" aria-label="Close modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="overflow-y-auto flex-1 p-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#7A535A] flex items-center gap-1.5">
+              <span>Provider Gallery (Up to 4 Photos)</span>
+              <span id="modal-photos-count-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-[#EAD5C0] text-[#4A1C24] font-mono font-bold">0 / 4</span>
+            </h4>
+            <p class="text-xs text-[#7A535A] font-sans mt-0.5">
+              Photo #1 is the Cover Thumbnail shown on cards across the site.
+            </p>
+          </div>
+
+          <div>
+            <input type="file" id="modal-photo-file-input" class="hidden" accept="image/*" multiple />
+            <button type="button" id="modal-add-photos-btn" class="px-4 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+              <span>Add photos</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Compression status spinner -->
+        <div id="modal-compress-status" class="hidden p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-sans flex items-center gap-2">
+          <span class="w-3.5 h-3.5 border-2 border-amber-600 border-t-transparent rounded-full animate-spin shrink-0"></span>
+          <span id="modal-compress-status-text">Compressing and resizing photo...</span>
+        </div>
+
+        <!-- Error banner -->
+        <div id="modal-photos-error-box" class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-800 font-sans"></div>
+
+        <!-- 4-Slot Photo Grid -->
+        <div id="modal-photos-preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+          <!-- Injected dynamically -->
+        </div>
+
+        <p class="text-[11px] text-[#7A535A] font-sans italic">
+          If all photos are removed, the provider will automatically display the category's signature graphic on the public directory.
+        </p>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 border-t border-[#EAD5C0] bg-[#F6EEE6]/80 flex items-center justify-end gap-3">
+        <button type="button" id="cancel-edit-photos-btn" class="px-5 py-2 rounded-full border border-[#D4A7B0] hover:bg-[#FDFBF8] text-[#7A535A] text-xs font-heading font-bold uppercase tracking-wider transition-all cursor-pointer">
+          Cancel
+        </button>
+        <button type="button" id="save-edit-photos-btn" class="px-6 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-2 cursor-pointer">
+          <span>Save Photos</span>
+          <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
 
 </body>
 

@@ -100,13 +100,12 @@ export function getCategoryDefaultImageHtml(category = '', extraClasses = '') {
  * @returns {string} HTML markup string for the card
  */
 export function createProviderCard(provider) {
-  const hasImage = Boolean(
-    provider.portfolioImages &&
-    Array.isArray(provider.portfolioImages) &&
-    provider.portfolioImages.length > 0 &&
-    typeof provider.portfolioImages[0] === 'string' &&
-    provider.portfolioImages[0].trim() !== ''
-  );
+  const thumbUrl = (provider.thumbnail && typeof provider.thumbnail === 'string' && provider.thumbnail.trim())
+    ? provider.thumbnail.trim()
+    : ((provider.portfolioImages && Array.isArray(provider.portfolioImages) && provider.portfolioImages.length > 0 && typeof provider.portfolioImages[0] === 'string' && provider.portfolioImages[0].trim())
+      ? provider.portfolioImages[0].trim()
+      : null);
+  const hasImage = Boolean(thumbUrl);
 
   // Calculate distance from LSU Memorial Tower for data-distance attribute (used by filters/sorting)
   const distance = getDistanceFromLSU(provider);
@@ -139,7 +138,7 @@ export function createProviderCard(provider) {
           <div class="relative w-full aspect-[16/11] rounded-2xl overflow-hidden bg-[#F6EEE6] shadow-sm">
             ${hasImage ? `
               <img 
-                src="${provider.portfolioImages[0]}" 
+                src="${thumbUrl}" 
                 alt="${provider.businessName} portfolio preview" 
                 loading="lazy"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out rounded-2xl"

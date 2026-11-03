@@ -556,10 +556,13 @@ export async function approvePendingProvider(pendingId, providerData) {
   // Extract private contact info
   const ownerEmail = providerData.ownerEmail || null;
   const ownerPhone = providerData.ownerPhone || null;
+  const fullPhotos = Array.isArray(providerData.fullPhotos) ? providerData.fullPhotos : [];
+  const thumbnail = providerData.thumbnail || null;
 
   const finalProvider = {
     ...providerData,
     id: permanentId,
+    thumbnail: thumbnail,
     averageRating: providerData.averageRating || 5.0,
     reviewCount: providerData.reviewCount || 0,
     approvedAt: new Date().toISOString()
@@ -568,6 +571,8 @@ export async function approvePendingProvider(pendingId, providerData) {
   // PRIVACY: NEVER copy ownerEmail or ownerPhone into public "providers" collection
   delete finalProvider.ownerEmail;
   delete finalProvider.ownerPhone;
+  delete finalProvider.fullPhotos;
+  delete finalProvider.portfolioImages;
   delete finalProvider.status;
   delete finalProvider.campus_location; // Keep only campusLocation
 
@@ -589,11 +594,26 @@ export async function approvePendingProvider(pendingId, providerData) {
     }
   }
 
-  // 2. Write to official public "providers" collection
+  // 2. Save full-size photos in separate "providerPhotos" collection
+  if (fullPhotos.length > 0) {
+    try {
+      const photoRef = doc(db, "providerPhotos", permanentId);
+      await setDoc(photoRef, {
+        providerId: permanentId,
+        images: fullPhotos,
+        createdAt: new Date().toISOString()
+      });
+      console.log(`[Review Queue] Saved ${fullPhotos.length} full photos to providerPhotos/${permanentId}`);
+    } catch (photoErr) {
+      console.warn(`[Review Queue] Could not save providerPhotos doc: ${photoErr.message}`);
+    }
+  }
+
+  // 3. Write to official public "providers" collection
   const providerRef = doc(db, "providers", permanentId);
   await setDoc(providerRef, finalProvider);
 
-  // 3. Remove from "pendingProviders" collection
+  // 4. Remove from "pendingProviders" collection
   const pendingRef = doc(db, "pendingProviders", pendingId);
   await deleteDoc(pendingRef);
 
@@ -611,6 +631,103 @@ export async function rejectPendingProvider(pendingId) {
   const pendingRef = doc(db, "pendingProviders", pendingId);
   await deleteDoc(pendingRef);
   console.log(`[Review Queue] Rejected & removed pending application [${pendingId}]`);
+}
+
+/**
+ * Removes an approved live business provider from "providers" and removes its
+ * matching document from "providerContacts".
+ * 
+ * @param {string} providerId 
+ * @returns {Promise<void>}
+ */
+export async function deleteLiveProvider(providerId) {
+  const providerRef = doc(db, "providers", providerId);
+  await deleteDoc(providerRef);
+
+  try {
+    const contactRef = doc(db, "providerContacts", providerId);
+    await deleteDoc(contactRef);
+    console.log(`[Live Directory] Removed private contacts for [${providerId}]`);
+  } catch (err) {
+    console.warn(`[Live Directory] Note on providerContacts removal: ${err.message}`);
+  }
+
+  try {
+    const photoRef = doc(db, "providerPhotos", providerId);
+    await deleteDoc(photoRef);
+    console.log(`[Live Directory] Removed providerPhotos for [${providerId}]`);
+  } catch (err) {
+    console.warn(`[Live Directory] Note on providerPhotos removal: ${err.message}`);
+  }
+
+  console.log(`[Live Directory] Removed live provider [${providerId}] from providers`);
+}
+
+/**
+ * Retrieves full-size photos array from "providerPhotos" for a given provider.
+ * Public operation.
+ * 
+ * @param {string} providerId 
+ * @returns {Promise<Array<string>>}
+ */
+export async function getProviderPhotosFromFirestore(providerId) {
+  if (!providerId) return [];
+  try {
+    const photoRef = doc(db, "providerPhotos", providerId);
+    const docSnap = await getDoc(photoRef);
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return Array.isArray(data.images) ? data.images : [];
+    }
+    return [];
+  } catch (err) {
+    console.warn(`[Photos] Could not read providerPhotos/${providerId}:`, err.message);
+    return [];
+  }
+}
+
+/**
+ * Updates full-size photos in "providerPhotos" and thumbnail in "providers".
+ * Admin operation.
+ * 
+ * @param {string} providerId 
+ * @param {Array<string>} images 
+ * @param {string|null} thumbnail 
+ * @returns {Promise<void>}
+ */
+export async function saveProviderPhotosToFirestore(providerId, images = [], thumbnail = null) {
+  if (!providerId) throw new Error('Missing providerId');
+
+  const photoRef = doc(db, "providerPhotos", providerId);
+  await setDoc(photoRef, {
+    providerId: providerId,
+    images: Array.isArray(images) ? images : [],
+    updatedAt: new Date().toISOString()
+  });
+
+  const providerRef = doc(db, "providers", providerId);
+  await setDoc(providerRef, {
+    thumbnail: thumbnail || null,
+    updatedAt: new Date().toISOString()
+  }, { merge: true });
+
+  console.log(`[Photos] Updated photos & thumbnail for provider [${providerId}]`);
+}
+
+/**
+ * Retrieves all private contact documents from "providerContacts" keyed by providerId.
+ * Admin-only operation.
+ * 
+ * @returns {Promise<Object>} Map of providerId -> contactData
+ */
+export async function getProviderContacts() {
+  const contactsCol = collection(db, "providerContacts");
+  const snapshot = await getDocs(contactsCol);
+  const contactsMap = {};
+  snapshot.forEach(docSnap => {
+    contactsMap[docSnap.id] = docSnap.data();
+  });
+  return contactsMap;
 }
 
 // ============================================================================

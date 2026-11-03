@@ -93,7 +93,6 @@ export function getActiveFilterCount() {
   if (appState.maxStartingPrice !== null && appState.maxStartingPrice < 250) count++;
   if (appState.minRating > 0) count++;
   if (appState.studentDiscountOnly) count++;
-  if (appState.serviceDelivery !== 'all') count++;
 
   // Hair
   if (appState.hairSpecialties.length > 0) count += appState.hairSpecialties.length;
@@ -278,7 +277,7 @@ export function updateDirectory() {
 
   if (!gridElement) return;
 
-  // Update results counter text with source indicator (Never shows a count, even after filtering)
+  // Update results counter text (Never shows a count, even after filtering)
   if (countElement) {
     const activeCat = (appState.selectedCategory && appState.selectedCategory !== 'All')
       ? appState.selectedCategory
@@ -286,10 +285,7 @@ export function updateDirectory() {
     const displayCategory = activeCat
       ? (activeCat.startsWith('Fashion') ? ' in Fashion' : ` in ${activeCat}`)
       : '';
-    const sourceBadge = firestoreLoadStatus === 'firestore'
-      ? `<span class="ml-2 inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" title="Data loaded live from Cloud Firestore 'providers' collection"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Firestore</span>`
-      : '';
-    countElement.innerHTML = `Showing providers${displayCategory}${sourceBadge}`;
+    countElement.innerHTML = `Showing providers${displayCategory}`;
   }
 
   // If still loading from Firestore, show skeleton loader
@@ -442,6 +438,8 @@ export function resetAllFilters() {
   // Reset Location Pills
   document.querySelectorAll('.location-pill').forEach(pill => {
     const isAll = pill.dataset.location === 'all';
+    pill.classList.toggle('active-location', isAll);
+    pill.classList.toggle('active-filter', isAll);
     pill.classList.toggle('bg-[#E9C6CC]', isAll);
     pill.classList.toggle('text-[#4A1C24]', isAll);
     pill.classList.toggle('font-bold', isAll);
@@ -615,6 +613,8 @@ function attachFilterListeners() {
         appState.locationFilter = loc;
         locationPills.forEach(p => {
           const isSelected = p.dataset.location === loc;
+          p.classList.toggle('active-location', isSelected);
+          p.classList.toggle('active-filter', isSelected);
           p.classList.toggle('bg-[#E9C6CC]', isSelected);
           p.classList.toggle('text-[#4A1C24]', isSelected);
           p.classList.toggle('font-bold', isSelected);

@@ -655,6 +655,7 @@ body.filter-drawer-open #filter-backdrop {
 
 .filter-pill:hover,
 .zone-pill:hover,
+.location-pill:hover,
 .rating-pill:hover {
   background-color: var(--color-blush-light) !important;
   border-color: var(--color-burgundy) !important;
@@ -665,6 +666,9 @@ body.filter-drawer-open #filter-backdrop {
 /* BLUSH SELECTED STATES: Explicitly requested */
 .filter-pill.active-filter,
 .zone-pill.active-zone,
+.location-pill.active-location,
+.location-pill.active-filter,
+.location-pill.active,
 .rating-pill.active-rating,
 .filter-pill.bg-lsu-gold,
 .zone-pill.bg-lsu-gold,

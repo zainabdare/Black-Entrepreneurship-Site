@@ -332,8 +332,8 @@ export function injectFilterPanel(categoryName, onFilterChange) {
         <!-- Category-Specific Section (Top of panel) -->
         ${categorySpecificHtml}
 
-        <!-- Shared Section: 4 Column Grid on Desktop -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Shared Section: 3 Column Grid on Desktop -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
           <!-- Col 1: Location Filter (All, On Campus, Off Campus) -->
           <div class="space-y-4">
@@ -345,7 +345,7 @@ export function injectFilterPanel(categoryName, onFilterChange) {
             <div>
               <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Campus Vicinity</label>
               <div class="flex flex-wrap gap-1.5" role="group" aria-label="Location Filter">
-                <button type="button" data-location="all" class="location-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-[#E9C6CC] text-[#4A1C24] font-bold border border-[#D4A7B0] active-location">All</button>
+                <button type="button" data-location="all" class="location-pill active-location active-filter px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-[#E9C6CC] text-[#4A1C24] font-bold border border-[#D4A7B0]">All</button>
                 <button type="button" data-location="on-campus" class="location-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">On Campus</button>
                 <button type="button" data-location="off-campus" class="location-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Off Campus</button>
               </div>
@@ -407,33 +407,6 @@ export function injectFilterPanel(categoryName, onFilterChange) {
                 <button type="button" data-rating="3" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">3+ Stars</button>
                 <button type="button" data-rating="4" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">4+ Stars</button>
                 <button type="button" data-rating="4.5" class="rating-pill px-3 py-1 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">4.5+ Stars</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Col 4: Service Setup -->
-          <div class="space-y-4">
-            <div class="flex items-center gap-2 pb-1.5 border-b border-[#EAD5C0]">
-              <svg class="w-3.5 h-3.5 text-[#4A1C24]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">Service Setup</h4>
-            </div>
-
-            <!-- Service Delivery -->
-            <div>
-              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Service Setup</label>
-              <div class="space-y-1.5">
-                <label class="flex items-center gap-2 text-xs text-[#4A1C24] cursor-pointer font-sans">
-                  <input type="radio" name="service-delivery-radio" value="all" checked class="text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
-                  <span>All Setups</span>
-                </label>
-                <label class="flex items-center gap-2 text-xs text-[#4A1C24] cursor-pointer font-sans">
-                  <input type="radio" name="service-delivery-radio" value="mobile" class="text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
-                  <span>Mobile / Travels to Campus</span>
-                </label>
-                <label class="flex items-center gap-2 text-xs text-[#4A1C24] cursor-pointer font-sans">
-                  <input type="radio" name="service-delivery-radio" value="studio" class="text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
-                  <span>Studio / Home Setup</span>
-                </label>
               </div>
             </div>
           </div>
