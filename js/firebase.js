@@ -496,8 +496,29 @@ export async function uploadPendingProviderPhoto(file, tempId, index = 0) {
 export async function submitPendingProvider(providerData) {
   const pendingCol = collection(db, "pendingProviders");
 
+  const cleanField = (val) => {
+    if (val === null || val === undefined) return null;
+    if (typeof val === 'string') {
+      const trimmed = val.trim();
+      return (!trimmed || trimmed.toLowerCase() === 'not provided') ? null : trimmed;
+    }
+    return val;
+  };
+
+  const cleanData = { ...providerData };
+  // NO FAKE RATINGS: New applicants should not have averageRating or reviewCount saved
+  delete cleanData.averageRating;
+  delete cleanData.reviewCount;
+
+  // NO "NOT PROVIDED" TEXT: Blank optional fields saved as null
+  ['description', 'websiteUrl', 'bookingUrl', 'tiktokUrl', 'instagramUrl', 'ownerPhone'].forEach(f => {
+    if (cleanData[f] !== undefined) {
+      cleanData[f] = cleanField(cleanData[f]);
+    }
+  });
+
   const newDoc = {
-    ...providerData,
+    ...cleanData,
     status: 'pending',
     submittedAt: new Date().toISOString()
   };
@@ -553,20 +574,34 @@ export async function approvePendingProvider(pendingId, providerData) {
     .replace(/-+/g, '-');
   const permanentId = `provider-${categorySlug}-${Date.now().toString(36)}`;
 
+  const cleanField = (val) => {
+    if (val === null || val === undefined) return null;
+    if (typeof val === 'string') {
+      const trimmed = val.trim();
+      return (!trimmed || trimmed.toLowerCase() === 'not provided') ? null : trimmed;
+    }
+    return val;
+  };
+
   // Extract private contact info
-  const ownerEmail = providerData.ownerEmail || null;
-  const ownerPhone = providerData.ownerPhone || null;
+  const ownerEmail = cleanField(providerData.ownerEmail);
+  const ownerPhone = cleanField(providerData.ownerPhone);
   const fullPhotos = Array.isArray(providerData.fullPhotos) ? providerData.fullPhotos : [];
-  const thumbnail = providerData.thumbnail || null;
+  const thumbnail = cleanField(providerData.thumbnail);
 
   const finalProvider = {
     ...providerData,
     id: permanentId,
     thumbnail: thumbnail,
-    averageRating: providerData.averageRating || 5.0,
-    reviewCount: providerData.reviewCount || 0,
     approvedAt: new Date().toISOString()
   };
+
+  // Clean optional fields: treat "Not provided" as null
+  ['description', 'websiteUrl', 'bookingUrl', 'tiktokUrl', 'instagramUrl'].forEach(f => {
+    if (finalProvider[f] !== undefined) {
+      finalProvider[f] = cleanField(finalProvider[f]);
+    }
+  });
 
   // PRIVACY: NEVER copy ownerEmail or ownerPhone into public "providers" collection
   delete finalProvider.ownerEmail;
@@ -575,6 +610,10 @@ export async function approvePendingProvider(pendingId, providerData) {
   delete finalProvider.portfolioImages;
   delete finalProvider.status;
   delete finalProvider.campus_location; // Keep only campusLocation
+
+  // NO FAKE RATINGS: Never save averageRating or reviewCount on newly approved providers
+  delete finalProvider.averageRating;
+  delete finalProvider.reviewCount;
 
   // 1. Save private contact info into the admin-only "providerContacts" collection
   if (ownerEmail || ownerPhone) {

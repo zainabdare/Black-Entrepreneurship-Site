@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Portal | SETLIST Marketplace</title>
-  
+
   <!-- Privacy: Never index admin portal in search engines -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -61,7 +61,8 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
+<body
+  class="bg-[#F6EEE6] text-[#4A1C24] min-h-screen flex flex-col selection:bg-[#E9C6CC] selection:text-[#4A1C24] antialiased">
 
   <!-- ========================================================================
        TOP HEADER BAR
@@ -76,7 +77,8 @@
             <span class="setlist-logo-main">SETLIST</span>
             <span class="setlist-logo-sub">MARKETPLACE</span>
           </a>
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-heading font-black tracking-wider uppercase bg-[#4A1C24] text-[#F6EEE6] shadow-sm">
+          <span
+            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-heading font-black tracking-wider uppercase bg-[#4A1C24] text-[#F6EEE6] shadow-sm">
             Admin
           </span>
         </div>
@@ -112,9 +114,10 @@
          ==================================================================== -->
     <div id="login-view" class="hidden max-w-md mx-auto py-6 sm:py-12">
       <div class="rounded-3xl bg-white border border-[#E9C6CC] p-6 sm:p-10 shadow-lg space-y-6">
-        
+
         <div class="text-center space-y-2">
-          <div class="w-12 h-12 mx-auto rounded-full bg-[#4A1C24] text-[#F6EEE6] flex items-center justify-center font-heading font-black text-lg shadow-md">
+          <div
+            class="w-12 h-12 mx-auto rounded-full bg-[#4A1C24] text-[#F6EEE6] flex items-center justify-center font-heading font-black text-lg shadow-md">
             S
           </div>
           <h1 class="text-2xl sm:text-3xl font-heading font-extrabold text-[#4A1C24] leading-tight">
@@ -126,27 +129,28 @@
         </div>
 
         <!-- Login Error Box -->
-        <div id="login-error-box" class="hidden p-3.5 rounded-2xl bg-red-50 border border-red-200 text-xs sm:text-sm text-red-800 font-sans">
+        <div id="login-error-box"
+          class="hidden p-3.5 rounded-2xl bg-red-50 border border-red-200 text-xs sm:text-sm text-red-800 font-sans">
           <!-- Injected dynamically -->
         </div>
 
         <!-- Login Form (Email & Password only, zero sign-up) -->
         <form id="login-form" class="space-y-4" novalidate autocomplete="on">
           <div>
-            <label for="login-email" class="block text-xs font-heading font-bold text-[#4A1C24] uppercase tracking-wider mb-1.5">
+            <label for="login-email"
+              class="block text-xs font-heading font-bold text-[#4A1C24] uppercase tracking-wider mb-1.5">
               Admin Email
             </label>
             <input id="login-email" type="email" required autocomplete="email"
-              placeholder="zainabdare07@gmail.com"
               class="w-full px-4 py-3 rounded-xl bg-[#FDFBF8] border border-[#D4A7B0] text-[#4A1C24] font-sans text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors">
           </div>
 
           <div>
-            <label for="login-password" class="block text-xs font-heading font-bold text-[#4A1C24] uppercase tracking-wider mb-1.5">
+            <label for="login-password"
+              class="block text-xs font-heading font-bold text-[#4A1C24] uppercase tracking-wider mb-1.5">
               Password
             </label>
             <input id="login-password" type="password" required autocomplete="current-password"
-              placeholder="••••••••"
               class="w-full px-4 py-3 rounded-xl bg-[#FDFBF8] border border-[#D4A7B0] text-[#4A1C24] font-sans text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors">
           </div>
 
@@ -159,7 +163,7 @@
 
         <div class="pt-2 text-center border-t border-[#EAD5C0]/60">
           <p class="text-[11px] text-[#7A535A] font-sans">
-            Protected area &bull; IP &amp; session telemetry monitored
+            Protected area &bull; Authorized administrators only
           </p>
         </div>
 
@@ -171,11 +175,13 @@
          ==================================================================== -->
     <div id="unverified-view" class="hidden max-w-xl mx-auto py-8">
       <div class="rounded-3xl bg-white border-2 border-[#D4A7B0] p-6 sm:p-8 shadow-lg space-y-6">
-        
+
         <div class="flex items-start gap-4">
-          <div class="w-12 h-12 rounded-2xl bg-[#E9C6CC] text-[#4A1C24] flex items-center justify-center shrink-0 shadow-sm">
+          <div
+            class="w-12 h-12 rounded-2xl bg-[#E9C6CC] text-[#4A1C24] flex items-center justify-center shrink-0 shadow-sm">
             <svg class="w-6 h-6 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
           <div class="space-y-1">
@@ -183,14 +189,17 @@
               Email Verification Required
             </h2>
             <p class="text-xs sm:text-sm text-[#7A535A] font-sans leading-relaxed">
-              Your administrator account (<span id="unverified-email-label" class="font-semibold text-[#4A1C24]"></span>) has not yet been verified.
+              Your administrator account (<span id="unverified-email-label"
+                class="font-semibold text-[#4A1C24]"></span>) has not yet been verified.
             </p>
           </div>
         </div>
 
-        <div class="p-4 rounded-2xl bg-[#FDFBF8] border border-[#EAD5C0] text-xs text-[#7A535A] font-sans leading-relaxed space-y-2">
+        <div
+          class="p-4 rounded-2xl bg-[#FDFBF8] border border-[#EAD5C0] text-xs text-[#7A535A] font-sans leading-relaxed space-y-2">
           <p>
-            Firestore security rules require that your admin email address be verified before reading or reviewing pending applications.
+            Firestore security rules require that your admin email address be verified before reading or reviewing
+            pending applications.
           </p>
           <p class="font-medium text-[#4A1C24]">
             &bull; Please check your inbox and <strong>Spam / Junk</strong> folder for the verification link.
@@ -208,18 +217,20 @@
             class="flex-1 py-3 px-5 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
             <span>Send Verification Email</span>
           </button>
-          
+
           <button id="refresh-verif-btn" type="button"
             class="flex-1 py-3 px-5 rounded-full bg-white hover:bg-[#F7E9EC] text-[#4A1C24] border border-[#D4A7B0] font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
             <svg class="w-4 h-4 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
             <span>I've Verified, Refresh</span>
           </button>
         </div>
 
         <div class="text-center pt-2">
-          <button id="unverified-logout-btn" type="button" class="text-xs text-[#7A535A] hover:text-[#4A1C24] underline cursor-pointer font-sans">
+          <button id="unverified-logout-btn" type="button"
+            class="text-xs text-[#7A535A] hover:text-[#4A1C24] underline cursor-pointer font-sans">
             Log out and use a different account
           </button>
         </div>
@@ -231,11 +242,12 @@
          4. ADMIN DASHBOARD (Pending Queue & Approved Providers Directory)
          ==================================================================== -->
     <div id="dashboard-view" class="hidden space-y-8">
-      
+
       <!-- Dashboard Header & Navigation Tabs -->
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#EAD5C0] pb-6">
         <div>
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold mb-2">
+          <span
+            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold mb-2">
             <span>Verified Administrator</span>
           </span>
           <h1 class="text-3xl sm:text-4xl font-heading font-light tracking-[0.12em] text-[#4A1C24] uppercase">
@@ -251,12 +263,14 @@
           <button id="tab-btn-pending" type="button"
             class="px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 bg-[#4A1C24] text-[#F6EEE6] shadow-sm cursor-pointer">
             <span>Pending</span>
-            <span id="tab-count-pending" class="px-2 py-0.5 rounded-full text-[11px] font-mono bg-white/20 text-white">0</span>
+            <span id="tab-count-pending"
+              class="px-2 py-0.5 rounded-full text-[11px] font-mono bg-white/20 text-white">0</span>
           </button>
           <button id="tab-btn-approved" type="button"
             class="px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all flex items-center gap-2 text-[#7A535A] hover:text-[#4A1C24] hover:bg-stone-100/60 cursor-pointer">
             <span>Approved</span>
-            <span id="tab-count-approved" class="px-2 py-0.5 rounded-full text-[11px] font-mono bg-[#E9C6CC]/60 text-[#4A1C24]">0</span>
+            <span id="tab-count-approved"
+              class="px-2 py-0.5 rounded-full text-[11px] font-mono bg-[#E9C6CC]/60 text-[#4A1C24]">0</span>
           </button>
         </div>
       </div>
@@ -264,7 +278,8 @@
       <!-- TAB PANE 1: PENDING APPLICATIONS -->
       <div id="pending-tab-pane" class="space-y-6">
         <!-- Queue Status & Refresh Bar -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm font-sans font-semibold text-[#7A535A] px-1">
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm font-sans font-semibold text-[#7A535A] px-1">
           <div class="flex items-center gap-3">
             <span id="queue-count-label">Loading applications...</span>
             <span class="text-[11px] text-[#7A535A]/70 uppercase tracking-wider font-heading">&bull; Newest First</span>
@@ -272,17 +287,21 @@
           <button id="dashboard-refresh-btn" type="button"
             class="self-start sm:self-auto px-4 py-1.5 rounded-full bg-white hover:bg-[#F7E9EC] text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-2 cursor-pointer">
             <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
             <span>Refresh Queue</span>
           </button>
         </div>
 
         <!-- Queue Error Alert Container -->
-        <div id="queue-error-box" class="hidden p-5 rounded-3xl bg-red-50 border-2 border-red-200 text-red-900 space-y-3 shadow-sm font-sans">
+        <div id="queue-error-box"
+          class="hidden p-5 rounded-3xl bg-red-50 border-2 border-red-200 text-red-900 space-y-3 shadow-sm font-sans">
           <div class="flex items-center gap-2 font-bold text-sm text-red-800">
-            <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <span>Unable to Load Applications</span>
           </div>
@@ -298,7 +317,8 @@
         </div>
 
         <!-- Action Notification Banner (Approve / Reject Feedback) -->
-        <div id="action-notification-banner" class="hidden p-4 sm:p-5 rounded-3xl border shadow-sm transition-all font-sans">
+        <div id="action-notification-banner"
+          class="hidden p-4 sm:p-5 rounded-3xl border shadow-sm transition-all font-sans">
           <!-- Injected dynamically -->
         </div>
 
@@ -308,7 +328,8 @@
         </div>
 
         <!-- Empty Queue View -->
-        <div id="empty-queue-box" class="hidden text-center py-16 px-4 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm space-y-3">
+        <div id="empty-queue-box"
+          class="hidden text-center py-16 px-4 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm space-y-3">
           <div class="w-14 h-14 mx-auto rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] flex items-center justify-center">
             <svg class="w-7 h-7 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -324,12 +345,13 @@
       <!-- TAB PANE 2: APPROVED PROVIDERS DIRECTORY -->
       <div id="approved-tab-pane" class="hidden space-y-6">
         <!-- Search and Filter Controls -->
-        <div class="p-4 sm:p-5 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <div
+          class="p-4 sm:p-5 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           <!-- Search Box -->
           <div class="relative flex-1">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#7A535A]">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
             <input type="text" id="approved-search-input"
@@ -353,7 +375,8 @@
             <button id="approved-refresh-btn" type="button"
               class="px-4 py-2.5 rounded-2xl bg-white hover:bg-[#F7E9EC] text-[#4A1C24] border border-[#D4A7B0] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0">
               <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
               <span>Refresh</span>
             </button>
@@ -363,19 +386,24 @@
         <!-- Count Status Bar -->
         <div class="flex items-center justify-between text-xs sm:text-sm font-sans font-semibold text-[#7A535A] px-1">
           <span id="approved-count-label">Loading live providers...</span>
-          <span class="text-[11px] text-[#7A535A]/70 uppercase tracking-wider font-heading">Auto-Sorted Newest First</span>
+          <span class="text-[11px] text-[#7A535A]/70 uppercase tracking-wider font-heading">Auto-Sorted Newest
+            First</span>
         </div>
 
         <!-- Action Notification Banner (Removal Feedback) -->
-        <div id="approved-action-banner" class="hidden p-4 sm:p-5 rounded-3xl border shadow-sm transition-all font-sans">
+        <div id="approved-action-banner"
+          class="hidden p-4 sm:p-5 rounded-3xl border shadow-sm transition-all font-sans">
           <!-- Injected dynamically -->
         </div>
 
         <!-- Approved Error Alert Container -->
-        <div id="approved-error-box" class="hidden p-5 rounded-3xl bg-red-50 border-2 border-red-200 text-red-900 space-y-3 shadow-sm font-sans">
+        <div id="approved-error-box"
+          class="hidden p-5 rounded-3xl bg-red-50 border-2 border-red-200 text-red-900 space-y-3 shadow-sm font-sans">
           <div class="flex items-center gap-2 font-bold text-sm text-red-800">
-            <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <span>Unable to Load Live Providers</span>
           </div>
@@ -396,10 +424,12 @@
         </div>
 
         <!-- Empty Approved Box -->
-        <div id="empty-approved-box" class="hidden text-center py-16 px-4 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm space-y-3">
+        <div id="empty-approved-box"
+          class="hidden text-center py-16 px-4 rounded-3xl bg-white border border-[#E9C6CC] shadow-sm space-y-3">
           <div class="w-14 h-14 mx-auto rounded-full bg-[#E9C6CC]/50 text-[#4A1C24] flex items-center justify-center">
             <svg class="w-7 h-7 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
           </div>
           <h3 class="text-lg font-heading font-bold text-[#4A1C24]">No Providers Found</h3>
@@ -789,7 +819,7 @@
       // Intercept console.warn to capture Firestore errors if getPendingProviders swallows them
       let capturedWarn = null;
       const originalWarn = console.warn;
-      console.warn = function(...args) {
+      console.warn = function (...args) {
         const text = args.join(' ');
         if (text.includes('[Firestore Pending]')) {
           capturedWarn = text.replace(/\[Firestore Pending\]\s*/i, '').trim();
@@ -1143,7 +1173,7 @@
       if (!actionNotificationBanner) return;
       actionNotificationBanner.innerHTML = htmlContent;
       actionNotificationBanner.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300', 'text-emerald-950', 'bg-stone-100', 'border-stone-300', 'text-stone-900');
-      
+
       if (type === 'success') {
         actionNotificationBanner.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-950');
       } else {
@@ -1445,10 +1475,12 @@
       const cancelText = policies.cancellationPolicy || policies.cancellation_policy || '';
       const refundText = policies.refundPolicy || policies.refund_policy || '';
 
-      // Links for summary display
+      // Links for summary display (treat 'Not provided' as null)
+      const cleanContactVal = (v) => (v && typeof v === 'string' && v.trim().length > 0 && v.trim().toLowerCase() !== 'not provided') ? v.trim() : null;
       const igUrlClean = cleanInstagramUrl(app.instagramUrl || app.instagram);
       const ttUrlClean = cleanTiktokUrl(app.tiktokUrl || app.tiktok);
-      const ownerPhoneFormatted = formatPhone(app.ownerPhone) || app.ownerPhone || '';
+      const cleanOwnerEmail = cleanContactVal(app.ownerEmail);
+      const cleanOwnerPhone = formatPhone(app.ownerPhone);
 
       card.innerHTML = `
         <!-- ================================================================
@@ -1505,9 +1537,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
               <span class="text-[#7A535A] text-[10px] uppercase font-bold shrink-0">Email:</span>
-              ${app.ownerEmail ? `
-                <a href="mailto:${escAttr(app.ownerEmail)}" class="summary-email-link font-semibold text-[#4A1C24] hover:underline truncate" title="${escAttr(app.ownerEmail)}">
-                  ${esc(app.ownerEmail)}
+              ${cleanOwnerEmail ? `
+                <a href="mailto:${escAttr(cleanOwnerEmail)}" class="summary-email-link font-semibold text-[#4A1C24] hover:underline truncate" title="${escAttr(cleanOwnerEmail)}">
+                  ${esc(cleanOwnerEmail)}
                 </a>
               ` : '<span class="summary-email-link text-[#7A535A]/60 italic">None</span>'}
             </div>
@@ -1518,9 +1550,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
               </svg>
               <span class="text-[#7A535A] text-[10px] uppercase font-bold shrink-0">Phone:</span>
-              ${app.ownerPhone ? `
-                <a href="tel:${escAttr(ownerPhoneFormatted)}" class="summary-phone-link font-semibold text-[#4A1C24] hover:underline font-mono truncate">
-                  ${esc(ownerPhoneFormatted)}
+              ${cleanOwnerPhone ? `
+                <a href="tel:${escAttr(cleanOwnerPhone.replace(/\D/g, ''))}" class="summary-phone-link font-semibold text-[#4A1C24] hover:underline font-mono truncate">
+                  ${esc(cleanOwnerPhone)}
                 </a>
               ` : '<span class="summary-phone-link text-[#7A535A]/60 italic">None</span>'}
             </div>
@@ -2342,9 +2374,7 @@
           policies: policiesObj,
           ...catFields,
           availability: app.availability || "open-this-week",
-          lsuVerified: app.lsuVerified || null,
-          averageRating: typeof app.averageRating === 'number' ? app.averageRating : 5.0,
-          reviewCount: typeof app.reviewCount === 'number' ? app.reviewCount : 0
+          lsuVerified: app.lsuVerified || null
         };
 
         setCardProcessing(true, 'Publishing...');
@@ -2485,40 +2515,52 @@
       return 'index.html';
     }
 
-    // Default category thumbnail SVG graphics in brand colors
-    function getCategoryGraphicHtml(category) {
+    // Business name placeholder CSS design (used when provider has no photos)
+    function getBusinessGraphicHtml(businessName, category) {
       const cat = (category || '').toLowerCase();
       let bg = '#4A1C24';
-      let icon = 'SETLIST';
-      if (cat.includes('hair')) { bg = '#4A1C24'; icon = 'Hair'; }
-      else if (cat.includes('nail')) { bg = '#561C2C'; icon = 'Nails'; }
-      else if (cat.includes('lash')) { bg = '#3A121A'; icon = 'Lashes'; }
-      else if (cat.includes('food') || cat.includes('beverage')) { bg = '#5C2022'; icon = 'Food'; }
-      else if (cat.includes('fashion')) { bg = '#44182E'; icon = 'Fashion'; }
-      else if (cat.includes('photograph')) { bg = '#32141D'; icon = 'Photo'; }
+      let catDisplay = 'SETLIST';
+      if (cat.includes('hair')) { bg = '#4A1C24'; catDisplay = 'HAIR'; }
+      else if (cat.includes('nail')) { bg = '#561C2C'; catDisplay = 'NAILS'; }
+      else if (cat.includes('lash')) { bg = '#3A121A'; catDisplay = 'LASHES'; }
+      else if (cat.includes('food') || cat.includes('beverage')) { bg = '#5C2022'; catDisplay = 'FOOD'; }
+      else if (cat.includes('fashion')) { bg = '#44182E'; catDisplay = 'FASHION'; }
+      else if (cat.includes('photograph')) { bg = '#32141D'; catDisplay = 'PHOTO'; }
+
+      const rawName = (businessName || 'SETLIST').trim();
+      const len = rawName.length;
+      let sizeClass = 'text-[10px] sm:text-[11px]';
+      let trackingClass = 'tracking-[0.14em] pl-[0.14em]';
+      if (len > 24) {
+        sizeClass = 'text-[8px] sm:text-[9px]';
+        trackingClass = 'tracking-[0.08em] pl-[0.08em]';
+      } else if (len > 14) {
+        sizeClass = 'text-[9px] sm:text-[10px]';
+        trackingClass = 'tracking-[0.1em] pl-[0.1em]';
+      }
 
       return `
-        <div class="w-full h-full flex flex-col items-center justify-center text-[#F6EEE6] p-1.5 text-center select-none" style="background-color: ${bg};">
-          <span class="font-heading font-light text-lg sm:text-xl tracking-wider leading-none">${icon.slice(0, 1)}</span>
-          <span class="text-[9px] font-sans tracking-wider uppercase opacity-85 mt-0.5">${esc(icon)}</span>
+        <div class="w-full h-full flex flex-col items-center justify-center text-[#F6EEE6] p-1.5 text-center select-none overflow-hidden" style="background-color: ${bg}; font-family: 'Raleway', sans-serif;">
+          <span class="font-heading font-extrabold uppercase ${sizeClass} ${trackingClass} leading-tight line-clamp-2 max-w-[95%] text-center">${esc(rawName)}</span>
+          <span class="text-[7px] sm:text-[8px] font-sans font-semibold tracking-widest uppercase text-[#E9C6CC] mt-0.5 opacity-90">${esc(catDisplay)}</span>
         </div>
       `;
     }
 
-    // Extracts thumbnail URL from any known provider photo field (checks thumbnail first)
+    function getCategoryGraphicHtml(category, businessName = '') {
+      return getBusinessGraphicHtml(businessName, category);
+    }
+
+    // Extracts thumbnail URL from any known provider photo field (checks thumbnail first, ignores 'Not provided')
     function getProviderThumbnailUrl(provider) {
       if (!provider) return null;
-      if (typeof provider.thumbnail === 'string' && provider.thumbnail.trim()) {
-        return provider.thumbnail.trim();
+      const clean = (val) => (val && typeof val === 'string' && val.trim().length > 0 && val.trim().toLowerCase() !== 'not provided') ? val.trim() : null;
+      if (clean(provider.thumbnail)) return clean(provider.thumbnail);
+      if (Array.isArray(provider.portfolioImages) && provider.portfolioImages.length > 0 && clean(provider.portfolioImages[0])) {
+        return clean(provider.portfolioImages[0]);
       }
-      if (Array.isArray(provider.portfolioImages) && provider.portfolioImages.length > 0) {
-        const first = provider.portfolioImages[0];
-        if (typeof first === 'string' && first.trim()) return first.trim();
-      }
-      if (typeof provider.imageUrl === 'string' && provider.imageUrl.trim()) return provider.imageUrl.trim();
-      if (typeof provider.photoUrl === 'string' && provider.photoUrl.trim()) return provider.photoUrl.trim();
-      if (typeof provider.portfolioImage === 'string' && provider.portfolioImage.trim()) return provider.portfolioImage.trim();
-      if (typeof provider.image === 'string' && provider.image.trim()) return provider.image.trim();
+      if (clean(provider.imageUrl)) return clean(provider.imageUrl);
+      if (clean(provider.photoUrl)) return clean(provider.photoUrl);
       return null;
     }
 
@@ -2683,11 +2725,14 @@
     function updateCardContactInfo(card, contact) {
       const emailEl = card.querySelector('.contact-email-val');
       const phoneEl = card.querySelector('.contact-phone-val');
-      if (emailEl && contact.ownerEmail) {
-        emailEl.innerHTML = `<a href="mailto:${escAttr(contact.ownerEmail)}" class="underline hover:text-[#4A1C24]">${esc(contact.ownerEmail)}</a>`;
+      const cleanVal = (v) => (v && typeof v === 'string' && v.trim().length > 0 && v.trim().toLowerCase() !== 'not provided') ? v.trim() : null;
+      const cleanEmail = cleanVal(contact.ownerEmail);
+      const cleanPhone = cleanVal(contact.ownerPhone);
+      if (emailEl && cleanEmail) {
+        emailEl.innerHTML = `<a href="mailto:${escAttr(cleanEmail)}" class="underline hover:text-[#4A1C24]">${esc(cleanEmail)}</a>`;
       }
-      if (phoneEl && contact.ownerPhone) {
-        phoneEl.innerHTML = `<a href="tel:${escAttr(contact.ownerPhone.replace(/\D/g, ''))}" class="underline hover:text-[#4A1C24]">${esc(contact.ownerPhone)}</a>`;
+      if (phoneEl && cleanPhone) {
+        phoneEl.innerHTML = `<a href="tel:${escAttr(cleanPhone.replace(/\D/g, ''))}" class="underline hover:text-[#4A1C24]">${esc(cleanPhone)}</a>`;
       }
     }
 
@@ -2762,24 +2807,25 @@
       // Thumbnail
       const photoUrl = getProviderThumbnailUrl(provider);
 
-      // Contact info
-      const email = contactData?.ownerEmail || provider.ownerEmail || null;
-      const phone = contactData?.ownerPhone || provider.ownerPhone || null;
+      // Contact info (clean 'Not provided')
+      const cleanContact = (v) => (v && typeof v === 'string' && v.trim().length > 0 && v.trim().toLowerCase() !== 'not provided') ? v.trim() : null;
+      const email = cleanContact(contactData?.ownerEmail || provider.ownerEmail);
+      const phone = cleanContact(contactData?.ownerPhone || provider.ownerPhone);
 
-      // Category Icon SVG & color
-      const catGraphic = getCategoryGraphicHtml(category);
+      // Business Name placeholder in brand colors
+      const placeholderGraphic = getBusinessGraphicHtml(bName, category);
 
       card.innerHTML = `
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#F6EEE6]">
           <div class="flex items-center gap-3 sm:gap-4">
-            <!-- Thumbnail or Category Graphic -->
+            <!-- Thumbnail or Business Name Graphic Placeholder -->
             <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shrink-0 border border-[#EAD5C0] bg-[#FDFBF8] flex items-center justify-center">
               ${photoUrl ? `
                 <img src="${escAttr(photoUrl)}" alt="${escAttr(bName)}" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.classList.remove('hidden');" />
                 <div class="hidden w-full h-full">
-                  ${catGraphic}
+                  ${placeholderGraphic}
                 </div>
-              ` : catGraphic}
+              ` : placeholderGraphic}
             </div>
 
             <div>
@@ -3180,16 +3226,16 @@
         if (currentEditModalCard) {
           const thumbWrap = currentEditModalCard.querySelector('.w-16.h-16, .w-20.h-20');
           if (thumbWrap) {
-            const catGraphic = getCategoryGraphicHtml(provider.category);
+            const placeholderGraphic = getBusinessGraphicHtml(bName, provider.category);
             if (thumbUrl) {
               thumbWrap.innerHTML = `
                 <img src="${escAttr(thumbUrl)}" alt="${escAttr(bName)}" class="w-full h-full object-cover" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.classList.remove('hidden');" />
                 <div class="hidden w-full h-full">
-                  ${catGraphic}
+                  ${placeholderGraphic}
                 </div>
               `;
             } else {
-              thumbWrap.innerHTML = catGraphic;
+              thumbWrap.innerHTML = placeholderGraphic;
             }
           }
         }
@@ -3241,20 +3287,26 @@
   </script>
 
   <!-- Edit Photos Modal for Approved Providers -->
-  <div id="edit-photos-modal" class="hidden fixed inset-0 z-50 bg-[#4A1C24]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="relative w-full max-w-2xl bg-[#F6EEE6] border border-[#EAD5C0] rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-[#4A1C24]" role="dialog" aria-modal="true">
-      
+  <div id="edit-photos-modal"
+    class="hidden fixed inset-0 z-50 bg-[#4A1C24]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div
+      class="relative w-full max-w-2xl bg-[#F6EEE6] border border-[#EAD5C0] rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-[#4A1C24]"
+      role="dialog" aria-modal="true">
+
       <!-- Modal Header -->
       <div class="px-6 py-4 border-b border-[#EAD5C0] bg-[#F6EEE6]/90 backdrop-blur flex items-center justify-between">
         <div>
           <span class="text-[10px] font-heading font-bold uppercase tracking-wider text-[#7A535A] block">
             Approved Provider &bull; Manage Photos
           </span>
-          <h3 id="edit-photos-modal-title" class="text-lg sm:text-xl font-heading font-bold text-[#4A1C24] leading-tight">
+          <h3 id="edit-photos-modal-title"
+            class="text-lg sm:text-xl font-heading font-bold text-[#4A1C24] leading-tight">
             Edit Photos
           </h3>
         </div>
-        <button type="button" id="close-edit-photos-modal-btn" class="w-8 h-8 rounded-full bg-white hover:bg-[#4A1C24] text-[#4A1C24] hover:text-[#F6EEE6] border border-[#EAD5C0] flex items-center justify-center text-lg font-bold transition-all cursor-pointer shadow-sm" aria-label="Close modal">
+        <button type="button" id="close-edit-photos-modal-btn"
+          class="w-8 h-8 rounded-full bg-white hover:bg-[#4A1C24] text-[#4A1C24] hover:text-[#F6EEE6] border border-[#EAD5C0] flex items-center justify-center text-lg font-bold transition-all cursor-pointer shadow-sm"
+          aria-label="Close modal">
           &times;
         </button>
       </div>
@@ -3263,9 +3315,12 @@
       <div class="overflow-y-auto flex-1 p-6 space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#7A535A] flex items-center gap-1.5">
+            <h4
+              class="text-xs font-heading font-bold uppercase tracking-wider text-[#7A535A] flex items-center gap-1.5">
               <span>Provider Gallery (Up to 4 Photos)</span>
-              <span id="modal-photos-count-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-[#EAD5C0] text-[#4A1C24] font-mono font-bold">0 / 4</span>
+              <span id="modal-photos-count-badge"
+                class="text-[10px] px-2 py-0.5 rounded-full bg-[#EAD5C0] text-[#4A1C24] font-mono font-bold">0 /
+                4</span>
             </h4>
             <p class="text-xs text-[#7A535A] font-sans mt-0.5">
               Photo #1 is the Cover Thumbnail shown on cards across the site.
@@ -3274,21 +3329,27 @@
 
           <div>
             <input type="file" id="modal-photo-file-input" class="hidden" accept="image/*" multiple />
-            <button type="button" id="modal-add-photos-btn" class="px-4 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
-              <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            <button type="button" id="modal-add-photos-btn"
+              class="px-4 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
               <span>Add photos</span>
             </button>
           </div>
         </div>
 
         <!-- Compression status spinner -->
-        <div id="modal-compress-status" class="hidden p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-sans flex items-center gap-2">
-          <span class="w-3.5 h-3.5 border-2 border-amber-600 border-t-transparent rounded-full animate-spin shrink-0"></span>
+        <div id="modal-compress-status"
+          class="hidden p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-sans flex items-center gap-2">
+          <span
+            class="w-3.5 h-3.5 border-2 border-amber-600 border-t-transparent rounded-full animate-spin shrink-0"></span>
           <span id="modal-compress-status-text">Compressing and resizing photo...</span>
         </div>
 
         <!-- Error banner -->
-        <div id="modal-photos-error-box" class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-800 font-sans"></div>
+        <div id="modal-photos-error-box"
+          class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-800 font-sans"></div>
 
         <!-- 4-Slot Photo Grid -->
         <div id="modal-photos-preview-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
@@ -3296,18 +3357,23 @@
         </div>
 
         <p class="text-[11px] text-[#7A535A] font-sans italic">
-          If all photos are removed, the provider will automatically display the category's signature graphic on the public directory.
+          If all photos are removed, the provider will automatically display the category's signature graphic on the
+          public directory.
         </p>
       </div>
 
       <!-- Modal Footer -->
       <div class="px-6 py-4 border-t border-[#EAD5C0] bg-[#F6EEE6]/80 flex items-center justify-end gap-3">
-        <button type="button" id="cancel-edit-photos-btn" class="px-5 py-2 rounded-full border border-[#D4A7B0] hover:bg-[#FDFBF8] text-[#7A535A] text-xs font-heading font-bold uppercase tracking-wider transition-all cursor-pointer">
+        <button type="button" id="cancel-edit-photos-btn"
+          class="px-5 py-2 rounded-full border border-[#D4A7B0] hover:bg-[#FDFBF8] text-[#7A535A] text-xs font-heading font-bold uppercase tracking-wider transition-all cursor-pointer">
           Cancel
         </button>
-        <button type="button" id="save-edit-photos-btn" class="px-6 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-2 cursor-pointer">
+        <button type="button" id="save-edit-photos-btn"
+          class="px-6 py-2 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] text-xs font-heading font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-2 cursor-pointer">
           <span>Save Photos</span>
-          <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          <svg class="w-3.5 h-3.5 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
         </button>
       </div>
 
@@ -3317,4 +3383,3 @@
 </body>
 
 </html>
-

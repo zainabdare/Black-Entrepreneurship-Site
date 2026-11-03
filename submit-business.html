@@ -1432,13 +1432,22 @@
 
             const { submitPendingProvider } = await import('./js/firebase.js');
 
+            const cleanFirestoreVal = (val) => {
+              if (val === null || val === undefined) return null;
+              if (typeof val === 'string') {
+                const trimmed = val.trim();
+                return (!trimmed || trimmed.toLowerCase() === 'not provided') ? null : trimmed;
+              }
+              return val;
+            };
+
             const firestorePayload = {
               businessName,
               ownerName,
               ownerEmail,
-              ownerPhone: ownerPhone || null,
+              ownerPhone: cleanFirestoreVal(ownerPhone),
               category,
-              description: "Not provided",
+              description: null,
               startingPrice: startingPriceNum,
               studentDiscount,
               serviceDelivery: serviceDeliverySelect.value,
@@ -1449,10 +1458,10 @@
               latitude: coords.lat,
               longitude: coords.lng,
               lsuVerified: null,
-              instagramUrl: instagramUrl || (rawIg ? `https://instagram.com/${rawIg.replace(/^@/, '')}` : ''),
-              tiktokUrl: tiktokUrl || '',
-              websiteUrl: "Not provided",
-              bookingUrl,
+              instagramUrl: cleanFirestoreVal(instagramUrl || (rawIg ? `https://instagram.com/${rawIg.replace(/^@/, '')}` : null)),
+              tiktokUrl: cleanFirestoreVal(tiktokUrl),
+              websiteUrl: null,
+              bookingUrl: cleanFirestoreVal(bookingUrl),
               portfolioImages: [],
               policies: {
                 depositRequired,
@@ -1461,8 +1470,6 @@
                 refundPolicy: refundPolicy
               },
               categoryDetails: categoryDetailsLine,
-              averageRating: 5.0,
-              reviewCount: 0,
               ...categoryData
             };
 

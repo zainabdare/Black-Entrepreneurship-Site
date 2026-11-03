@@ -278,7 +278,7 @@ export function filterProviders(providers, {
 
     // Minimum Rating (3+, 4+, 4.5+)
     if (minRating && Number(minRating) > 0) {
-      const avg = (provider.ratingCount > 0 && provider.averageRating) ? provider.averageRating : 0;
+      const avg = (Number(provider.ratingCount) > 0 && typeof provider.averageRating === 'number' && !isNaN(provider.averageRating)) ? provider.averageRating : 0;
       if (avg < Number(minRating)) {
         return false;
       }
@@ -439,11 +439,11 @@ export function filterProviders(providers, {
 
       case 'rating':
       default: {
-        const ratingA = (a.ratingCount > 0 && a.averageRating) ? a.averageRating : 0;
-        const ratingB = (b.ratingCount > 0 && b.averageRating) ? b.averageRating : 0;
+        const ratingA = (Number(a.ratingCount) > 0 && typeof a.averageRating === 'number' && !isNaN(a.averageRating)) ? a.averageRating : 0;
+        const ratingB = (Number(b.ratingCount) > 0 && typeof b.averageRating === 'number' && !isNaN(b.averageRating)) ? b.averageRating : 0;
         const ratingDiff = ratingB - ratingA;
         if (ratingDiff !== 0) return ratingDiff;
-        return (b.ratingCount || 0) - (a.ratingCount || 0);
+        return (Number(b.ratingCount) || 0) - (Number(a.ratingCount) || 0);
       }
     }
   });

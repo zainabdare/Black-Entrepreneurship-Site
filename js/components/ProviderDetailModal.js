@@ -28,7 +28,7 @@ import {
   getProviderPhotosFromFirestore
 } from '../firebase.js';
 import { getPriceTier, getDistanceFromLSU } from '../utils/distance.js';
-import { getCategoryDefaultImageHtml } from './ProviderCard.js';
+import { getCategoryDefaultImageHtml, getBusinessPlaceholderHtml, isCleanValue } from './ProviderCard.js';
 
 // ============================================================================
 // 1. Category Criteria Definitions
@@ -131,7 +131,11 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
   activeModalProvider = provider;
   modalOnStatsUpdatedCallback = onStatsUpdated;
 
-  const initialThumb = provider.thumbnail || (Array.isArray(provider.portfolioImages) && provider.portfolioImages[0] ? provider.portfolioImages[0] : null);
+  const cleanThumb = isCleanValue(provider.thumbnail) ? provider.thumbnail.trim() : null;
+  const firstPortfolioImg = (Array.isArray(provider.portfolioImages) && provider.portfolioImages.length > 0 && isCleanValue(provider.portfolioImages[0]))
+    ? provider.portfolioImages[0].trim()
+    : null;
+  const initialThumb = cleanThumb || firstPortfolioImg;
 
   // Track profile view in Firestore analytics
   if (provider) {
@@ -143,14 +147,16 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
 
   const criteria = getCriteriaForCategory(provider.category);
 
-  // Collect all available booking / contact links for this provider
+  // Collect all available booking / contact links for this provider (ignore 'Not provided')
   const availableLinks = [];
 
-  const bookingOrWebsiteUrl = (provider.bookingUrl && provider.bookingUrl !== 'Not provided')
-    ? provider.bookingUrl
-    : ((provider.websiteUrl && provider.websiteUrl !== 'Not provided') ? provider.websiteUrl : null);
+  const validBookingUrl = isCleanValue(provider.bookingUrl) ? provider.bookingUrl.trim() : null;
+  const validWebsiteUrl = isCleanValue(provider.websiteUrl) ? provider.websiteUrl.trim() : null;
+  const validInstagramUrl = isCleanValue(provider.instagramUrl) ? provider.instagramUrl.trim() : null;
+  const validTiktokUrl = isCleanValue(provider.tiktokUrl) ? provider.tiktokUrl.trim() : null;
 
-  const hasDirectBooking = (provider.bookingUrl && provider.bookingUrl !== 'Not provided');
+  const bookingOrWebsiteUrl = validBookingUrl || validWebsiteUrl;
+  const hasDirectBooking = Boolean(validBookingUrl);
 
   if (bookingOrWebsiteUrl) {
     availableLinks.push({
@@ -161,20 +167,20 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
     });
   }
 
-  if (provider.instagramUrl && provider.instagramUrl !== 'Not provided') {
+  if (validInstagramUrl) {
     availableLinks.push({
       type: 'instagram',
       label: 'Instagram',
-      url: provider.instagramUrl,
+      url: validInstagramUrl,
       icon: `<svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`
     });
   }
 
-  if (provider.tiktokUrl && provider.tiktokUrl !== 'Not provided') {
+  if (validTiktokUrl) {
     availableLinks.push({
       type: 'tiktok',
       label: 'TikTok',
-      url: provider.tiktokUrl,
+      url: validTiktokUrl,
       icon: `<svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg>`
     });
   }
@@ -311,11 +317,11 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                 onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.classList.remove('hidden');"
               />
               <div class="hidden w-full h-full">
-                ${getCategoryDefaultImageHtml(provider.category, 'rounded-2xl')}
+                ${getBusinessPlaceholderHtml(provider.businessName, provider.category, 'rounded-2xl')}
               </div>
             ` : `
               <div class="w-full h-full">
-                ${getCategoryDefaultImageHtml(provider.category, 'rounded-2xl')}
+                ${getBusinessPlaceholderHtml(provider.businessName, provider.category, 'rounded-2xl')}
               </div>
             `}
           </div>
@@ -337,7 +343,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
               </span>
             </div>
 
-            ${provider.description ? `
+            ${isCleanValue(provider.description) ? `
             <p class="text-sm sm:text-base text-[#1A1A1A] font-sans font-medium leading-relaxed">
               ${provider.description}
             </p>
@@ -368,7 +374,7 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
               <div>
                 <span class="text-[#E9C6CC] block text-[10px] uppercase tracking-wider font-semibold font-sans">Rating</span>
                 <span id="modal-header-rating" class="font-bold text-[#F6EEE6] text-sm sm:text-base flex items-center gap-1 font-sans">
-                  ${(provider.ratingCount > 0 && provider.averageRating) ? `
+                  ${(Number(provider.ratingCount) > 0 && typeof provider.averageRating === 'number' && !isNaN(provider.averageRating)) ? `
                     <svg class="w-3.5 h-3.5 text-[#A3456A] fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     <span>${provider.averageRating.toFixed(1)}</span>
                   ` : `
@@ -412,13 +418,13 @@ export async function openProviderDetailModal(provider, onStatsUpdated = null) {
                 <!-- Overall Score Box -->
                 <div class="text-center md:border-r md:border-[#612731] md:pr-6 space-y-1">
                   <div id="summary-big-rating" class="text-4xl sm:text-5xl font-heading font-black text-[#F6EEE6]">
-                    ${(provider.ratingCount > 0 && provider.averageRating) ? provider.averageRating.toFixed(1) : '<span class="text-lg text-[#E9C6CC] font-semibold font-sans">No ratings yet</span>'}
+                    ${(Number(provider.ratingCount) > 0 && typeof provider.averageRating === 'number' && !isNaN(provider.averageRating)) ? provider.averageRating.toFixed(1) : '<span class="text-lg text-[#E9C6CC] font-semibold font-sans">No ratings yet</span>'}
                   </div>
                   <div id="summary-stars" class="text-lg sm:text-xl flex justify-center">
-                    ${(provider.ratingCount > 0 && provider.averageRating) ? getStarsSvg(provider.averageRating, 5, true) : ''}
+                    ${(Number(provider.ratingCount) > 0 && typeof provider.averageRating === 'number' && !isNaN(provider.averageRating)) ? getStarsSvg(provider.averageRating, 5, true) : ''}
                   </div>
                   <p id="summary-count-text" class="text-xs text-[#E9C6CC]">
-                    ${(provider.ratingCount > 0) ? `Based on <strong class="text-[#F6EEE6]">${provider.ratingCount}</strong> rating${provider.ratingCount === 1 ? '' : 's'}` : 'Be the first to rate this business'}
+                    ${(Number(provider.ratingCount) > 0) ? `Based on <strong class="text-[#F6EEE6]">${provider.ratingCount}</strong> rating${provider.ratingCount === 1 ? '' : 's'}` : 'Be the first to rate this business'}
                   </p>
                 </div>
 
