@@ -1054,14 +1054,14 @@
     }
 
     // ========================================================================
-    // Client-Side Canvas Image Resizing & Compression Helpers (<200KB)
+    // Client-Side Canvas Image Resizing & Compression Helpers (<700KB)
     // ========================================================================
 
     /**
      * Resizes and compresses an image File or Data URL to a JPEG Data URL.
-     * Keeps max dimension <= 1000px, JPEG quality ~0.70, and strictly under ~200KB.
+     * Keeps max dimension <= 1400px, JPEG quality ~0.82, and strictly under ~700KB.
      */
-    async function compressImageToDataUrl(fileOrDataUrl, maxDimension = 1000, initialQuality = 0.7, maxBytes = 204800) {
+    async function compressImageToDataUrl(fileOrDataUrl, maxDimension = 1400, initialQuality = 0.82, maxBytes = 716800) {
       return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = () => {
@@ -1091,9 +1091,9 @@
           let dataUrl = canvas.toDataURL('image/jpeg', quality);
           let sizeBytes = Math.round((dataUrl.length - 23) * 0.75);
 
-          // Step down quality if needed to get under maxBytes
-          while (sizeBytes > maxBytes && quality > 0.35) {
-            quality -= 0.08;
+          // Step down quality if needed to get under maxBytes (~700KB)
+          while (sizeBytes > maxBytes && quality > 0.45) {
+            quality -= 0.04;
             dataUrl = canvas.toDataURL('image/jpeg', quality);
             sizeBytes = Math.round((dataUrl.length - 23) * 0.75);
           }
@@ -1101,18 +1101,18 @@
           // Step down dimensions if still slightly over maxBytes
           if (sizeBytes > maxBytes) {
             const smallerCanvas = document.createElement('canvas');
-            smallerCanvas.width = Math.round(width * 0.75);
-            smallerCanvas.height = Math.round(height * 0.75);
+            smallerCanvas.width = Math.round(width * 0.85);
+            smallerCanvas.height = Math.round(height * 0.85);
             const smCtx = smallerCanvas.getContext('2d');
             smCtx.fillStyle = '#FFFFFF';
             smCtx.fillRect(0, 0, smallerCanvas.width, smallerCanvas.height);
             smCtx.drawImage(canvas, 0, 0, smallerCanvas.width, smallerCanvas.height);
-            dataUrl = smallerCanvas.toDataURL('image/jpeg', 0.6);
+            dataUrl = smallerCanvas.toDataURL('image/jpeg', 0.75);
             sizeBytes = Math.round((dataUrl.length - 23) * 0.75);
           }
 
           if (sizeBytes > maxBytes) {
-            reject(new Error(`Photo is ${Math.round(sizeBytes / 1024)}KB, which exceeds the 200KB limit after compression. Please choose a smaller photo.`));
+            reject(new Error(`Photo is ${Math.round(sizeBytes / 1024)}KB, which exceeds the limit (~700KB) after compression. Please choose a different photo.`));
             return;
           }
 
@@ -1137,9 +1137,9 @@
     }
 
     /**
-     * Generates a 400px thumbnail Data URL (JPEG quality ~0.60) for provider cards.
+     * Generates an 800px thumbnail Data URL (JPEG quality ~0.82) for provider cards.
      */
-    async function createThumbnailFromDataUrl(fullDataUrl, maxDimension = 400, quality = 0.6) {
+    async function createThumbnailFromDataUrl(fullDataUrl, maxDimension = 800, quality = 0.82) {
       if (!fullDataUrl) return null;
       return new Promise((resolve) => {
         const img = new Image();
@@ -1168,6 +1168,8 @@
           resolve(thumbDataUrl);
         };
         img.onerror = () => resolve(null);
+      });
+    }
         img.src = fullDataUrl;
       });
     }
@@ -2084,7 +2086,7 @@
 
               <!-- Size badge -->
               <span class="absolute bottom-2 left-2 px-1.5 py-0.5 rounded text-[9px] font-mono bg-black/65 text-white select-none">
-                ${kb > 0 ? `${kb}KB` : '<200KB'}
+                ${kb > 0 ? `${kb}KB` : '<700KB'}
               </span>
 
               <!-- Remove Button (X) -->
@@ -2179,7 +2181,7 @@
           if (statusText) statusText.textContent = `Compressing ${file.name}...`;
 
           try {
-            const compressed = await compressImageToDataUrl(file, 1000, 0.70, 204800);
+            const compressed = await compressImageToDataUrl(file, 1400, 0.82, 716800);
             cardPhotos.push({
               full: compressed.dataUrl,
               sizeBytes: compressed.sizeBytes
@@ -2408,7 +2410,7 @@
         const fullPhotosArray = cardPhotos.map(p => p.full);
         if (fullPhotosArray.length > 0) {
           setCardProcessing(true, 'Creating thumbnail...');
-          thumbnailVal = await createThumbnailFromDataUrl(fullPhotosArray[0], 400, 0.6);
+          thumbnailVal = await createThumbnailFromDataUrl(fullPhotosArray[0], 800, 0.82);
         }
 
         // Policies
@@ -3115,7 +3117,7 @@
             </span>
 
             <span class="absolute bottom-2 left-2 px-1.5 py-0.5 rounded text-[9px] font-mono bg-black/65 text-white select-none">
-              ${kb > 0 ? `${kb}KB` : '<200KB'}
+              ${kb > 0 ? `${kb}KB` : '<700KB'}
             </span>
 
             <button type="button" class="btn-modal-del-photo absolute top-2 right-2 w-6 h-6 rounded-full bg-black/65 hover:bg-red-600 text-white flex items-center justify-center text-xs font-bold transition-all shadow-md cursor-pointer" data-index="${i}" title="Remove photo">
@@ -3207,7 +3209,7 @@
         if (modalStatusText) modalStatusText.textContent = `Compressing ${file.name}...`;
 
         try {
-          const compressed = await compressImageToDataUrl(file, 1000, 0.70, 204800);
+          const compressed = await compressImageToDataUrl(file, 1400, 0.82, 716800);
           modalPhotosList.push({
             full: compressed.dataUrl,
             sizeBytes: compressed.sizeBytes
@@ -3289,7 +3291,7 @@
         const fullImages = modalPhotosList.map(p => p.full);
         let thumbUrl = null;
         if (fullImages.length > 0) {
-          thumbUrl = await createThumbnailFromDataUrl(fullImages[0], 400, 0.6);
+          thumbUrl = await createThumbnailFromDataUrl(fullImages[0], 800, 0.82);
         }
 
         await saveProviderPhotosToFirestore(provider.id, fullImages, thumbUrl);

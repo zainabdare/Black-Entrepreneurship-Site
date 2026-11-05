@@ -20,6 +20,7 @@ import {
   deleteDoc,
   writeBatch,
   query,
+  where,
   orderBy,
   increment
 } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
@@ -634,17 +635,22 @@ export async function approvePendingProvider(pendingId, providerData) {
   }
 
   // 2. Save full-size photos in separate "providerPhotos" collection
+  // Each photo is saved as its OWN document: {providerId}_1, {providerId}_2, etc.
   if (fullPhotos.length > 0) {
     try {
-      const photoRef = doc(db, "providerPhotos", permanentId);
-      await setDoc(photoRef, {
-        providerId: permanentId,
-        images: fullPhotos,
-        createdAt: new Date().toISOString()
-      });
-      console.log(`[Review Queue] Saved ${fullPhotos.length} full photos to providerPhotos/${permanentId}`);
+      for (let i = 0; i < fullPhotos.length; i++) {
+        const photoDocId = `${permanentId}_${i + 1}`;
+        const photoRef = doc(db, "providerPhotos", photoDocId);
+        await setDoc(photoRef, {
+          providerId: permanentId,
+          order: i + 1,
+          image: fullPhotos[i],
+          createdAt: new Date().toISOString()
+        });
+      }
+      console.log(`[Review Queue] Saved ${fullPhotos.length} individual photo docs to providerPhotos/ for [${permanentId}]`);
     } catch (photoErr) {
-      console.warn(`[Review Queue] Could not save providerPhotos doc: ${photoErr.message}`);
+      console.warn(`[Review Queue] Could not save providerPhotos docs: ${photoErr.message}`);
     }
   }
 
@@ -692,8 +698,12 @@ export async function deleteLiveProvider(providerId) {
   }
 
   try {
-    const photoRef = doc(db, "providerPhotos", providerId);
-    await deleteDoc(photoRef);
+    const photoDeletions = [];
+    for (let i = 1; i <= 4; i++) {
+      photoDeletions.push(deleteDoc(doc(db, "providerPhotos", `${providerId}_${i}`)).catch(() => {}));
+    }
+    photoDeletions.push(deleteDoc(doc(db, "providerPhotos", providerId)).catch(() => {}));
+    await Promise.all(photoDeletions);
     console.log(`[Live Directory] Removed providerPhotos for [${providerId}]`);
   } catch (err) {
     console.warn(`[Live Directory] Note on providerPhotos removal: ${err.message}`);
@@ -704,6 +714,9 @@ export async function deleteLiveProvider(providerId) {
 
 /**
  * Retrieves full-size photos array from "providerPhotos" for a given provider.
+ * Supports both:
+ * 1. New multi-document structure: individual documents named "{providerId}_1", "{providerId}_2", etc.
+ * 2. Legacy single-document structure: document "{providerId}" with an array field "images".
  * Public operation.
  * 
  * @param {string} providerId 
@@ -711,22 +724,75 @@ export async function deleteLiveProvider(providerId) {
  */
 export async function getProviderPhotosFromFirestore(providerId) {
   if (!providerId) return [];
+
   try {
-    const photoRef = doc(db, "providerPhotos", providerId);
-    const docSnap = await getDoc(photoRef);
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      return Array.isArray(data.images) ? data.images : [];
+    // 1. Query the new multi-doc format (where providerId == providerId)
+    const photosCol = collection(db, "providerPhotos");
+    const q = query(photosCol, where("providerId", "==", providerId));
+    const querySnap = await getDocs(q);
+
+    if (!querySnap.empty) {
+      const items = [];
+      querySnap.forEach(d => {
+        const data = d.data();
+        if (data && data.image) {
+          items.push({
+            order: typeof data.order === 'number' ? data.order : 1,
+            image: data.image
+          });
+        }
+      });
+      items.sort((a, b) => a.order - b.order);
+      const images = items.map(it => it.image);
+      if (images.length > 0) {
+        return images;
+      }
     }
+
+    // 2. Backward compatibility fallback: check legacy single doc providerPhotos/{providerId}
+    const legacyDocRef = doc(db, "providerPhotos", providerId);
+    const legacySnap = await getDoc(legacyDocRef);
+    if (legacySnap.exists()) {
+      const data = legacySnap.data();
+      if (Array.isArray(data.images) && data.images.length > 0) {
+        return data.images.filter(img => typeof img === 'string' && img.trim() !== '');
+      }
+    }
+
     return [];
   } catch (err) {
-    console.warn(`[Photos] Could not read providerPhotos/${providerId}:`, err.message);
+    console.warn(`[Photos] Query for providerPhotos/${providerId} note:`, err.message);
+
+    // 3. Ultra-resilient fallback: try direct getDoc on {providerId}_1 to _4 and legacy doc
+    try {
+      const directImages = [];
+      for (let i = 1; i <= 4; i++) {
+        const dSnap = await getDoc(doc(db, "providerPhotos", `${providerId}_${i}`));
+        if (dSnap.exists()) {
+          const img = dSnap.data()?.image;
+          if (img) directImages.push(img);
+        }
+      }
+      if (directImages.length > 0) return directImages;
+
+      const legacySnap = await getDoc(doc(db, "providerPhotos", providerId));
+      if (legacySnap.exists()) {
+        const data = legacySnap.data();
+        return Array.isArray(data?.images) ? data.images : [];
+      }
+    } catch (fallbackErr) {
+      console.warn(`[Photos] Fallback getDoc for ${providerId} failed:`, fallbackErr.message);
+    }
+
     return [];
   }
 }
 
 /**
  * Updates full-size photos in "providerPhotos" and thumbnail in "providers".
+ * Saves each photo as its OWN document: "{providerId}_1", "{providerId}_2", etc.
+ * with fields: providerId, order, image.
+ * Also cleans up previous documents for this provider.
  * Admin operation.
  * 
  * @param {string} providerId 
@@ -737,20 +803,38 @@ export async function getProviderPhotosFromFirestore(providerId) {
 export async function saveProviderPhotosToFirestore(providerId, images = [], thumbnail = null) {
   if (!providerId) throw new Error('Missing providerId');
 
-  const photoRef = doc(db, "providerPhotos", providerId);
-  await setDoc(photoRef, {
-    providerId: providerId,
-    images: Array.isArray(images) ? images : [],
-    updatedAt: new Date().toISOString()
-  });
+  const cleanImages = Array.isArray(images)
+    ? images.filter(img => typeof img === 'string' && img.trim() !== '')
+    : [];
 
+  // 1. Clean up previous photo docs ({providerId}_1 to _4, plus legacy single doc)
+  const deletePromises = [];
+  for (let i = 1; i <= 4; i++) {
+    deletePromises.push(deleteDoc(doc(db, "providerPhotos", `${providerId}_${i}`)).catch(() => {}));
+  }
+  deletePromises.push(deleteDoc(doc(db, "providerPhotos", providerId)).catch(() => {}));
+  await Promise.all(deletePromises);
+
+  // 2. Save each photo as its OWN document with fields: providerId, order, image
+  for (let i = 0; i < cleanImages.length; i++) {
+    const photoDocId = `${providerId}_${i + 1}`;
+    const photoRef = doc(db, "providerPhotos", photoDocId);
+    await setDoc(photoRef, {
+      providerId: providerId,
+      order: i + 1,
+      image: cleanImages[i],
+      updatedAt: new Date().toISOString()
+    });
+  }
+
+  // 3. Update thumbnail in the main provider document
   const providerRef = doc(db, "providers", providerId);
   await setDoc(providerRef, {
     thumbnail: thumbnail || null,
     updatedAt: new Date().toISOString()
   }, { merge: true });
 
-  console.log(`[Photos] Updated photos & thumbnail for provider [${providerId}]`);
+  console.log(`[Photos] Saved ${cleanImages.length} individual photo docs & thumbnail for provider [${providerId}]`);
 }
 
 /**
