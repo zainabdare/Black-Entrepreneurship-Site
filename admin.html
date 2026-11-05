@@ -1168,8 +1168,6 @@
           resolve(thumbDataUrl);
         };
         img.onerror = () => resolve(null);
-      });
-    }
         img.src = fullDataUrl;
       });
     }
@@ -3457,6 +3455,24 @@
 
     </div>
   </div>
+
+  <!-- Safety Fallback Timer: Guarantees the page reveals the login form even if CDN or network stalls -->
+  <script>
+    setTimeout(function () {
+      var loading = document.getElementById('initial-loading-view');
+      var login = document.getElementById('login-view');
+      var dashboard = document.getElementById('dashboard-view');
+      if (loading && !loading.classList.contains('hidden') && (!dashboard || dashboard.classList.contains('hidden'))) {
+        loading.classList.add('hidden');
+        if (login) login.classList.remove('hidden');
+        var err = document.getElementById('login-error-box');
+        if (err && !err.textContent) {
+          err.textContent = "Session check timed out. Please enter your email and password to sign in.";
+          err.classList.remove('hidden');
+        }
+      }
+    }, 8000);
+  </script>
 
 </body>
 
