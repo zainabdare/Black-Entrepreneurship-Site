@@ -15,7 +15,11 @@ export function injectNavigationDrawer() {
   }
 
   // Detect current active page to highlight active link
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  let currentFile = window.location.pathname.split('/').pop() || 'index.html';
+  if (!currentFile.includes('.')) {
+    currentFile += '.html';
+  }
+  const currentPath = currentFile;
 
   const drawerHtml = `
     <!-- Backdrop Overlay (Closes drawer on tap/click) -->
@@ -52,7 +56,7 @@ export function injectNavigationDrawer() {
       </div>
 
       <!-- Drawer Links List (Scrollable) -->
-      <div class="flex-grow overflow-y-auto px-5 py-6 space-y-6">
+      <div class="flex-grow overflow-y-auto overscroll-contain px-5 py-6 space-y-4">
         
         <!-- Primary Link: Home -->
         <div>
@@ -65,10 +69,10 @@ export function injectNavigationDrawer() {
           </a>
         </div>
 
-        <!-- Categories Section -->
-        <div>
-          <div class="px-4 pb-2 text-[11px] font-heading font-medium uppercase tracking-[0.12em] text-[#E9C6CC]">
-            Browse by Category
+        <!-- Section: BEAUTY & GROOMING -->
+        <div class="pt-4 border-t border-[#E9C6CC]/20">
+          <div class="px-4 pb-2 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] text-[#E9C6CC]/80 select-none" style="letter-spacing: 0.14em;">
+            BEAUTY &amp; GROOMING
           </div>
           <div class="space-y-1.5">
             <a 
@@ -90,30 +94,69 @@ export function injectNavigationDrawer() {
               <span>Lashes</span>
             </a>
             <a 
+              href="makeup.html" 
+              class="menu-link flex items-center gap-3 px-4 py-2 rounded-full text-sm font-medium transition-colors ${currentPath === 'makeup.html' ? 'bg-[#E9C6CC]/25 text-[#FDD023] font-bold border border-[#FDD023]/40' : 'text-[#F6EEE6]/90 hover:bg-[#E9C6CC]/15 hover:text-[#FDD023]'}"
+            >
+              <span>Makeup</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Section: FOOD & TREATS -->
+        <div class="pt-4 border-t border-[#E9C6CC]/20">
+          <div class="px-4 pb-2 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] text-[#E9C6CC]/80 select-none" style="letter-spacing: 0.14em;">
+            FOOD &amp; TREATS
+          </div>
+          <div class="space-y-1.5">
+            <a 
               href="food-and-beverages.html" 
               class="menu-link flex items-center gap-3 px-4 py-2 rounded-full text-sm font-medium transition-colors ${currentPath === 'food-and-beverages.html' ? 'bg-[#E9C6CC]/25 text-[#FDD023] font-bold border border-[#FDD023]/40' : 'text-[#F6EEE6]/90 hover:bg-[#E9C6CC]/15 hover:text-[#FDD023]'}"
             >
               <span>Food &amp; Beverages</span>
             </a>
+          </div>
+        </div>
+
+        <!-- Section: STYLE & APPAREL -->
+        <div class="pt-4 border-t border-[#E9C6CC]/20">
+          <div class="px-4 pb-2 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] text-[#E9C6CC]/80 select-none" style="letter-spacing: 0.14em;">
+            STYLE &amp; APPAREL
+          </div>
+          <div class="space-y-1.5">
             <a 
               href="fashion.html" 
               class="menu-link flex items-center gap-3 px-4 py-2 rounded-full text-sm font-medium transition-colors ${currentPath === 'fashion.html' ? 'bg-[#E9C6CC]/25 text-[#FDD023] font-bold border border-[#FDD023]/40' : 'text-[#F6EEE6]/90 hover:bg-[#E9C6CC]/15 hover:text-[#FDD023]'}"
             >
               <span>Fashion (Custom Outfits)</span>
             </a>
+          </div>
+        </div>
+
+        <!-- Section: CREATIVE & EVENTS -->
+        <div class="pt-4 border-t border-[#E9C6CC]/20">
+          <div class="px-4 pb-2 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] text-[#E9C6CC]/80 select-none" style="letter-spacing: 0.14em;">
+            CREATIVE &amp; EVENTS
+          </div>
+          <div class="space-y-1.5">
             <a 
               href="photography.html" 
               class="menu-link flex items-center gap-3 px-4 py-2 rounded-full text-sm font-medium transition-colors ${currentPath === 'photography.html' ? 'bg-[#E9C6CC]/25 text-[#FDD023] font-bold border border-[#FDD023]/40' : 'text-[#F6EEE6]/90 hover:bg-[#E9C6CC]/15 hover:text-[#FDD023]'}"
             >
               <span>Photography</span>
             </a>
+            <a 
+              href="flowers.html" 
+              class="menu-link flex items-center gap-3 px-4 py-2 rounded-full text-sm font-medium transition-colors ${currentPath === 'flowers.html' ? 'bg-[#E9C6CC]/25 text-[#FDD023] font-bold border border-[#FDD023]/40' : 'text-[#F6EEE6]/90 hover:bg-[#E9C6CC]/15 hover:text-[#FDD023]'}"
+            >
+              <span>Flowers</span>
+            </a>
           </div>
         </div>
 
-        <!-- Campus & Community Section -->
+        <!-- Section: SETLIST -->
         <div class="pt-4 border-t border-[#E9C6CC]/20">
-          <div class="px-4 pb-2 text-[11px] font-heading font-medium uppercase tracking-[0.12em] text-[#E9C6CC]">
-            Campus &amp; Community
+          <div class="px-4 pb-2 text-[11px] font-heading font-semibold uppercase tracking-[0.14em] text-[#E9C6CC]/80 select-none" style="letter-spacing: 0.14em;">
+            SETLIST
           </div>
           <div class="space-y-1.5">
             <a 
@@ -129,19 +172,19 @@ export function injectNavigationDrawer() {
               <span>About the Creators</span>
             </a>
           </div>
-        </div>
 
-        <!-- Admin Section (Subtle divider and small link) -->
-        <div class="pt-4 border-t border-[#E9C6CC]/20">
-          <a 
-            href="admin.html" 
-            class="menu-link flex items-center gap-2 px-4 py-1.5 rounded-full text-xs transition-colors ${currentPath === 'admin.html' ? 'bg-[#E9C6CC]/20 text-[#FDD023] font-medium' : 'text-[#E9C6CC]/60 hover:text-[#F6EEE6] hover:bg-[#E9C6CC]/10'}"
-          >
-            <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-            </svg>
-            <span class="font-sans">Admin</span>
-          </a>
+          <!-- Admin Link (Small and subtle at the very bottom) -->
+          <div class="pt-3 mt-3 border-t border-[#E9C6CC]/15">
+            <a 
+              href="admin.html" 
+              class="menu-link flex items-center gap-2 px-4 py-1.5 rounded-full text-xs transition-colors ${currentPath === 'admin.html' ? 'bg-[#E9C6CC]/20 text-[#FDD023] font-medium' : 'text-[#E9C6CC]/60 hover:text-[#F6EEE6] hover:bg-[#E9C6CC]/10'}"
+            >
+              <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+              </svg>
+              <span class="font-sans">Admin</span>
+            </a>
+          </div>
         </div>
 
       </div>

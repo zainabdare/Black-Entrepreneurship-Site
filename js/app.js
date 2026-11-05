@@ -16,8 +16,8 @@
 
 import { getProvidersFromFirestore, getAllRatingsFromFirestore, trackLinkClick } from './firebase.js';
 import { SAMPLE_PROVIDERS } from './data/providers.js';
-import { createProviderCard } from './components/ProviderCard.js';
-import { filterProviders, MAX_ALLOWED_RADIUS_MILES } from './utils/filters.js';
+import { createProviderCard, createInviteCard } from './components/ProviderCard.js';
+import { filterProviders, matchesCategory, MAX_ALLOWED_RADIUS_MILES } from './utils/filters.js';
 import { calculateDistance, LSU_COORDINATES } from './utils/distance.js';
 import { injectNavigationDrawer } from './components/NavigationDrawer.js';
 import { injectFilterPanel } from './components/FilterPanel.js';
@@ -79,7 +79,15 @@ export const appState = {
   // Photography Specific
   shootTypes: [],
   photoTurnarounds: [],
-  travelsToCampusOnly: false
+  travelsToCampusOnly: false,
+
+  // Makeup Specific
+  makeupStyles: [],
+  lashesIncludedOnly: false,
+
+  // Flowers Specific
+  arrangementTypes: [],
+  offersDeliveryOnly: false
 };
 
 /**
@@ -118,6 +126,14 @@ export function getActiveFilterCount() {
   if (appState.shootTypes.length > 0) count += appState.shootTypes.length;
   if (appState.photoTurnarounds.length > 0) count += appState.photoTurnarounds.length;
   if (appState.travelsToCampusOnly) count++;
+
+  // Makeup
+  if (appState.makeupStyles && appState.makeupStyles.length > 0) count += appState.makeupStyles.length;
+  if (appState.lashesIncludedOnly) count++;
+
+  // Flowers
+  if (appState.arrangementTypes && appState.arrangementTypes.length > 0) count += appState.arrangementTypes.length;
+  if (appState.offersDeliveryOnly) count++;
 
   return count;
 }
@@ -267,6 +283,35 @@ export async function loadProvidersData() {
 }
 
 /**
+ * Normalizes category name for display in headings.
+ * @param {string} category 
+ * @returns {string}
+ */
+export function getDisplayCategoryName(category) {
+  if (!category || category === 'All') return '';
+  if (category.startsWith('Fashion')) return 'Fashion';
+  return category.replace(/&amp;/g, '&');
+}
+
+/**
+ * Returns the friendly category-specific invitation question for empty category pages.
+ * @param {string} category 
+ * @returns {string}
+ */
+export function getEmptyCategoryDescription(category) {
+  const cat = (category || '').toLowerCase();
+  if (cat.includes('nail')) return 'Do your nails? Get listed for free and get discovered by LSU students.';
+  if (cat.includes('hair')) return 'Do your hair? Get listed for free and get discovered by LSU students.';
+  if (cat.includes('lash')) return 'Do your lashes? Get listed for free and get discovered by LSU students.';
+  if (cat.includes('makeup')) return 'Do your makeup? Get listed for free and get discovered by LSU students.';
+  if (cat.includes('food') || cat.includes('beverage')) return 'Make food or drinks? Get listed for free and get discovered by LSU students.';
+  if (cat.includes('fashion') || cat.includes('outfit')) return 'Design custom outfits? Get listed for free and get discovered by LSU students.';
+  if (cat.includes('photo')) return 'Do photography? Get listed for free and get discovered by LSU students.';
+  if (cat.includes('flower') || cat.includes('floral')) return 'Arrange flowers? Get listed for free and get discovered by LSU students.';
+  return 'Offer your services? Get listed for free and get discovered by LSU students.';
+}
+
+/**
  * Updates the directory grid and status indicators according to current filter state.
  */
 export function updateDirectory() {
@@ -312,26 +357,57 @@ export function updateDirectory() {
 
   // Handle empty state: "No providers found"
   if (filtered.length === 0) {
+    const categoryTotalCount = allProviders.filter(p => matchesCategory(p.category, pageCategory)).length;
+    
+    // 1. EMPTY PAGE: Category has no providers at all
+    if (isDedicatedCategoryPage && categoryTotalCount === 0) {
+      const displayCategory = getDisplayCategoryName(pageCategory);
+      const promptText = getEmptyCategoryDescription(pageCategory);
+      gridElement.innerHTML = `
+        <div class="col-span-full py-16 px-6 sm:px-12 rounded-3xl bg-white border border-[#E9C6CC] text-center shadow-sm max-w-2xl mx-auto my-6 space-y-4">
+          <div class="w-16 h-16 mx-auto rounded-full bg-[#E9C6CC]/30 border border-[#D4A7B0] flex items-center justify-center text-[#4A1C24] shadow-inner">
+            <svg class="w-8 h-8 stroke-current stroke-1.5" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h4 class="text-xl sm:text-2xl font-heading font-bold text-[#4A1C24]">
+            Be the first ${displayCategory} business on SETLIST
+          </h4>
+          <p class="text-xs sm:text-sm text-[#7A535A] max-w-md mx-auto leading-relaxed font-sans">
+            ${promptText}
+          </p>
+          <div class="pt-2">
+            <a 
+              href="submit-business.html" 
+              class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-md hover:shadow-lg cursor-pointer"
+            >
+              <span>Submit Your Business</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    // 3. FILTERED / SEARCH EMPTY STATE: Providers exist, but active filters or search hid them all
     gridElement.innerHTML = `
-      <div class="col-span-full py-14 px-6 rounded-2xl bg-slate-900/60 border border-slate-800 text-center shadow-lg">
-        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-lsu-purple/30 border border-lsu-gold/30 flex items-center justify-center text-lsu-gold shadow-inner">
+      <div class="col-span-full py-14 px-6 rounded-3xl bg-white border border-[#E9C6CC] text-center shadow-sm max-w-2xl mx-auto my-6">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-[#E9C6CC]/30 border border-[#D4A7B0] flex items-center justify-center text-[#4A1C24] shadow-inner">
           <svg class="w-6 h-6 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
         </div>
-        <h4 class="text-lg sm:text-xl font-heading font-bold text-white">
+        <h4 class="text-lg sm:text-xl font-heading font-bold text-[#4A1C24]">
           No providers found
         </h4>
-        <p class="text-xs sm:text-sm text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
-          No businesses found matching your active filter criteria
-          ${appState.searchQuery ? ` for "<strong class="text-white">${appState.searchQuery}</strong>"` : ''}
-          ${appState.selectedCategory !== 'All' ? ` under <strong class="text-lsu-gold">${appState.selectedCategory}</strong>` : ''}
-          within <strong class="text-lsu-gold">${appState.maxRadius} miles</strong> of LSU.
+        <p class="text-xs sm:text-sm text-[#7A535A] mt-2 max-w-md mx-auto leading-relaxed font-sans">
+          No providers found. Try a different search.
         </p>
         <button 
           id="empty-reset-filters-btn"
           type="button" 
-          class="mt-6 px-5 py-2.5 rounded-xl bg-lsu-gold hover:bg-lsu-gold-hover text-lsu-purple-dark font-heading font-bold text-xs uppercase tracking-wider transition-colors shadow-md inline-flex items-center gap-2 cursor-pointer"
+          class="mt-6 px-5 py-2.5 rounded-full bg-[#4A1C24] hover:bg-[#351218] text-[#F6EEE6] font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-md inline-flex items-center gap-2 cursor-pointer"
         >
           <span>Reset All Filters</span>
           <span>&times;</span>
@@ -348,8 +424,10 @@ export function updateDirectory() {
     return;
   }
 
-  // Render provider cards
-  gridElement.innerHTML = filtered.map(provider => createProviderCard(provider)).join('');
+  // 2. Render provider cards + INVITE CARD at the end of the grid when category has providers
+  const providerCardsHtml = filtered.map(provider => createProviderCard(provider)).join('');
+  const inviteCardHtml = createInviteCard();
+  gridElement.innerHTML = providerCardsHtml + inviteCardHtml;
 
   // Attach Provider Detail Modal triggers
   attachProviderModalTriggers(gridElement);
@@ -419,6 +497,10 @@ export function resetAllFilters() {
   appState.shootTypes = [];
   appState.photoTurnarounds = [];
   appState.travelsToCampusOnly = false;
+  appState.makeupStyles = [];
+  appState.lashesIncludedOnly = false;
+  appState.arrangementTypes = [];
+  appState.offersDeliveryOnly = false;
 
   // Reset Input Elements
   const searchInput = document.getElementById('hero-search-input');
@@ -463,6 +545,12 @@ export function resetAllFilters() {
 
   const travelsCampusCb = document.getElementById('filter-travels-campus');
   if (travelsCampusCb) travelsCampusCb.checked = false;
+
+  const lashesIncludedCb = document.getElementById('filter-lashes-included');
+  if (lashesIncludedCb) lashesIncludedCb.checked = false;
+
+  const offersDeliveryCb = document.getElementById('filter-offers-delivery');
+  if (offersDeliveryCb) offersDeliveryCb.checked = false;
 
   // Reset radios
   const allDeliveryRadio = document.querySelector('input[name="service-delivery-radio"][value="all"]');
@@ -727,6 +815,8 @@ function attachFilterListeners() {
   bindCheckbox('filter-campus-dropoff', 'campusDropOffOnly');
   bindCheckbox('filter-preorder-required', 'preOrderRequiredOnly');
   bindCheckbox('filter-travels-campus', 'travelsToCampusOnly');
+  bindCheckbox('filter-lashes-included', 'lashesIncludedOnly');
+  bindCheckbox('filter-offers-delivery', 'offersDeliveryOnly');
 }
 
 // ---------------------------------------------------------------------------
@@ -847,6 +937,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const q = query.toLowerCase();
     if (q.includes('nail')) return 'nails.html';
     if (q.includes('lash')) return 'lashes.html';
+    if (q.includes('makeup') || q.includes('glam') || q.includes('cosmetic')) return 'makeup.html';
+    if (q.includes('flower') || q.includes('floral') || q.includes('bouquet') || q.includes('corsage') || q.includes('boutonniere') || q.includes('florist')) return 'flowers.html';
     if (q.includes('food') || q.includes('cater') || q.includes('bake') || q.includes('cake') || q.includes('bbq') || q.includes('plate') || q.includes('drink')) return 'food-and-beverages.html';
     if (q.includes('fashion') || q.includes('outfit') || q.includes('dress') || q.includes('suit') || q.includes('prom') || q.includes('stole') || q.includes('alteration') || q.includes('formal fit')) return 'fashion.html';
     if (q.includes('photo') || q.includes('grad') || q.includes('shoot') || q.includes('portrait') || q.includes('headshot') || q.includes('shutter') || q.includes('camera')) return 'photography.html';

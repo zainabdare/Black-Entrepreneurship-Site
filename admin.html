@@ -367,9 +367,11 @@
               <option value="Hair">Hair</option>
               <option value="Nails">Nails</option>
               <option value="Lashes">Lashes</option>
+              <option value="Makeup">Makeup</option>
               <option value="Food & Beverages">Food &amp; Beverages</option>
               <option value="Fashion (Custom Outfits)">Fashion (Custom Outfits)</option>
               <option value="Photography">Photography</option>
+              <option value="Flowers">Flowers</option>
             </select>
 
             <button id="approved-refresh-btn" type="button"
@@ -884,9 +886,11 @@
       "Hair",
       "Nails",
       "Lashes",
+      "Makeup",
       "Food & Beverages",
       "Fashion (Custom Outfits)",
-      "Photography"
+      "Photography",
+      "Flowers"
     ];
 
     const ZIP_COORDINATES = {
@@ -1382,6 +1386,58 @@
             </div>
           </div>
         `;
+      } else if (category === 'Makeup') {
+        const makeupStyles = Array.isArray(app.makeupStyles) ? app.makeupStyles : (Array.isArray(app.makeup_styles) ? app.makeup_styles : []);
+        const stylesVal = makeupStyles.join(', ');
+        const lashes = (app.lashesIncluded === true || app.lashes_included === true || app.lashes_included === 'Yes');
+        container.innerHTML = `
+          <div class="space-y-3">
+            <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#7A535A]">
+              7. Makeup Craft Details
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-sans">
+              <div>
+                <label class="block text-[11px] font-bold text-[#7A535A] uppercase tracking-wider mb-1">
+                  Makeup Styles (Comma-separated)
+                </label>
+                <input type="text" class="field-makeup-styles w-full p-2.5 rounded-xl border border-[#D4A7B0] focus:border-[#4A1C24] bg-[#FDFBF8] text-[#4A1C24] text-xs font-medium"
+                  value="${escAttr(stylesVal)}" placeholder="soft glam, full glam, natural, bridal, photoshoot/editorial" />
+              </div>
+              <div class="flex items-end pb-2">
+                <label class="inline-flex items-center gap-2 cursor-pointer font-medium text-[#4A1C24]">
+                  <input type="checkbox" class="field-lashes-included w-4 h-4 rounded text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]" ${lashes ? 'checked' : ''} />
+                  <span>Lashes Included with Booking</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (category === 'Flowers') {
+        const arrangementTypes = Array.isArray(app.arrangementTypes) ? app.arrangementTypes : (Array.isArray(app.arrangement_types) ? app.arrangement_types : []);
+        const typesVal = arrangementTypes.join(', ');
+        const delivery = (app.offersDelivery === true || app.offers_delivery === true || app.offers_delivery === 'Yes');
+        container.innerHTML = `
+          <div class="space-y-3">
+            <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#7A535A]">
+              7. Flowers Craft Details
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-sans">
+              <div>
+                <label class="block text-[11px] font-bold text-[#7A535A] uppercase tracking-wider mb-1">
+                  Arrangement Types (Comma-separated)
+                </label>
+                <input type="text" class="field-arrangement-types w-full p-2.5 rounded-xl border border-[#D4A7B0] focus:border-[#4A1C24] bg-[#FDFBF8] text-[#4A1C24] text-xs font-medium"
+                  value="${escAttr(typesVal)}" placeholder="bouquets, graduation flowers, event florals, corsages & boutonnieres, money bouquets" />
+              </div>
+              <div class="flex items-end pb-2">
+                <label class="inline-flex items-center gap-2 cursor-pointer font-medium text-[#4A1C24]">
+                  <input type="checkbox" class="field-offers-delivery w-4 h-4 rounded text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]" ${delivery ? 'checked' : ''} />
+                  <span>Offers Local Delivery</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        `;
       } else {
         container.innerHTML = `
           <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 font-sans">
@@ -1437,6 +1493,20 @@
         result.shootTypes = shoots.length > 0 ? shoots : ['graduation', 'portraits'];
         result.turnaround = (card.querySelector('.field-photo-turnaround')?.value || '').trim() || '3-5 business days';
         result.travelsToCampus = !!card.querySelector('.field-travels-campus')?.checked;
+      } else if (category === 'Makeup') {
+        const styles = (card.querySelector('.field-makeup-styles')?.value || '')
+          .split(',')
+          .map(s => s.trim().toLowerCase())
+          .filter(Boolean);
+        result.makeupStyles = styles.length > 0 ? styles : ['soft glam'];
+        result.lashesIncluded = !!card.querySelector('.field-lashes-included')?.checked;
+      } else if (category === 'Flowers') {
+        const arrangements = (card.querySelector('.field-arrangement-types')?.value || '')
+          .split(',')
+          .map(s => s.trim().toLowerCase())
+          .filter(Boolean);
+        result.arrangementTypes = arrangements.length > 0 ? arrangements : ['bouquets'];
+        result.offersDelivery = !!card.querySelector('.field-offers-delivery')?.checked;
       }
       return result;
     }
@@ -1454,7 +1524,7 @@
       const isCampus = (app.campusLocation === 'On Campus' || app.campus_location === 'On Campus' || app.zipCode === '70803');
       const campusLabel = isCampus ? 'On Campus' : 'Off Campus';
 
-      // Attempt to map category to one of the 6 valid categories
+      // Attempt to map category to one of the valid categories
       const rawCategory = (app.category || '').trim();
       let matchedCategory = VALID_CATEGORIES.find(c => c.toLowerCase() === rawCategory.toLowerCase()) || '';
       if (!matchedCategory) {
@@ -1462,9 +1532,11 @@
         if (lower.includes('hair') || lower.includes('braid')) matchedCategory = 'Hair';
         else if (lower.includes('nail')) matchedCategory = 'Nails';
         else if (lower.includes('lash')) matchedCategory = 'Lashes';
+        else if (lower.includes('makeup') || lower.includes('cosmetic') || lower.includes('glam')) matchedCategory = 'Makeup';
         else if (lower.includes('food') || lower.includes('beverage')) matchedCategory = 'Food & Beverages';
         else if (lower.includes('fashion') || lower.includes('outfit')) matchedCategory = 'Fashion (Custom Outfits)';
         else if (lower.includes('photo')) matchedCategory = 'Photography';
+        else if (lower.includes('flower') || lower.includes('floral') || lower.includes('bouquet')) matchedCategory = 'Flowers';
       }
 
 
@@ -2509,6 +2581,8 @@
       if (c.includes('hair')) return 'hair.html';
       if (c.includes('nail')) return 'nails.html';
       if (c.includes('lash')) return 'lashes.html';
+      if (c.includes('makeup') || c.includes('glam') || c.includes('cosmetic')) return 'makeup.html';
+      if (c.includes('flower') || c.includes('floral')) return 'flowers.html';
       if (c.includes('food') || c.includes('beverage')) return 'food-and-beverages.html';
       if (c.includes('fashion')) return 'fashion.html';
       if (c.includes('photograph')) return 'photography.html';
@@ -2523,6 +2597,8 @@
       if (cat.includes('hair')) { bg = '#4A1C24'; catDisplay = 'HAIR'; }
       else if (cat.includes('nail')) { bg = '#561C2C'; catDisplay = 'NAILS'; }
       else if (cat.includes('lash')) { bg = '#3A121A'; catDisplay = 'LASHES'; }
+      else if (cat.includes('makeup') || cat.includes('cosmetic')) { bg = '#4D1A2B'; catDisplay = 'MAKEUP'; }
+      else if (cat.includes('flower') || cat.includes('floral')) { bg = '#3E1825'; catDisplay = 'FLOWERS'; }
       else if (cat.includes('food') || cat.includes('beverage')) { bg = '#5C2022'; catDisplay = 'FOOD'; }
       else if (cat.includes('fashion')) { bg = '#44182E'; catDisplay = 'FASHION'; }
       else if (cat.includes('photograph')) { bg = '#32141D'; catDisplay = 'PHOTO'; }

@@ -228,12 +228,14 @@
               <option value="Hair" class="bg-white text-[#4A1C24]">Hair (Braids, Silk Press, Locs, Wigs)</option>
               <option value="Nails" class="bg-white text-[#4A1C24]">Nails (Acrylic, Gel-X, Natural Nail)</option>
               <option value="Lashes" class="bg-white text-[#4A1C24]">Lashes (Classic, Volume, Hybrid)</option>
+              <option value="Makeup" class="bg-white text-[#4A1C24]">Makeup (Soft Glam, Full Glam, Natural, Bridal)</option>
               <option value="Food & Beverages" class="bg-white text-[#4A1C24]">Food &amp; Beverages (Plates, Catering,
                 Desserts)</option>
               <option value="Fashion (Custom Outfits)" class="bg-white text-[#4A1C24]">Fashion (Custom Outfits,
                 Tailoring, Prom)</option>
               <option value="Photography" class="bg-white text-[#4A1C24]">Photography (Graduation, Game Day, Brand)
               </option>
+              <option value="Flowers" class="bg-white text-[#4A1C24]">Flowers (Bouquets, Graduation, Event Florals)</option>
             </select>
           </div>
 
@@ -566,6 +568,117 @@
             </div>
           </div>
 
+          <!-- 1G. Makeup Specific Fields -->
+          <div id="fields-makeup" class="category-field-group hidden space-y-4">
+            <div>
+              <span
+                class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Makeup
+                Style</span>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="makeupStyles" value="soft glam"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0"
+                    checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Soft Glam</span>
+                </label>
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="makeupStyles" value="full glam"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0"
+                    checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Full Glam</span>
+                </label>
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="makeupStyles" value="natural"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Natural</span>
+                </label>
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="makeupStyles" value="bridal"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Bridal</span>
+                </label>
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm sm:col-span-2">
+                  <input type="checkbox" name="makeupStyles" value="photoshoot/editorial"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Photoshoot / Editorial</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label
+                class="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" id="intake-lashes-included"
+                  class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                <div>
+                  <span class="text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] block select-none">Lashes Included with Booking</span>
+                  <span class="text-[11px] sm:text-xs text-[#7A535A] font-sans block mt-0.5 select-none">False lash strip application included in glam sessions.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- 1H. Flowers Specific Fields -->
+          <div id="fields-flowers" class="category-field-group hidden space-y-4">
+            <div>
+              <span
+                class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-2.5 uppercase tracking-wide">Arrangement
+                Type</span>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="arrangementTypes" value="bouquets"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0"
+                    checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Bouquets</span>
+                </label>
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="arrangementTypes" value="graduation flowers"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0"
+                    checked>
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Graduation Flowers</span>
+                </label>
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="arrangementTypes" value="event florals"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Event Florals</span>
+                </label>
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                  <input type="checkbox" name="arrangementTypes" value="corsages & boutonnieres"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Corsages &amp; Boutonnieres</span>
+                </label>
+                <label
+                  class="flex items-center gap-3 p-3 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm sm:col-span-2">
+                  <input type="checkbox" name="arrangementTypes" value="money bouquets"
+                    class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0">
+                  <span class="text-[#4A1C24] font-sans font-medium select-none">Money Bouquets</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label
+                class="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-[#EAD5C0] hover:border-[#D4A7B0] hover:bg-[#F7E9EC]/40 transition-all cursor-pointer shadow-sm">
+                <input type="checkbox" id="intake-offers-delivery"
+                  class="w-5 h-5 rounded border-2 border-[#D4A7B0] bg-white accent-[#4A1C24] focus:ring-2 focus:ring-[#4A1C24] cursor-pointer shrink-0"
+                  checked>
+                <div>
+                  <span class="text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] block select-none">Offers Delivery</span>
+                  <span class="text-[11px] sm:text-xs text-[#7A535A] font-sans block mt-0.5 select-none">Offers hand delivery or campus drop-off in Baton Rouge.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -669,9 +782,9 @@
         <div>
           <label class="block text-xs sm:text-sm font-sans font-semibold text-[#4A1C24] mb-1.5"
             for="intake-booking-url">
-            Booking Site / Direct Link <span class="text-[#612731] font-bold">*</span>
+            Booking Site / Direct Link <span class="text-[#7A535A] font-normal font-sans">(Optional)</span>
           </label>
-          <input id="intake-booking-url" type="url" required
+          <input id="intake-booking-url" type="url"
             class="w-full px-4 py-3 rounded-xl bg-white border border-[#D4A7B0] text-[#4A1C24] font-sans text-xs sm:text-sm focus:border-[#4A1C24] focus:ring-1 focus:ring-[#4A1C24] focus:outline-none transition-colors">
         </div>
       </div>
@@ -869,9 +982,11 @@
       'Hair': document.getElementById('fields-hair'),
       'Nails': document.getElementById('fields-nails'),
       'Lashes': document.getElementById('fields-lashes'),
+      'Makeup': document.getElementById('fields-makeup'),
       'Food & Beverages': document.getElementById('fields-food'),
       'Fashion (Custom Outfits)': document.getElementById('fields-fashion'),
-      'Photography': document.getElementById('fields-photography')
+      'Photography': document.getElementById('fields-photography'),
+      'Flowers': document.getElementById('fields-flowers')
     };
 
     categorySelect.addEventListener('change', () => {
@@ -926,6 +1041,16 @@
         if (shootTypes.length > 0) parts.push(`Shoot Types: ${shootTypes.join(', ')}`);
         if (turnaround) parts.push(`Turnaround: ${turnaround}`);
         parts.push(`Shoots On Campus: ${travelsToCampus ? 'Yes' : 'No'}`);
+      } else if (cat === 'Makeup') {
+        const makeupStyles = Array.from(document.querySelectorAll('input[name="makeupStyles"]:checked')).map(el => el.value);
+        const lashesIncluded = document.getElementById('intake-lashes-included')?.checked;
+        if (makeupStyles.length > 0) parts.push(`Styles: ${makeupStyles.join(', ')}`);
+        parts.push(`Lashes Included: ${lashesIncluded ? 'Yes' : 'No'}`);
+      } else if (cat === 'Flowers') {
+        const arrangementTypes = Array.from(document.querySelectorAll('input[name="arrangementTypes"]:checked')).map(el => el.value);
+        const offersDelivery = document.getElementById('intake-offers-delivery')?.checked;
+        if (arrangementTypes.length > 0) parts.push(`Arrangements: ${arrangementTypes.join(', ')}`);
+        parts.push(`Offers Delivery: ${offersDelivery ? 'Yes' : 'No'}`);
       }
       return parts.length > 0 ? parts.join(' | ') : 'Not provided';
     }
@@ -1145,8 +1270,13 @@
       const refundPolicy = refundPolicySelect.value.trim();
 
       // Required field validation
-      if (!businessName || !ownerName || !ownerEmail || !bookingUrl || startingPriceVal === '' || !zipCode) {
+      if (!businessName || !ownerName || !ownerEmail || startingPriceVal === '' || !zipCode) {
         showError('Please fill in all required fields marked with an asterisk (*).');
+        return;
+      }
+
+      if (!rawIg && !rawTiktok) {
+        showError('Please provide your Instagram or TikTok handle as a way for clients to book.');
         return;
       }
 
@@ -1270,6 +1400,16 @@
         categoryData.shootTypes = shootTypes.length > 0 ? shootTypes : ['graduation'];
         categoryData.turnaround = turnaround || '';
         categoryData.travelsToCampus = !!travelsToCampus;
+      } else if (category === 'Makeup') {
+        const makeupStyles = Array.from(document.querySelectorAll('input[name="makeupStyles"]:checked')).map(el => el.value);
+        const lashesIncluded = document.getElementById('intake-lashes-included')?.checked;
+        categoryData.makeupStyles = makeupStyles.length > 0 ? makeupStyles : ['soft glam'];
+        categoryData.lashesIncluded = !!lashesIncluded;
+      } else if (category === 'Flowers') {
+        const arrangementTypes = Array.from(document.querySelectorAll('input[name="arrangementTypes"]:checked')).map(el => el.value);
+        const offersDelivery = document.getElementById('intake-offers-delivery')?.checked;
+        categoryData.arrangementTypes = arrangementTypes.length > 0 ? arrangementTypes : ['bouquets'];
+        categoryData.offersDelivery = !!offersDelivery;
       }
 
       // Generate single readable line for category_details
@@ -1392,7 +1532,7 @@
           service_description: "Not provided",
           availability: "Not provided",
           general_availability: "Not provided",
-          booking_link: bookingUrl,
+          booking_link: sanitize(bookingUrl),
           submitted_at: submittedAtReadable,
           // Checkbox and multi-choice category answers as comma-separated values
           specialties: categoryData.specialties ? categoryData.specialties.join(', ') : '',
@@ -1406,7 +1546,11 @@
           outfit_types: categoryData.outfitTypes ? categoryData.outfitTypes.join(', ') : '',
           shoot_types: categoryData.shootTypes ? categoryData.shootTypes.join(', ') : '',
           turnaround: categoryData.turnaround || '',
-          travels_campus: categoryData.travelsToCampus !== undefined ? (categoryData.travelsToCampus ? 'Yes' : 'No') : ''
+          travels_campus: categoryData.travelsToCampus !== undefined ? (categoryData.travelsToCampus ? 'Yes' : 'No') : '',
+          makeup_styles: categoryData.makeupStyles ? categoryData.makeupStyles.join(', ') : '',
+          lashes_included: categoryData.lashesIncluded !== undefined ? (categoryData.lashesIncluded ? 'Yes' : 'No') : '',
+          arrangement_types: categoryData.arrangementTypes ? categoryData.arrangementTypes.join(', ') : '',
+          offers_delivery: categoryData.offersDelivery !== undefined ? (categoryData.offersDelivery ? 'Yes' : 'No') : ''
         };
 
         const sheetUrl = EMAILJS_CONFIG.googleSheetWebAppUrl || GOOGLE_SHEET_URL;

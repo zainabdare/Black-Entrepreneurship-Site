@@ -21,10 +21,12 @@ export const CATEGORY_BURGUNDY_SHADES = {
   'Hair': '#4A1C24',                     // Signature deep burgundy
   'Nails': '#561C2C',                    // Rich berry wine burgundy
   'Lashes': '#3A121A',                   // Noir dark burgundy
+  'Makeup': '#4D1A2B',                   // Velvet rose burgundy
   'Food & Beverages': '#5C2022',         // Warm spiced terracotta burgundy
   'Fashion': '#44182E',                  // Royal plum burgundy
   'Fashion (Custom Outfits)': '#44182E', // Royal plum burgundy
-  'Photography': '#32141D'               // Espresso charcoal burgundy
+  'Photography': '#32141D',              // Espresso charcoal burgundy
+  'Flowers': '#3E1825'                   // Floral plum burgundy
 };
 
 /**
@@ -41,6 +43,8 @@ export function getCategoryBurgundyShade(category = '') {
   if (lower.includes('hair')) return CATEGORY_BURGUNDY_SHADES['Hair'];
   if (lower.includes('nail')) return CATEGORY_BURGUNDY_SHADES['Nails'];
   if (lower.includes('lash')) return CATEGORY_BURGUNDY_SHADES['Lashes'];
+  if (lower.includes('makeup') || lower.includes('cosmetic')) return CATEGORY_BURGUNDY_SHADES['Makeup'];
+  if (lower.includes('flower') || lower.includes('floral')) return CATEGORY_BURGUNDY_SHADES['Flowers'];
   if (lower.includes('food') || lower.includes('beverage')) return CATEGORY_BURGUNDY_SHADES['Food & Beverages'];
   if (lower.includes('fashion') || lower.includes('outfit')) return CATEGORY_BURGUNDY_SHADES['Fashion'];
   if (lower.includes('photo')) return CATEGORY_BURGUNDY_SHADES['Photography'];
@@ -321,6 +325,47 @@ export function createProviderCard(provider) {
 
       </article>
 
+    </div>
+  `;
+}
+
+/**
+ * Generates the HTML markup for the "Your business here? Get listed free" invite card.
+ * Styled to look like a provider card in the grid with a dashed border, plus icon, and link to submit-business.html.
+ * 
+ * @returns {string} HTML markup string
+ */
+export function createInviteCard() {
+  return `
+    <div class="flex flex-col h-full">
+      <a 
+        href="submit-business.html"
+        class="group relative flex flex-col flex-grow items-center justify-center p-6 sm:p-8 rounded-3xl bg-white/70 hover:bg-white border-2 border-dashed border-[#D4A7B0] hover:border-[#4A1C24] shadow-sm hover:shadow-xl shadow-[#4A1C24]/5 transition-all duration-300 text-center cursor-pointer min-h-[380px] sm:min-h-[460px]"
+        aria-label="Your business here? Get listed free on SETLIST"
+      >
+        <!-- Plus Icon Circle -->
+        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#E9C6CC]/35 border-2 border-dashed border-[#D4A7B0] group-hover:border-[#4A1C24] group-hover:bg-[#4A1C24] group-hover:text-[#F6EEE6] text-[#4A1C24] flex items-center justify-center transition-all duration-300 shadow-inner mb-5 group-hover:scale-105">
+          <svg class="w-8 h-8 sm:w-10 sm:h-10 stroke-current stroke-2" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+        </div>
+
+        <!-- Heading -->
+        <h3 class="text-xl sm:text-2xl font-heading font-bold text-[#4A1C24] group-hover:text-[#612731] transition-colors leading-tight mb-2">
+          Your business here?
+        </h3>
+
+        <!-- Subtext -->
+        <p class="text-xs sm:text-sm text-[#7A535A] font-medium font-sans mb-6 max-w-xs leading-relaxed">
+          Get listed free
+        </p>
+
+        <!-- CTA Button -->
+        <span class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#4A1C24] group-hover:bg-[#351218] text-[#F6EEE6] font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-md group-hover:shadow-lg">
+          <span>Submit Your Business</span>
+          <span>&rarr;</span>
+        </span>
+      </a>
     </div>
   `;
 }

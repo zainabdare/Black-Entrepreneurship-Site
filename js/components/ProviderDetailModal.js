@@ -68,6 +68,16 @@ export const CATEGORY_CRITERIA_MAP = {
     { key: 'quality', label: 'Quality' },
     { key: 'punctuality', label: 'Punctuality' },
     { key: 'editingTurnaround', label: 'Editing Turnaround' }
+  ],
+  'Makeup': [
+    { key: 'longevity', label: 'Longevity' },
+    { key: 'punctuality', label: 'Punctuality' },
+    { key: 'cleanliness', label: 'Cleanliness' }
+  ],
+  'Flowers': [
+    { key: 'freshness', label: 'Freshness & Quality' },
+    { key: 'design', label: 'Design' },
+    { key: 'punctuality', label: 'Punctuality' }
   ]
 };
 
@@ -93,6 +103,8 @@ export function getCriteriaForCategory(category) {
   if (category.includes('Food')) return CATEGORY_CRITERIA_MAP['Food & Beverages'];
   if (category.includes('Nail')) return CATEGORY_CRITERIA_MAP['Nails'];
   if (category.includes('Lash')) return CATEGORY_CRITERIA_MAP['Lashes'];
+  if (category.includes('Makeup')) return CATEGORY_CRITERIA_MAP['Makeup'];
+  if (category.includes('Flower')) return CATEGORY_CRITERIA_MAP['Flowers'];
   if (category.includes('Photo')) return CATEGORY_CRITERIA_MAP['Photography'];
   return CATEGORY_CRITERIA_MAP[category] || CATEGORY_CRITERIA_MAP['Hair'];
 }

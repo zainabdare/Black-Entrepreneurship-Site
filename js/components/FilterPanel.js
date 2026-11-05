@@ -216,6 +216,68 @@ function getCategorySpecificHtml(category) {
         </div>
       `;
 
+    case 'Makeup':
+      return `
+        <div class="col-span-full border-b border-[#EAD5C0] pb-5 mb-5">
+          <div class="flex items-center gap-2 mb-3">
+            <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">
+              Makeup Specific Filters
+            </h4>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Makeup Style</label>
+              <div class="flex flex-wrap gap-2" role="group" aria-label="Makeup Styles">
+                <button type="button" data-filter="makeupStyles" data-value="soft glam" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Soft Glam</button>
+                <button type="button" data-filter="makeupStyles" data-value="full glam" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Full Glam</button>
+                <button type="button" data-filter="makeupStyles" data-value="natural" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Natural</button>
+                <button type="button" data-filter="makeupStyles" data-value="bridal" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Bridal</button>
+                <button type="button" data-filter="makeupStyles" data-value="photoshoot/editorial" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Photoshoot/Editorial</button>
+              </div>
+            </div>
+
+            <!-- Lashes Included Checkbox -->
+            <div class="flex items-end pb-1">
+              <label class="inline-flex items-center gap-2.5 p-2 rounded-2xl bg-white border border-[#EAD5C0] cursor-pointer hover:border-[#4A1C24] transition-colors w-full">
+                <input type="checkbox" id="filter-lashes-included" class="w-4 h-4 rounded text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
+                <span class="text-xs text-[#4A1C24] font-medium font-sans">Lashes Included</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      `;
+
+    case 'Flowers':
+      return `
+        <div class="col-span-full border-b border-[#EAD5C0] pb-5 mb-5">
+          <div class="flex items-center gap-2 mb-3">
+            <h4 class="text-xs font-heading font-bold uppercase tracking-wider text-[#4A1C24]">
+              Flowers Specific Filters
+            </h4>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-semibold text-[#7A535A] mb-2 font-sans">Arrangement Type</label>
+              <div class="flex flex-wrap gap-2" role="group" aria-label="Arrangement Types">
+                <button type="button" data-filter="arrangementTypes" data-value="bouquets" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Bouquets</button>
+                <button type="button" data-filter="arrangementTypes" data-value="graduation flowers" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Graduation Flowers</button>
+                <button type="button" data-filter="arrangementTypes" data-value="event florals" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Event Florals</button>
+                <button type="button" data-filter="arrangementTypes" data-value="corsages & boutonnieres" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Corsages &amp; Boutonnieres</button>
+                <button type="button" data-filter="arrangementTypes" data-value="money bouquets" class="filter-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-white border border-[#EAD5C0] text-[#4A1C24] hover:bg-[#F7E9EC]">Money Bouquets</button>
+              </div>
+            </div>
+
+            <!-- Offers Delivery Checkbox -->
+            <div class="flex items-end pb-1">
+              <label class="inline-flex items-center gap-2.5 p-2 rounded-2xl bg-white border border-[#EAD5C0] cursor-pointer hover:border-[#4A1C24] transition-colors w-full">
+                <input type="checkbox" id="filter-offers-delivery" class="w-4 h-4 rounded text-[#4A1C24] focus:ring-[#4A1C24] accent-[#4A1C24]">
+                <span class="text-xs text-[#4A1C24] font-medium font-sans">Offers Delivery</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      `;
+
     default:
       return '';
   }

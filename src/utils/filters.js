@@ -24,9 +24,11 @@ export const CATEGORY_FILTERS = [
   'Hair',
   'Nails',
   'Lashes',
+  'Makeup',
   'Food & Beverages',
   'Fashion',
-  'Photography'
+  'Photography',
+  'Flowers'
 ];
 
 // Zone quick-select options
@@ -49,13 +51,22 @@ export function matchesCategory(providerCategory, selectedCategory) {
   if (!selectedCategory || selectedCategory === 'All') {
     return true;
   }
+  if (!providerCategory) {
+    return false;
+  }
+
+  const prov = String(providerCategory).replace(/&amp;/g, '&').trim().toLowerCase();
+  const sel = String(selectedCategory).replace(/&amp;/g, '&').trim().toLowerCase();
 
   // Handle "Fashion" matching "Fashion (Custom Outfits)"
-  if (selectedCategory === 'Fashion' && providerCategory.includes('Fashion')) {
+  if ((sel === 'fashion' || sel.startsWith('fashion')) && prov.includes('fashion')) {
+    return true;
+  }
+  if ((prov === 'fashion' || prov.startsWith('fashion')) && sel.includes('fashion')) {
     return true;
   }
 
-  return providerCategory.trim().toLowerCase() === selectedCategory.trim().toLowerCase();
+  return prov === sel;
 }
 
 /**
@@ -77,7 +88,36 @@ export function matchesSearch(provider, query) {
   const descMatch = provider.description ? provider.description.toLowerCase().includes(cleanQuery) : false;
   const zipMatch = provider.zipCode ? String(provider.zipCode).includes(cleanQuery) : false;
 
-  return nameMatch || categoryMatch || descMatch || zipMatch;
+  // Search across category-specific styles and types
+  const makeupStylesMatch = Array.isArray(provider.makeupStyles)
+    ? provider.makeupStyles.some(s => String(s).toLowerCase().includes(cleanQuery))
+    : false;
+  const arrangementTypesMatch = Array.isArray(provider.arrangementTypes)
+    ? provider.arrangementTypes.some(a => String(a).toLowerCase().includes(cleanQuery))
+    : false;
+  const hairSpecialtiesMatch = Array.isArray(provider.specialties)
+    ? provider.specialties.some(s => String(s).toLowerCase().includes(cleanQuery))
+    : false;
+  const nailStylesMatch = Array.isArray(provider.nailStyles)
+    ? provider.nailStyles.some(s => String(s).toLowerCase().includes(cleanQuery))
+    : false;
+  const lashTypesMatch = Array.isArray(provider.lashTypes)
+    ? provider.lashTypes.some(s => String(s).toLowerCase().includes(cleanQuery))
+    : false;
+  const foodTypesMatch = Array.isArray(provider.foodTypes)
+    ? provider.foodTypes.some(s => String(s).toLowerCase().includes(cleanQuery))
+    : false;
+  const outfitTypesMatch = Array.isArray(provider.outfitTypes)
+    ? provider.outfitTypes.some(s => String(s).toLowerCase().includes(cleanQuery))
+    : false;
+  const shootTypesMatch = Array.isArray(provider.shootTypes)
+    ? provider.shootTypes.some(s => String(s).toLowerCase().includes(cleanQuery))
+    : false;
+
+  return nameMatch || categoryMatch || descMatch || zipMatch ||
+    makeupStylesMatch || arrangementTypesMatch ||
+    hairSpecialtiesMatch || nailStylesMatch || lashTypesMatch ||
+    foodTypesMatch || outfitTypesMatch || shootTypesMatch;
 }
 
 /**
@@ -186,7 +226,15 @@ export function filterProviders(providers, {
   // Category-Specific: Photography
   shootTypes = [],              // ['graduation', 'game day', 'events', 'portraits', 'brand content']
   photoTurnarounds = [],        // ['this-week', '2-weeks', 'formal-ready']
-  travelsToCampusOnly = false   // Boolean
+  travelsToCampusOnly = false,  // Boolean
+
+  // Category-Specific: Makeup
+  makeupStyles = [],            // ['soft glam', 'full glam', 'natural', 'bridal', 'photoshoot/editorial']
+  lashesIncludedOnly = false,   // Boolean
+
+  // Category-Specific: Flowers
+  arrangementTypes = [],        // ['bouquets', 'graduation flowers', 'event florals', 'corsages & boutonnieres', 'money bouquets']
+  offersDeliveryOnly = false    // Boolean
 } = {}) {
   if (!Array.isArray(providers)) {
     return [];
@@ -416,6 +464,34 @@ export function filterProviders(providers, {
     // Photography: Travels to Campus
     if (travelsToCampusOnly) {
       if (!provider.travelsToCampus) {
+        return false;
+      }
+    }
+
+    // Makeup: Makeup Style
+    if (makeupStyles && makeupStyles.length > 0) {
+      if (!provider.makeupStyles || !provider.makeupStyles.some(s => makeupStyles.some(m => String(s).toLowerCase().includes(m.toLowerCase()) || m.toLowerCase().includes(String(s).toLowerCase())))) {
+        return false;
+      }
+    }
+
+    // Makeup: Lashes Included
+    if (lashesIncludedOnly) {
+      if (!provider.lashesIncluded) {
+        return false;
+      }
+    }
+
+    // Flowers: Arrangement Type
+    if (arrangementTypes && arrangementTypes.length > 0) {
+      if (!provider.arrangementTypes || !provider.arrangementTypes.some(a => arrangementTypes.some(t => String(a).toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(String(a).toLowerCase())))) {
+        return false;
+      }
+    }
+
+    // Flowers: Offers Delivery
+    if (offersDeliveryOnly) {
+      if (!provider.offersDelivery) {
         return false;
       }
     }
